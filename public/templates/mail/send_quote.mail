@@ -1,0 +1,9 @@
+<?from?>hello@example.com<?/from?>
+<?subject?>Quote has been estimated<?/?>
+<?body?>
+
+Quote has been estimated<br />
+Click <a href="<?$link?>">quote</a> to review.<br />
+
+<?sign?>
+<?/sign?><?/body?>

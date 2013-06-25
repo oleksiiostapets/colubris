@@ -1,0 +1,31 @@
+<style>
+a.flink { border-bottom: dashed 1px black; cursor: pointer; }
+.status{ font-size: 10px;}
+</style>
+<div class="g-row">
+<div class="g-3"><h3>Most Recent Reports</h3></div>
+<div class="g-7" style="text-align: right"><?just_reported_buttons?>&nbsp;<?/?></div>
+</div>
+
+
+<div class="g-row">
+<div class="g-7"><?$just_reported?></div>
+<div class="g-3">
+<table width="100%" class="ui-widget-content" style="border-spacing:10px;border-collapse:separate;">
+<tbody><tr>
+
+<td align="center" width="33%"><h3><?htd?>23<?/?></h3>Hours Worked Today</td>
+<td align="center" width="33%"><h3><?htw?>23<?/?></h3>Hours worked This Week <div class="status">(<?htw_status?>23<?/?>)</div> </td>
+<td align="center" width="33%"><h3><?htm?>23<?/?></h3>Hours worked This Month <div class="status">(<?htm_status?>23<?/?>)</div> </td>
+</tr>
+</tbody></table>
+<?graph?><img src="http://chart.googleapis.com/chart?cht=bvg&chs=220x150&chd=s:Monkeys&chxt=x,y&chxs=0,ff0000,12,0,lt|1,0000ff,10,1,lt"/><?/?>
+
+<?$dev_stats?>
+</div>
+</div>
+
+<div class="g-row">
+<div class="g-7"><?$open_budgets?></div>
+<div class="g-7"><?$incomplete_tasks?></div>
+</div>

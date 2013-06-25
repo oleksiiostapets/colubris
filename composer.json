@@ -1,0 +1,10 @@
+{
+		"name": "atk4/atk4-secure",
+		"description": "Initial bootstrap of Agile Toolkit",
+		"license": "GPL-3.0",
+		
+		"require": {
+            "atk4/atk4": "dev-master",
+            "suin/php-rss-writer": "dev-master"
+		}
+}

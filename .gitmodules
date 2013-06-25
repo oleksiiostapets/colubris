@@ -1,0 +1,3 @@
+[submodule "atk4-addons"]
+	path = atk4-addons
+	url = git@github.com:atk4/atk4-addons

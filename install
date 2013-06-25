@@ -1,0 +1,21 @@
+#!/bin/sh
+
+git=`which git`
+[ -x "$git" ] || { echo "Could not find command-line 'git' on your system. Try manual install."; exit 1; }
+[ `ls` ] && { echo "There are files in your current folder. Go to an empty folder."; exit 2; }
+git clone git@github.com:atk4/atk4-secure.git .
+rm -rf .git
+rm install
+git init
+git add .
+git commit -m "Initial Commit"
+
+curl -sS https://getcomposer.org/installer | php
+
+echo "Your Agile Toolkit project is ready. I will load dependencies next. If this"
+echo "operation fails, you can resume by executing:"
+echo
+echo " php composer update"
+echo
+
+php composer.phar install

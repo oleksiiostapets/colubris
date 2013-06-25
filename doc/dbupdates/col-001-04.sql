@@ -1,0 +1,1 @@
+ALTER TABLE `quote` ADD COLUMN `status` VARCHAR(255) NULL DEFAULT "quotation_requested";
