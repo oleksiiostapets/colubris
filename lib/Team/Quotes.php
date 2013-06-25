@@ -7,7 +7,7 @@ class Team_Quotes extends View {
         $this->api->stickyGET('id');
         $this->api->stickyGET($this->name);
 
-        $participated_in=$this->add('Model_Participant')->loadBy('user_id',$this->api->auth->model['id']);
+        $participated_in=$this->add('Model_Participant')->tryLoadBy('user_id',$this->api->auth->model['id']);
         $projects_ids="";
         foreach($participated_in as $p){
         	if($projects_ids=="") $projects_ids=$p['project_id'];
