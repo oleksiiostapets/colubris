@@ -62,13 +62,14 @@ class Frontend extends ApiFrontend {
                 'account',
                 'about',
                 'home',
+            	'manager',
                 ));
 
             // Access for managers
             if($this->api->auth->model['is_manager']) {
                 $this->addAllowedPages(array(
                     'manager',
-                    ));
+                ));
             }
             // Access for developers
             if($this->api->auth->model['is_developer']) {
@@ -134,11 +135,12 @@ class Frontend extends ApiFrontend {
                 //$m->addMenuItem('manager/tasks','Tasks'); // review all tasks in system - temporary
                 //$m->addMenuItem('manager/req','Requirements'); // PM can define project requirements here and view tasks
                 //$m->addMenuItem('manager/budgets','Budgets'); // Admin can setup projects and users here
-                //$m->addMenuItem('manager/clients','Clients');
+                $m->addMenuItem('manager/clients','Clients');
                 break;
             case 'admin':
                 $m->addMenuItem('admin/users','Users');
                 $m->addMenuItem('admin/developers','Developers');
+                //$m->addMenuItem('manager/clients','Clients');
                 //$m->addMenuItem('admin/filestore','Files');
                 break;
 
