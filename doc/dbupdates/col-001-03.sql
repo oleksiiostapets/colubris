@@ -4,7 +4,7 @@ CREATE TABLE `requirement` (
   `type` varchar(20) DEFAULT NULL,
   `descr` text,
   `estimate` decimal(8,2) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 
