@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<!--[if IE 7 ]> <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]> <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]> <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html> <!--<![endif]-->
+  <head>
+    <title>newseek</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <!-- <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,400italic|PT+Sans+Caption&subset=latin,cyrillic' rel='stylesheet' type='text/css'> -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/newseek.css" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery-1.10.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollUp.min.js"></script>
+    <script type="text/javascript" src="js/jquery.dotdotdot-1.5.9.min.js"></script>
+    <script type="text/javascript" src="js/jquery.autocomplete.js"></script>
+    <script type="text/javascript" src="js/newseek.js"></script>
+  </head>
+  <body data-spy="scroll" data-target=".page-title">
+    <div id="layout" class="container">
+      <div id="sidebar">
+        <div class="navbar">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".collapse-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <button type="button" class="btn btn-navbar account"><i class="icon-user icon-white"></i></button>
+          <a href="javascript:void(0)" class="brand"><img src="img/logo.png" alt="newseek"></a>
+          <div class="nav-collapse collapse-main collapse">
+            <ul class="nav nav-list">
+              <li><a href="javascript:void(0)">Главные новости</a></li>
+              <li><a href="javascript:void(0)">Все категории</a></li>
+              <li><a href="javascript:void(0)">Бизнес</a></li>
+              <li><a href="javascript:void(0)">Наука и технологии</a></li>
+              <li class="active"><a href="javascript:void(0)">Политика</a></li>
+              <li><a href="javascript:void(0)">Происшествия</a></li>
+              <li><a href="javascript:void(0)">Спорт</a></li>
+              <li><a href="javascript:void(0)">Экономика</a></li>
+            </ul>
+            <ul class="nav nav-list">
+              <li><a href="javascript:void(0)">Читать позже<span>(17)</span></a></li>
+              <li><a href="javascript:void(0)">Настройки ленты</a></li>
+              <li class="search">
+                 <input type="text" id="quicksearch">
+                 <input type="submit" class="icon white s-16 i-search" />
+                 <script>
+                  // Temporary
+                  $(function(){
+                    $('#quicksearch').autocomplete("search.php",{maxItemsToShow: 3});
+                  });
+                 </script>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div><!--/#sidebar -->
+      <div id="main">
+        <div class="navbar nav-categories">
+          <button type="button" class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".collapse-category"></button>
+          <div class="nav-collapse collapse-category collapse">
+            <ul class="nav">
+              <li class="active"><a href="javascript:void(0)">Все новости</a></li>
+              <li><a href="javascript:void(0)">Мир</a></li>
+              <li><a href="javascript:void(0)">Украина</a></li>
+              <li><a href="javascript:void(0)">Киевская область</a></li>
+              <li><a href="javascript:void(0)">Я — репортер</a></li>
+            </ul>
+            <ul class="nav pull-right account">
+              <li><a href="javascript:void(0)">Профиль</a></li>
+              <li><a href="javascript:void(0)">Выход</a></li>
+            </ul>
+          </div>
+        </div><!--/.nav-categories -->
+       <div class="page-title-wrapper fixed">
+            <div class="page-title affix-top navbar">
+              <ul class="nav section-title">
+                <li class="active"><a href="#section-politika">Политика</a></li>
+                <li><a href="#section-proverka">Проверка</a></li>
+              </ul>
+              <ul class="nav pull-right">
+                <li class="dropdown select-regions">
+                  <select>
+                    <option selected>Киевская область</option>
+                    <option>Автономная Республика Крым</option>
+                    <option>Винницкая область</option>
+                    <option>Волынская область</option>
+                    <option>Днепропетровская область</option>
+                    <option>Донецкая область</option>
+                    <option>Житомирская область</option>
+                    <option>Закарпатская область</option>
+                    <option>Запорожская область</option>
+                    <option>Ивано-Франковская область</option>
+                    <option>Киевская область</option>
+                    <option>Кировоградская область</option>
+                    <option>Луганская область</option>
+                    <option>Львовская область</option>
+                    <option>Николаевская область</option>
+                    <option>Одесская область</option>
+                    <option>Полтавская область</option>
+                    <option>Ровненская область</option>
+                    <option>Сумская область</option>
+                    <option>Тернопольская область</option>
+                    <option>Харьковская область</option>
+                    <option>Херсонская область</option>
+                    <option>Хмельницкая область</option>
+                    <option>Черкасская область</option>
+                    <option>Черниговская область</option>
+                    <option>Черновицкая область</option>
+                  </select>
+                  <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                    Другая область
+                  </a>
+                  <div class="dropdown-menu">
+                    <div class="row-fluid">
+                      <ul class="span7">
+                        <li class="current"><a href="javascript:void(0)">Киевская область</a></li>
+                        <li><a href="javascript:void(0)">Автономная Республика Крым</a></li>
+                        <li><a href="javascript:void(0)">Винницкая область</a></li>
+                        <li><a href="javascript:void(0)">Волынская область</a></li>
+                        <li><a href="javascript:void(0)">Днепропетровская область</a></li>
+                        <li><a href="javascript:void(0)">Донецкая область</a></li>
+                        <li><a href="javascript:void(0)">Житомирская область</a></li>
+                        <li><a href="javascript:void(0)">Закарпатская область</a></li>
+                        <li><a href="javascript:void(0)">Запорожская область</a></li>
+                        <li><a href="javascript:void(0)">Ивано-Франковская область</a></li>
+                        <li><a href="javascript:void(0)">Киевская область</a></li>
+                        <li><a href="javascript:void(0)">Кировоградская область</a></li>
+                        <li><a href="javascript:void(0)">Луганская область</a></li>
+                      </ul>
+                      <ul class="span5">
+                        <li><a href="javascript:void(0)">Львовская область</a></li>
+                        <li><a href="javascript:void(0)">Николаевская область</a></li>
+                        <li><a href="javascript:void(0)">Одесская область</a></li>
+                        <li><a href="javascript:void(0)">Полтавская область</a></li>
+                        <li><a href="javascript:void(0)">Ровненская область</a></li>
+                        <li><a href="javascript:void(0)">Сумская область</a></li>
+                        <li><a href="javascript:void(0)">Тернопольская область</a></li>
+                        <li><a href="javascript:void(0)">Харьковская область</a></li>
+                        <li><a href="javascript:void(0)">Херсонская область</a></li>
+                        <li><a href="javascript:void(0)">Хмельницкая область</a></li>
+                        <li><a href="javascript:void(0)">Черкасская область</a></li>
+                        <li><a href="javascript:void(0)">Черниговская область</a></li>
+                        <li><a href="javascript:void(0)">Черновицкая область</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+        </div><!-- /page-title-wrapper -->
+        <div id="content">
+          <div class="section" id="section-politika">
+            <div class="section-title"><div class="title">Политика</div></div>
+            <div class="articles">
+              <div class="media">
+                <a class="pull-left" href="javascript:void(0)">
+                  <img class="media-object" data-src="holder.js/120x90" alt="120x90" src="temp/politician.png">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><a href="javascript:void(0)">Германии стоит подумать о выходе из еврозоны, — Сорос</a></div>
+                  <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac.</p>
+                  <div class="meta-post">17:00<span class="sep">&sdot;</span>Бизнес<span class="sep">&sdot;</span><a href="javascript:void(0)">Unian.net</a></div>
+                </div>
+              </div>
+              <div class="media">
+                <a class="pull-left" href="javascript:void(0)">
+                  <img class="media-object" data-src="holder.js/120x90" alt="120x90" src="temp/politician.png">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><a href="javascript:void(0)">Германии стоит подумать о выходе из еврозоны, — Сорос</a></div>
+                  <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac.</p>
+                  <div class="meta-post">17:00<span class="sep">&sdot;</span>Бизнес<span class="sep">&sdot;</span><a href="javascript:void(0)">Unian.net</a></div>
+                </div>
+              </div>
+              <div class="media">
+                <a class="pull-left" href="javascript:void(0)">
+                  <img class="media-object" data-src="holder.js/120x90" alt="120x90" src="temp/politician.png">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><a href="javascript:void(0)">Германии стоит подумать о выходе из еврозоны, — Сорос</a></div>
+                  <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac.</p>
+                  <div class="meta-post">17:00<span class="sep">&sdot;</span>Бизнес<span class="sep">&sdot;</span><a href="javascript:void(0)">Unian.net</a></div>
+                </div>
+              </div>
+              <div class="media">
+                <a class="pull-left" href="javascript:void(0)">
+                  <img class="media-object" data-src="holder.js/120x90" alt="120x90" src="temp/politician.png">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><a href="javascript:void(0)">Германии стоит подумать о выходе из еврозоны, — Сорос</a></div>
+                  <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac.</p>
+                  <div class="meta-post">17:00<span class="sep">&sdot;</span>Бизнес<span class="sep">&sdot;</span><a href="javascript:void(0)">Unian.net</a></div>
+                </div>
+              </div>
+              <div class="media">
+                <a class="pull-left" href="javascript:void(0)">
+                  <img class="media-object" data-src="holder.js/120x90" alt="120x90" src="temp/politician.png">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><a href="javascript:void(0)">Германии стоит подумать о выходе из еврозоны, — Сорос</a></div>
+                  <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac.</p>
+                  <div class="meta-post">17:00<span class="sep">&sdot;</span>Бизнес<span class="sep">&sdot;</span><a href="javascript:void(0)">Unian.net</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="section articles" id="section-proverka">
+            <div class="section-title"><div class="title">Проверка</div></div>
+            <div class="articles">
+              <div class="media">
+                <a class="pull-left" href="javascript:void(0)">
+                  <img class="media-object" data-src="holder.js/120x90" alt="120x90" src="temp/politician.png">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><a href="javascript:void(0)">Германии стоит подумать о выходе из еврозоны, — Сорос</a></div>
+                  <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac.</p>
+                  <div class="meta-post">17:00<span class="sep">&sdot;</span>Бизнес<span class="sep">&sdot;</span><a href="javascript:void(0)">Unian.net</a></div>
+                </div>
+              </div>
+              <div class="media">
+                <a class="pull-left" href="javascript:void(0)">
+                  <img class="media-object" data-src="holder.js/120x90" alt="120x90" src="temp/politician.png">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><a href="javascript:void(0)">Германии стоит подумать о выходе из еврозоны, — Сорос</a></div>
+                  <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac.</p>
+                  <div class="meta-post">17:00<span class="sep">&sdot;</span>Бизнес<span class="sep">&sdot;</span><a href="javascript:void(0)">Unian.net</a></div>
+                </div>
+              </div>
+              <div class="media">
+                <a class="pull-left" href="javascript:void(0)">
+                  <img class="media-object" data-src="holder.js/120x90" alt="120x90" src="temp/politician.png">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><a href="javascript:void(0)">Германии стоит подумать о выходе из еврозоны, — Сорос</a></div>
+                  <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac.</p>
+                  <div class="meta-post">17:00<span class="sep">&sdot;</span>Бизнес<span class="sep">&sdot;</span><a href="javascript:void(0)">Unian.net</a></div>
+                </div>
+              </div>
+              <div class="media">
+                <a class="pull-left" href="javascript:void(0)">
+                  <img class="media-object" data-src="holder.js/120x90" alt="120x90" src="temp/politician.png">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><a href="javascript:void(0)">Германии стоит подумать о выходе из еврозоны, — Сорос</a></div>
+                  <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac.</p>
+                  <div class="meta-post">17:00<span class="sep">&sdot;</span>Бизнес<span class="sep">&sdot;</span><a href="javascript:void(0)">Unian.net</a></div>
+                </div>
+              </div>
+              <div class="media">
+                <a class="pull-left" href="javascript:void(0)">
+                  <img class="media-object" data-src="holder.js/120x90" alt="120x90" src="temp/politician.png">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><a href="javascript:void(0)">Германии стоит подумать о выходе из еврозоны, — Сорос</a></div>
+                  <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac.</p>
+                  <div class="meta-post">17:00<span class="sep">&sdot;</span>Бизнес<span class="sep">&sdot;</span><a href="javascript:void(0)">Unian.net</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- /#content -->
+      </div>
+    </div>
+    <div id="popover-search-wrap"></div>
+  </body>
+</html>

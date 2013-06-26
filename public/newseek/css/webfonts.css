@@ -1,0 +1,24 @@
+/* @license
+ * MyFonts Webfont Build ID 2529589, 2013-04-13T08:44:48-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: Palatino nova Std Cyrillic Regular by Linotype
+ * URL: http://www.myfonts.com/fonts/linotype/palatino-nova/cyrillic-regular/
+ * Copyright: Copyright &#x00A9; 2009 Linotype GmbH, www.linotype.com. All rights reserved. This font software may not be reproduced, modified, disclosed or transferred without the express written approval of Linotype GmbH. Palatino is a trademark of Linotype Corp. reg
+ * 
+ * 
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=2529589
+ * 
+ * © 2013 MyFonts Inc
+*/
+
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("//hello.myfonts.net/count/269935");
+@font-face {font-family: 'PalatinoNovaCYR-Regular';src: url('../webfonts/269935_0_0.eot');src: url('../webfonts/269935_0_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/269935_0_0.woff') format('woff'),url('../webfonts/269935_0_0.ttf') format('truetype');}
+ 
