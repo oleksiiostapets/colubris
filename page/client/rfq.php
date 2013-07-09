@@ -9,6 +9,8 @@ class page_client_rfq extends Page {
 
         $m=$this->setModel('Model_Quote');
         $form->setModel($m,array('project_id','name'));
+        $form->getElement('project')->caption='Project\'s name';
+        $form->getElement('name')->caption='Quotation\'s name';
         //$form->getElement('project')->set($_GET['project']);
         //$form->getElement('project_id')->set($_GET['project_id']);
         $add_button=$form->add('Button')->set("New Project")->addClass('add_project');
@@ -16,7 +18,7 @@ class page_client_rfq extends Page {
         
         $form->add('Order')->move($add_button,'before','name')->now();
         
-        $form->addSubmit('Next');
+        $form->addSubmit('To the Next Step');
         
         if($form->isSubmitted()){
         	$js=array();

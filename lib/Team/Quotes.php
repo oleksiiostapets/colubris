@@ -26,5 +26,32 @@ class Team_Quotes extends View {
                 ->execute();
         }
         
+        $this->add('H4')->set('2. Quotes not estimated (developer returned)');
+        $this->quotes=$cr=$this->add('CRUD',array('allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
+        $m=$cr->setModel('Quote',array('project','user','name'));
+        $m->addCondition('status','not_estimated');
+        $m->addCondition('project_id','in',$projects_ids);
+            if($cr->grid){
+        	$cr->grid->addColumn('button','details');
+        }
+        if($_GET['details']){
+            $this->js()->univ()->redirect($this->api->url('/team/rfq/view',
+                        array('quote_id'=>$_GET['details'])))
+                ->execute();
+        }
+        
+        $this->add('H4')->set('3. Quotes estimated (developer returned)');
+        $this->quotes=$cr=$this->add('CRUD',array('allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
+        $m=$cr->setModel('Quote',array('project','user','name','estimated'));
+        $m->addCondition('status','estimated');
+        $m->addCondition('project_id','in',$projects_ids);
+        if($cr->grid){
+        	$cr->grid->addColumn('button','details');
+        }
+        if($_GET['details']){
+            $this->js()->univ()->redirect($this->api->url('/team/rfq/view',
+                        array('quote_id'=>$_GET['details'])))
+                ->execute();
+        }
     }
 }

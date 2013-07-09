@@ -64,6 +64,7 @@ class page_manager_rfq_step2 extends Page {
     			array('text'),
     			array('text','user')
     	);
+    	$cr->add_button->setLabel('Add Comment');
     }
     
 }
