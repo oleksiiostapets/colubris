@@ -12,7 +12,7 @@ class Client_Quotes extends View {
         $v=$this->add('View')->setClass('right');
         $b=$v->add('Button')->set('Request For Quotation');
         $b->js('click', array(
-        		$this->js()->univ()->redirect($this->api->url('client/rfq'))
+        		$this->js()->univ()->redirect($this->api->url('client/quotes/rfq'))
         ));
         
         $v=$this->add('View')->setClass('clear');
@@ -26,7 +26,7 @@ class Client_Quotes extends View {
         $m->addCondition('client_id',$this->api->auth->model['client_id']);
         $grid->addColumn('button','edit');
         if($_GET['edit']){
-            $this->js()->univ()->redirect($this->api->url('/client/rfq/step2',
+            $this->js()->univ()->redirect($this->api->url('/client/quotes/rfq/step2',
                         array('quote_id'=>$_GET['edit'])))
                 ->execute();
         }
@@ -40,7 +40,7 @@ class Client_Quotes extends View {
         	$cr->grid->addColumn('button','edit');
         }
         if($_GET['edit']){
-            $this->js()->univ()->redirect($this->api->url('/client/rfq/step2',
+            $this->js()->univ()->redirect($this->api->url('/client/quotes/rfq/step2',
                         array('quote_id'=>$_GET['edit'])))
                 ->execute();
         }
@@ -57,7 +57,7 @@ class Client_Quotes extends View {
         	$cr->grid->addColumn('button','details');
         }
         if($_GET['details']){
-            $this->js()->univ()->redirect($this->api->url('/client/rfq/view',
+            $this->js()->univ()->redirect($this->api->url('/client/quotes/rfq/view',
                         array('quote_id'=>$_GET['details'])))
                 ->execute();
         }
@@ -71,7 +71,7 @@ class Client_Quotes extends View {
         	$cr->grid->addColumn('button','details');
         }
         if($_GET['details']){
-            $this->js()->univ()->redirect($this->api->url('/client/rfq/view',
+            $this->js()->univ()->redirect($this->api->url('/client/quotes/rfq/view',
                         array('quote_id'=>$_GET['details'])))
                 ->execute();
         }

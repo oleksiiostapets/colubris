@@ -116,7 +116,7 @@ class Frontend extends ApiFrontend {
         	$m->addMenuItem('team','Developer');
         }
         if ($this->api->auth->model['is_client']) {
-        	$m->addMenuItem('client','Home');
+        	$m->addMenuItem('client/projects','Home');
         }
         if ($this->api->auth->model['is_admin']) {
         	$m->addMenuItem('admin/users','Admin');
@@ -131,8 +131,8 @@ class Frontend extends ApiFrontend {
         switch ($p[0]) {
             case 'client':
                 $sm->addMenuItem('client/projects','Projects');
-                $sm->addMenuItem('client','Quotes');
-                //$sm->addMenuItem('client/rfq','Request For Quotation');
+                $sm->addMenuItem('client/quotes','Quotes');
+                //$sm->addMenuItem('client/quotes/rfq','Request For Quotation');
                 //$m->addMenuItem('client/budgets','Budgets');
                 //$m->addMenuItem('client/status','Project Status');
                 //if($this->api->auth->model['is_timereport']){

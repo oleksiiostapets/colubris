@@ -60,7 +60,7 @@ class Manager_Projects extends View {
 	        	$mail = $this->add('TMail');
 	        	$mail->loadTemplate('send_quote');
 	            $mail->setTag('from',$this->from);
-	            $mail->setTag('link',$this->api->url('/client/rfq/estimated',array('quote_id'=>$_GET['send_to_client'])));
+	            $mail->setTag('link',$this->api->url('/client/quotes/rfq/estimated',array('quote_id'=>$_GET['send_to_client'])));
 	            $mail->send($to);
 
 	            $this->js()->univ()->successMessage('Sent')->execute();
