@@ -116,7 +116,7 @@ class Frontend extends ApiFrontend {
         	$m->addMenuItem('team','Developer');
         }
         if ($this->api->auth->model['is_client']) {
-        	$m->addMenuItem('client','Home');
+        	$m->addMenuItem('client','Desktop');
         }
         if ($this->api->auth->model['is_admin']) {
         	$m->addMenuItem('admin/users','Admin');
