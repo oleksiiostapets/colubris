@@ -105,8 +105,6 @@ class Frontend extends ApiFrontend {
         $m = $this->add('Mymenu', 'Menu', 'Menu');
         $sm = $this->add('Mysubmenu', 'SubMenu', 'SubMenu');
 
-        $m->addMenuItem('intro','Introduction');
-
         if(!$this->auth->isLoggedIn()){
         	//break;
         }
