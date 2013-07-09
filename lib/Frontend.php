@@ -116,16 +116,16 @@ class Frontend extends ApiFrontend {
         	$m->addMenuItem('team','Developer');
         }
         if ($this->api->auth->model['is_client']) {
-        	$m->addMenuItem('client','Client');
+        	$m->addMenuItem('client','Projects');
         }
         if ($this->api->auth->model['is_admin']) {
         	$m->addMenuItem('admin/users','Admin');
         }
-        
-        $m->addMenuItem('about','About');
+
         if($this->auth->isLoggedIn()){
-        	$m->addMenuItem('account');
+        	$m->addMenuItem('account','Settings');
         }
+        $m->addMenuItem('about','About');
         
         $p = explode('_', $this->page);
         switch ($p[0]) {
