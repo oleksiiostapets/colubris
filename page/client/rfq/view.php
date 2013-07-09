@@ -1,6 +1,6 @@
 <?php
 
-class page_client_rfq_step2 extends Page {
+class page_client_rfq_view extends Page {
     function page_index(){
 
     	$this->api->stickyGet('quote_id');
@@ -11,7 +11,7 @@ class page_client_rfq_step2 extends Page {
         
         // Checking client's permission to this quote
         $project=$this->add('Model_Project')->tryLoad($quote->get('project_id'));
-        if( (!$project->loaded()) || ( ($quote->get('status')!="quotation_requested") && ($quote->get('status')!="not_estimated") ) ){
+        if(!$project->loaded()){
         	$this->api->redirect('/denied');
         }
 
@@ -19,12 +19,13 @@ class page_client_rfq_step2 extends Page {
         $this->add('P')->set('Project - '.$quote->get('project'));
         $this->add('P')->set('User - '.$quote->get('user'));
         $this->add('P')->set('Name - '.$quote->get('name'));
+        $this->add('P')->set('Estimated - '.$quote->get('estimated'));
         
         $this->add('H4')->set('Requirements:');
         $requirements=$this->add('Model_Requirement');
         $requirements->addCondition('quote_id',$_GET['quote_id']);
 
-        $cr = $this->add('CRUD',array('allow_add'=>false));
+        $cr = $this->add('CRUD',array('allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
         $cr->setModel($requirements,
         		array('name','descr','file_id'),
         		array('name','descr','estimate','file','user')
@@ -33,20 +34,6 @@ class page_client_rfq_step2 extends Page {
         	$cr->grid->addColumn('expander','comments');
         	$cr->grid->addFormatter('file','download');
         }        
-        
-        $this->add('H4')->set('New Requirement:');
-        
-        $form=$this->add('Form');
-        $m=$this->setModel('Model_Requirement');
-        $form->setModel($m,array('name','descr','file_id'));
-        $form->addSubmit('Save');
-
-        if($form->isSubmitted()){
-        	$form->model->set('user_id',$this->api->auth->model['id']);
-        	$form->model->set('quote_id',$_GET['quote_id']);
-        	$form->update();
-        	$this->api->redirect(null);
-        }
         
     }
 

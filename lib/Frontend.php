@@ -19,7 +19,7 @@ class Frontend extends ApiFrontend {
 //            ),
             //'template'=>'atk4-addons/misc/templates',
         ));
-
+        
         $this->dbConnect();
         $this->add('jUI');
         
@@ -101,7 +101,8 @@ class Frontend extends ApiFrontend {
     }
     
     function initLayout(){
-        $m = $this->add('Menu', 'Menu', 'Menu');
+
+        $m = $this->add('Mymenu', 'Menu', 'Menu');
         $sm = $this->add('Menu', 'SubMenu', 'SubMenu');
 
         $m->addMenuItem('intro','Introduction');

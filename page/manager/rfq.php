@@ -20,12 +20,14 @@ class page_manager_rfq extends Page {
         $form->setModel($m,array('project_id','name'));
         $form->getElement('project')->set($_GET['project']);
         $form->getElement('project_id')->set($_GET['project_id']);
+        $form->getElement('project')->caption='Project\'s name';
+        $form->getElement('name')->caption='Quotation\'s name';
         $add_button=$form->add('Button')->set("New Project")->addClass('add_project');
         $add_button->js('click', $this->js()->univ()->redirect($this->api->url('manager/project/add',array('return'=>'manager/rfq'))));
         
         $form->add('Order')->move($add_button,'before','name')->now();
         
-        $form->addSubmit('Next');
+        $form->addSubmit('To the Next Step');
         
         if($form->isSubmitted()){
         	$js=array();
