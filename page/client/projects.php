@@ -11,6 +11,6 @@ class page_client_projects extends Page {
    		parent::init();
     }
     function defaultTemplate(){
-        return array('page/home');
+        return array('page/client/projects');
     }
 }
