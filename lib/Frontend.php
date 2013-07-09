@@ -103,12 +103,35 @@ class Frontend extends ApiFrontend {
     function initLayout(){
 
         $m = $this->add('Menu', 'Menu', 'Menu');
+        $sm = $this->add('Menu', 'SubMenu', 'SubMenu');
+
+        $m->addMenuItem('intro','Introduction');
+        
+        if(!$this->auth->isLoggedIn()){
+        	break;
+        }
+        
+        if ($this->api->auth->model['is_manager'] || $this->api->auth->model['is_admin']) {
+        	$m->addMenuItem('manager','Manager');
+        }
+        if ($this->api->auth->model['is_developer']) {
+        	$m->addMenuItem('team','Developer');
+        }
+        if ($this->api->auth->model['is_client']) {
+        	$m->addMenuItem('client','Client');
+        }
+        if ($this->api->auth->model['is_admin']) {
+        	$m->addMenuItem('admin/users','Admin');
+        }
+        
+        $m->addMenuItem('about','About Colubris');
+        $m->addMenuItem('account');
         
         $p = explode('_', $this->page);
         switch ($p[0]) {
             case 'client':
-                $m->addMenuItem('client','Welcome');
-                $m->addMenuItem('client/rfq','Request For Quotation');
+                $sm->addMenuItem('client','Welcome');
+                $sm->addMenuItem('client/rfq','Request For Quotation');
                 //$m->addMenuItem('client/budgets','Budgets');
                 //$m->addMenuItem('client/status','Project Status');
                 //if($this->api->auth->model['is_timereport']){
@@ -117,7 +140,7 @@ class Frontend extends ApiFrontend {
                 break;
 
             case 'team':
-                $m->addMenuItem('team','Welcome');
+                $sm->addMenuItem('team','Welcome');
                 //$m->addMenuItem('team/entry','Time Entry');
                 //$m->addMenuItem('team/timesheets','Development Priorities');
                 //$m->addMenuItem('team/timesheets','Timesheets');
@@ -125,9 +148,9 @@ class Frontend extends ApiFrontend {
                 break;
 
             case 'manager':
-                $m->addMenuItem('manager','Home');
-                $m->addMenuItem('manager/rfq','Request For Quotation');
-                $m->addMenuItem('manager/projects','Projects'); // Admin can setup projects and users here
+                $sm->addMenuItem('manager','Home');
+                $sm->addMenuItem('manager/rfq','Request For Quotation');
+                $sm->addMenuItem('manager/projects','Projects'); // Admin can setup projects and users here
                 //$m->addMenuItem('manager/statistics','Statistics');
                 //$m->addMenuItem('manager/reports','Reports'); // review all reports in system - temporary
                 //$m->addMenuItem('manager/timesheets','Timesheets'); // review all reports in system - temporary
@@ -135,44 +158,22 @@ class Frontend extends ApiFrontend {
                 //$m->addMenuItem('manager/tasks','Tasks'); // review all tasks in system - temporary
                 //$m->addMenuItem('manager/req','Requirements'); // PM can define project requirements here and view tasks
                 //$m->addMenuItem('manager/budgets','Budgets'); // Admin can setup projects and users here
-                $m->addMenuItem('manager/clients','Clients');
+                $sm->addMenuItem('manager/clients','Clients');
                 break;
             case 'admin':
-                $m->addMenuItem('admin/users','Users');
-                $m->addMenuItem('admin/developers','Developers');
+                $sm->addMenuItem('admin/users','Users');
+                $sm->addMenuItem('admin/developers','Developers');
                 //$m->addMenuItem('manager/clients','Clients');
                 //$m->addMenuItem('admin/filestore','Files');
                 break;
 
             default:
-                $m->addMenuItem('intro','Introduction');
-
-                if(!$this->auth->isLoggedIn()){
-                    break;
-                }
-
-                if ($this->api->auth->model['is_manager'] || $this->api->auth->model['is_admin']) {
-
-                    $m->addMenuItem('manager','Manager');
-                }
-                if ($this->api->auth->model['is_developer']) {
-                    $m->addMenuItem('team','Developer');
-                }
-                if ($this->api->auth->model['is_client']) {
-                    $m->addMenuItem('client','Client');
-                }
-                if ($this->api->auth->model['is_admin']) {
-                    $m->addMenuItem('admin/users','Admin');
-                }
-
-                $m->addMenuItem('about','About Colubris');
-                $m->addMenuItem('account');
 
                 break;
         }
         
         if ($this->auth->isLoggedIn() && !$this->api->auth->model['is_client']) {
-            $m->addMenuItem('index','Main Menu');
+            //$m->addMenuItem('index','Main Menu');
         }
         if ($this->auth->isLoggedIn()){
             $m->addMenuItem('logout');
