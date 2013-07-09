@@ -132,7 +132,7 @@ class Frontend extends ApiFrontend {
         $p = explode('_', $this->page);
         switch ($p[0]) {
             case 'client':
-                $sm->addMenuItem('client','Welcome');
+                $sm->addMenuItem('client','Quotes');
                 $sm->addMenuItem('client/rfq','Request For Quotation');
                 //$m->addMenuItem('client/budgets','Budgets');
                 //$m->addMenuItem('client/status','Project Status');
