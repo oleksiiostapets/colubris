@@ -101,15 +101,14 @@ class Frontend extends ApiFrontend {
     }
     
     function initLayout(){
-
         $m = $this->add('Menu', 'Menu', 'Menu');
         $sm = $this->add('Menu', 'SubMenu', 'SubMenu');
 
         $m->addMenuItem('intro','Introduction');
-        
-//        if(!$this->auth->isLoggedIn()){
-//        	break;
-//        }
+
+        if(!$this->auth->isLoggedIn()){
+        	//break;
+        }
         
         if ($this->api->auth->model['is_manager'] || $this->api->auth->model['is_admin']) {
         	$m->addMenuItem('manager','Manager');
@@ -125,7 +124,9 @@ class Frontend extends ApiFrontend {
         }
         
         $m->addMenuItem('about','About Colubris');
-        $m->addMenuItem('account');
+        if($this->auth->isLoggedIn()){
+        	$m->addMenuItem('account');
+        }
         
         $p = explode('_', $this->page);
         switch ($p[0]) {
