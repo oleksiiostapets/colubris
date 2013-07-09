@@ -3,4 +3,11 @@
 }
 .atk-form fieldset .atk-form-row > .atk-form-field {
 	margin-left:12em;
+}
+.left {
+	float:left;
+}
+.right {
+    float:right;
+}
 
