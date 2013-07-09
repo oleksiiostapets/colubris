@@ -4,7 +4,7 @@ class page_client extends Page {
         parent::init();
 
         $t=$this->add('H1');
-        $t->set('Welcome Client');
+        $t->set('Quotes');
 
         $q=$this->add('Client_Quotes');
     }
