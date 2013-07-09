@@ -107,9 +107,9 @@ class Frontend extends ApiFrontend {
 
         $m->addMenuItem('intro','Introduction');
         
-        if(!$this->auth->isLoggedIn()){
-        	break;
-        }
+//        if(!$this->auth->isLoggedIn()){
+//        	break;
+//        }
         
         if ($this->api->auth->model['is_manager'] || $this->api->auth->model['is_admin']) {
         	$m->addMenuItem('manager','Manager');
