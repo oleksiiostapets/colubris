@@ -124,7 +124,7 @@ class Frontend extends ApiFrontend {
         	$m->addMenuItem('admin/users','Admin');
         }
         
-        $m->addMenuItem('about','About Colubris');
+        $m->addMenuItem('about','About');
         if($this->auth->isLoggedIn()){
         	$m->addMenuItem('account');
         }

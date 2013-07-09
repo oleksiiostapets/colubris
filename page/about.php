@@ -1,5 +1,5 @@
 <?php
-class page_intro extends Page {
+class page_about extends Page {
     function init(){
         parent::init();
 
@@ -12,5 +12,15 @@ class page_intro extends Page {
         $t->addTabURL('./changereq','Change Requests');
         $t->addTabURL('./tasks','Task Lists');
         $t->addTabURL('./qa','Quality Assurance');
+
+
+        $this->add('x_bread_crumb/View_BC',array(
+            'route'=>array(
+
+            )
+        ));
+    }
+    function defaultTemplate() {
+        return array('page/about');
     }
 }
