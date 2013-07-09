@@ -7,6 +7,16 @@ class Client_Quotes extends View {
         $this->api->stickyGET('id');
         $this->api->stickyGET($this->name);
 
+        $v=$this->add('View')->setClass('left');
+        
+        $v=$this->add('View')->setClass('right');
+        $b=$v->add('Button')->set('Request For Quotation');
+        $b->js('click', array(
+        		$this->js()->univ()->redirect($this->api->url('client/rfq'))
+        ));
+        
+        $v=$this->add('View')->setClass('clear');
+        
         $v=$this->add('View')->setClass('span6 left');
         
         $v->add('H4')->set('1. Quotes requested');
