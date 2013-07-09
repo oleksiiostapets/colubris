@@ -103,7 +103,7 @@ class Frontend extends ApiFrontend {
     function initLayout(){
 
         $m = $this->add('Mymenu', 'Menu', 'Menu');
-        $sm = $this->add('Menu', 'SubMenu', 'SubMenu');
+        $sm = $this->add('Mysubmenu', 'SubMenu', 'SubMenu');
 
         $m->addMenuItem('intro','Introduction');
         
