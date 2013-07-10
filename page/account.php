@@ -3,6 +3,20 @@ class page_account extends Page {
     function init(){
         parent::init();
 
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Settings',
+                    'url' => 'account',
+                ),
+            )
+        ));
+
+        $this->add('H1')->set('Settings');
+
         // Left side form
         $v=$this->add('View')->setClass('span6 left');
         $f=$v->add('Form');

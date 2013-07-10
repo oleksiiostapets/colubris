@@ -14,11 +14,18 @@ class page_about extends Page {
         $t->addTabURL('./qa','Quality Assurance');
 
 
-        $this->add('x_bread_crumb/View_BC',array(
-            'route'=>array(
 
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'About',
+                    'url' => 'about',
+                ),
             )
-        ));
+        ),'bread_crumb');
     }
     function defaultTemplate() {
         return array('page/about');
