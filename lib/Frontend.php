@@ -110,7 +110,7 @@ class Frontend extends ApiFrontend {
         }
         
         if ($this->api->auth->model['is_manager'] || $this->api->auth->model['is_admin']) {
-        	$m->addMenuItem('manager','Manager');
+        	$m->addMenuItem('manager/projects','Manager');
         }
         if ($this->api->auth->model['is_developer']) {
         	$m->addMenuItem('team','Developer');
@@ -149,9 +149,10 @@ class Frontend extends ApiFrontend {
                 break;
 
             case 'manager':
-                $sm->addMenuItem('manager','Home');
-                $sm->addMenuItem('manager/rfq','Request For Quotation');
-                $sm->addMenuItem('manager/projects','Projects'); // Admin can setup projects and users here
+                $sm->addMenuItem('manager/projects','Projects');
+                $sm->addMenuItem('manager/quotes','Quotes');
+                $sm->addMenuItem('manager/clients','Clients');
+                //$sm->addMenuItem('manager/projects','Projects'); // Admin can setup projects and users here
                 //$m->addMenuItem('manager/statistics','Statistics');
                 //$m->addMenuItem('manager/reports','Reports'); // review all reports in system - temporary
                 //$m->addMenuItem('manager/timesheets','Timesheets'); // review all reports in system - temporary
@@ -159,7 +160,6 @@ class Frontend extends ApiFrontend {
                 //$m->addMenuItem('manager/tasks','Tasks'); // review all tasks in system - temporary
                 //$m->addMenuItem('manager/req','Requirements'); // PM can define project requirements here and view tasks
                 //$m->addMenuItem('manager/budgets','Budgets'); // Admin can setup projects and users here
-                $sm->addMenuItem('manager/clients','Clients');
                 break;
             case 'admin':
                 $sm->addMenuItem('admin/users','Users');
