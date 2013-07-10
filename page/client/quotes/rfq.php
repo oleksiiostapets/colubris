@@ -3,6 +3,22 @@
 class page_client_quotes_rfq extends Page {
     function page_index(){
 
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Quotes',
+                    'url' => 'client/quotes',
+                ),
+                2 => array(
+                    'name' => 'Request for Quotation (create)',
+                    'url' => 'client/quotes/rfq',
+                ),
+            )
+        ));
+
         $this->add('H1')->set('New Request for Quotation');
 
         $form=$this->add('Form');
