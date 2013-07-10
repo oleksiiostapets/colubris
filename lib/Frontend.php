@@ -113,7 +113,7 @@ class Frontend extends ApiFrontend {
         	$m->addMenuItem('manager/projects','Manager');
         }
         if ($this->api->auth->model['is_developer']) {
-        	$m->addMenuItem('team','Developer');
+        	$m->addMenuItem('team/quotes','Developer');
         }
         if ($this->api->auth->model['is_client']) {
         	$m->addMenuItem('client/projects','Desktop');
@@ -141,7 +141,7 @@ class Frontend extends ApiFrontend {
                 break;
 
             case 'team':
-                $sm->addMenuItem('team','Welcome');
+                $sm->addMenuItem('team/quotes','Quotes');
                 //$m->addMenuItem('team/entry','Time Entry');
                 //$m->addMenuItem('team/timesheets','Development Priorities');
                 //$m->addMenuItem('team/timesheets','Timesheets');

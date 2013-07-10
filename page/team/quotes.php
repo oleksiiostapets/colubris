@@ -1,6 +1,6 @@
 <?php
 
-class page_team extends Page {
+class page_team_quotes extends Page {
 
     function initMainPage() {
     	

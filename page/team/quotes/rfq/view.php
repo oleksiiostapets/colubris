@@ -1,6 +1,6 @@
 <?php
 
-class page_team_rfq_view extends Page {
+class page_team_quotes_rfq_view extends Page {
     function page_index(){
 
     	$this->api->stickyGet('quote_id');

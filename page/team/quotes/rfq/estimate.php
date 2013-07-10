@@ -1,6 +1,6 @@
 <?php
 
-class page_team_rfq_estimate extends Page {
+class page_team_quotes_rfq_estimate extends Page {
     function page_index(){
 
     	$this->api->stickyGet('quote_id');
@@ -9,13 +9,13 @@ class page_team_rfq_estimate extends Page {
         if($_GET['action']=='estimated'){
         	$quote->set('status','estimated');
         	$quote->save();
-        	$this->api->redirect($this->api->url('/team'));
+        	$this->api->redirect($this->api->url('/team/quotes'));
         }
         
         if($_GET['action']=='not_estimated'){
         	$quote->set('status','not_estimated');
         	$quote->save();
-        	$this->api->redirect($this->api->url('/team'));
+        	$this->api->redirect($this->api->url('/team/quotes'));
         }
         
         $this->add('H4')->set('Quote:');
