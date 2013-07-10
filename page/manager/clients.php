@@ -2,6 +2,21 @@
 class page_manager_clients extends Page {
 
 	function page_index(){
+
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Clients',
+                    'url' => 'manager/clients',
+                ),
+            )
+        ));
+
+        $this->add('H2')->set('Clients');
+
         $crud=$this->add('CRUD');
         $crud->setModel('Client');
 
