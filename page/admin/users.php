@@ -6,6 +6,21 @@ class page_admin_users extends Page {
     }
     
     function page_index(){
+
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Users',
+                    'url' => 'admin/users',
+                ),
+            )
+        ));
+
+        $this->add('H1')->set('Users');
+
         $crud=$this->add('CRUD');
         
         $model = $this->add('Model_User')->setOrder('name');
