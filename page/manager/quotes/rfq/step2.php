@@ -4,6 +4,23 @@ class page_manager_quotes_rfq_step2 extends Page {
     function page_index(){
 
     	$this->api->stickyGet('quote_id');
+
+
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Quotes',
+                    'url' => 'manager/quotes',
+                ),
+                2 => array(
+                    'name' => 'Request for Quotation (requirements)',
+                    'url' => 'manager/quotes/rfq',
+                ),
+            )
+        ));
     	
         $this->add('H1')->set('Requirements for Quotation');
 
