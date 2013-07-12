@@ -9,7 +9,6 @@ class Client_Quotes extends View {
 
         $v=$this->add('View')->setClass('left');
         
-        $v=$this->add('View')->setClass('right');
         $b=$v->add('Button')->set('Request For Quotation');
         $b->js('click', array(
         		$this->js()->univ()->redirect($this->api->url('client/quotes/rfq'))
