@@ -47,7 +47,6 @@ class View_Switcher extends View {
 		$fq=$f->addField('dropdown','quote');
 		$fq->setValueList($qn_arr);
 		$fq->set($this->api->recall('quote_id'));
-		$fq->js('change',$fq->js()->colubris()->myredirect($fq->name,'quote_id',$this->api->url()));
 		
 		// Requirement
 		$mr=$this->add('Model_Requirement');
@@ -69,7 +68,6 @@ class View_Switcher extends View {
 		$fr=$f->addField('dropdown','requirement');
 		$fr->setValueList($rn_arr);
 		$fr->set($this->api->recall('requirement_id'));
-		$fr->js('change',$fr->js()->colubris()->myredirect($fr->name,'requirement_id',$this->api->url()));
 		
 		if (strpos($this->api->page,'new')===false){
 			// Status
@@ -82,7 +80,6 @@ class View_Switcher extends View {
 			$fs=$f->addField('dropdown','status');
 			$fs->setValueList($s_arr);
 			$fs->set($this->api->recall('status'));
-			$fs->js('change',$fs->js()->colubris()->myredirect($fs->name,'status',$this->api->url()));
 			
 			// Assigned_to
 			$ma=$this->add('Model_User')->setOrder('name');
@@ -97,7 +94,6 @@ class View_Switcher extends View {
 			$fa=$f->addField('dropdown','assigned_id','Assigned');
 			$fa->setValueList($u_arr);
 			$fa->set($this->api->recall('assigned_id'));
-			$fa->js('change',$fa->js()->colubris()->myredirect($fa->name,'assigned_id',$this->api->url()));
 			
 			$js_arr=array(
 					$this->api->url(),
