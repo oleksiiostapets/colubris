@@ -28,8 +28,6 @@ class page_manager_tasks extends Page {
         if($cr->grid){
         	$cr->grid->addColumn('expander','attaches');
         }
-        
-    	//$this->api->recall('project_id');
     }
     
     // "Expander" pages
