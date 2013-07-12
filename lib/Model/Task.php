@@ -5,45 +5,40 @@ class Model_Task extends Model_Table {
     function init(){
         parent::init();
 
-        $this->addField('name');
-        $this->addField('priority')->datatype('int');
+        $this->addField('name')->mandatory(true);
+        $this->addField('priority')->setValueList(
+            array(
+                'low'=>'low',
+                'normal'=>'normal',
+            	'high'=>'high',
+            )
+        )->defaultValue('normal');
 
+        $this->addField('status')->setValueList($this->api->task_statuses)->defaultValue('unstarted');
+        
         $this->addField('descr_original')->dataType('text');
 
         $this->addField('estimate')->dataType('money');
-        $this->addField('cur_progress')->dataType('int')->calculated(true);
+        $this->addField('spent_time')->dataType('int');
 
-        $this->addField('deviation')->dataType('text');
+        //$this->addField('deviation')->dataType('text');
 
-        $this->addField('budget_id')->refModel('Model_Budget');
+        $this->addField('project_id')->refModel('Model_Project')->mandatory(true);
         $this->addField('requirement_id')->refModel('Model_Requirement');
-
-
-        /*
-        $this->addRelatedEntity('bu2','budget','budget_id','left');
-        $this->addField('client_id')
-            ->readonly(true)
-            ->relEntity('bu2')
-            ->refModel('Model_Client')
-            ;
-            */
+        $this->addField('assigned_id')->refModel('Model_User_Developer');
+        
+        $this->addField('created_dts');
+        $this->addField('updated_dts');
+        
+        $this->addHook('beforeInsert', function($m,$q){
+        	$q->set('created_dts', $q->expr('now()'));
+        });
+        
+       	$this->addHook('beforeSave', function($m){
+       		$m['updated_dts']=date('Y-m-d G:i:s', time());
+       	});
+        
+       	$this->setOrder('updated_dts',true);
 
 	}
-    function enScope($dsql){
-        return;
-        if($sc=$this->api->recall('scope')){
-                if($sc['budget'])$dsql->where('budget_id',$sc['budget']);
-        }
-        $u=$this->api->getUser();
-        if($u->get('is_client')){
-            $this->addCondition('client_id',$u->get('id'));
-        }
-    }
-    function calculate_cur_progress(){
-            return $this->api->db->dsql()
-                    ->table('timesheet')
-                    ->where('task_id=tsk.id')
-                    ->field('sum(minutes)')
-                    ->select();
-    }
 }

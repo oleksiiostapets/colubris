@@ -1,0 +1,1 @@
+ALTER TABLE `task` CHANGE COLUMN `priority` `priority` VARCHAR(32) NULL DEFAULT NULL  ;

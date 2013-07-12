@@ -11,4 +11,14 @@
     float:right;
 }
 
+.horizontal .atk-form-row {
+	float:left;
+	margin:0 0 0 20px !important;
+}
+.horizontal .atk-form-row > label {
+    width:auto !important;
+}
+.horizontal .atk-form-row > .atk-form-field {
+    margin-left:auto !important;
+}
 

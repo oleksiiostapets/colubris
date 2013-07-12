@@ -1,0 +1,29 @@
+<?php
+
+class page_client_tasks extends Page {
+
+    function initMainPage() {
+    	$s=$this->add('View_Switcher');
+    	
+        $b=$this->add('Button')->set('New Task');
+        $b->js('click', array(
+        		$this->js()->univ()->redirect($this->api->url('client/tasks/new'))
+        ));
+        
+        $cr=$this->add('CRUD',array('allow_add'=>false,'allow_edit'=>true,'allow_del'=>true));
+        $m=$this->add('Model_Task');
+        if ($this->api->recall('project_id')>0) $m->addCondition('project_id',$this->api->recall('project_id'));
+        if ($this->api->recall('quote_id')>0) {
+        	$mq=$this->add('Model_Quote')->load($this->api->recall('quote_id'));
+        	$m->addCondition('requirement_id','IN', explode(',',$mq->getRequirements_id()));
+        }
+        if ($this->api->recall('requirement_id')>0) $m->addCondition('requirement_id',$this->api->recall('requirement_id'));
+        if ($this->api->recall('status')!='all') $m->addCondition('status',$this->api->recall('status'));
+        if ($this->api->recall('assigned_id')>0) $m->addCondition('assigned_id',$this->api->recall('assigned_id'));
+        $cr->setModel($m,
+        		array('name','descr_original','priority','status','assigned_id'),
+        		array('name','descr_original','priority','status','estimate','spent_time','assigned')
+        		);
+        
+    }
+}

@@ -19,6 +19,7 @@ class Model_Quote extends Model_Table {
                 'estimate_needed'=>'estimate_needed',
             	'not_estimated'=>'not_estimated',
             	'estimated'=>'estimated',
+            	'estimation_approved'=>'estimation_approved',
             	'finished'=>'finished',
             )
         )->mandatory('Cannot be empty');
@@ -39,5 +40,30 @@ class Model_Quote extends Model_Table {
                 ->where('requirement.quote_id',$q->getField('id'))
                 ;
         });
+        
+        $this->addExpression('spent_time')->set(function($m,$q){
+            return $q->dsql()
+                ->table('task')
+                ->table('requirement')
+                ->field('sum(task.spent_time)')
+                ->where('requirement.id=task.requirement_id')
+                ->where('requirement.quote_id',$q->getField('id'))
+                ;
+        });
+        
     }
+    
+    function getRequirements(){
+    	$rm=$this->add('Model_Requirement')->addCondition('quote_id',$this->get('id'));
+    	return($rm->getRows());
+    }
+    function getRequirements_id(){
+    	$rids='';
+    	foreach($this->getRequirements() as $reqs){
+    		if ($rids=='') $rids=$reqs['id']; else $rids.=','.$reqs['id'];
+    	}
+    	
+    	return($rids);
+    }
+    
 }

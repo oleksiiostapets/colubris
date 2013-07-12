@@ -24,6 +24,8 @@ class Model_Project extends Model_Table {
                 if($sc['client'])$this->addCondition('client_id',$sc['client']);
             }
         }
+        
+        $this->setOrder('name');
     }
     
     function calculate_budgets(){

@@ -62,7 +62,6 @@ class Frontend extends ApiFrontend {
                 'account',
                 'about',
                 'home',
-            	'manager',
                 ));
 
             // Access for managers
@@ -88,6 +87,13 @@ class Frontend extends ApiFrontend {
                 $this->api->redirect('denied');
             }
         }
+        $this->task_statuses=array(
+                'unstarted'=>'unstarted',
+                'started'=>'started',
+            	'finished'=>'finished',
+            	'rejected'=>'rejected',
+            	'accepted'=>'accepted',
+            );
     }
     
     function addAllowedPages($allowed_pages){
@@ -110,13 +116,13 @@ class Frontend extends ApiFrontend {
         }
         
         if ($this->api->auth->model['is_manager'] || $this->api->auth->model['is_admin']) {
-        	$m->addMenuItem('manager/projects','Manager');
+        	$m->addMenuItem('manager/tasks','Manager');
         }
         if ($this->api->auth->model['is_developer']) {
-        	$m->addMenuItem('team/quotes','Developer');
+        	$m->addMenuItem('team/tasks','Developer');
         }
         if ($this->api->auth->model['is_client']) {
-        	$m->addMenuItem('client/projects','Desktop');
+        	$m->addMenuItem('client/tasks','Client');
         }
         if ($this->api->auth->model['is_admin']) {
         	$m->addMenuItem('admin/users','Admin');
@@ -130,7 +136,8 @@ class Frontend extends ApiFrontend {
         $p = explode('_', $this->page);
         switch ($p[0]) {
             case 'client':
-                $sm->addMenuItem('client/projects','Projects');
+                $sm->addMenuItem('client/tasks','Tasks');
+            	$sm->addMenuItem('client/projects','Projects');
                 $sm->addMenuItem('client/quotes','Quotes');
                 //$sm->addMenuItem('client/quotes/rfq','Request For Quotation');
                 //$m->addMenuItem('client/budgets','Budgets');
@@ -141,7 +148,8 @@ class Frontend extends ApiFrontend {
                 break;
 
             case 'team':
-                $sm->addMenuItem('team/quotes','Quotes');
+                $sm->addMenuItem('team/tasks','Tasks');
+            	$sm->addMenuItem('team/quotes','Quotes');
                 //$m->addMenuItem('team/entry','Time Entry');
                 //$m->addMenuItem('team/timesheets','Development Priorities');
                 //$m->addMenuItem('team/timesheets','Timesheets');
@@ -149,7 +157,8 @@ class Frontend extends ApiFrontend {
                 break;
 
             case 'manager':
-                $sm->addMenuItem('manager/projects','Projects');
+                $sm->addMenuItem('manager/tasks','Tasks');
+            	$sm->addMenuItem('manager/projects','Projects');
                 $sm->addMenuItem('manager/quotes','Quotes');
                 $sm->addMenuItem('manager/clients','Clients');
                 //$sm->addMenuItem('manager/projects','Projects'); // Admin can setup projects and users here
