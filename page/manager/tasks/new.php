@@ -20,7 +20,7 @@ class page_manager_tasks_new extends Page {
         	}
         	$f->getModel()->set('assigned_id',$this->api->auth->model['id']);
         	$f->update();
-            $this->js()->univ()->redirect('/team/tasks')->execute();
+            $this->js()->univ()->redirect('/manager/tasks')->execute();
         }
     }
 }
