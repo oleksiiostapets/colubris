@@ -10,19 +10,22 @@ class View_Switcher extends View {
         $f->addClass('horizontal');
         // Project
         $mp=$this->add('Model_Project_Participant');
-
+        $projects=$mp->getRows();
         if($_GET['project_id']){
         	$this->api->memorize('project_id',$_GET['project_id']);
         	$this->api->memorize('quote_id',0);
         	$this->api->memorize('requirement_id',0);
         }elseif(!$this->api->recall('project_id')){
-        	if($mp->count()>0){
-        		$projects=$mp->getRows();
+        	if(count($projects)>0){
         		$this->api->memorize('project_id',$projects[0]['id']);
         	}
         }
+        $p_arr=array();
+        foreach ($projects as $p){
+        	$p_arr[$p['id']]=$p['name'];
+        }
         $fp=$f->addField('dropdown','project');
-        $fp->setModel($mp);
+        $fp->setValueList($p_arr);
         $fp->set($this->api->recall('project_id'));
 
         // Quote
