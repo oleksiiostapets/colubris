@@ -33,10 +33,13 @@ class Grid_Quotes extends Grid_Advanced {
     			break;
     	}
     }
+    function format_durdead($field){
+    	echo $this->current_row['duration'];
+    }
     function formatRow() {
     	parent::formatRow();
     	
-    	$this->current_row_html['edit']=($this->current_row['status']=='quotation_requested')?$this->current_row_html['edit']:'';
+    	$this->current_row_html['requirements']=($this->current_row['status']=='quotation_requested')?$this->current_row_html['requirements']:'';
     	$this->current_row_html['approve']=($this->current_row['status']=='estimated')?$this->current_row_html['approve']:'';
     	$this->current_row_html['estimation']=($this->current_row['status']=='quotation_requested')?$this->current_row_html['estimation']:'';
     	$this->current_row_html['send_to_client']=($this->current_row['status']=='estimated')?$this->current_row_html['send_to_client']:'';

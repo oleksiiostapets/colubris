@@ -20,26 +20,33 @@ class Manager_Quotes extends View {
         
         $this->add('P');
         
-        $cr=$this->add('Grid_Quotes');
+        $cr=$this->add('CRUD', array('grid_class'=>'Grid_Quotes','allow_add'=>false));
         $m=$this->add('Model_Quote');
-        $cr->setModel($m,array('project','user','name','estimated','spent_time','status'));
-        $cr->addFormatter('status','status');
+        $cr->setModel($m,
+        		array('project_id','name','general','duration','deadline','status'),
+        		array('project','user','name','estimated','spent_time','durdead','status')
+        		);
+        if($cr->grid){
+        	$cr->grid->addFormatter('status','status');
+        	$cr->grid->addColumn('button','requirements');
+        	$cr->grid->addColumn('button','details');
+        	$cr->grid->addColumn('button','estimation','Request for estimate');
+        	$cr->grid->addColumn('button','send_to_client','Send Quote to the client');
+        	$cr->grid->addColumn('button','approve','Approve Estimation');
+        }
         
-        $cr->addColumn('button','edit');
-        if($_GET['edit']){
+        if($_GET['requirements']){
         	$this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/step2',
-        			array('quote_id'=>$_GET['edit'])))
+        			array('quote_id'=>$_GET['requirements'])))
         			->execute();
         }
         
-        $cr->addColumn('button','details');
         if($_GET['details']){
         	$this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/view',
         			array('quote_id'=>$_GET['details'])))
         			->execute();
         }
         
-        $cr->addColumn('button','estimation','Request for estimate');
         if($_GET['estimation']){
         	$quote=$this->add('Model_Quote')->load($_GET['estimation']);
         	$quote->set('status','estimate_needed');
@@ -47,7 +54,6 @@ class Manager_Quotes extends View {
         	$this->api->redirect($this->api->url('/manager/quotes'));
         }
         
-        $cr->addColumn('button','send_to_client','Send Quote to the client');
         if($_GET['send_to_client']){
         	$this->from=$this->api->getConfig('tmail/from','test@test.com');
         	
@@ -69,7 +75,6 @@ class Manager_Quotes extends View {
         	}
         }
         
-        $cr->addColumn('button','approve','Approve Estimation');
         if($_GET['approve']){
         	$quote=$this->add('Model_Quote')->load($_GET['approve']);
         	$quote->set('status','estimation_approved');

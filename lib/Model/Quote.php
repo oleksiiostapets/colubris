@@ -12,6 +12,14 @@ class Model_Quote extends Model_Table {
         $this->addField('amount')->type('money')->mandatory(true);
         $this->addField('issued')->type('date');
 
+        $this->addField('duration')->type('int');
+        $this->addField('deadline')->type('date')->caption('Duration/Deadline');
+        
+        $this->addExpression('durdead')->caption('Duration(days)/Deadline')->set(function($m,$q){
+            return $q->dsql()
+                    ->expr('if(deadline is null,duration,deadline)');
+        });
+        
         $this->addField('html')->type('text')->allowHtml(true);
 
         $this->addField('status')->setValueList(

@@ -22,7 +22,7 @@ class Client_Quotes extends View {
         $cr=$this->add('Grid_Quotes');
         $m=$this->add('Model_Quote');
         $m->addCondition('client_id',$this->api->auth->model['client_id']);
-        $cr->setModel($m,array('project','user','name','estimated','spent_time','status'));
+        $cr->setModel($m,array('project','user','name','estimated','spent_time','durdead','status'));
         $cr->addFormatter('status','status');
        	$cr->addColumn('button','edit');
         if($_GET['edit']){
