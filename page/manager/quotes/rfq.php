@@ -42,9 +42,9 @@ class page_manager_quotes_rfq extends Page {
         $add_button->js('click', $this->js()->univ()->redirect($this->api->url('manager/project/add',array('return'=>'manager/quotes/rfq'))));
         
         $form->add('Order')->move($add_button,'before','name')->now();
-        
+
         $form->addSubmit('To the Next Step');
-        
+
         if($form->isSubmitted()){
         	$js=array();
         	$form->model->set('user_id',$this->api->auth->model['id']);
