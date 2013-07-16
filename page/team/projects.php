@@ -1,5 +1,5 @@
 <?
-class page_manager_projects extends Page {
+class page_team_projects extends Page {
     function page_index(){
 
         $this->add('x_bread_crumb/View_BC',array(
@@ -9,26 +9,19 @@ class page_manager_projects extends Page {
                 ),
                 1 => array(
                     'name' => 'Projects',
-                    'url' => 'manager/projects',
+                    'url' => 'team/projects',
                 ),
             )
         ));
 
         $this->add('H2')->set('Projects');
 
-        $cr=$this->add('CRUD');
-        $cr->setModel('Project',array('name','descr','client','demo_url','prod_url'));
+        $cr=$this->add('CRUD',array('allow_del'=>false,'allow_edit'=>false,'allow_add'=>false));
+        $cr->setModel('Project_Participant',array('name','descr','client','demo_url','prod_url'));
         if($cr->grid){
-			$cr->grid->addColumn('expander','participants');
 			$cr->grid->addColumn('expander','tasks');
         }
 
-    }
-    function page_participants(){
-        $this->api->stickyGET('project_id');
-        $this->add('CRUD')->setModel($this->add('Model_Participant')
-                ->addCondition('project_id',$_GET['project_id'])
-                );
     }
     function page_tasks(){
         $this->api->stickyGET('project_id');

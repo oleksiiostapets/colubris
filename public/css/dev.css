@@ -22,3 +22,9 @@
     margin-left:auto !important;
 }
 
+.quotation_requested{font-weight:bold;background-color:#33ccff;}
+.estimate_needed{font-weight:bold;background-color:#ff3399;}
+.not_estimated{font-weight:bold;background-color:#cc0000;}
+.estimated{font-weight:bold;background-color:#66ff99;}
+.estimation_approved{font-weight:bold;background-color:#66cc00;}
+.finished{font-weight:bold;background-color:#ffffff;}

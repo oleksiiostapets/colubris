@@ -22,9 +22,28 @@ class page_manager_quotes_rfq_step2 extends Page {
             )
         ));
     	
-        $this->add('H1')->set('Requirements for Quotation');
-
         $quote=$this->add('Model_Quote')->load($_GET['quote_id']);
+        
+        $requirements=$this->add('Model_Requirement');
+        $requirements->addCondition('quote_id',$_GET['quote_id']);
+        
+        $this->add('P');
+        
+        $v=$this->add('View')->setClass('left');
+        $v->add('H1')->set('Requirements for Quotation');
+        
+        if (  (count($requirements->getRows())>0) && ( ($quote['status']=='quotation_requested') || ($quote['status']=='not_estimated') )  ){
+        	$v=$this->add('View')->setClass('right');
+        	
+	        $estimation=$v->add('Button')->set('Request for estimate','estimation');
+	        $estimation->js('click', array(
+	            $this->js()->univ()->redirect($this->api->url(null,array('quote_id'=>$_GET['quote_id'],'action'=>'estimation')))
+	        ));
+        
+        }
+        
+        $v=$this->add('View')->setClass('clear');
+        
         if($_GET['action']=='estimation'){
         	$quote->set('status','estimate_needed');
         	$quote->save();
@@ -34,10 +53,9 @@ class page_manager_quotes_rfq_step2 extends Page {
         $this->add('P')->set('Project - '.$quote->get('project'));
         $this->add('P')->set('User - '.$quote->get('user'));
         $this->add('P')->set('Name - '.$quote->get('name'));
+        $this->add('P')->set('General requirement - '.$quote->get('general'));
         
         $this->add('H4')->set('Requirements:');
-        $requirements=$this->add('Model_Requirement');
-        $requirements->addCondition('quote_id',$_GET['quote_id']);
         
         $cr = $this->add('CRUD',array('allow_add'=>false));
         $cr->setModel($requirements,
@@ -63,11 +81,6 @@ class page_manager_quotes_rfq_step2 extends Page {
         	$form->update();
         	$this->api->redirect(null);
         }
-        
-        $estimation=$form->addButton('Request for estimate','estimation');
-        $estimation->js('click', array(
-            $this->js()->univ()->redirect($this->api->url(null,array('quote_id'=>$_GET['quote_id'],'action'=>'estimation')))
-        ));
         
     }
 

@@ -33,7 +33,7 @@ class page_manager_quotes_rfq extends Page {
         $project->setModel('Project');
 */
         $m=$this->setModel('Model_Quote');
-        $form->setModel($m,array('project_id','name'));
+        $form->setModel($m,array('project_id','name','general'));
         $form->getElement('project')->set($_GET['project']);
         $form->getElement('project_id')->set($_GET['project_id']);
         $form->getElement('project')->caption='Project\'s name';

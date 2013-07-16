@@ -7,6 +7,7 @@ class Manager_Quotes extends View {
         $this->api->stickyGET('id');
         $this->api->stickyGET($this->name);
 
+        
 
         $v=$this->add('View')->setClass('left');
         
@@ -17,19 +18,28 @@ class Manager_Quotes extends View {
         
         $v=$this->add('View')->setClass('clear');
         
-        $v=$this->add('View')->setClass('span6 left');
+        $this->add('P');
         
-        $v->add('H4')->set('Quotes requested from clients or managers');
-        $this->quotes=$grid=$v->add('Grid');
-        $m=$grid->setModel('Quote',array('project','user','name'));
-        $m->addCondition('status','quotation_requested');
-        $grid->addColumn('button','edit');
-        $grid->addColumn('button','estimation','Request for estimate');
+        $cr=$this->add('Grid_Quotes');
+        $m=$this->add('Model_Quote');
+        $cr->setModel($m,array('project','user','name','estimated','spent_time','status'));
+        $cr->addFormatter('status','status');
+        
+        $cr->addColumn('button','edit');
         if($_GET['edit']){
-            $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/step2',
-                        array('quote_id'=>$_GET['edit'])))
-                ->execute();
+        	$this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/step2',
+        			array('quote_id'=>$_GET['edit'])))
+        			->execute();
         }
+        
+        $cr->addColumn('button','details');
+        if($_GET['details']){
+        	$this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/view',
+        			array('quote_id'=>$_GET['details'])))
+        			->execute();
+        }
+        
+        $cr->addColumn('button','estimation','Request for estimate');
         if($_GET['estimation']){
         	$quote=$this->add('Model_Quote')->load($_GET['estimation']);
         	$quote->set('status','estimate_needed');
@@ -37,53 +47,7 @@ class Manager_Quotes extends View {
         	$this->api->redirect($this->api->url('/manager/quotes'));
         }
         
-        $v->add('H4')->set('Quotes with approved estimation');
-        $this->quotes=$grid=$v->add('Grid');
-        $m=$grid->setModel('Quote',array('project','user','name','estimated','spent_time'));
-        $m->addCondition('status','estimation_approved');
-      	$grid->addColumn('button','details');
-        if($_GET['details']){
-        	$this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/view',
-        			array('quote_id'=>$_GET['details'])))
-        			->execute();
-        }
-        
-        $v->add('H4')->set('Quotes not estimated (developer returned)');
-        $this->quotes=$grid=$v->add('Grid');
-        $m=$grid->setModel('Quote',array('project','user','name'));
-        $m->addCondition('status','not_estimated');
-        $grid->addColumn('button','edit');
-        if($_GET['edit']){
-            $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/step2',
-                        array('quote_id'=>$_GET['edit'])))
-                ->execute();
-        }
-        
-        
-        $v=$this->add('View')->setClass('span6 right');
-        
-        $v->add('H4')->set('Quotes estimate requested (sent to developers for estimation)');
-        $this->quotes=$grid=$v->add('Grid');
-        $m=$grid->setModel('Quote',array('project','user','name'));
-        $m->addCondition('status','estimate_needed');
-        $grid->addColumn('button','edit');
-        if($_GET['edit']){
-            $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/step2',
-                        array('quote_id'=>$_GET['edit'])))
-                ->execute();
-        }
-        
-        $v->add('H4')->set('Quotes estimated (developer returned)');
-        $this->quotes=$grid=$v->add('Grid');
-        $m=$grid->setModel('Quote',array('project','user','name','estimated'));
-        $m->addCondition('status','estimated');
-        $grid->addColumn('button','edit');
-        if($_GET['edit']){
-            $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/step2',
-                        array('quote_id'=>$_GET['edit'])))
-                ->execute();
-        }
-        $grid->addColumn('button','send_to_client','Send Quote to the client');
+        $cr->addColumn('button','send_to_client','Send Quote to the client');
         if($_GET['send_to_client']){
         	$this->from=$this->api->getConfig('tmail/from','test@test.com');
         	
@@ -104,7 +68,8 @@ class Manager_Quotes extends View {
         		$this->js()->univ()->successMessage('The project of this quote has no client!')->execute();
         	}
         }
-        $grid->addColumn('button','approve','Approve Estimation');
+        
+        $cr->addColumn('button','approve','Approve Estimation');
         if($_GET['approve']){
         	$quote=$this->add('Model_Quote')->load($_GET['approve']);
         	$quote->set('status','estimation_approved');
@@ -112,32 +77,7 @@ class Manager_Quotes extends View {
         	$this->api->redirect($this->api->url('/manager/quotes'));
         }
         
-        //if($_GET[$this->name]=='supplyquote')return $this->supplyQuote();
-/*
-        $this->add('H4')->set('5. Acceptance. Check on client');
-        $this->acceptance=$grid=$this->add('Grid');
-        $grid->setModel('Budget_Completed',array('name','priority','state','bugs','tasks'));
-        */
-    }
-    function supplyQuote(){
-
-        $v=$this->add('View','supplyquote');
-        $_GET['cut_object']=$v->name;
-
-        $m=$this->add('Model_Budget')->load($_GET['id']);
-
-        $form=$v->add('Form');
-        $form->setModel($m,array('amount','state'));
-        $form->getElement('amount')->js('change',
-                $form->getElement('state')->js()->val('quotereview')
-                );
-        $form->getElement('amount')->js(true)->univ()->autoChange(0);
-
-        if($form->isSubmitted()){
-            $form->update();
-
-            $form->js()->univ()->location($this->api->getDestinationURL(null,array(
-                            $this->name=>null,'id'=>null)))->execute();
-        }
+        $this->add('P');
+        
     }
 }

@@ -24,7 +24,7 @@ class page_client_quotes_rfq extends Page {
         $form=$this->add('Form');
 
         $m=$this->setModel('Model_Quote');
-        $form->setModel($m,array('project_id','name'));
+        $form->setModel($m,array('project_id','name','general'));
         $form->getElement('project')->caption='Project\'s name';
         $form->getElement('name')->caption='Quotation\'s name';
         //$form->getElement('project')->set($_GET['project']);

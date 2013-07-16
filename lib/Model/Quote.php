@@ -8,6 +8,7 @@ class Model_Quote extends Model_Table {
                 //->display(array('form'=>'autocomplete/basic'));
         $this->hasOne('User');
         $this->addField('name')->mandatory('required');
+        $this->addField('general')->type('text')->allowHtml(true);
         $this->addField('amount')->type('money')->mandatory(true);
         $this->addField('issued')->type('date');
 
@@ -22,7 +23,7 @@ class Model_Quote extends Model_Table {
             	'estimation_approved'=>'estimation_approved',
             	'finished'=>'finished',
             )
-        )->mandatory('Cannot be empty');
+        )->mandatory('Cannot be empty')->sortable(true);
         //$this->addField('attachment_id')->setModel('Model_Filestore_File');
         
         $this->addExpression('client_id')->set(function($m,$q){

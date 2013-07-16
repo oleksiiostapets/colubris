@@ -19,6 +19,7 @@ class page_client_quotes_rfq_view extends Page {
         $this->add('P')->set('Project - '.$quote->get('project'));
         $this->add('P')->set('User - '.$quote->get('user'));
         $this->add('P')->set('Name - '.$quote->get('name'));
+        $this->add('P')->set('General requirement - '.$quote->get('general'));
         $this->add('P')->set('Estimated - '.$quote->get('estimated'));
         
         $this->add('H4')->set('Requirements:');

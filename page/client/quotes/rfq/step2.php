@@ -22,7 +22,10 @@ class page_client_quotes_rfq_step2 extends Page {
             )
         ));
     	
-        $this->add('H1')->set('Requirements for Quotation');
+        $this->add('P');
+        
+        $v=$this->add('View')->setClass('left');
+        $v->add('H1')->set('Requirements for Quotation');
 
         $quote=$this->add('Model_Quote')->load($_GET['quote_id']);
         
@@ -32,10 +35,16 @@ class page_client_quotes_rfq_step2 extends Page {
         	$this->api->redirect('/denied');
         }
 
-        $this->add('H4')->set('Quote:');
-        $this->add('P')->set('Project - '.$quote->get('project'));
-        $this->add('P')->set('User - '.$quote->get('user'));
-        $this->add('P')->set('Name - '.$quote->get('name'));
+        $v->add('H4')->set('Quote:');
+        $v->add('P')->set('Project - '.$quote->get('project'));
+        $v->add('P')->set('User - '.$quote->get('user'));
+        $v->add('P')->set('Name - '.$quote->get('name'));
+        $v->add('P')->set('General requirement - '.$quote->get('general'));
+        
+        $v=$this->add('View')->setClass('right');
+        $v->add('P')->set('Requirements, which will be added in the future increase estimation.');
+        
+        $v=$this->add('View')->setClass('clear');
         
         $this->add('H4')->set('Requirements:');
         $requirements=$this->add('Model_Requirement');
