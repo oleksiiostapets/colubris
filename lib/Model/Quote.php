@@ -3,7 +3,7 @@ class Model_Quote extends Model_Table {
     public $table="quote";
     function init(){
         parent::init();
-        $this->hasOne('Project')->display(array('form'=>'autocomplete/Basic'));
+        $this->hasOne('Project')->display(array('form'=>'Form_Field_AutoEmpty'));
         //$this->addField('project_id')->refModel('Model_Project');
                 //->display(array('form'=>'autocomplete/basic'));
         $this->hasOne('User');
@@ -75,4 +75,16 @@ class Model_Quote extends Model_Table {
     	return($rids);
     }
     
+}
+
+class Form_Field_AutoEmpty extends autocomplete\Form_Field_Basic {
+    public $min_length = -1;
+    public $hint = 'Ckick to see list of projects. Search results will be limited to %s records.';
+	function init(){
+		parent::init();
+        $this->other_field->js('focus',array(
+                $this->other_field->js()->autocomplete( "search", "" ),
+            )
+        );
+	}
 }
