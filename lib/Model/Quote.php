@@ -79,7 +79,7 @@ class Model_Quote extends Model_Table {
 
 class Form_Field_AutoEmpty extends autocomplete\Form_Field_Basic {
     public $min_length = -1;
-    public $hint = 'Ckick to see list of projects. Search results will be limited to %s records.';
+    public $hint = 'Ckick to see list of projects. Search results will be limited to 20 records.';
 	function init(){
 		parent::init();
         $this->other_field->js('focus',array(
