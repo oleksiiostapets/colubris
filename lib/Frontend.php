@@ -210,5 +210,23 @@ class Frontend extends ApiFrontend {
     function getVersion() {
         return '0.2.1';
     }
+    function makeUrls($text) {
+        //replace all urls with our own spec_mark
+        $text_arr = explode(' ',$text);
+        $new_text_arr = array();
+        foreach($text_arr as $k=>$text_part) {
+            $new_text_arr[$k] = preg_match(
+                    '/(\n|\r|>|^|\s|\(|\))((ht|f)tp(?:s?):\/\/){1}(\S+)/',
+                $text_part
+            );
+            if ($new_text_arr[$k]==1) {
+                $new_text_arr[$k] = '<a href="'.$text_part.'" target="_blank">'.$text_part.'</a>';
+            } else {
+                $new_text_arr[$k] = $text_part;
+            }
+        }
+        $text = implode(' ',$new_text_arr);
+        return $text;
+    }
 
 }
