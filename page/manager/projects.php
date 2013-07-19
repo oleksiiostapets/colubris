@@ -17,7 +17,10 @@ class page_manager_projects extends Page {
         $this->add('H2')->set('Projects');
 
         $cr=$this->add('CRUD');
-        $cr->setModel('Project',array('name','descr','client','demo_url','prod_url'));
+        $cr->setModel('Project',
+        		array('name','descr','client_id','demo_url','prod_url'),
+        		array('name','descr','client','demo_url','prod_url')
+        		);
         if($cr->grid){
 			$cr->grid->addColumn('expander','participants');
 			$cr->grid->addColumn('expander','tasks');
