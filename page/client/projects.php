@@ -1,14 +1,7 @@
-<?php
-/**
- * Created by JetBrains PhpStorm.
- * User: vadym
- * Date: 7/9/13
- * Time: 5:35 PM
- * To change this template use File | Settings | File Templates.
- */
+<?
 class page_client_projects extends Page {
-    function init(){
-   		parent::init();
+    function page_index(){
+
         $this->add('x_bread_crumb/View_BC',array(
             'routes' => array(
                 0 => array(
@@ -19,9 +12,28 @@ class page_client_projects extends Page {
                     'url' => 'client/projects',
                 ),
             )
-        ),'bread_crumb');
+        ));
+
+        $this->add('H2')->set('Projects');
+
+        $cr=$this->add('CRUD',array('allow_del'=>false,'allow_edit'=>false,'allow_add'=>false));
+        $cr->setModel('Project',array('name','descr','client','demo_url','prod_url'));
+        if($cr->grid){
+			$cr->grid->addColumn('expander','tasks');
+        }
+
     }
-    function defaultTemplate(){
-        return array('page/client/projects');
+    function page_tasks(){
+        $this->api->stickyGET('project_id');
+        $cr=$this->add('CRUD',array('grid_class'=>'Grid_Tasks'));
+        $m=$this->add('Model_Task')
+                ->addCondition('project_id',$_GET['project_id']);
+        $cr->setModel($m,
+        		array('name','descr_original','priority','status','estimate','spent_time','assigned_id'),
+        		array('name','descr_original','priority','status','estimate','spent_time','assigned')
+        		);
+        if($cr->grid){
+        	$cr->grid->addFormatter('status','status');
+        }
     }
 }

@@ -63,13 +63,17 @@ class Manager_Quotes extends View {
         		$client=$this->add('Model_Client')->load($quote['client_id']);
         		$to=$client['email'];
         		
-	        	$mail = $this->add('TMail');
-	        	$mail->loadTemplate('send_quote');
-	            $mail->setTag('from',$this->from);
-	            $mail->setTag('link',$this->api->url('/client/quotes/rfq/estimated',array('quote_id'=>$_GET['send_to_client'])));
-	            $mail->send($to);
-
-	            $this->js()->univ()->successMessage('Sent')->execute();
+        		if ($to!=''){
+		        	$mail = $this->add('TMail');
+		        	$mail->loadTemplate('send_quote');
+		            $mail->setTag('from',$this->from);
+		            $mail->setTag('link',$this->api->url('/client/quotes/rfq/estimated',array('quote_id'=>$_GET['send_to_client'])));
+		            $mail->send($to);
+	
+		            $this->js()->univ()->successMessage('Mail sent to '.$to)->execute();
+        		}else{
+        			$this->js()->univ()->successMessage('Error! The client '.$client->get('name').' has no email. Please add email for the client.')->execute();
+        		}
         	}else{
         		$this->js()->univ()->successMessage('The project of this quote has no client!')->execute();
         	}

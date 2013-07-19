@@ -53,9 +53,10 @@ class page_client_quotes_rfq_step2 extends Page {
         $cr = $this->add('CRUD',array('allow_add'=>false));
         $cr->setModel($requirements,
         		array('name','descr','file_id'),
-        		array('name','descr','estimate','spent_time','file','user')
+        		array('name','estimate','spent_time','file','user')
         		);
         if($cr->grid){
+        	$cr->grid->addColumn('expander','details');
         	$cr->grid->addColumn('expander','comments');
         	$cr->grid->addFormatter('file','download');
         }        
@@ -76,6 +77,12 @@ class page_client_quotes_rfq_step2 extends Page {
         
     }
 
+    function page_details(){
+    	$this->api->stickyGET('requirement_id');
+    	$req=$this->add('Model_Requirement')->load($_GET['requirement_id']);
+    	
+    	$this->add('View')->setHtml('<strong>Description:</strong> '.$req->get('descr'));
+    }
     function page_comments(){
     	$this->api->stickyGET('requirement_id');
     	$cr=$this->add('CRUD',array('allow_del'=>false,'allow_edit'=>false));

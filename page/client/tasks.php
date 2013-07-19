@@ -10,7 +10,7 @@ class page_client_tasks extends Page {
         		$this->js()->univ()->redirect($this->api->url('client/tasks/new'))
         ));
         
-        $cr=$this->add('CRUD',array('allow_add'=>false,'allow_edit'=>true,'allow_del'=>true));
+        $cr=$this->add('CRUD',array('grid_class'=>'Grid_Tasks','allow_add'=>false,'allow_edit'=>true,'allow_del'=>true));
         $m=$this->add('Model_Task');
         if ($this->api->recall('project_id')>0) $m->addCondition('project_id',$this->api->recall('project_id'));
         if ($this->api->recall('quote_id')>0) {
@@ -26,6 +26,7 @@ class page_client_tasks extends Page {
         		);
         if($cr->grid){
         	$cr->grid->addColumn('expander','attaches');
+        	$cr->grid->addFormatter('status','status');
         }
     }
         
