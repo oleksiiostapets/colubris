@@ -55,12 +55,18 @@ class page_manager_quotes_rfq_step2 extends Page {
         $this->add('P')->set('Name - '.$quote->get('name'));
         $this->add('P')->set('General requirement - '.$quote->get('general'));
         
-        $this->add('H4')->set('Requirements:');
+        $v=$this->add('View')->setClass('left');
+        $v->add('H4')->set('Requirements:');
+        
+        $v=$this->add('View')->setClass('right');
+        $v->add('View')->setClass('red_color')->set('Estimated: '.$quote->get('estimated').'hours');
+        
+        $v=$this->add('View')->setClass('clear');
         
         $cr = $this->add('CRUD',array('allow_add'=>false));
         $cr->setModel($requirements,
         		array('name','descr','estimate','file_id'),
-        		array('name','descr','estimate','spent_time','file','user')
+        		array('name','estimate','spent_time','file','user')
         		);
         
         if($cr->grid){

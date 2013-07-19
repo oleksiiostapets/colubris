@@ -21,7 +21,7 @@ class page_team_quotes_rfq_view extends Page {
         $cr = $this->add('CRUD',array('allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
         $cr->setModel($requirements,
         		array('estimate'),
-        		array('name','descr','estimate','spent_time','file','user')
+        		array('name','estimate','spent_time','file','user')
         		);
         
         if($cr->grid){

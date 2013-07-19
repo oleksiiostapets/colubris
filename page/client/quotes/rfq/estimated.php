@@ -33,7 +33,7 @@ class page_client_quotes_rfq_estimated extends Page {
         $cr = $this->add('CRUD',array('allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
         $cr->setModel($requirements,
         		array('name','descr','estimate','file_id'),
-        		array('name','descr','estimate','spent_time','file','user')
+        		array('name','estimate','spent_time','file','user')
         		);
         if($cr->grid){
         	$cr->grid->addColumn('expander','details');
