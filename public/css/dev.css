@@ -28,3 +28,9 @@
 .estimated{font-weight:bold;background-color:#66ff99;}
 .estimation_approved{font-weight:bold;background-color:#66cc00;}
 .finished{font-weight:bold;background-color:#ffffff;}
+
+.unstarted{font-weight:bold;background-color:#33ccff;}
+.started{font-weight:bold;background-color:#66ff99;}
+.rejected{font-weight:bold;background-color:#F7624D;}
+.accepted{font-weight:bold;background-color:#66cc00;}
+

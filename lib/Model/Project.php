@@ -19,10 +19,6 @@ class Model_Project extends Model_Table {
 
         if($this->api->auth->model['is_client']){
             $this->addCondition('client_id',$this->api->auth->model['client_id']);
-        }else{
-            if($sc=$this->api->recall('scope')){
-                if($sc['client'])$this->addCondition('client_id',$sc['client']);
-            }
         }
         
         $this->setOrder('name');
