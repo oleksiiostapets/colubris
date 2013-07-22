@@ -82,7 +82,7 @@ class Form_Field_AutoEmpty extends autocomplete\Form_Field_Basic {
     public $hint = 'Ckick to see list of projects. Search results will be limited to 20 records.';
 	function init(){
 		parent::init();
-        $this->other_field->js('focus',array(
+        $this->other_field->js('click',array(
                 $this->other_field->js()->autocomplete( "search", "" ),
             )
         );
