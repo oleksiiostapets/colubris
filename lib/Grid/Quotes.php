@@ -44,5 +44,12 @@ class Grid_Quotes extends Grid_Advanced {
     	$this->current_row_html['estimation']=($this->current_row['status']=='quotation_requested')?$this->current_row_html['estimation']:'';
     	$this->current_row_html['send_to_client']=($this->current_row['status']=='estimated')?$this->current_row_html['send_to_client']:'';
     	$this->current_row_html['estimate']=($this->current_row['status']=='estimate_needed')?$this->current_row_html['estimate']:'';
+    	if ($this->api->auth->model['is_client']){
+	    	if ( ($this->current_row['status']=='not_estimated') || ($this->current_row['status']=='quotation_requested') ){
+	    		$this->current_row_html['edit']="<button type=\"button\" class=\"button_edit\" onclick=\"$(this).univ().ajaxec('/public/?page=client/quotes&edit=".$this->current_row['id']."&colubris_client_quotes_client_quotes_grid_quotes_edit=".$this->current_row['id']."')\">Edit</button>";
+	    	}else{
+	    		$this->current_row_html['edit']="";
+	    	}
+    	}
     }
 }

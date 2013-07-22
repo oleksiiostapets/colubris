@@ -23,8 +23,8 @@ class Manager_Quotes extends View {
         $cr=$this->add('CRUD', array('grid_class'=>'Grid_Quotes','allow_add'=>false));
         $m=$this->add('Model_Quote');
         $cr->setModel($m,
-        		array('project_id','name','general','duration','deadline','status'),
-        		array('project','user','name','estimated','spent_time','durdead','status')
+        		array('project_id','name','general','rate','currency','duration','deadline','status'),
+        		array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status')
         		);
         if($cr->grid){
         	$cr->grid->addFormatter('status','status');
