@@ -95,7 +95,7 @@ class page_manager_quotes_rfq_step2 extends Page {
     	$this->api->stickyGET('requirement_id');
     	$req=$this->add('Model_Requirement')->load($_GET['requirement_id']);
     	
-    	$this->add('View')->setHtml('<strong>Description:</strong> '.$req->get('descr'));
+    	$this->add('View')->setHtml('<strong>Description:</strong> '.$this->api->makeUrls($req->get('descr')));
     }
     function page_comments(){
     	$this->api->stickyGET('requirement_id');

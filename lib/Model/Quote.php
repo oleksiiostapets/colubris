@@ -3,7 +3,7 @@ class Model_Quote extends Model_Table {
     public $table="quote";
     function init(){
         parent::init();
-        $this->hasOne('Project')->display(array('form'=>'Form_Field_AutoEmpty'));
+        $this->hasOne('Project')->display(array('form'=>'Form_Field_AutoEmpty'))->mandatory('required');
         //$this->addField('project_id')->refModel('Model_Project');
                 //->display(array('form'=>'autocomplete/basic'));
         $this->hasOne('User');
@@ -34,6 +34,15 @@ class Model_Quote extends Model_Table {
         )->mandatory('Cannot be empty')->sortable(true);
         //$this->addField('attachment_id')->setModel('Model_Filestore_File');
         
+        $this->addField('rate');
+        $this->addField('currency')->setValueList(
+        		array(
+        				'EUR'=>'EUR',
+        				'GBP'=>'GBP',
+        				'USD'=>'USD',
+        		)
+        )->mandatory('Cannot be empty');
+        
         $this->addExpression('client_id')->set(function($m,$q){
             return $q->dsql()
                 ->table('project')
@@ -42,10 +51,18 @@ class Model_Quote extends Model_Table {
                 ;
         });
 
-        $this->addExpression('estimated')->set(function($m,$q){
+        $this->addExpression('estimated')->caption('Est.time(hours)')->set(function($m,$q){
             return $q->dsql()
                 ->table('requirement')
                 ->field('sum(estimate)')
+                ->where('requirement.quote_id',$q->getField('id'))
+                ;
+        });
+        
+        $this->addExpression('estimpay')->caption('Est.pay')->set(function($m,$q){
+            return $q->dsql()
+                ->table('requirement')
+                ->field('sum(estimate)*'.$q->getField('rate'))
                 ->where('requirement.quote_id',$q->getField('id'))
                 ;
         });
