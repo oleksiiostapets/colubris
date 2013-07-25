@@ -1,11 +1,13 @@
 <?php
 
-class page_team_quotes_rfq_estimate extends Page {
+class page_team_quotes_rfq_estimate extends page_quotesfunctions {
     function page_index(){
 
     	$this->api->stickyGet('quote_id');
     	
-        $quote=$this->add('Model_Quote')->load($_GET['quote_id']);
+        $this->add('View_RFQBread',array('quotes_link'=>'team/quotes'));
+    	    	 
+    	$quote=$this->add('Model_Quote')->load($_GET['quote_id']);
         if($_GET['action']=='estimated'){
         	$quote->set('status','estimated');
         	$quote->save();
@@ -18,28 +20,13 @@ class page_team_quotes_rfq_estimate extends Page {
         	$this->api->redirect($this->api->url('/team/quotes'));
         }
         
-        $this->add('H4')->set('Quote:');
-        $this->add('P')->set('Project - '.$quote->get('project'));
-        $this->add('P')->set('User - '.$quote->get('user'));
-        $this->add('P')->set('Name - '.$quote->get('name'));
-        $this->add('P')->set('General requirement - '.$quote->get('general'));
-        
-        $this->add('H4')->set('Requirements:');
+        $this->add('View_RFQQuote',array('quote'=>$quote));
+                
         $requirements=$this->add('Model_Requirement');
         $requirements->addCondition('quote_id',$_GET['quote_id']);
         
-        $cr = $this->add('CRUD',array('allow_add'=>false,'allow_edit'=>true,'allow_del'=>false));
-        $cr->setModel($requirements,
-        		array('estimate'),
-        		array('name','estimate','spent_time','file','user')
-        		);
-        
-        if($cr->grid){
-        	$cr->grid->addColumn('expander','details');
-        	$cr->grid->addColumn('expander','comments');
-        	$cr->grid->addFormatter('file','download');
-        }
-        
+        $this->add('View_RFQRequirements',array('requirements'=>$requirements,'allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
+                
         $finished=$this->add('Button')->set('Estimation finished','estimation_finished');
         $finished->js('click')->univ()->redirect($this->api->url(null,array('quote_id'=>$_GET['quote_id'],'action'=>'estimated')));
 
@@ -47,31 +34,4 @@ class page_team_quotes_rfq_estimate extends Page {
         $finished->js('click')->univ()->redirect($this->api->url(null,array('quote_id'=>$_GET['quote_id'],'action'=>'not_estimated')));
     }
     
-    function page_details(){
-    	$this->api->stickyGET('requirement_id');
-    	$req=$this->add('Model_Requirement')->load($_GET['requirement_id']);
-    	
-    	$this->add('View')->setHtml('<strong>Description:</strong> '.$this->api->makeUrls($req->get('descr')));
-    }
-    function page_comments(){
-    	$this->api->stickyGET('requirement_id');
-    	$cr=$this->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
-    	 
-    	$m=$this->add('Model_Reqcomment')
-    			->addCondition('requirement_id',$_GET['requirement_id']);
-    	$cr->setModel($m,
-    			array('text'),
-    			array('text','user')
-    	);
-    	if($cr->grid){
-    		$cr->add_button->setLabel('Add Comment');
-    		$cr->grid->setFormatter('text','text');
-    	}
-    	if($_GET['delete']){
-    		$comment=$this->add('Model_Reqcomment')->load($_GET['delete']);
-    		$comment->delete();
-    		$cr->js()->reload()->execute();
-    	}
-    }
-        
 }

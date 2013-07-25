@@ -17,5 +17,12 @@ class Model_Requirement extends Model_Table {
                 ->where('task.requirement_id',$q->getField('id'))
                 ;
         });
+        $this->addExpression('count_comments')->set(function($m,$q){
+            return $q->dsql()
+                ->table('reqcomment')
+                ->field('count(id)')
+                ->where('reqcomment.requirement_id',$q->getField('id'))
+                ;
+        });
 	}
 }
