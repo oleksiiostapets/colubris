@@ -1,0 +1,1 @@
+ALTER TABLE `reqcomment` CHANGE COLUMN `text` `text` TEXT NULL DEFAULT NULL  ;
