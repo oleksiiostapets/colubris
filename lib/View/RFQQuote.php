@@ -14,7 +14,8 @@ class View_RFQQuote extends View {
         $v->add('H4')->set('Requirements:');
         
         $v=$this->add('View')->setClass('right');
-        $v->add('View')->setClass('red_color')->set('Estimated: '.$this->quote->get('estimated').'hours');
+        $this->quote->get('estimated')>0?$estimate=$this->quote->get('estimated'):$estimate=0;
+        $v->add('View')->setClass('red_color')->set('Estimated: '.$estimate.'hours');
         
         $v=$this->add('View')->setClass('clear');
         

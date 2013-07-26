@@ -22,4 +22,21 @@ class Grid extends Grid_Advanced {
     		$this->current_row_html[$field] = '';
     	}
     }
+    function format_estimate($field){
+    	if ($this->current_row[$field]>0){
+    		$this->current_row_html[$field]=$this->current_row[$field];
+    	}else{
+    		$this->current_row_html[$field]='-';
+    	}
+    }
+    function format_number($field){
+    	$number=$this->api->recall('number')+1;
+    	$this->api->memorize('number',$number);
+   		$this->current_row_html[$field]=$number;
+    }
+    function format_text($field){
+    	$this->current_row_html[$field] = '<span style="white-space:wrap;">'.$this->current_row[$field].'</span>';
+    	$this->tdparam[$this->getCurrentIndex()][$field]['style']='white-space: wrap';
+    }
+    
 }

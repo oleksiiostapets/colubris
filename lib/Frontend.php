@@ -229,4 +229,24 @@ class Frontend extends ApiFrontend {
         return $text;
     }
 
+    /* ************************
+     *      TRANSLATIONS
+    */
+    private $translations = false;
+    function _($string) {
+    	// add translation if not exist yet
+    	if (!is_object($this->translations)) $this->translations = $this->add('Controller_Translator');
+    
+    	// do not translate if only spases
+    	if (trim($string) == '') return $string;
+    
+    	// check if passed twise throw translation, can be comented on production
+    	if(strpos($string,"\xe2\x80\x8b")!==false){
+    		throw new BaseException('String '.$string.' passed through _() twice');
+    	}
+    	return $this->translations->__($string)."\xe2\x80\x8b";
+    
+    	//return $this->translations->__($string);
+    }
+    
 }
