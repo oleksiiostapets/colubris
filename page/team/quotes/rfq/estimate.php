@@ -25,7 +25,7 @@ class page_team_quotes_rfq_estimate extends page_quotesfunctions {
         $requirements=$this->add('Model_Requirement');
         $requirements->addCondition('quote_id',$_GET['quote_id']);
         
-        $this->add('View_RFQRequirements',array('requirements'=>$requirements,'allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
+        $this->add('View_RFQRequirements',array('requirements'=>$requirements,'allow_add'=>false,'allow_edit'=>true,'allow_del'=>false,'edit_fields'=>array('estimate')));
                 
         $finished=$this->add('Button')->set('Estimation finished','estimation_finished');
         $finished->js('click')->univ()->redirect($this->api->url(null,array('quote_id'=>$_GET['quote_id'],'action'=>'estimated')));
