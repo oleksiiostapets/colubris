@@ -238,7 +238,9 @@ class Frontend extends ApiFrontend {
     	if (!is_object($this->translations)) $this->translations = $this->add('Controller_Translator');
     
     	// do not translate if only spases
-    	if (trim($string) == '') return $string;
+    	if(!is_array($string)){
+    		if (trim($string) == '') return $string;
+    	}
     
     	// check if passed twise throw translation, can be comented on production
     	if(strpos($string,"\xe2\x80\x8b")!==false){

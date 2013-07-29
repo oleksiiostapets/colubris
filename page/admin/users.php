@@ -32,7 +32,7 @@ class page_admin_users extends Page {
         if($crud->grid){
             //$crud->grid->addColumn('expander','projects');
             
-            $crud->grid->addColumn('button','login', array("descr" => "Log in"));
+            $crud->grid->addColumn('button','login');
             if($_GET['login']){
                 $u=$this->add("Model_User")->load($_GET['login']);
                 $u->set('hash',md5(time()));
