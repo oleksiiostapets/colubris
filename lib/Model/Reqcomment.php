@@ -4,7 +4,7 @@ class Model_Reqcomment extends Model_Table {
 	function init(){
 		parent::init();
 		$this->hasOne('Requirement');
-		$this->hasOne('User');
+		$this->hasOne('User')->Caption('Creator');
 		$this->addField('text')->type('text')->mandatory('required');
 		
 		$this->addHook('beforeInsert',function($m,$q){

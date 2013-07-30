@@ -1,14 +1,14 @@
 <?php
 
 class page_quotesfunctions extends Page {
-    function page_details(){
+    function page_more(){
     	$this->api->stickyGET('requirement_id');
     	$req=$this->add('Model_Requirement')->load($_GET['requirement_id']);
     	
     	$this->add('View')->setHtml('<strong>Description:</strong> '.$this->api->makeUrls($req->get('descr')));
-    }
-    function page_comments(){
-    	$this->api->stickyGET('requirement_id');
+
+    	$this->add('View')->setHtml('<hr /><strong>Comments:</strong> ');
+    	 
     	$cr=$this->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
     	 
     	$m=$this->add('Model_Reqcomment')

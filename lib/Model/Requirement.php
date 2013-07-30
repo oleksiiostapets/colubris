@@ -4,7 +4,7 @@ class Model_Requirement extends Model_Table {
 	function init(){
 		parent::init();
 		$this->hasOne('Quote');
-		$this->hasOne('User');
+		$this->hasOne('User')->Caption('Creator');
 		$this->addField('name')->mandatory('required');
 		$this->addField('descr')->type('text');
 		$this->addField('estimate');

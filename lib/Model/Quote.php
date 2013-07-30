@@ -24,12 +24,12 @@ class Model_Quote extends Model_Table {
 
         $this->addField('status')->setValueList(
             array(
-                'quotation_requested'=>'quotation_requested',
-                'estimate_needed'=>'estimate_needed',
-            	'not_estimated'=>'not_estimated',
-            	'estimated'=>'estimated',
-            	'estimation_approved'=>'estimation_approved',
-            	'finished'=>'finished',
+                'quotation_requested'=>'Quotation Requested',
+                'estimate_needed'=>'Estimate Needed',
+            	'not_estimated'=>'Not Estimated',
+            	'estimated'=>'Estimated',
+            	'estimation_approved'=>'Estimation Approved',
+            	'finished'=>'Finished',
             )
         )->mandatory('Cannot be empty')->sortable(true);
         //$this->addField('attachment_id')->setModel('Model_Filestore_File');

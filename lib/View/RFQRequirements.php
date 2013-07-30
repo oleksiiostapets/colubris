@@ -12,14 +12,13 @@ class View_RFQRequirements extends View {
         
         if($cr->grid){
         	$this->api->memorize('number',0);
-        	$cr->grid->addColumn('inline','number');
-        	$cr->grid->addFormatter('number','number');
-        	$cr->grid->addColumn('expander','details');
-        	$cr->grid->addColumn('expander','comments');
+        	$cr->grid->addColumn('inline','#');
+        	$cr->grid->addFormatter('#','number');
+        	$cr->grid->addColumn('expander','more');
         	$cr->grid->addFormatter('file','download');
         	$cr->grid->addFormatter('estimate','estimate');
         	$cr->grid->setFormatter('name','text');
-        	$cr->grid->addOrder()->move('number','first')->now();
+        	$cr->grid->addOrder()->move('#','first')->now();
         }
     }
 }
