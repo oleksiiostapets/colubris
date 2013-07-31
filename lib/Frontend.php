@@ -31,6 +31,12 @@ class Frontend extends ApiFrontend {
         ;
         $this->api->auth->add('auth/Controller_Cookie');
 
+        if(!$this->api->auth->model['id']){
+        	if($_COOKIE[$this->api->auth->name."_useremail"] != NULL & $_COOKIE[$this->api->auth->name."_userpassword"] != NULL){
+        		$this->api->auth->login($_COOKIE[$this->api->auth->name."_useremail"]);
+        	}
+        }
+        
         // Autologin from admin/users
         if( (isset($_REQUEST['id'])) && (isset($_REQUEST['hash'])) ){
             $u=$this->add('Model_User')->load($_GET["id"]);

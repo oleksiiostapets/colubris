@@ -3,12 +3,6 @@ class Page_index extends Page {
     function init(){
         parent::init();
 
-        if(!$this->api->auth->model['id']){
-        	if($_COOKIE[$this->api->auth->name."_useremail"] != NULL & $_COOKIE[$this->api->auth->name."_userpassword"] != NULL){
-        		$this->api->auth->login($_COOKIE[$this->api->auth->name."_useremail"]);
-        	}
-        }
-                
         if($this->api->auth->isLoggedIn())$this->api->redirect('home');
 
         $form=$this->add('Frame')->setTitle('Client Log-in')->add('Form');
