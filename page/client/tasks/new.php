@@ -5,6 +5,11 @@ class page_client_tasks_new extends Page {
     function initMainPage() {
     	$s=$this->add('View_Switcher');
     	
+        if ($this->api->recall('project_id')>0){
+	    	$pm=$this->add('Model_Project')->load($this->api->recall('project_id'));
+	    	$this->add('P')->addClass('red_color')->setHtml('<strong>Project:</strong> '.$pm->get('name'));
+    	}
+    	
     	$m=$this->add('Model_Task');
     	$f=$this->add('Form');
     	$f->setModel($m,array('name','descr_original','estimate','priority'));
