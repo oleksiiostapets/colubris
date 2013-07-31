@@ -1,0 +1,1 @@
+ALTER TABLE `reqcomment` ADD COLUMN `file_id` INT(11) NULL DEFAULT 0;

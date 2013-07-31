@@ -8,6 +8,7 @@ class Page_index extends Page {
         $form=$this->add('Frame')->setTitle('Client Log-in')->add('Form');
         $form->addField('line','email')->js(true)->focus();
         $form->addField('password','password');
+        $form->addField('Checkbox','memorize','Remember me');
         $form->addSubmit('Login');
         $form->setFormClass('vertical');
         $auth=$this->api->auth;

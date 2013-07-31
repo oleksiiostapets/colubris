@@ -7,6 +7,12 @@ class Model_Reqcomment extends Model_Table {
 		$this->hasOne('User')->Caption('Creator');
 		$this->addField('text')->type('text')->mandatory('required');
 		
+		$this->add('filestore/Field_File', array(
+				'name'=>'file_id',
+				'use_model'=>'Model_Myfile'
+		));
+		
+		
 		$this->addHook('beforeInsert',function($m,$q){
 			$q->set('user_id',$q->api->auth->model['id']);
 		});

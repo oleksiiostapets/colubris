@@ -29,6 +29,7 @@ class Frontend extends ApiFrontend {
             ->usePasswordEncryption('md5')
             ->setModel('Model_User', 'email', 'password')
         ;
+        $this->api->auth->add('auth/Controller_Cookie');
 
         // Autologin from admin/users
         if( (isset($_REQUEST['id'])) && (isset($_REQUEST['hash'])) ){
@@ -200,16 +201,13 @@ class Frontend extends ApiFrontend {
         $sc->add('Text')
                 ->set(
                         $this->api->auth->model['name'] . ' @ ' .
-                        'Colubris Team Manager v' . $this->getVersion());
+                        'Colubris Team Manager');
 
         $this->template->trySet('year',date('Y',time()));
         
         parent::initLayout();
     }
 
-    function getVersion() {
-        return '0.2.1';
-    }
     function makeUrls($text) {
         //replace all urls with our own spec_mark
         $text_arr = explode(' ',$text);
