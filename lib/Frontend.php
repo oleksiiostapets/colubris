@@ -25,6 +25,11 @@ class Frontend extends ApiFrontend {
         
         $this->formatter=$this->add('Controller_Formatter');
         
+        if($this->page=='logout'){
+        	setcookie("colubris_auth_useremail", "", time()-3600);
+        	setcookie("colubris_auth_userpassword", "", time()-3600);
+        }
+        
         $this->add('Auth')
             ->usePasswordEncryption('md5')
             ->setModel('Model_User', 'email', 'password')
@@ -32,8 +37,8 @@ class Frontend extends ApiFrontend {
         $this->api->auth->add('auth/Controller_Cookie');
 
         if(!$this->api->auth->model['id']){
-        	if($_COOKIE[$this->api->auth->name."_useremail"] != NULL & $_COOKIE[$this->api->auth->name."_userpassword"] != NULL){
-        		$this->api->auth->login($_COOKIE[$this->api->auth->name."_useremail"]);
+        	if($_COOKIE["colubris_auth_useremail"] != NULL & $_COOKIE["colubris_auth_userpassword"] != NULL){
+        		$this->api->auth->login($_COOKIE["colubris_auth_useremail"]);
         	}
         }
         
