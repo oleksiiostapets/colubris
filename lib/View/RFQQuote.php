@@ -18,9 +18,9 @@ class View_RFQQuote extends View {
         	if(  ($this->quote->get('status')=='quotation_requested')
         			|| ( ($this->api->auth->model['is_client']) && ($this->quote->get('status')=='not_estimated') )  
         			){
-        }
-	        $b=$v->add('Button')->set('Edit requirements');
-	        $b->js('click')->univ()->redirect($this->api->url('/'.$page[0].'/quotes/rfq/step2',array('quote_id'=>$this->quote->get('id'))));
+		        $b=$v->add('Button')->set('Edit requirements');
+		        $b->js('click')->univ()->redirect($this->api->url('/'.$page[0].'/quotes/rfq/step2',array('quote_id'=>$this->quote->get('id'))));
+            }
         }
         
         $v=$this->add('View')->setClass('clear');
