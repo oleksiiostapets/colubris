@@ -26,13 +26,13 @@ class page_manager_tasks extends Page {
         		);
         
         if($cr->grid){
-        	$cr->grid->addColumn('expander','attaches');
+        	$cr->grid->addColumn('expander','attachments');
         	$cr->grid->addFormatter('status','status');
         }
     }
     
     // "Expander" pages
-    function page_attaches(){
+    function page_attachments(){
         $this->api->stickyGet('task_id');
         $model=$this->add('Model_Attach')->addCondition('task_id',$_GET['task_id']);
         $crud=$this->add('CRUD');

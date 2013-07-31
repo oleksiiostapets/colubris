@@ -3,6 +3,12 @@ class Page_index extends Page {
     function init(){
         parent::init();
 
+        if(!$this->api->auth->model['id']){
+        	if($_COOKIE[$this->api->auth->name."_useremail"] != NULL & $_COOKIE[$this->api->auth->name."_userpassword"] != NULL){
+        		$this->api->auth->login($_COOKIE[$this->api->auth->name."_useremail"]);
+        	}
+        }
+                
         if($this->api->auth->isLoggedIn())$this->api->redirect('home');
 
         $form=$this->add('Frame')->setTitle('Client Log-in')->add('Form');
@@ -18,6 +24,11 @@ class Page_index extends Page {
 
             if($auth->verifyCredentials($l,$p)){
                 $auth->login($l);
+                if($form->get('memorize') == true){
+                	setcookie($this->api->auth->name."_useremail",$form->get('email'),time()+60*60*24*30*6);
+                	setcookie($this->api->auth->name."_userpassword",$form->get('password'),time()+60*60*24*30*6);
+                }
+                
                 $form->js()->univ()->redirect('home')->execute();
             }
             $form->getElement('password')->displayFieldError('Incorrect login');

@@ -7,7 +7,7 @@ class Team_Quotes extends View {
         $this->api->stickyGET('id');
         $this->api->stickyGET($this->name);
 
-        
+        /*
         $v=$this->add('View')->setClass('left');
         
         $b=$v->add('Button')->set('Request For Quotation');
@@ -16,7 +16,7 @@ class Team_Quotes extends View {
         ));
         
         $v=$this->add('View')->setClass('clear');
-        
+        */
         $this->add('P');
         
         $cr=$this->add('Grid_Quotes');
