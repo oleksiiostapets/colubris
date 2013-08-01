@@ -15,7 +15,7 @@ class page_quotesfunctions extends Page {
     			->addCondition('requirement_id',$_GET['requirement_id']);
     	$cr->setModel($m,
     			array('text','file_id'),
-    			array('text','user','file')
+    			array('text','user','file','created_dts')
     	);
     	if($cr->grid){
     		$cr->add_button->setLabel('Add Comment');

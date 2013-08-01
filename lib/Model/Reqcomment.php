@@ -12,9 +12,11 @@ class Model_Reqcomment extends Model_Table {
 				'use_model'=>'Model_Myfile'
 		));
 		
+		$this->addField('created_dts')->Caption('Created At')->sortable(true);
 		
 		$this->addHook('beforeInsert',function($m,$q){
 			$q->set('user_id',$q->api->auth->model['id']);
+        	$q->set('created_dts', $q->expr('now()'));
 		});
 		
         $this->addHook('beforeSave',function($m){
