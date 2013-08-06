@@ -27,16 +27,21 @@ class View_TasksCRUD extends View {
         	$cr->grid->js('reload')->reload();
         	
         	if(!$this->api->auth->model['is_client']){
-	        	$cr->grid->addColumn('button','time');
+   	        	$cr->grid->addColumn('button','time');
 	            if ($_GET['time']) {
 	                $this->js()->univ()->frameURL($this->api->_('Time'),array(
-	                    $this->api->url('./time',array('task_id'=>$_GET['time'],'reload_view'=>$cr->grid->name)),
-	                    array('beforeClose'=>'alert(beforeClose)')
+	                    $this->api->url('./time',array('task_id'=>$_GET['time'],'reload_view'=>$cr->grid->name))
 	                ))->execute();
 	            }
         	}
 
-            $cr->grid->addColumn('expander','attachments');
+            $cr->grid->addColumn('button','attachments');
+            if ($_GET['attachments']) {
+                $this->js()->univ()->frameURL($this->api->_('Attachments'),array(
+                    $this->api->url('./attachments',array('task_id'=>$_GET['attachments'],'reload_view'=>$cr->grid->name))
+                ))->execute();
+            }
+
         	$cr->grid->addFormatter('status','status');
         }
     }

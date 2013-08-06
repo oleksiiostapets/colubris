@@ -34,7 +34,7 @@ class page_tasksfunctions extends Page {
         if (!$_GET['task_id']) {
             throw $this->exception('task_id must be provided!');
         }
-        
+
     	$this->api->stickyGet('task_id');
       	$model=$this->add('Model_Attach')->addCondition('task_id',$_GET['task_id']);
        	$crud=$this->add('CRUD');
@@ -45,6 +45,15 @@ class page_tasksfunctions extends Page {
        	if($crud->grid){
        		$crud->grid->addFormatter('file','download');
        	}
+
+        if ($_GET['reload_view']) {
+            $this->js(true)->closest(".ui-dialog")->on("dialogbeforeclose",
+                $this->js(null,'function(event, ui){
+                            '.$this->js()->_selector('#'.$_GET['reload_view'])->trigger('reload').'
+                        }
+                ')
+            );
+        }
     }
 	        
 }
