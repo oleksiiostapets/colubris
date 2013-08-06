@@ -30,7 +30,7 @@ class View_TasksCRUD extends View {
         	$cr->grid->addColumn('button','time');
             if ($_GET['time']) {
                 $this->js()->univ()->frameURL($this->api->_('Time'),array(
-                    $this->api->url('./time',array('reload_view'=>$cr->grid->name)),
+                    $this->api->url('./time',array('task_id'=>$_GET['time'],'reload_view'=>$cr->grid->name)),
                     array('beforeClose'=>'alert(beforeClose)')
                 ))->execute();
             }
