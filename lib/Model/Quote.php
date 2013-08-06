@@ -70,9 +70,11 @@ class Model_Quote extends Model_Table {
         $this->addExpression('spent_time')->set(function($m,$q){
             return $q->dsql()
                 ->table('task')
+                ->table('task_time')
                 ->table('requirement')
-                ->field('sum(task.spent_time)')
+                ->field('sum(task_time.spent_time)')
                 ->where('requirement.id=task.requirement_id')
+                ->where('task.id=task_time.task_id')
                 ->where('requirement.quote_id',$q->getField('id'))
                 ;
         });

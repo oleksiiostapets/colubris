@@ -39,6 +39,8 @@ class Grid_Quotes extends Grid_Advanced {
     function formatRow() {
     	parent::formatRow();
     	
+    	//$this->js('click')->_selector('[data-id='.$this->current_row['id'].']')->univ()->redirect($this->current_row['id']);
+    	
     	$this->current_row_html['requirements']=($this->current_row['status']=='Quotation Requested')?$this->current_row_html['requirements']:'';
     	$this->current_row_html['approve']=($this->current_row['status']=='Estimated')?$this->current_row_html['approve']:'';
     	$this->current_row_html['estimation']=($this->current_row['status']=='Quotation Requested')?$this->current_row_html['estimation']:'';

@@ -19,7 +19,7 @@ class Model_Task extends Model_Table {
         $this->addField('descr_original')->dataType('text');
 
         $this->addField('estimate')->dataType('money');
-        $this->addField('spent_time')->dataType('int');
+        //$this->addField('spent_time')->dataType('int');
 
         //$this->addField('deviation')->dataType('text');
 
@@ -40,5 +40,12 @@ class Model_Task extends Model_Table {
         
        	$this->setOrder('updated_dts',true);
 
-	}
+        $this->addExpression('spent_time')->set(function($m,$q){
+            return $q->dsql()
+                ->table('task_time')
+                ->field('sum(task_time.spent_time)')
+                ->where('task_time.task_id',$q->getField('id'))
+                ;
+        });
+    }
 }

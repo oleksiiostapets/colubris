@@ -18,7 +18,9 @@ class Model_Requirement extends Model_Table {
         $this->addExpression('spent_time')->set(function($m,$q){
             return $q->dsql()
                 ->table('task')
-                ->field('sum(spent_time)')
+                ->table('task_time')
+                ->field('sum(task_time.spent_time)')
+                ->where('task.id=task_time.task_id')
                 ->where('task.requirement_id',$q->getField('id'))
                 ;
         });
