@@ -12,7 +12,7 @@ class View_RFQRequirements extends View {
         
         if($cr->grid){
         	$this->api->memorize('number',0);
-        	$cr->grid->addColumn('inline','#');
+        	$cr->grid->addColumn('text','#');
         	$cr->grid->addFormatter('#','number');
         	$cr->grid->addColumn('expander','more');
         	$cr->grid->addFormatter('file','download');
