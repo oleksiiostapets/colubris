@@ -2,6 +2,11 @@
 
 class page_tasksfunctions extends Page {
     function page_time(){
+
+        if (!$_GET['task_id']) {
+            throw $this->exception('task_id must be provided!');
+        }
+
     	$this->api->stickyGet('task_id');
       	$model=$this->add('Model_TaskTime')->addCondition('task_id',$_GET['task_id']);
        	$crud=$this->add('CRUD');
