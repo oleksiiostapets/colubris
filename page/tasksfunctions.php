@@ -12,6 +12,15 @@ class page_tasksfunctions extends Page {
        	if ($crud->grid){
        		$crud->add_button->setLabel('Add Time');
        	}
+
+        if ($_GET['reload_view']) {
+            $this->js(true)->closest(".ui-dialog")->on("dialogbeforeclose",
+                $this->js(null,'function(event, ui){
+                            '.$this->js()->_selector('#'.$_GET['reload_view'])->trigger('reload').'
+                        }
+                ')
+            );
+        }
        		
     }
 	

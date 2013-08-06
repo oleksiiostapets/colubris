@@ -24,10 +24,18 @@ class View_TasksCRUD extends View {
         		);
         
         if($cr->grid){
-        	//$cr->grid->js('reload')->reload();
+        	$cr->grid->js('reload')->reload();
         	
-        	$cr->grid->addColumn('expander','time'); //,array('descr'=>'time','page'=>$this->api->url('./time',array('reload_view'=>$cr->grid->name))));
-        	$cr->grid->addColumn('expander','attachments');
+        	//$cr->grid->addColumn('expander','time'); //,array('descr'=>'time','page'=>$this->api->url('./time',array('reload_view'=>$cr->grid->name))));
+        	$cr->grid->addColumn('button','time');
+            if ($_GET['time']) {
+                $this->js()->univ()->frameURL($this->api->_('Time'),array(
+                    $this->api->url('./time',array('reload_view'=>$cr->grid->name)),
+                    array('beforeClose'=>'alert(beforeClose)')
+                ))->execute();
+            }
+
+            $cr->grid->addColumn('expander','attachments');
         	$cr->grid->addFormatter('status','status');
         }
     }
