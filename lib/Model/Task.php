@@ -37,6 +37,24 @@ class Model_Task extends Model_Table {
         
        	$this->addHook('beforeSave', function($m){
        		$m['updated_dts']=date('Y-m-d G:i:s', time());
+
+       		$to='';
+        	if ($m->get('requester_id')>0){
+        		$u=$m->add('Model_User')->load($m->get('requester_id'));
+        		if ($u['email']!='') $to=$u['email'];
+        	}
+        	if ($m->get('assigned_id')>0){
+        		$u=$m->add('Model_User')->load($m->get('assigned_id'));
+        		if ($u['email']!=''){
+        			if ($to=='') $to=$u['email']; else $to.=', '.$u['email'];
+        		}
+        	}
+        	if ($to!=''){
+        		$m->api->mailer->sendMail($to,'edit_task',array(
+        				'link'=>$m->api->url('/manager/tasks'),
+        				'task_name'=>$m->get('name'),
+        				));
+        	}
        	});
         
        	$this->setOrder('updated_dts',true);
