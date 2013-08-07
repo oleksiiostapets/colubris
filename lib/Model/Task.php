@@ -50,7 +50,27 @@ class Model_Task extends Model_Table {
         		}
         	}
         	if ($to!=''){
-        		$m->api->mailer->sendMail($to,'edit_task',array(
+        		$m->api->mailer->sendMail($to,'task_edit',array(
+        				'link'=>$m->api->url('/manager/tasks'),
+        				'task_name'=>$m->get('name'),
+        				));
+        	}
+       	});
+       	
+       	$this->addHook('beforeDelete', function($m){
+       		$to='';
+        	if ($m->get('requester_id')>0){
+        		$u=$m->add('Model_User')->load($m->get('requester_id'));
+        		if ($u['email']!='') $to=$u['email'];
+        	}
+        	if ($m->get('assigned_id')>0){
+        		$u=$m->add('Model_User')->load($m->get('assigned_id'));
+        		if ($u['email']!=''){
+        			if ($to=='') $to=$u['email']; else $to.=', '.$u['email'];
+        		}
+        	}
+        	if ($to!=''){
+        		$m->api->mailer->sendMail($to,'task_delete',array(
         				'link'=>$m->api->url('/manager/tasks'),
         				'task_name'=>$m->get('name'),
         				));
