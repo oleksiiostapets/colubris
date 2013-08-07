@@ -25,6 +25,8 @@ class Frontend extends ApiFrontend {
         
         $this->formatter=$this->add('Controller_Formatter');
         
+        $this->mailer=$this->add('Controller_Mailer');
+        
         if($this->page=='logout'){
         	setcookie("colubris_auth_useremail", "", time()-3600);
         	setcookie("colubris_auth_userpassword", "", time()-3600);

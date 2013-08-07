@@ -26,7 +26,7 @@ class Model_Task extends Model_Table {
         $this->addField('project_id')->refModel('Model_Project')->mandatory(true);
         $this->addField('requirement_id')->refModel('Model_Requirement');
         $this->addField('requester_id')->refModel('Model_User');
-        $this->addField('assigned_id')->refModel('Model_User_Developer');
+        $this->addField('assigned_id')->refModel('Model_User');
         
         $this->addField('created_dts');
         $this->addField('updated_dts');

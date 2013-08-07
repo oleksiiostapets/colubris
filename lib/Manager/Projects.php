@@ -49,20 +49,14 @@ class Manager_Projects extends View {
         }
         $grid->addColumn('button','send_to_client','Send Quote to the client');
         if($_GET['send_to_client']){
-        	$this->from=$this->api->getConfig('tmail/from','test@test.com');
-        	
         	$quote=$this->add('Model_Quote')->load($_GET['send_to_client']);
         	
         	if ($quote['client_id']>0){
         		$client=$this->add('Model_Client')->load($quote['client_id']);
         		$to=$client['email'];
         		
-	        	$mail = $this->add('TMail');
-	        	$mail->loadTemplate('send_quote');
-	            $mail->setTag('from',$this->from);
-	            $mail->setTag('link',$this->api->url('/client/quotes/rfq/estimated',array('quote_id'=>$_GET['send_to_client'])));
-	            $mail->send($to);
-
+        		$this->api->mailer->sendMail($to,'send_quote',array('link'=>$this->api->url('/client/quotes/rfq/estimated',array('quote_id'=>$_GET['send_to_client']))));
+        		
 	            $this->js()->univ()->successMessage('Sent')->execute();
         	}else{
         		$this->js()->univ()->successMessage('The project of this quote has no client!')->execute();
