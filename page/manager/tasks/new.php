@@ -12,7 +12,7 @@ class page_manager_tasks_new extends Page {
     	
     	$m=$this->add('Model_Task');
     	$f=$this->add('Form');
-    	$f->setModel($m,array('name','descr_original','estimate','priority','status'));
+    	$f->setModel($m,array('name','descr_original','estimate','priority','status','requester_id','assigned_id'));
     	
     	$f->addSubmit('Save');
     	

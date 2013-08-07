@@ -25,6 +25,8 @@ class Model_User extends Model_Table {
         });
         
         $this->addField('hash');
+        
+        $this->setOrder('name');
 
     }
     function me(){
