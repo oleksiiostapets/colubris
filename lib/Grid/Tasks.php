@@ -20,6 +20,10 @@ class Grid_Tasks extends Grid_Advanced {
     			break;
     	}
     }
+    function format_text($field){
+    	$this->current_row_html[$field] = '<span style="white-space:wrap;">'.$this->current_row[$field].'</span>';
+    	$this->tdparam[$this->getCurrentIndex()][$field]['style']='white-space: wrap';
+    }
     function defaultTemplate() {
     	return array('grid/colored');
     }
