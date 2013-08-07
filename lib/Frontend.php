@@ -44,6 +44,8 @@ class Frontend extends ApiFrontend {
         	}
         }
         
+        $this->template->set('page_title','Colubris');
+        
         // Autologin from admin/users
         if( (isset($_REQUEST['id'])) && (isset($_REQUEST['hash'])) ){
             $u=$this->add('Model_User')->load($_GET["id"]);
