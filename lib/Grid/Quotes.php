@@ -4,32 +4,32 @@ class Grid_Quotes extends Grid_Advanced {
     	switch($this->current_row[$field]){
     		case 'Quotation Requested':
     			$this->current_row_html[$field] = 'Quotation requested';
-    			$this->row_t->setHTML('odd_even','quotation_requested');
+    			$this->row_t->setHTML('painted','quotation_requested');
     			break;
     		case 'Estimate Needed':
     			$this->current_row_html[$field] = 'Estimate needed';
-    			$this->row_t->setHTML('odd_even','estimate_needed');
+    			$this->row_t->setHTML('painted','estimate_needed');
     			break;
    			case 'Not Estimated':
    				$this->current_row_html[$field] = 'Not estimated';
-    			$this->row_t->setHTML('odd_even','not_estimated');
+    			$this->row_t->setHTML('painted','not_estimated');
    				break;
 			case 'Estimated':
 				$this->current_row_html[$field] = 'Estimated';
-    			$this->row_t->setHTML('odd_even','estimated');
+    			$this->row_t->setHTML('painted','estimated');
 				break;
 			case 'Estimation Approved':
 				$this->current_row_html[$field] = 'Estimation approved';
-    			$this->row_t->setHTML('odd_even','estimation_approved');
+    			$this->row_t->setHTML('painted','estimation_approved');
 				break;
 			case 'Finished':
 				$this->current_row_html[$field] = 'Finished';
-    			$this->row_t->setHTML('odd_even','finished');
+    			$this->row_t->setHTML('painted','finished');
 				break;
     						
     		default:
     			$this->current_row_html[$field] = $this->current_row[$field];
-    			$this->row_t->setHTML('odd_even','');
+    			$this->row_t->setHTML('painted','');
     			break;
     	}
     }
@@ -53,5 +53,14 @@ class Grid_Quotes extends Grid_Advanced {
 	    		$this->current_row_html['edit']="";
 	    	}
     	}
+    }
+    function defaultTemplate() {
+    	return array('grid/colored');
+    }
+    
+    function precacheTemplate()
+    {
+    	$this->row_t->trySetHTML('painted', '<?$painted?>');
+    	parent::precacheTemplate();
     }
 }
