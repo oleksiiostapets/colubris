@@ -16,7 +16,9 @@ class Controller_Translator extends Controller {
     private $translations = array(
 
         //Meta
-        'Adding new Reqcomment'    =>'Adding new Comment',
-        
+        'Adding new Reqcomment'		=>'Adding new Comment',
+    	'Add Attach'				=>'Add Attachment',
+    	'Adding new Attach'			=>'Adding new Attachment',
+    		
     );
 }
