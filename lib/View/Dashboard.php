@@ -6,7 +6,7 @@ class View_Dashboard extends View {
         $this->add('H2')->set('My active tasks (requested by me or assigned to me)');
         $cr=$this->add('CRUD',array('grid_class'=>'Grid_Tasks','allow_add'=>$this->allow_add,'allow_edit'=>$this->allow_edit,'allow_del'=>$this->allow_del));
         $m=$this->add('Model_Task');
-        $m->addCondition('status','<>','finished');
+        $m->addCondition('status','<>','accepted');
         $q=$m->_dsql();
         $q->where($q->orExpr()
         		->where('requester_id',$this->api->auth->model['id'])
