@@ -1,0 +1,9 @@
+<?from?>hello@example.com<?/from?>
+<?subject?>New task created<?/?>
+<?body?>
+
+New Task has been created<br />
+Review tasks <a href="<?$link?>">here</a>.<br />
+
+<?sign?>
+<?/sign?><?/body?>

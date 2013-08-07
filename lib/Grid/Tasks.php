@@ -16,8 +16,7 @@ class Grid_Tasks extends Grid_Advanced {
 				break;
     						
     		default:
-    			$this->current_row_html[$field] = $this->current_row[$field];
-    			$this->row_t->setHTML('odd_even','');
+    			$this->row_t->setHTML('painted','');
     			break;
     	}
     }
