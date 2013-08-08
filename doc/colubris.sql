@@ -32,7 +32,7 @@ CREATE TABLE `attach` (
   PRIMARY KEY (`id`),
   KEY `fk_attach_task1` (`task_id`),
   CONSTRAINT `fk_attach_task1` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `attach` (
 
 LOCK TABLES `attach` WRITE;
 /*!40000 ALTER TABLE `attach` DISABLE KEYS */;
-INSERT INTO `attach` VALUES (1,4,'','2013-07-12 08:37:48','2013-07-12 08:37:48',3);
+INSERT INTO `attach` VALUES (1,4,'','2013-07-12 08:37:48','2013-07-12 08:37:48',3),(2,12,'','2013-08-08 08:09:09','2013-08-08 08:09:08',3);
 /*!40000 ALTER TABLE `attach` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +143,7 @@ CREATE TABLE `filestore_file` (
   `filenum` int(11) NOT NULL DEFAULT '0',
   `deleted` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +152,7 @@ CREATE TABLE `filestore_file` (
 
 LOCK TABLES `filestore_file` WRITE;
 /*!40000 ALTER TABLE `filestore_file` DISABLE KEYS */;
-INSERT INTO `filestore_file` VALUES (1,2,1,'0/20130621111333__dsc-0013.jpg','DSC_0013.JPG',851689,0,''),(2,2,1,'0/20130621111424__dsc-0015.jpg','DSC_0015.JPG',852845,0,''),(3,2,1,'0/20130621131835__dsc-0078.jpg','DSC_0078.JPG',845292,0,''),(4,2,1,'0/20130712113743__asc-0013.jpg','ASC_0013.JPG',851689,0,''),(5,4,1,'0/20130725153136__git.book.rus.pdf','GIT.BOOK.RUS.pdf',316643,0,''),(6,4,1,'0/20130725154324__git.book.rus.pdf','GIT.BOOK.RUS.pdf',316643,0,''),(7,2,1,'0/20130725154650__gr1.jpg','gr1.jpg',1926,0,''),(8,1,1,'0/20130731110000__accept.png','accept.png',781,0,'');
+INSERT INTO `filestore_file` VALUES (1,2,1,'0/20130621111333__dsc-0013.jpg','DSC_0013.JPG',851689,0,''),(2,2,1,'0/20130621111424__dsc-0015.jpg','DSC_0015.JPG',852845,0,''),(3,2,1,'0/20130621131835__dsc-0078.jpg','DSC_0078.JPG',845292,0,''),(4,2,1,'0/20130712113743__asc-0013.jpg','ASC_0013.JPG',851689,0,''),(5,4,1,'0/20130725153136__git.book.rus.pdf','GIT.BOOK.RUS.pdf',316643,0,''),(6,4,1,'0/20130725154324__git.book.rus.pdf','GIT.BOOK.RUS.pdf',316643,0,''),(7,2,1,'0/20130725154650__gr1.jpg','gr1.jpg',1926,0,''),(8,1,1,'0/20130731110000__accept.png','accept.png',781,0,''),(9,2,1,'0/20130807143002__111111111111.jpg','111111111111.jpg',1430707,0,''),(10,2,1,'0/20130807143322__111111111111.jpg','111111111111.jpg',1430707,0,''),(11,2,1,'0/20130808110640__111111111111.jpg','111111111111.jpg',1430707,0,''),(12,2,1,'0/20130808110906__8-marta-34.jpg','8_marta_34.jpg',53622,0,'');
 /*!40000 ALTER TABLE `filestore_file` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,7 +234,7 @@ CREATE TABLE `filestore_volume` (
 
 LOCK TABLES `filestore_volume` WRITE;
 /*!40000 ALTER TABLE `filestore_volume` DISABLE KEYS */;
-INSERT INTO `filestore_volume` VALUES (1,'upload','upload',1000000000,0,8,'Y',NULL);
+INSERT INTO `filestore_volume` VALUES (1,'upload','upload',1000000000,0,12,'Y',NULL);
 /*!40000 ALTER TABLE `filestore_volume` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -416,6 +416,7 @@ CREATE TABLE `task` (
   `requirement_id` int(11) DEFAULT NULL,
   `budget_id` int(11) DEFAULT NULL,
   `project_id` int(11) DEFAULT NULL,
+  `requester_id` int(11) DEFAULT NULL,
   `assigned_id` int(11) DEFAULT NULL,
   `created_dts` timestamp NULL DEFAULT NULL,
   `updated_dts` timestamp NULL DEFAULT NULL,
@@ -424,9 +425,11 @@ CREATE TABLE `task` (
   KEY `fk_task_project1` (`project_id`),
   KEY `fk_task_screen1` (`requirement_id`),
   KEY `fk_task_assigned1` (`assigned_id`),
+  KEY `fk_task_requester1` (`requester_id`),
   CONSTRAINT `fk_task_assigned1` FOREIGN KEY (`assigned_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_task_budget1` FOREIGN KEY (`budget_id`) REFERENCES `budget` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_task_project1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_task_requester1` FOREIGN KEY (`requester_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_task_screen1` FOREIGN KEY (`requirement_id`) REFERENCES `requirement` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -437,7 +440,7 @@ CREATE TABLE `task` (
 
 LOCK TABLES `task` WRITE;
 /*!40000 ALTER TABLE `task` DISABLE KEYS */;
-INSERT INTO `task` VALUES (2,'Task 1','normal','finished',NULL,'task for req1 - step1',NULL,0.50,1,NULL,1,22,NULL,'2013-07-11 12:43:41'),(3,'Task2','normal','finished',NULL,'step 2фыв фыв фыв фыв фыв фыв фыв ыфва вфап вап вап  ыва пыва рывап ыва пыа пыв апыа пы ап\r\nыва пы вапы ва пв апы',NULL,1.00,1,NULL,1,22,'2013-07-11 12:43:30','2013-08-06 08:41:07'),(4,'just task','normal','unstarted',NULL,'asdf',NULL,10.00,NULL,NULL,1,22,'2013-07-12 06:33:51','2013-07-12 06:33:51'),(5,'task3','normal','unstarted',NULL,'sfadf',NULL,1.00,2,NULL,1,21,'2013-07-12 07:43:58','2013-07-12 07:43:58');
+INSERT INTO `task` VALUES (2,'Task 1','normal','started',NULL,'task for req1 - step1',NULL,0.50,1,NULL,1,NULL,22,NULL,'2013-08-07 13:13:04'),(3,'Task2','normal','finished',NULL,'step 2фыв фыв фыв фыв фыв фыв фыв ыфва вфап вап вап  ыва пыва рывап ыва пыа пыв апыа пы ап\r\nыва пы вапы ва пв апы',NULL,1.00,1,NULL,1,21,22,'2013-07-11 12:43:30','2013-08-07 13:06:46'),(4,'just task1','normal','unstarted',NULL,'asdf',NULL,10.00,NULL,NULL,1,20,21,'2013-07-12 06:33:51','2013-08-07 13:09:32'),(5,'task3','normal','accepted',NULL,'sfadf',NULL,1.00,2,NULL,1,21,19,'2013-07-12 07:43:58','2013-08-07 11:23:23');
 /*!40000 ALTER TABLE `task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -454,13 +457,13 @@ CREATE TABLE `task_time` (
   `user_id` int(11) DEFAULT NULL,
   `spent_time` decimal(8,2) DEFAULT NULL,
   `comment` text,
-  `created_dts` timestamp NULL DEFAULT NULL,
+  `date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_task_time_task1` (`task_id`),
   KEY `fk_task_time_user1` (`user_id`),
   CONSTRAINT `fk_task_time_task1` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_task_time_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -469,8 +472,40 @@ CREATE TABLE `task_time` (
 
 LOCK TABLES `task_time` WRITE;
 /*!40000 ALTER TABLE `task_time` DISABLE KEYS */;
-INSERT INTO `task_time` VALUES (1,3,22,1.00,'done','2013-08-06 08:52:38'),(2,3,22,0.50,'','2013-08-06 08:54:44');
+INSERT INTO `task_time` VALUES (1,3,22,1.00,'done','2013-08-06'),(5,5,20,1.00,'','2013-08-06'),(6,5,20,0.30,'','2013-08-06');
 /*!40000 ALTER TABLE `task_time` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `taskcomment`
+--
+
+DROP TABLE IF EXISTS `taskcomment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `taskcomment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_id` int(11) NOT NULL,
+  `text` text,
+  `user_id` int(11) NOT NULL,
+  `file_id` int(11) DEFAULT '0',
+  `created_dts` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_taskcomment_task1` (`task_id`),
+  KEY `fk_taskcomment_user1` (`user_id`),
+  CONSTRAINT `fk_taskcomment_task1` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_taskcomment_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `taskcomment`
+--
+
+LOCK TABLES `taskcomment` WRITE;
+/*!40000 ALTER TABLE `taskcomment` DISABLE KEYS */;
+INSERT INTO `taskcomment` VALUES (1,2,'dada123 dada123 dada123 dada123 dada123 dada123 dada123 dada123 22222\r\ndada123 dada123 dada123 dada123 dada123 dada123 dada123 dada123 dada123 dada123 2223333',21,11,'2013-08-08 08:06:55'),(2,2,'test',21,NULL,'2013-08-08 08:15:10');
+/*!40000 ALTER TABLE `taskcomment` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -504,7 +539,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Romans Malinovskis','r@agiletech.ie','ff58c902bd980c805af25516caa93c76',NULL,1,1,1,'8b310b249133f88ba98935c6d4c0657e',20,1),(3,'Gita Malinovska','g@agiletech.ie','fe01ce2a7fbac8fafaed7c982a04e229',NULL,1,1,1,'b6be7013a2aa47ce1157a0684a9220cc',30,1),(4,'Andrew Fluery','andrew@gradpool.ie',NULL,1,0,0,0,'16046270f4bdcf4f04989c1e42e53a7a',40,1),(7,'Janis Volbergs','j@agiletech.ie','f5bb0c8de146c67b44babbf4e6584cc0',NULL,1,1,1,'8aa9e4b16ed60a428771edf375f23f23',30,1),(8,'Dmitry','m@agiletech.ie','e61c3734215b62c1e13a88792ebb18d4',NULL,0,1,1,'fd58b564da1b4d9b5893fc5329903aa4',40,1),(9,'max','max@agiletech.ie','d1696816bc1a7afe92f1c8787ac222c3',NULL,0,0,1,'02da9f0ec5dbf471dbdf289221a5e4fb',35,1),(10,'Serhij Stasyuk','stas@agiletech.ie','202cb962ac59075b964b07152d234b70',4,1,0,1,'5e2073e08525213f257e388f0826e051',20,1),(11,'Prashant','prashanth@cgvakindia.com','098f6bcd4621d373cade4e832627b4f6',NULL,0,1,1,'891a65302e16a3340967b147ea4eb67c',NULL,1),(13,'Ray Rogers','ray.rogers@relate-software.com','098f6bcd4621d373cade4e832627b4f6',8,0,0,0,'9556cdcc3598d4b64413552f15797d77',NULL,1),(14,'Peter','lf','fe01ce2a7fbac8fafaed7c982a04e229',15,0,0,0,'bb5f2f29d69b71be4bbfaa2899b03e79',NULL,1),(16,'Orna Ross','info@ornaross.com','41d56ec6a51ea83a1be672dd6b5dc298',16,0,0,0,'2f70976948dd7316924507d7c7b3ac55',NULL,1),(17,'Barry Alistair Paterson','barry@irishdev.com','098f6bcd4621d373cade4e832627b4f6',11,0,0,0,'6c704e572f09f8801b5ee67f840bddc0',NULL,0),(18,'Tony Goold','tony@realise4.ie','8f494d6b79722c201450e7ecec8f7694',18,0,0,0,'62e7e78717eaa554f6f36a97350fe1ff',NULL,0),(19,'Alex','a@agiletech.ie','5dadc79e341f236249b2661836dcbdca',NULL,1,1,1,'377f73316169f735fd091a8980768651',NULL,1),(20,'Admin','admin','202cb962ac59075b964b07152d234b70',NULL,1,0,0,'d0357110161ceb0d2a776a97633d6b33',NULL,1),(21,'Manager','man','202cb962ac59075b964b07152d234b70',NULL,0,1,0,'50128184852cae55957bf1d87720d82f',NULL,0),(22,'Developer','dev','202cb962ac59075b964b07152d234b70',NULL,0,0,1,'d002f2926c9af3960d7bb3056adca78e',40,1),(23,'Client','client','202cb962ac59075b964b07152d234b70',1,0,0,0,'d002f2926c9af3960d7bb3056adca78d',NULL,1),(24,'Client2','client2','202cb962ac59075b964b07152d234b70',2,0,0,0,NULL,NULL,1),(25,'Oleksii Developer','oleksii','202cb962ac59075b964b07152d234b70',NULL,0,0,1,NULL,NULL,0);
+INSERT INTO `user` VALUES (1,'Romans Malinovskis','r@agiletech.ie','ff58c902bd980c805af25516caa93c76',NULL,1,1,1,'8b310b249133f88ba98935c6d4c0657e',20,1),(3,'Gita Malinovska','g@agiletech.ie','fe01ce2a7fbac8fafaed7c982a04e229',NULL,1,1,1,'b6be7013a2aa47ce1157a0684a9220cc',30,1),(4,'Andrew Fluery','andrew@gradpool.ie',NULL,1,0,0,0,'16046270f4bdcf4f04989c1e42e53a7a',40,1),(8,'Dmitry','m@agiletech.ie','e61c3734215b62c1e13a88792ebb18d4',NULL,0,1,1,'fd58b564da1b4d9b5893fc5329903aa4',40,1),(10,'Serhij Stasyuk','stas@agiletech.ie','202cb962ac59075b964b07152d234b70',4,1,0,1,'5e2073e08525213f257e388f0826e051',20,1),(19,'Alex','a@agiletech.ie','5dadc79e341f236249b2661836dcbdca',NULL,1,1,1,'377f73316169f735fd091a8980768651',NULL,1),(20,'Admin','admin','202cb962ac59075b964b07152d234b70',NULL,1,0,0,'d0357110161ceb0d2a776a97633d6b33',NULL,1),(21,'Manager','man','202cb962ac59075b964b07152d234b70',NULL,0,1,0,'50128184852cae55957bf1d87720d82f',NULL,0),(22,'Developer','dev','202cb962ac59075b964b07152d234b70',NULL,0,0,1,'d002f2926c9af3960d7bb3056adca78e',40,1),(23,'Client','client','202cb962ac59075b964b07152d234b70',1,0,0,0,'d002f2926c9af3960d7bb3056adca78d',NULL,1),(24,'Client2','client2','202cb962ac59075b964b07152d234b70',2,0,0,0,NULL,NULL,1),(25,'Oleksii Developer','oleksii','202cb962ac59075b964b07152d234b70',NULL,0,0,1,NULL,NULL,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -517,4 +552,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-08-06 14:58:22
+-- Dump completed on 2013-08-08 11:40:10
