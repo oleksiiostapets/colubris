@@ -34,13 +34,15 @@ class View_TasksCRUD extends View {
 	                ))->execute();
 	            }
         	}
-
+/*
             $cr->grid->addColumn('button','attachments');
             if ($_GET['attachments']) {
                 $this->js()->univ()->frameURL($this->api->_('Attachments'),array(
                     $this->api->url('./attachments',array('task_id'=>$_GET['attachments'],'reload_view'=>$cr->grid->name))
                 ))->execute();
             }
+*/
+            $cr->grid->addColumn('expander','more');
 
         	$cr->grid->addFormatter('status','status');
         }

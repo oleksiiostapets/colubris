@@ -181,9 +181,9 @@ class Frontend extends ApiFrontend {
             	$sm->addMenuItem('manager/projects','Projects');
                 $sm->addMenuItem('manager/quotes','Quotes');
                 $sm->addMenuItem('manager/clients','Clients');
+                $sm->addMenuItem('manager/reports','Reports');
                 //$sm->addMenuItem('manager/projects','Projects'); // Admin can setup projects and users here
                 //$m->addMenuItem('manager/statistics','Statistics');
-                //$m->addMenuItem('manager/reports','Reports'); // review all reports in system - temporary
                 //$m->addMenuItem('manager/timesheets','Timesheets'); // review all reports in system - temporary
 
                 //$m->addMenuItem('manager/tasks','Tasks'); // review all tasks in system - temporary
@@ -267,4 +267,10 @@ class Frontend extends ApiFrontend {
     	//return $this->translations->__($string);
     }
     
+    function getUserType(){
+    	if ($this->auth->model['is_manager']) return 'manager';
+    	if ($this->auth->model['is_developer']) return 'developer';
+    	if ($this->auth->model['is_client']) return 'client';
+    	if ($this->auth->model['is_admin']) return 'admin';
+    }
 }
