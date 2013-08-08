@@ -12,14 +12,14 @@ class Model_TaskTime extends Model_Table {
 
         $this->addField('comment')->dataType('text');
 
-        $this->addField('created_dts');
+        $this->addField('date')->dataType('date');
         
         $this->addHook('beforeInsert', function($m,$q){
-        	$q->set('created_dts', $q->expr('now()'));
+        	if($m['date']=='') $q->set('date', $q->expr('now()'));
         	$q->set('user_id', $q->api->auth->model['id']);
         });
         
-       	$this->setOrder('created_dts',true);
+       	$this->setOrder('date',true);
 
 	}
 }
