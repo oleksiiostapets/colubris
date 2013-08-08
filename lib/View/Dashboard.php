@@ -1,12 +1,17 @@
 <?php
 class View_Dashboard extends View {
+    public $allow_add  = false;
+    public $allow_edit = false;
+    public $allow_del  = false;
     function init(){
         parent::init();
 
         $this->add('H2')->set('My active tasks (requested by me or assigned to me)');
         $cr=$this->add('CRUD',array('grid_class'=>'Grid_Tasks','allow_add'=>$this->allow_add,'allow_edit'=>$this->allow_edit,'allow_del'=>$this->allow_del));
         $m=$this->add('Model_Task');
-        $m->addCondition('status','<>','accepted');
+        if (!$_GET['submit']) {
+            $m->addCondition('status','<>','accepted');
+        }
         $q=$m->_dsql();
         $q->where($q->orExpr()
         		->where('requester_id',$this->api->auth->model['id'])
@@ -14,9 +19,9 @@ class View_Dashboard extends View {
         );
 
         $cr->setModel($m,
-        		$this->edit_fields,
-        		$this->show_fields
-        		);
+            $this->edit_fields,
+            $this->show_fields
+        );
         
 		if($cr->grid){
         	$cr->grid->js('reload')->reload();
