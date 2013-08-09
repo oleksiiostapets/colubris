@@ -7,54 +7,46 @@ class Client_Quotes extends View {
         $this->api->stickyGET('id');
         $this->api->stickyGET($this->name);
 
-        
+
         $v=$this->add('View')->setClass('left');
-        
+
         $b=$v->add('Button')->set('Request For Quotation');
         $b->js('click', array(
-        		$this->js()->univ()->redirect($this->api->url('client/quotes/rfq'))
+            $this->js()->univ()->redirect($this->api->url('client/quotes/rfq'))
         ));
-        
+
         $v=$this->add('View')->setClass('clear');
 
         $this->add('P');
-        
+
         $cr=$this->add('Grid_Quotes');
         $m=$this->add('Model_Quote');
+        $pr = $m->join('project','project_id','left','_pr');
+        $pr->addField('pr_client_id','client_id');
+        $m->addCondition('pr_client_id',$this->api->auth->model['client_id']);
 
-        $p=$this->api->db->dsql()->table('project')->field('id')->where('client_id',$this->api->auth->model['client_id'])->get('id');
-        $project_ids=array();
-        foreach ($p as $val){
-            $project_ids[]=$val['id'];
-        }
-
-
-        $q=$m->_dsql();
-        //$q->join('project');
-        $q->where('project_id','IN',$project_ids);
-        //$m->addCondition('client_id',$this->api->auth->model['client_id']);
         $cr->setModel($m,array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status'));
         $cr->addFormatter('status','status');
-       	$cr->addColumn('button','edit');
+        $cr->addColumn('button','edit');
         if($_GET['edit']){
-        	$this->js()->univ()->redirect($this->api->url('/client/quotes/rfq/step2',
-        			array('quote_id'=>$_GET['edit'])))
-        			->execute();
+            $this->js()->univ()->redirect($this->api->url('/client/quotes/rfq/step2',
+                array('quote_id'=>$_GET['edit'])))
+                ->execute();
         }
         $cr->addColumn('button','details');
         if($_GET['details']){
-        	$this->js()->univ()->redirect($this->api->url('/client/quotes/rfq/view',
-        			array('quote_id'=>$_GET['details'])))
-        			->execute();
+            $this->js()->univ()->redirect($this->api->url('/client/quotes/rfq/view',
+                array('quote_id'=>$_GET['details'])))
+                ->execute();
         }
-       	$cr->addColumn('button','approve','Approve Estimation');
+        $cr->addColumn('button','approve','Approve Estimation');
         if($_GET['approve']){
-        	$quote=$this->add('Model_Quote')->load($_GET['approve']);
-        	$quote->set('status','estimation_approved');
-        	$quote->save();
-        	$this->api->redirect($this->api->url('/client/quotes'));
+            $quote=$this->add('Model_Quote')->load($_GET['approve']);
+            $quote->set('status','estimation_approved');
+            $quote->save();
+            $this->api->redirect($this->api->url('/client/quotes'));
         }
-        
+
         $this->add('P');
     }
 }
