@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/Model/Task/Bug.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/Model/Task/Enhancement.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/Model/Task/Validation.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addons/autocomplete" afterPath="$PROJECT_DIR$/addons/autocomplete" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/View/Report.php" afterPath="$PROJECT_DIR$/lib/View/Report.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/View/ReportsSwitcher.php" afterPath="$PROJECT_DIR$/lib/View/ReportsSwitcher.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/Model/Task.php" afterPath="$PROJECT_DIR$/lib/Model/Task.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/Frontend.php" afterPath="$PROJECT_DIR$/lib/Frontend.php" />
     </list>
     <ignored path="colubris.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,7 +17,7 @@
     <file path="/Quotes.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376037274749" ignored="false" />
     <file path="/Quote.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376034553003" ignored="false" />
     <file path="/a.dummy" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376038159943" ignored="false" />
-    <file path="/reports.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376034771377" ignored="false" />
+    <file path="/reports.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376048824792" ignored="false" />
     <file path="/Report.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376048420817" ignored="false" />
     <file path="/Frontend.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376035731118" ignored="false" />
     <file path="/Task.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376047950650" ignored="false" />
@@ -109,11 +103,9 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/public/css/dev.css" />
         <option value="$PROJECT_DIR$/vendor/atk4/atk4/lib/SQL/Model.php" />
         <option value="$PROJECT_DIR$/lib/Model/Quote.php" />
         <option value="$PROJECT_DIR$/page/manager/reports.php" />
-        <option value="$PROJECT_DIR$/lib/Frontend.php" />
         <option value="$PROJECT_DIR$/page/client/tasks.php" />
         <option value="$PROJECT_DIR$/page/manager/tasks.php" />
         <option value="$PROJECT_DIR$/page/team/tasks.php" />
@@ -125,6 +117,8 @@
         <option value="$PROJECT_DIR$/lib/Model/Task.php" />
         <option value="$PROJECT_DIR$/lib/View/ReportsSwitcher.php" />
         <option value="$PROJECT_DIR$/lib/View/Report.php" />
+        <option value="$PROJECT_DIR$/page/team/reports.php" />
+        <option value="$PROJECT_DIR$/lib/Frontend.php" />
       </list>
     </option>
   </component>
@@ -428,6 +422,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/page/team" />
       <recent name="$PROJECT_DIR$/lib/Model/Task" />
       <recent name="$PROJECT_DIR$/doc/dbupdates" />
       <recent name="$PROJECT_DIR$/lib/View" />
@@ -536,20 +531,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/page/team/tasks.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="62" selection-start="452" selection-end="452" vertical-scroll-proportion="0.38732395">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/page/manager/tasks.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="62" selection-start="458" selection-end="458" vertical-scroll-proportion="0.38732395">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/page/client/tasks.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="62" selection-start="445" selection-end="445" vertical-scroll-proportion="0.38732395">
@@ -637,6 +618,20 @@
     <entry file="file://$PROJECT_DIR$/lib/View/ReportsSwitcher.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="0" selection-start="661" selection-end="661" vertical-scroll-proportion="-6.875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/Frontend.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="178" column="38" selection-start="6112" selection-end="6112" vertical-scroll-proportion="0.33259425">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/page/team/reports.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="15" selection-start="22" selection-end="22" vertical-scroll-proportion="0.06651885">
           <folding />
         </state>
       </provider>
