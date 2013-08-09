@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atk4-addons" afterPath="$PROJECT_DIR$/atk4-addons" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addons/autocomplete" afterPath="$PROJECT_DIR$/addons/autocomplete" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addons/x_bread_crumb" afterPath="$PROJECT_DIR$/addons/x_bread_crumb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/Client/Quotes.php" afterPath="$PROJECT_DIR$/lib/Client/Quotes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/View/Switcher.php" afterPath="$PROJECT_DIR$/lib/View/Switcher.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/dev.css" afterPath="$PROJECT_DIR$/public/css/dev.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/page/manager/reports.php" afterPath="$PROJECT_DIR$/page/manager/reports.php" />
     </list>
     <ignored path="colubris.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,7 +37,7 @@
       <file leaf-file-name="reports.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/page/manager/reports.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="32" selection-start="129" selection-end="129" vertical-scroll-proportion="0.0">
+            <state line="5" column="32" selection-start="129" selection-end="129" vertical-scroll-proportion="-0.625">
               <folding />
             </state>
           </provider>
@@ -69,7 +64,7 @@
       <file leaf-file-name="Quotes.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/Client/Quotes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="55" selection-start="663" selection-end="663" vertical-scroll-proportion="0.4949785">
+            <state line="23" column="10" selection-start="618" selection-end="618" vertical-scroll-proportion="0.4404591">
               <folding />
             </state>
           </provider>
@@ -316,6 +311,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="colubris" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="colubris" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Client" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -464,7 +477,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/page/manager/reports.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="32" selection-start="129" selection-end="129" vertical-scroll-proportion="0.0">
+        <state line="5" column="32" selection-start="129" selection-end="129" vertical-scroll-proportion="-0.625">
           <folding />
         </state>
       </provider>
@@ -502,9 +515,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/Model/Quote.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.32281205">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/Client/Quotes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="55" selection-start="663" selection-end="663" vertical-scroll-proportion="0.4949785">
+        <state line="23" column="10" selection-start="618" selection-end="618" vertical-scroll-proportion="0.4404591">
           <folding />
         </state>
       </provider>
