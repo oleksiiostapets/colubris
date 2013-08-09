@@ -14,8 +14,8 @@ class Model_Task extends Model_Table {
             )
         )->defaultValue('normal');
 
-        $this->addField('status')->setValueList($this->api->task_statuses)->defaultValue('unstarted');
-        $this->addField('type')->setValueList($this->api->task_types)->defaultValue('change request');
+        $this->addField('status')->setValueList($this->api->task_statuses)->defaultValue('unstarted')->sortable(true);
+        $this->addField('type')->setValueList($this->api->task_types)->defaultValue('change request')->sortable(true);
 
         $this->addField('descr_original')->dataType('text');
 
@@ -24,7 +24,7 @@ class Model_Task extends Model_Table {
 
         //$this->addField('deviation')->dataType('text');
 
-        $this->addField('project_id')->refModel('Model_Project')->mandatory(true);
+        $this->addField('project_id')->refModel('Model_Project')->mandatory(true)->sortable(true);
         $this->addField('requirement_id')->refModel('Model_Requirement');
         $this->addField('requester_id')->refModel('Model_User');
         $this->addField('assigned_id')->refModel('Model_User');

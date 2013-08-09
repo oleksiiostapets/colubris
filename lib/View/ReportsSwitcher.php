@@ -14,15 +14,13 @@ class View_ReportsSwitcher extends View {
         	$mp=$this->add('Model_Project');
         }
         $projects=$mp->getRows();
-        if($_GET['project_id']){
+        if($_GET['project_id']!==null){
         	$this->api->memorize('project_id',$_GET['project_id']);
         	$this->api->memorize('quote_id',0);
-        }elseif(!$this->api->recall('project_id')){
-        	if(count($projects)>0){
-        		$this->api->memorize('project_id',$projects[0]['id']);
-        	}
         }
+
         $p_arr=array();
+        $p_arr['0']='all';
         foreach ($projects as $p){
         	$p_arr[$p['id']]=$p['name'];
         }
