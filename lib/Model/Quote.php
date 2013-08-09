@@ -3,6 +3,7 @@ class Model_Quote extends Model_Table {
     public $table="quote";
     function init(){
         parent::init();
+        $this->debug();
         $this->hasOne('Project')->display(array('form'=>'Form_Field_AutoEmpty'))->mandatory('required');
         //$this->addField('project_id')->refModel('Model_Project');
                 //->display(array('form'=>'autocomplete/basic'));

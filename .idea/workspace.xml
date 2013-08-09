@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addons/autocomplete" afterPath="$PROJECT_DIR$/addons/autocomplete" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/Model/Quote.php" afterPath="$PROJECT_DIR$/lib/Model/Quote.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/Client/Quotes.php" afterPath="$PROJECT_DIR$/lib/Client/Quotes.php" />
     </list>
     <ignored path="colubris.iws" />
@@ -14,7 +15,8 @@
     <file path="/a.coffee" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1375962483654" ignored="false" />
     <file path="/a.css" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1375962489237" ignored="false" />
     <file path="/dev.css" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1375962659800" ignored="false" />
-    <file path="/Quotes.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376028134912" ignored="false" />
+    <file path="/Quotes.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376028878419" ignored="false" />
+    <file path="/Quote.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376028863824" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +66,16 @@
       <file leaf-file-name="Quotes.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/Client/Quotes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="138" selection-start="824" selection-end="824" vertical-scroll-proportion="0.46197993">
+            <state line="23" column="50" selection-start="658" selection-end="658" vertical-scroll-proportion="0.4404591">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Quote.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/Model/Quote.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="23" selection-start="141" selection-end="141" vertical-scroll-proportion="-3.125">
               <folding />
             </state>
           </provider>
@@ -110,6 +121,7 @@
         <option value="$PROJECT_DIR$/lib/View/Switcher.php" />
         <option value="$PROJECT_DIR$/public/css/dev.css" />
         <option value="$PROJECT_DIR$/lib/View/ReportsSwitcher.php" />
+        <option value="$PROJECT_DIR$/lib/Model/Quote.php" />
         <option value="$PROJECT_DIR$/lib/Client/Quotes.php" />
       </list>
     </option>
@@ -517,14 +529,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/Model/Quote.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.32281205">
+        <state line="5" column="23" selection-start="141" selection-end="141" vertical-scroll-proportion="-3.125">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/Client/Quotes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="138" selection-start="824" selection-end="824" vertical-scroll-proportion="0.46197993">
+        <state line="23" column="50" selection-start="658" selection-end="658" vertical-scroll-proportion="0.4404591">
           <folding />
         </state>
       </provider>
