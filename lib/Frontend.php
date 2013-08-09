@@ -110,6 +110,13 @@ class Frontend extends ApiFrontend {
             	'rejected'=>'rejected',
             	'accepted'=>'accepted',
             );
+        $this->task_types=array(
+            'project'=>'project',
+            'change request'=>'change request',
+            'bug'=>'bug',
+            'support'=>'support',
+            'drop'=>'drop',
+        );
     }
     
     function addAllowedPages($allowed_pages){
