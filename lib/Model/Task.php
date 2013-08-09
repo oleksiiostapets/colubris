@@ -30,7 +30,7 @@ class Model_Task extends Model_Table {
         $this->addField('assigned_id')->refModel('Model_User');
         
         $this->addField('created_dts');
-        $this->addField('updated_dts');
+        $this->addField('updated_dts')->caption('Updated')->sortable(true);
         
         $this->addHook('beforeInsert', function($m,$q){
         	$q->set('created_dts', $q->expr('now()'));
