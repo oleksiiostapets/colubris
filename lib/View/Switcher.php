@@ -1,6 +1,5 @@
 <?php
 class View_Switcher extends View {
-    public $quotes;
     function init(){
         parent::init();
 
