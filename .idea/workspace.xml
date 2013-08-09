@@ -2,35 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/colubris.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atk4-addons" afterPath="$PROJECT_DIR$/atk4-addons" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/Model/Task/Bug.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/Model/Task/Enhancement.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/Model/Task/Validation.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addons/autocomplete" afterPath="$PROJECT_DIR$/addons/autocomplete" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addons/x_bread_crumb" afterPath="$PROJECT_DIR$/addons/x_bread_crumb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/View/Report.php" afterPath="$PROJECT_DIR$/lib/View/Report.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/View/ReportsSwitcher.php" afterPath="$PROJECT_DIR$/lib/View/ReportsSwitcher.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/Model/Task.php" afterPath="$PROJECT_DIR$/lib/Model/Task.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="colubris.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376027820614" ignored="false" />
     <file path="/a.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1375962480006" ignored="false" />
-    <file path="/ReportsSwitcher.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1375962811631" ignored="false" />
+    <file path="/ReportsSwitcher.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376046354628" ignored="false" />
     <file path="$PROJECT_DIR$/../nkorg/lib/Banner/Show.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1375961578759" ignored="false" />
     <file path="/a.coffee" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1375962483654" ignored="false" />
     <file path="/a.css" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1375962489237" ignored="false" />
     <file path="/dev.css" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1375962659800" ignored="false" />
-    <file path="/Quotes.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376034504604" ignored="false" />
+    <file path="/Quotes.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376037274749" ignored="false" />
     <file path="/Quote.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376034553003" ignored="false" />
-    <file path="/a.dummy" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376033393750" ignored="false" />
+    <file path="/a.dummy" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376038159943" ignored="false" />
     <file path="/reports.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376034771377" ignored="false" />
-    <file path="/Report.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376034802313" ignored="false" />
+    <file path="/Report.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376048420817" ignored="false" />
     <file path="/Frontend.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376035731118" ignored="false" />
-    <file path="/Task.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376035950912" ignored="false" />
+    <file path="/Task.php" changelist="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" time="1376047950650" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,28 +55,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Report.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Report.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/View/Report.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="85" selection-end="85" vertical-scroll-proportion="-3.125">
+            <state line="6" column="46" selection-start="163" selection-end="163" vertical-scroll-proportion="0.19955654">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Task.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/Model/Task.php">
+      <file leaf-file-name="Report.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/Model/Task/Report.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="99" selection-start="582" selection-end="582" vertical-scroll-proportion="-8.75">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TasksNew.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/View/TasksNew.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="25" selection-start="660" selection-end="660" vertical-scroll-proportion="0.4323725">
+            <state line="6" column="10" selection-start="105" selection-end="105" vertical-scroll-proportion="-3.75">
               <folding />
             </state>
           </provider>
@@ -89,25 +76,16 @@
       <file leaf-file-name="ReportsSwitcher.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/View/ReportsSwitcher.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="26" selection-start="438" selection-end="438" vertical-scroll-proportion="-8.125">
+            <state line="20" column="0" selection-start="661" selection-end="661" vertical-scroll-proportion="-6.875">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Quotes.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/Client/Quotes.php">
+      <file leaf-file-name="Task.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/Model/Task.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="14" selection-start="1052" selection-end="1052" vertical-scroll-proportion="-12.166667">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Quote.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/Model/Quote.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="26" selection-start="120" selection-end="120" vertical-scroll-proportion="-1.25">
+            <state line="26" column="97" selection-start="952" selection-end="952" vertical-scroll-proportion="-16.25">
               <folding />
             </state>
           </provider>
@@ -131,22 +109,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/lib/View/Switcher.php" />
         <option value="$PROJECT_DIR$/public/css/dev.css" />
-        <option value="$PROJECT_DIR$/lib/View/ReportsSwitcher.php" />
         <option value="$PROJECT_DIR$/vendor/atk4/atk4/lib/SQL/Model.php" />
-        <option value="$PROJECT_DIR$/lib/Client/Quotes.php" />
         <option value="$PROJECT_DIR$/lib/Model/Quote.php" />
         <option value="$PROJECT_DIR$/page/manager/reports.php" />
-        <option value="$PROJECT_DIR$/lib/View/Report.php" />
         <option value="$PROJECT_DIR$/lib/Frontend.php" />
-        <option value="$PROJECT_DIR$/lib/Model/Task.php" />
         <option value="$PROJECT_DIR$/page/client/tasks.php" />
         <option value="$PROJECT_DIR$/page/manager/tasks.php" />
         <option value="$PROJECT_DIR$/page/team/tasks.php" />
         <option value="$PROJECT_DIR$/page/team/tasks/new.php" />
         <option value="$PROJECT_DIR$/page/manager/tasks/new.php" />
         <option value="$PROJECT_DIR$/page/client/tasks/new.php" />
+        <option value="$PROJECT_DIR$/lib/Client/Quotes.php" />
+        <option value="$PROJECT_DIR$/lib/Model/Task/Report.php" />
+        <option value="$PROJECT_DIR$/lib/Model/Task.php" />
+        <option value="$PROJECT_DIR$/lib/View/ReportsSwitcher.php" />
+        <option value="$PROJECT_DIR$/lib/View/Report.php" />
       </list>
     </option>
   </component>
@@ -413,24 +391,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="colubris" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="colubris" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="Manager" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -468,6 +428,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/Model/Task" />
       <recent name="$PROJECT_DIR$/doc/dbupdates" />
       <recent name="$PROJECT_DIR$/lib/View" />
     </key>
@@ -502,6 +463,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24183877" sideWeight="0.6724368" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24983345" sideWeight="0.6724368" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -510,7 +472,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -575,69 +536,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/Model/Budget.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="126" column="25" selection-start="4947" selection-end="4947" vertical-scroll-proportion="0.40798226">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/Model/Quote.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="26" selection-start="120" selection-end="120" vertical-scroll-proportion="-1.25">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/page/manager/reports.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="31" selection-start="173" selection-end="173" vertical-scroll-proportion="-4.375">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/Client/Quotes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="14" selection-start="1052" selection-end="1052" vertical-scroll-proportion="-12.166667">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/page/client/quotes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/View/ReportsSwitcher.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="26" selection-start="438" selection-end="438" vertical-scroll-proportion="-8.125">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/Frontend.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="19" selection-start="3639" selection-end="3639" vertical-scroll-proportion="0.5654102">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/View/Report.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="85" selection-end="85" vertical-scroll-proportion="-3.125">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/Model/Task.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="99" selection-start="582" selection-end="582" vertical-scroll-proportion="-8.75">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/page/team/tasks.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="62" selection-start="452" selection-end="452" vertical-scroll-proportion="0.38732395">
@@ -680,9 +578,72 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/Model/Quote.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="26" selection-start="120" selection-end="120" vertical-scroll-proportion="-0.83148557">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/Model/Quote/Participant.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/atk4/lib/Model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="408" column="54" selection-start="13818" selection-end="13818" vertical-scroll-proportion="0.4063927">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/View/TasksNew.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="25" selection-start="660" selection-end="660" vertical-scroll-proportion="0.4323725">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/Client/Quotes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="0" selection-start="578" selection-end="769" vertical-scroll-proportion="0.37694013">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/Model/Task/Report.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="10" selection-start="105" selection-end="105" vertical-scroll-proportion="-3.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/page/manager/reports.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="31" selection-start="173" selection-end="173" vertical-scroll-proportion="-4.375">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/Model/Task.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="97" selection-start="952" selection-end="952" vertical-scroll-proportion="-16.25">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/View/ReportsSwitcher.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="0" selection-start="661" selection-end="661" vertical-scroll-proportion="-6.875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/View/Report.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="46" selection-start="163" selection-end="163" vertical-scroll-proportion="0.19955654">
           <folding />
         </state>
       </provider>
