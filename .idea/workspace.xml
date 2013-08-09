@@ -2,16 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/colubris.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atk4-addons" afterPath="$PROJECT_DIR$/atk4-addons" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addons/autocomplete" afterPath="$PROJECT_DIR$/addons/autocomplete" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/Frontend.php" afterPath="$PROJECT_DIR$/lib/Frontend.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/Model/Task.php" afterPath="$PROJECT_DIR$/lib/Model/Task.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/page/client/tasks/new.php" afterPath="$PROJECT_DIR$/page/client/tasks/new.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/page/manager/tasks/new.php" afterPath="$PROJECT_DIR$/page/manager/tasks/new.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/page/team/tasks/new.php" afterPath="$PROJECT_DIR$/page/team/tasks/new.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/page/manager/reports.php" afterPath="$PROJECT_DIR$/page/manager/reports.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/page/client/tasks.php" afterPath="$PROJECT_DIR$/page/client/tasks.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/page/manager/tasks.php" afterPath="$PROJECT_DIR$/page/manager/tasks.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/page/team/tasks.php" afterPath="$PROJECT_DIR$/page/team/tasks.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addons/x_bread_crumb" afterPath="$PROJECT_DIR$/addons/x_bread_crumb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="colubris.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -78,7 +80,7 @@
       <file leaf-file-name="TasksNew.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/View/TasksNew.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="21" selection-start="1136" selection-end="1136" vertical-scroll-proportion="0.6984479">
+            <state line="13" column="25" selection-start="660" selection-end="660" vertical-scroll-proportion="0.4323725">
               <folding />
             </state>
           </provider>
@@ -680,7 +682,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/View/TasksNew.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="21" selection-start="1136" selection-end="1136" vertical-scroll-proportion="0.6984479">
+        <state line="13" column="25" selection-start="660" selection-end="660" vertical-scroll-proportion="0.4323725">
           <folding />
         </state>
       </provider>
