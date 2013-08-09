@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="53a9af27-6eee-4a4a-8dca-3adb023bbb8e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addons/autocomplete" afterPath="$PROJECT_DIR$/addons/autocomplete" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/Model/Quote.php" afterPath="$PROJECT_DIR$/lib/Model/Quote.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/Client/Quotes.php" afterPath="$PROJECT_DIR$/lib/Client/Quotes.php" />
     </list>
     <ignored path="colubris.iws" />
@@ -66,7 +65,7 @@
       <file leaf-file-name="Quotes.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/Client/Quotes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="50" selection-start="658" selection-end="658" vertical-scroll-proportion="0.4404591">
+            <state line="24" column="8" selection-start="667" selection-end="667" vertical-scroll-proportion="0.46197993">
               <folding />
             </state>
           </provider>
@@ -536,7 +535,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/Client/Quotes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="50" selection-start="658" selection-end="658" vertical-scroll-proportion="0.4404591">
+        <state line="24" column="8" selection-start="667" selection-end="667" vertical-scroll-proportion="0.46197993">
           <folding />
         </state>
       </provider>
