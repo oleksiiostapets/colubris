@@ -15,7 +15,8 @@ class Model_Task extends Model_Table {
         )->defaultValue('normal');
 
         $this->addField('status')->setValueList($this->api->task_statuses)->defaultValue('unstarted');
-        
+        $this->addField('type')->setValueList($this->api->task_types)->defaultValue('change request');
+
         $this->addField('descr_original')->dataType('text');
 
         $this->addField('estimate')->dataType('money');
