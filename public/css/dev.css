@@ -37,3 +37,6 @@
 .red_color{color:red;font-weight:bold;}
 
 .lister_expander {background:#fbfbfb;}
+
+.switcher .input-row .input-cell.expanded {width:auto;}
+.switcher fieldset .atk-form-row label {float:none;}
