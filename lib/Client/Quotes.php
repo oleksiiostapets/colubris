@@ -21,9 +21,19 @@ class Client_Quotes extends View {
         
         $cr=$this->add('Grid_Quotes');
         $m=$this->add('Model_Quote');
-        echo $this->api->auth->model['client_id'];
-        $m->addCondition('client_id',$this->api->auth->model['client_id']);
-        $cr->setModel($m,array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status','client_id'));
+
+        $p=$this->api->db->dsql()->table('project')->field('id')->where('client_id',$this->api->auth->model['client_id'])->get('id');
+        $project_ids=array();
+        foreach ($p as $val){
+            $project_ids[]=$val['id'];
+        }
+
+
+        $q=$m->_dsql();
+        //$q->join('project');
+        $q->where('project_id','IN',$project_ids);
+        //$m->addCondition('client_id',$this->api->auth->model['client_id']);
+        $cr->setModel($m,array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status'));
         $cr->addFormatter('status','status');
        	$cr->addColumn('button','edit');
         if($_GET['edit']){

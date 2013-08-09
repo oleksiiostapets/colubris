@@ -2,8 +2,7 @@
 class Model_Quote extends Model_Table {
     public $table="quote";
     function init(){
-        parent::init();
-        $this->debug();
+        parent::init(); //$this->debug();
         $this->hasOne('Project')->display(array('form'=>'Form_Field_AutoEmpty'))->mandatory('required');
         //$this->addField('project_id')->refModel('Model_Project');
                 //->display(array('form'=>'autocomplete/basic'));
@@ -43,7 +42,7 @@ class Model_Quote extends Model_Table {
         				'USD'=>'USD',
         		)
         )->mandatory('Cannot be empty');
-        
+
         $this->addExpression('client_id')->set(function($m,$q){
             return $q->dsql()
                 ->table('project')
@@ -81,7 +80,7 @@ class Model_Quote extends Model_Table {
         });
         
     }
-    
+
     function getRequirements(){
     	$rm=$this->add('Model_Requirement')->addCondition('quote_id',$this->get('id'));
     	return($rm->getRows());
