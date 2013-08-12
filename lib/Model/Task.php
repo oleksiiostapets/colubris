@@ -5,7 +5,7 @@ class Model_Task extends Model_Table {
     function init(){
         parent::init();
 
-        $this->debug();
+        //$this->debug();
 
         $this->addField('name')->mandatory(true);
         $this->addField('priority')->setValueList(
