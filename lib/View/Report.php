@@ -36,7 +36,7 @@ class View_Report extends View {
             $m->addCondition('date','<=',$date);
         }
 
-        $cr->setModel($m,array('project','quote','name','status','type','estimate','spent','date','performer'));
+        $cr->setModel($m,$this->grid_show_fields);
 
         $cr->addTotals(array('estimate','spent'));
     }
