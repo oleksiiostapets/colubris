@@ -4,12 +4,16 @@ class View_Report extends View {
         parent::init();
 
         $cr=$this->add('Grid');
-        $m=$this->add('Model_Task_Report'); //->debug();
+        $m=$this->add('Model_Task_Report');//->debug();
 
         $j = $m->join('task_time.task_id','id','left','_tt');
         $j->addField('spent','spent_time');
         $j->addField('date','date');
+        $j->addField('performer_id','user_id');
         $m->addCondition('spent','>','0');
+
+        $ju = $j->join('user.id','user_id','left','_tu');
+        $ju->addField('performer','name');
 
         $jr = $m->join('requirement','requirement_id','left','_req');
         $jr->addField('quote_id','quote_id');
@@ -20,8 +24,8 @@ class View_Report extends View {
         if($this->api->recall('quote_id')>0){
             $m->addCondition('quote_id',$this->api->recall('quote_id'));
         }
-        if($this->api->recall('assigned_id')>0){
-            $m->addCondition('assigned_id',$this->api->recall('assigned_id'));
+        if($this->api->recall('performer_id')>0){
+            $m->addCondition('performer_id',$this->api->recall('performer_id'));
         }
         if($this->api->recall('date_from')!=''){
             $date=date('Y-m-d',strtotime(str_replace('/','-',$this->api->recall('date_from'))));
@@ -32,7 +36,7 @@ class View_Report extends View {
             $m->addCondition('date','<=',$date);
         }
 
-        $cr->setModel($m,array('project','quote','name','status','type','estimate','requester','assigned','spent','date'));
+        $cr->setModel($m,array('project','quote','name','status','type','estimate','spent','date','performer'));
 
         $cr->addTotals(array('estimate','spent'));
     }
