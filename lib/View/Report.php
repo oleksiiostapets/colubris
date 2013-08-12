@@ -33,5 +33,7 @@ class View_Report extends View {
         }
 
         $cr->setModel($m,array('project','quote','name','status','type','estimate','requester','assigned','spent','date'));
+
+        $cr->addTotals(array('estimate','spent'));
     }
 }
