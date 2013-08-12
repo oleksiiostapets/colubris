@@ -28,6 +28,19 @@ class Model_User extends Model_Table {
         
         $this->setOrder('name');
 
+        $this->addHook('beforeInsert',function($m){
+            if($m->getBy('email',$m['email'])){
+                throw $m
+                    ->exception('User with this email already exists','ValidityCheck')
+                    ->setField('email');
+            }
+        });
+
+        $this->addHook('beforeModify',function($m){
+            if($m->dirty['email'])throw $m
+                ->exception('Do not change email for existing user','ValidityCheck')
+                ->setField('email');
+        });
     }
     function me(){
         $this->addCondition('id',$this->api->auth->get('id'));
