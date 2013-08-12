@@ -50,19 +50,19 @@ class View_ReportsSwitcher extends View {
 		$fq->setValueList($qn_arr);
 		$fq->set($this->api->recall('quote_id'));
 		
-        // Assigned_to
+        // Performer
         $ma=$this->add('Model_User')->setOrder('name');
         $a_arr=$ma->getRows();
         $u_arr['0']='all';
         foreach($a_arr as $a){
             $u_arr[$a['id']]=$a['name'];
         }
-        if($_GET['assigned_id']!==null){
-            $this->api->memorize('assigned_id',$_GET['assigned_id']);
+        if($_GET['performer_id']!==null){
+            $this->api->memorize('performer_id',$_GET['performer_id']);
         }
-        $fa=$f->addField('dropdown','assigned_id','Assigned');
+        $fa=$f->addField('dropdown','performer_id','Performer');
         $fa->setValueList($u_arr);
-        $fa->set($this->api->recall('assigned_id'));
+        $fa->set($this->api->recall('performer_id'));
 
         // Date from
         if($_GET['date_from']!==null){
@@ -83,7 +83,7 @@ class View_ReportsSwitcher extends View {
             $this->api->url(),
             'project_id'=>$fp->js()->val(),
             'quote_id'=>$fq->js()->val(),
-            'assigned_id'=>$fa->js()->val(),
+            'performer_id'=>$fa->js()->val(),
             'date_from'=>$fdate_from->js()->val(),
             'date_to'=>$fdate_to->js()->val(),
         );
