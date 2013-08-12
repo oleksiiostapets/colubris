@@ -163,6 +163,7 @@ class Frontend extends ApiFrontend {
             	$sm->addMenuItem('client/tasks','Tasks');
             	$sm->addMenuItem('client/projects','Projects');
                 $sm->addMenuItem('client/quotes','Quotes');
+                $sm->addMenuItem('client/reports','Reports');
                 //$sm->addMenuItem('client/quotes/rfq','Request For Quotation');
                 //$m->addMenuItem('client/budgets','Budgets');
                 //$m->addMenuItem('client/status','Project Status');

@@ -5,6 +5,8 @@ class Model_Task extends Model_Table {
     function init(){
         parent::init();
 
+        $this->debug();
+
         $this->addField('name')->mandatory(true);
         $this->addField('priority')->setValueList(
             array(
@@ -28,7 +30,13 @@ class Model_Task extends Model_Table {
         $this->addField('requirement_id')->refModel('Model_Requirement');
         $this->addField('requester_id')->refModel('Model_User');
         $this->addField('assigned_id')->refModel('Model_User');
-        
+
+        if($this->api->auth->model['is_client']){
+            $j = $this->join('project.id','project_id','left','_p');
+            $j->addField('client_id','client_id');
+            $this->addCondition('client_id',$this->api->auth->model['client_id']);
+        }
+
         $this->addField('created_dts');
         $this->addField('updated_dts')->caption('Updated')->sortable(true);
         
