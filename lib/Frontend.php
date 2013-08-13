@@ -277,7 +277,7 @@ class Frontend extends ApiFrontend {
     
     function getUserType(){
     	if ($this->auth->model['is_manager']) return 'manager';
-    	if ($this->auth->model['is_developer']) return 'developer';
+    	if ($this->auth->model['is_developer']) return 'team';
     	if ($this->auth->model['is_client']) return 'client';
     	if ($this->auth->model['is_admin']) return 'admin';
     }
