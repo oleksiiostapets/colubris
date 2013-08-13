@@ -55,7 +55,9 @@ class Manager_Projects extends View {
         		$client=$this->add('Model_Client')->load($quote['client_id']);
         		$to=$client['email'];
         		
-        		$this->api->mailer->sendMail($to,'send_quote',array('link'=>$this->api->url('/client/quotes/rfq/estimated',array('quote_id'=>$_GET['send_to_client']))));
+        		$this->api->mailer->sendMail($to,'send_quote',array(
+                    'link'=>$this->api->url('/client/quotes/rfq/estimated',array('quote_id'=>$_GET['send_to_client']))
+                ),true);
         		
 	            $this->js()->univ()->successMessage('Sent')->execute();
         	}else{

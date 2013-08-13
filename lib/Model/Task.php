@@ -62,7 +62,7 @@ class Model_Task extends Model_Table {
         		$m->api->mailer->sendMail($to,'task_edit',array(
         				'link'=>$m->api->url('/manager/tasks'),
         				'task_name'=>$m->get('name'),
-        				));
+        				),'mail_task_changes');
         	}
        	});
        	
@@ -82,7 +82,7 @@ class Model_Task extends Model_Table {
         		$m->api->mailer->sendMail($to,'task_delete',array(
         				'link'=>$m->api->url('/manager/tasks'),
         				'task_name'=>$m->get('name'),
-        				));
+        				),'mail_task_changes');
         	}
        	});
         

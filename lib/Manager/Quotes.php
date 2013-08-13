@@ -62,7 +62,9 @@ class Manager_Quotes extends View {
         		$to=$client['email']; $to .= ', radwwmail@gmail.com';
         		
         		if ($to!=''){
-        			$this->api->mailer->sendMail($to,'send_quote',array('link'=>$this->api->url('/client/quotes/rfq/estimated',array('quote_id'=>$_GET['send_to_client']))));
+        			$this->api->mailer->sendMail($to,'send_quote',array(
+                        'link'=>$this->api->url('/client/quotes/rfq/estimated',array('quote_id'=>$_GET['send_to_client']))
+                    ),true);
 	
 		            $this->js()->univ()->successMessage('Mail sent to '.$to)->execute();
         		}else{
