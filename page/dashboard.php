@@ -11,8 +11,8 @@ class page_dashboard extends Page {
 		$model=$this->add('Model_TaskTime')->addCondition('task_id',$_GET['task_id']);
 		$crud=$this->add('CRUD');
 		$crud->setModel($model,
-				array('spent_time','comment'),
-				array('user','spent_time','comment','created_dts')
+				array('spent_time','comment','date'),
+				array('user','spent_time','comment','date')
 		);
 		if ($crud->grid){
 			$crud->add_button->setLabel('Add Time');
