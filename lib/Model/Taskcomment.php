@@ -44,7 +44,7 @@ class Model_Taskcomment extends Model_Table {
         		$m->api->mailer->sendMail($to,'task_comment_changed',array(
         				'link'=>$m->api->url('/'.$m->api->getUserType().'/tasks'),
         				'task_name'=>$task->get('name'),
-        				));
+        				),'mail_task_changes');
         	}
         });
         $this->addHook('beforeDelete',function($m){

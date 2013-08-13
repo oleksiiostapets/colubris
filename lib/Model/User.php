@@ -28,6 +28,8 @@ class Model_User extends Model_Table {
         
         $this->setOrder('name');
 
+        $this->addField('mail_task_changes')->type('boolean')->caption('Send when task changed');
+
         $this->addHook('beforeInsert',function($m){
             if($m->getBy('email',$m['email'])){
                 throw $m
