@@ -42,7 +42,7 @@ class Model_Taskcomment extends Model_Table {
         	}
         	if ($to!=''){
         		$m->api->mailer->sendMail($to,'task_comment_changed',array(
-        				'link'=>$m->api->url('/'.$m->api->getUserType().'/tasks'),
+        				'link'=>$m->api->siteURL().$m->api->url($m->api->getUserType().'/tasks'),
         				'task_name'=>$task->get('name'),
         				),'mail_task_changes');
         	}

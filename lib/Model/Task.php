@@ -60,7 +60,7 @@ class Model_Task extends Model_Table {
         	}
         	if ($to!=''){
         		$m->api->mailer->sendMail($to,'task_edit',array(
-        				'link'=>$m->api->url('/manager/tasks'),
+        				'link'=>$m->api->siteURL().$m->api->url($m->api->getUserType().'/tasks'),
         				'task_name'=>$m->get('name'),
         				),'mail_task_changes');
         	}
@@ -80,7 +80,7 @@ class Model_Task extends Model_Table {
         	}
         	if ($to!=''){
         		$m->api->mailer->sendMail($to,'task_delete',array(
-        				'link'=>$m->api->url('/manager/tasks'),
+        				'link'=>$m->api->siteURL().$m->api->url($m->api->getUserType().'/tasks'),
         				'task_name'=>$m->get('name'),
         				),'mail_task_changes');
         	}

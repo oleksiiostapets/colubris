@@ -31,7 +31,7 @@ class Model_Attach extends Model_Table {
         	}
         	if ($to!=''){
         		$m->api->mailer->sendMail($to,'task_attachment_changed',array(
-        				'link'=>$m->api->url('/'.$m->api->getUserType().'/tasks'),
+        				'link'=>$m->api->siteURL().$m->api->url($m->api->getUserType().'/tasks'),
         				'task_name'=>$task->get('name'),
         				),'mail_task_changes');
         	}
@@ -52,7 +52,7 @@ class Model_Attach extends Model_Table {
         	}
         	if ($to!=''){
         		$m->api->mailer->sendMail($to,'task_attachment_deleted',array(
-        				'link'=>$m->api->url('/'.$m->api->getUserType().'/tasks'),
+        				'link'=>$m->api->siteURL().$m->api->url($m->api->getUserType().'/tasks'),
         				'task_name'=>$task->get('name'),
         				),'mail_task_changes');
         	}
