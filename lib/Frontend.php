@@ -281,4 +281,10 @@ class Frontend extends ApiFrontend {
     	if ($this->auth->model['is_client']) return 'client';
     	if ($this->auth->model['is_admin']) return 'admin';
     }
+
+    function siteURL(){
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $domainName = $_SERVER['HTTP_HOST'];
+        return $protocol.$domainName;
+    }
 }
