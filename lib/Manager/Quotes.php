@@ -59,14 +59,14 @@ class Manager_Quotes extends View {
         	
         	if ($quote['client_id']>0){
         		$client=$this->add('Model_Client')->load($quote['client_id']);
-        		$to=$client['email']; $to .= ', radwwmail@gmail.com';
-        		
-        		if ($to!=''){
-        			$this->api->mailer->sendMail($to,'send_quote',array(
+                $m->api->mailer->setReceivers(array($client['email']));
+
+        		if ($client['email']!=''){
+        			$this->api->mailer->sendMail('send_quote',array(
                         'link'=>$m->api->siteURL().$this->api->url('client/quotes/rfq/estimated',array('quote_id'=>$_GET['send_to_client']))
                     ),true);
 	
-		            $this->js()->univ()->successMessage('Mail sent to '.$to)->execute();
+		            $this->js()->univ()->successMessage('Mail sent to '.$client['email'])->execute();
         		}else{
         			$this->js()->univ()->successMessage('Error! The client '.$client->get('name').' has no email. Please add email for the client.')->execute();
         		}

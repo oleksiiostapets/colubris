@@ -47,43 +47,22 @@ class Model_Task extends Model_Table {
        	$this->addHook('beforeSave', function($m){
        		$m['updated_dts']=date('Y-m-d G:i:s', time());
 
-       		$to='';
-        	if ($m->get('requester_id')>0){
-        		$u=$m->add('Model_User')->load($m->get('requester_id'));
-        		if ($u['email']!='') $to=$u['email'];
-        	}
-        	if ($m->get('assigned_id')>0){
-        		$u=$m->add('Model_User')->load($m->get('assigned_id'));
-        		if ($u['email']!=''){
-        			if ($to=='') $to=$u['email']; else $to.=', '.$u['email'];
-        		}
-        	}
-        	if ($to!=''){
-        		$m->api->mailer->sendMail($to,'task_edit',array(
-        				'link'=>$m->api->siteURL().$m->api->url($m->api->getUserType().'/tasks'),
-        				'task_name'=>$m->get('name'),
-        				),'mail_task_changes');
-        	}
+            $m->api->mailer->task_status=$m['status'];
+            $m->api->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
+            $m->api->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
+            $m->api->mailer->sendMail('task_edit',array(
+                    'link'=>$m->api->siteURL().$m->api->url($m->api->getUserType().'/tasks'),
+                    'task_name'=>$m->get('name'),
+                    ));
        	});
        	
        	$this->addHook('beforeDelete', function($m){
-       		$to='';
-        	if ($m->get('requester_id')>0){
-        		$u=$m->add('Model_User')->load($m->get('requester_id'));
-        		if ($u['email']!='') $to=$u['email'];
-        	}
-        	if ($m->get('assigned_id')>0){
-        		$u=$m->add('Model_User')->load($m->get('assigned_id'));
-        		if ($u['email']!=''){
-        			if ($to=='') $to=$u['email']; else $to.=', '.$u['email'];
-        		}
-        	}
-        	if ($to!=''){
-        		$m->api->mailer->sendMail($to,'task_delete',array(
-        				'link'=>$m->api->siteURL().$m->api->url($m->api->getUserType().'/tasks'),
-        				'task_name'=>$m->get('name'),
-        				),'mail_task_changes');
-        	}
+            $m->api->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
+            $m->api->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
+            $m->api->mailer->sendMail('task_delete',array(
+                    'link'=>$m->api->siteURL().$m->api->url($m->api->getUserType().'/tasks'),
+                    'task_name'=>$m->get('name'),
+                    ));
        	});
         
        	$this->setOrder('updated_dts',true);
