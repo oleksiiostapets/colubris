@@ -27,9 +27,10 @@
 .not_estimated{font-weight:bold;background-color: rgba(247, 98, 77, 0.23);}
 .estimated{font-weight:bold;background-color: rgba(102, 255, 153, 0.15);}
 .estimation_approved{font-weight:bold;background-color: rgba(102, 204, 0, 0.18);}
-.finished{font-weight:bold;background-color: rgba(255, 255, 255, 0.15);}
+.finished{font-weight:bold;background-color: rgba(51, 204, 255, 0.17);}
+.tested{font-weight:bold;background-color: rgba(81, 164, 235, 0.19);}
 
-.unstarted{font-weight:bold;background-color: rgba(51, 204, 255, 0.17);}
+.unstarted{font-weight:bold;background-color: rgba(255, 255, 255, 0.15);}
 .started{font-weight:bold;background-color: rgba(102, 255, 153, 0.19);}
 .rejected{font-weight:bold;background-color: rgba(247, 98, 77, 0.15);}
 .accepted{font-weight:bold;background-color: rgba(102, 204, 0, 0.15);}
