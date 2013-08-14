@@ -25,7 +25,7 @@ class Grid_Attachments extends Grid {
         }
 
         $this->current_row_html['description'] =
-                $this->current_row['description'].'<br>'.
+                '<div class="comment radius_10">'.$this->current_row['description'].'</div>'.
                 '<div class="timestamp">'.$this->current_row['updated_dts'].'</div>'.
                 $file
         ;
