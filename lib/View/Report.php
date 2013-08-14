@@ -24,6 +24,12 @@ class View_Report extends View {
         if($this->api->recall('quote_id')>0){
             $m->addCondition('quote_id',$this->api->recall('quote_id'));
         }
+        if($this->api->recall('quote_id')==-1){
+            $m->addCondition('quote_id','>',0);
+        }
+        if($this->api->recall('quote_id')==-2){
+            $m->addCondition('quote_id',null);
+        }
         if($this->api->recall('performer_id')>0){
             $m->addCondition('performer_id',$this->api->recall('performer_id'));
         }
