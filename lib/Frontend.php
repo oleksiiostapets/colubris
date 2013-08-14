@@ -106,6 +106,7 @@ class Frontend extends ApiFrontend {
                 'unstarted'=>'unstarted',
                 'started'=>'started',
             	'finished'=>'finished',
+                'tested'=>'tested',
             	'rejected'=>'rejected',
             	'accepted'=>'accepted',
             );

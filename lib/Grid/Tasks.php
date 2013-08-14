@@ -6,8 +6,11 @@ class Grid_Tasks extends Grid_Advanced {
     			$this->row_t->setHTML('painted','started');
     			break;
     		case 'finished':
-    			$this->row_t->setHTML('painted','unstarted');
+    			$this->row_t->setHTML('painted','finished');
     			break;
+            case 'tested':
+                $this->row_t->setHTML('painted','tested');
+                break;
    			case 'rejected':
     			$this->row_t->setHTML('painted','rejected');
    				break;
