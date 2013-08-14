@@ -18,6 +18,7 @@ class Model_Attach extends Model_Table {
        		$m['updated_dts']=date('Y-m-d G:i:s', time());
        	
        		$task=$m->add('Model_Task')->load($m->get('task_id'));
+            $m->api->mailer->task_status=$task['status'];
             $m->api->mailer->addReceiverByUserId($task->get('requester_id'),'mail_task_changes');
             $m->api->mailer->addReceiverByUserId($task->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_attachment_changed',array(
@@ -28,6 +29,7 @@ class Model_Attach extends Model_Table {
         
        	$this->addHook('beforeDelete', function($m){
        		$task=$m->add('Model_Task')->load($m->get('task_id'));
+            $m->api->mailer->task_status=$task['status'];
             $m->api->mailer->addReceiverByUserId($task->get('requester_id'),'mail_task_changes');
             $m->api->mailer->addReceiverByUserId($task->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_attachment_deleted',array(
