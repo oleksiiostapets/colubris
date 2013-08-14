@@ -22,17 +22,17 @@
     margin-left:auto !important;
 }
 
-.quotation_requested{font-weight:bold;background-color:#33ccff;}
-.estimate_needed{font-weight:bold;background-color:#FBB6AA;}
-.not_estimated{font-weight:bold;background-color:#F7624D;}
-.estimated{font-weight:bold;background-color:#66ff99;}
-.estimation_approved{font-weight:bold;background-color:#66cc00;}
-.finished{font-weight:bold;background-color:#ffffff;}
+.quotation_requested{font-weight:bold;background-color: rgba(51, 204, 255, 0.20);}
+.estimate_needed{font-weight:bold;background-color: rgba(251, 182, 170, 0.17);}
+.not_estimated{font-weight:bold;background-color: rgba(247, 98, 77, 0.23);}
+.estimated{font-weight:bold;background-color: rgba(102, 255, 153, 0.15);}
+.estimation_approved{font-weight:bold;background-color: rgba(102, 204, 0, 0.18);}
+.finished{font-weight:bold;background-color: rgba(255, 255, 255, 0.15);}
 
-.unstarted{font-weight:bold;background-color:#33ccff;}
-.started{font-weight:bold;background-color:#66ff99;}
-.rejected{font-weight:bold;background-color:#F7624D;}
-.accepted{font-weight:bold;background-color:#66cc00;}
+.unstarted{font-weight:bold;background-color: rgba(51, 204, 255, 0.17);}
+.started{font-weight:bold;background-color: rgba(102, 255, 153, 0.19);}
+.rejected{font-weight:bold;background-color: rgba(247, 98, 77, 0.15);}
+.accepted{font-weight:bold;background-color: rgba(102, 204, 0, 0.15);}
 
 .red_color{color:red;font-weight:bold;}
 
