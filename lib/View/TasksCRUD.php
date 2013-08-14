@@ -21,9 +21,10 @@ class View_TasksCRUD extends View {
         $cr->setModel($m,
         		$this->edit_fields,
         		$this->show_fields
-        		);
+        );
         
         if($cr->grid){
+            $cr->grid->addPaginator();
         	$cr->grid->js('reload')->reload();
         	
         	if(!$this->api->auth->model['is_client']){
@@ -34,16 +35,15 @@ class View_TasksCRUD extends View {
 	                ))->execute();
 	            }
         	}
-/*
+            /*
             $cr->grid->addColumn('button','attachments');
             if ($_GET['attachments']) {
                 $this->js()->univ()->frameURL($this->api->_('Attachments'),array(
                     $this->api->url('./attachments',array('task_id'=>$_GET['attachments'],'reload_view'=>$cr->grid->name))
                 ))->execute();
             }
-*/
+            */
             $cr->grid->addColumn('expander','more');
-
         	$cr->grid->addFormatter('status','status');
         }
     }
