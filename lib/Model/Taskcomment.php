@@ -29,6 +29,7 @@ class Model_Taskcomment extends Model_Table {
         	}
         	
 			$task=$m->add('Model_Task')->load($m->get('task_id'));
+            $m->api->mailer->task_status=$task['status'];
             $m->api->mailer->addReceiverByUserId($task->get('requester_id'),'mail_task_changes');
             $m->api->mailer->addReceiverByUserId($task->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_comment_changed',array(
