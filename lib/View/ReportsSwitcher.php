@@ -32,14 +32,17 @@ class View_ReportsSwitcher extends View {
 		$mq=$this->add('Model_Quote');
 		$mq->addCondition('status','estimation_approved');
 		$mq->addCondition('project_id',$this->api->recall('project_id'));
+        /*
 		if($_GET['quote_id']!==null){
 			$check=$mq->tryLoad($_GET['quote_id']);
 			if(!$check->loaded()){
 				$_GET['quote_id']=0;
 			}
-		}
+		}*/
 		$q_arr=$mq->getRows();
 		$qn_arr['0']='all';
+        $qn_arr['-1']='tasks in quotes';
+        $qn_arr['-2']='tasks without quotes';
 		foreach($q_arr as $q){
 			$qn_arr[$q['id']]=$q['name'];
 		}
