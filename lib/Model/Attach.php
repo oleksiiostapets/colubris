@@ -5,7 +5,7 @@ class Model_Attach extends Model_Table {
 		parent::init();
 		$this->hasOne('Task');
 		$this->addField('description')->type('text');
-		$attach = $this->add('Field_ImageOrFile','file_id')->setModel('ImageOrFile')->mandatory(true);
+		$attach = $this->add('filestore/Field_Image','file_id')->setModel('ImageOrFile')->mandatory(true);
         $attach->addThumb();
 
         $this->addField('created_dts');

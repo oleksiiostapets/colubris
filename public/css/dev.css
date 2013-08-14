@@ -42,3 +42,9 @@
 .switcher fieldset .atk-form-row label {float:none;}
 
 .atk-grid-totals {background-color:#eee;}
+
+.timestamp {
+    color: #cdcdcd;
+    padding: 0;
+    margin: 0;
+}

@@ -7,10 +7,8 @@ class Model_Taskcomment extends Model_Table {
 		$this->hasOne('User')->Caption('Creator');
 		$this->addField('text')->type('text')->mandatory('required');
 		
-		$this->add('filestore/Field_File', array(
-				'name'=>'file_id',
-				'use_model'=>'Model_Myfile'
-		));
+        $attach = $this->add('filestore/Field_Image','file_id')->setModel('Myfile');
+        $attach->addThumb();
 		
 		$this->addField('created_dts')->Caption('Created At')->sortable(true);
 		

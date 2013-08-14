@@ -18,21 +18,17 @@ class Grid_Attachments extends Grid {
         $this->removeColumn('updated_dts');
     }
     function formatRow() {
-        parent::formatRow();
-
         if ($this->current_row['file_thumb'] != '') {
             $file = '<a target="_blank" href="'. $this->current_row['file'] .'"><img width="50" src="'.$this->current_row['file_thumb'].'"></a>';
         } else {
             $file = '<a target="_blank" href="'. $this->current_row['file'] .'">download</a>';
         }
 
-
         $this->current_row_html['description'] =
                 $this->current_row['description'].'<br>'.
-                $this->current_row['updated_dts'].'<br>'.
-                $file;
-
-
-
+                '<div class="timestamp">'.$this->current_row['updated_dts'].'</div>'.
+                $file
+        ;
+        parent::formatRow();
     }
 }
