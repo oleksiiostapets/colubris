@@ -13,6 +13,9 @@ class Grid_Tasks extends Grid_Advanced {
                 '<div style="white-space:nowrap;" class="spent_time">'.$this->current_row['spent_time'].'</div>'.
                 '<div style="white-space:nowrap;" class="estimate">Est: ('.$this->current_row['estimate'].')</div>'
         ;
+        $this->current_row_html['requester'] = '<div class="requester">'.$this->current_row['requester'].'</div>';
+        $this->current_row_html['assigned'] = '<div class="assigned">'.$this->current_row['assigned'].'</div>';
+        $this->current_row_html['updated_dts'] = '<div class="updated">'.$this->current_row['updated_dts'].'</div>';
     }
     function format_status($field){
     	switch($this->current_row[$field]){
