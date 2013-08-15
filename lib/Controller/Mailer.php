@@ -17,7 +17,7 @@ class Controller_Mailer extends AbstractController {
      */
     function addReceiverByUserId($id,$mode){
         if ($id>0){
-            $u=$this->add('Model_User_Notdeleted')->load($id);
+            $u=$this->add('Model_User')->load($id);
             // Check if the user whants to get email
             if( ($mode===true) || ($u[$mode]) ) {
                 // Check if user is client and status of task not restricted to view by clients

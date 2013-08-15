@@ -1,5 +1,5 @@
 <?php
-class Model_Developer extends Model_User_Notdeleted {
+class Model_Developer extends Model_User {
     function init(){
         parent::init();
 
