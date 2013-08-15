@@ -236,21 +236,18 @@ class Frontend extends ApiFrontend {
     }
 
     function makeUrls($text) {
-        //replace all urls with our own spec_mark
-        $text_arr = explode(' ',$text);
-        $new_text_arr = array();
-        foreach($text_arr as $k=>$text_part) {
-            $new_text_arr[$k] = preg_match(
-                    '/(\n|\r|>|^|\s|\(|\))((ht|f)tp(?:s?):\/\/){1}(\S+)/',
-                $text_part
-            );
-            if ($new_text_arr[$k]==1) {
-                $new_text_arr[$k] = '<a href="'.$text_part.'" target="_blank">'.$text_part.'</a>';
-            } else {
-                $new_text_arr[$k] = $text_part;
+        preg_match_all('/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/',
+            $text,$matches);
+
+        $replaced = array();
+        if (isset($matches[0])) {
+            foreach ($matches[0] as $match) {
+                if (in_array($match,$replaced)) continue;
+                $text = str_replace($match,'<a href="'.$match.'" target="_blank">'.$match.'</a>',$text);
+                $replaced[] = $match;
             }
         }
-        $text = implode(' ',$new_text_arr);
+
         return $text;
     }
 
