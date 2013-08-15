@@ -11,8 +11,8 @@ class Grid_Quotes extends Grid_Advanced {
         $this->removeColumn('rate');
         $this->removeColumn('currency');
         $this->removeColumn('spent_time');
+//        $this->addColumn('status');
         $this->addFormatter('status','wrap');
-        $this->addColumn('status');
     }
     function formatRow() {
     	parent::formatRow();
