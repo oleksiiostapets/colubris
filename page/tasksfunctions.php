@@ -68,12 +68,12 @@ class page_tasksfunctions extends Page {
 
         // Description
         $descr_view = $v->add('View')->addClass('span12');
-        $descr_view->add('H3')->set('Description');
+        $descr_view->add('H4')->set('Description');
         $descr_view->add('View')->setHtml( $this->api->makeUrls($task->get('descr_original')) );
 
         // left view
         $left_view = $v->add('View')->setClass('span6 right');
-        $left_view->add('H3')->set('Attachments');
+        $left_view->add('H4')->set('Attachments');
 
     	$model=$left_view->add('Model_Attach')->addCondition('task_id',$_GET['task_id']);
     	$crud=$left_view->add('CRUD',array(
@@ -87,7 +87,7 @@ class page_tasksfunctions extends Page {
 
         // right view
         $right_view = $v->add('View')->setClass('span6 left');
-        $right_view->add('H3')->set('Comments');
+        $right_view->add('H4')->set('Comments');
     
     	$cr=$right_view->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
     
