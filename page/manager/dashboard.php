@@ -2,6 +2,22 @@
 
 class page_manager_dashboard extends page_dashboard {
 
+    function init() {
+        parent::init();
+
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Dashboard',
+                    'url' => 'manager/dashboard',
+                ),
+            )
+        ));
+    }
+
     function initMainPage() {
     	$this->add('View_Dashboard',array(
     			'allow_add'=>false,'allow_edit'=>true,'allow_del'=>true,
