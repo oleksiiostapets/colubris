@@ -1,5 +1,19 @@
 <?php
 class Grid_Tasks extends Grid_Advanced {
+    function setModel($model, $actual_fields = UNDEFINED) {
+        parent::setModel($model, $actual_fields);
+        $this->removeColumn('estimate');
+    }
+    function formatRow() {
+        parent::formatRow();
+        if ($this->current_row['spent_time'] == '') {
+            $this->current_row['spent_time'] = '0.00';
+        }
+        $this->current_row_html['spent_time'] =
+                '<div style="white-space:nowrap;" class="spent_time">'.$this->current_row['spent_time'].'</div>'.
+                '<div style="white-space:nowrap;" class="estimate">Est: ('.$this->current_row['estimate'].')</div>'
+        ;
+    }
     function format_status($field){
     	switch($this->current_row[$field]){
     		case 'started':
@@ -31,8 +45,7 @@ class Grid_Tasks extends Grid_Advanced {
     	return array('grid/colored');
     }
     
-    function precacheTemplate()
-    {
+    function precacheTemplate() {
     	$this->row_t->trySetHTML('painted', '<?$painted?>');
     	parent::precacheTemplate();
     }
