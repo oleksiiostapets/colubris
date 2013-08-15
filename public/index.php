@@ -1,4 +1,5 @@
 <?php
+include '../vendor/atk4/atk4/loader.php';
 include '../vendor/autoload.php';
 include '../lib/Frontend.php';
 

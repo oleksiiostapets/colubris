@@ -82,3 +82,17 @@
     font-weight: normal;
     font-size: 10px;
 }
+
+.quote_project, .quote_client {
+    white-space:nowrap;
+    color: #a9a9a9;
+    font-weight: normal;
+}
+.quote_project > span, .quote_client > span {
+    font-style: italic;
+    padding: 0 3px;
+    color: #565656;
+}
+.quote_name {
+    white-space:nowrap;
+}
