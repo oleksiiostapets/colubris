@@ -101,6 +101,14 @@
     white-space:nowrap;
     font-weight: bold;
 }
+.quote_name > a {
+    color: #1d0d6d;
+    text-decoration: none;
+}
+.quote_name > a:hover {
+    color: #98081b;
+    text-decoration: underline;
+}
 
 .quote_estimated, .quote_estimpay, .quote_rate, .quote_spent_time {
     white-space:nowrap;
