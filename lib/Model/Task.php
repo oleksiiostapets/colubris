@@ -28,8 +28,8 @@ class Model_Task extends Model_Table {
 
         $this->addField('project_id')->refModel('Model_Project')->mandatory(true)->sortable(true);
         $this->addField('requirement_id')->refModel('Model_Requirement');
-        $this->addField('requester_id')->refModel('Model_User_Notdeleted');
-        $this->addField('assigned_id')->refModel('Model_User_Notdeleted');
+        $this->addField('requester_id')->refModel('Model_User');
+        $this->addField('assigned_id')->refModel('Model_User');
 
         if($this->api->auth->model['is_client']){
             $j = $this->join('project.id','project_id','left','_p');
