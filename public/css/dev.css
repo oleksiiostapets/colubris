@@ -68,3 +68,17 @@
     color: #b4b4b4;
     font-weight: normal;
 }
+.requester, .assigned {
+    padding: 0;
+    margin: 0;
+    color: #595959;
+    font-weight: normal;
+    font-size: 10px;
+}
+.updated {
+    padding: 0;
+    margin: 0;
+    color: #595959;
+    font-weight: normal;
+    font-size: 10px;
+}
