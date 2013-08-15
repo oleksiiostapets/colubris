@@ -6,7 +6,7 @@ class Model_TaskTime extends Model_Table {
         parent::init();
 
         $this->addField('task_id')->refModel('Model_Task')->mandatory(true);
-        $this->addField('user_id')->refModel('Model_User')->mandatory(true);
+        $this->addField('user_id')->refModel('Model_User_Notdeleted')->mandatory(true);
 
         $this->addField('spent_time');
 

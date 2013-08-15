@@ -33,7 +33,7 @@ class Frontend extends ApiFrontend {
         
         $this->add('Auth')
             ->usePasswordEncryption('md5')
-            ->setModel('Model_User', 'email', 'password')
+            ->setModel('Model_User_Notdeleted', 'email', 'password')
         ;
         $this->api->auth->add('auth/Controller_Cookie');
 
@@ -47,7 +47,7 @@ class Frontend extends ApiFrontend {
         
         // Autologin from admin/users
         if( (isset($_REQUEST['id'])) && (isset($_REQUEST['hash'])) ){
-            $u=$this->add('Model_User')->load($_GET["id"]);
+            $u=$this->add('Model_User_Notdeleted')->load($_GET["id"]);
             if($u['hash']!=$_GET["hash"]){
                 echo json_encode("Wrong user hash");
                 $this->logVar('wrong user hash: '.$v['hash']);

@@ -7,7 +7,7 @@ class Model_Participant extends Model_Table {
 
 		$this->addField('user_id')
             ->mandatory(true)
-            ->refModel('Model_User');
+            ->refModel('Model_User_Notdeleted');
 
         $this->addField('project_id')
             ->mandatory(true)
