@@ -1,5 +1,13 @@
 <?php
 class Grid_Quotes extends Grid_Advanced {
+    function init() {
+        parent::init();
+    }
+    function setModel($model, $actual_fields = UNDEFINED) {
+        parent::setModel($model, $actual_fields);
+        $this->removeColumn('user');
+        $this->removeColumn('name');
+    }
     function format_status($field){
     	switch($this->current_row[$field]){
     		case 'Quotation Requested':
@@ -53,13 +61,18 @@ class Grid_Quotes extends Grid_Advanced {
 	    		$this->current_row_html['edit']="";
 	    	}
     	}
+
+        $this->current_row_html['project'] =
+                '<div class="quote_name">'.$this->current_row['name'].'</div>'.
+                '<div class="quote_project">Project:<span>'.$this->current_row['project'].'</span></div>'.
+                '<div class="quote_client">User:<span>'.$this->current_row['user'].'</span></div>'
+        ;
     }
     function defaultTemplate() {
     	return array('grid/colored');
     }
     
-    function precacheTemplate()
-    {
+    function precacheTemplate() {
     	$this->row_t->trySetHTML('painted', '<?$painted?>');
     	parent::precacheTemplate();
     }
