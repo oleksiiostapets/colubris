@@ -20,14 +20,14 @@ class page_account extends Page {
         // Left side form
         $v=$this->add('View')->setClass('span6 left');
         $f=$v->add('Form');
-        $user_model=$f->setModel($this->add('Model_User')->load($this->api->auth->model['id']),array('name'));
+        $user_model=$f->setModel($this->add('Model_User_Notdeleted')->load($this->api->auth->model['id']),array('name'));
         $f->addSubmit('Save');
         if($f->isSubmitted()){
             $f->update();
             $f->js()->univ()->successMessage('Successfully updated your details')->execute();
         }
 
-        $u=$this->add('Model_User')->load($this->api->auth->model['id']);
+        $u=$this->add('Model_User_Notdeleted')->load($this->api->auth->model['id']);
         
         $v=$this->add('View')->setClass('span6 right');
         $f=$v->add('Form');
@@ -58,7 +58,7 @@ class page_account extends Page {
         // Left side form
         $v=$this->add('View')->setClass('span6 left');
         $f=$v->add('Form');
-        $f->setModel($this->add('Model_User')->load($this->api->auth->model['id']),array('mail_task_changes'));
+        $f->setModel($this->add('Model_User_Notdeleted')->load($this->api->auth->model['id']),array('mail_task_changes'));
         $f->addSubmit('Save');
         if($f->isSubmitted()){
             $f->update();

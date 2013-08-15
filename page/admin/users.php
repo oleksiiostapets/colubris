@@ -23,7 +23,7 @@ class page_admin_users extends Page {
 
         $crud=$this->add('CRUD');
         
-        $model = $this->add('Model_User')->setOrder('name');
+        $model = $this->add('Model_User_Notdeleted')->setOrder('name');
 
         $crud->setModel($model,
                         array('email','name','client_id','is_admin','is_manager','is_developer','is_timereport','password'),
@@ -34,7 +34,7 @@ class page_admin_users extends Page {
             
             $crud->grid->addColumn('button','login');
             if($_GET['login']){
-                $u=$this->add("Model_User")->load($_GET['login']);
+                $u=$this->add("Model_User_Notdeleted")->load($_GET['login']);
                 $u->set('hash',md5(time()));
                 $u->save();
                 $this->js(true)->univ()->location($this->api->url("index",array('id'=>$_GET['login'],'hash'=>$u->get('hash'))))->execute();

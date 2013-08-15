@@ -1,5 +1,5 @@
 <?php
-class Model_User extends Model_Table {
+class Model_User_Base extends Model_BaseTable {
     public $table='user';
     function init(){
         parent::init(); //$this->debug();
@@ -25,7 +25,9 @@ class Model_User extends Model_Table {
         });
         
         $this->addField('hash');
-        
+
+        $this->addField('is_deleted')->type('boolean')->defaultValue('0');
+
         $this->setOrder('name');
 
         $this->addField('mail_task_changes')->type('boolean')->caption('Send when task changed');

@@ -19,6 +19,9 @@ class Controller_Translator extends Controller {
         'Adding new Reqcomment'		=>'Adding new Comment',
     	'Add Attach'				=>'Add Attachment',
     	'Adding new Attach'			=>'Adding new Attachment',
-    		
+
+        'Add User Notdeleted'		=>'Add User',
+        'Adding new User Notdeleted'=>'Adding new User',
+
     );
 }
