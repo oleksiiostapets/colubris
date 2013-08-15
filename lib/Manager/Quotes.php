@@ -29,7 +29,7 @@ class Manager_Quotes extends View {
         if($cr->grid){
         	$cr->grid->addFormatter('status','status');
         	$cr->grid->addColumn('button','requirements');
-        	$cr->grid->addColumn('button','details');
+        	//$cr->grid->addColumn('button','details');
         	$cr->grid->addColumn('button','estimation','Request for estimate');
         	$cr->grid->addColumn('button','send_to_client','Send Quote to the client');
         	$cr->grid->addColumn('button','approve','Approve Estimation');

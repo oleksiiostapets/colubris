@@ -33,7 +33,7 @@ class Grid_Quotes extends Grid_Advanced {
     	}
 
         $this->current_row_html['project'] =
-                '<div class="quote_name">'.$this->current_row['name'].'</div>'.
+                '<div class="quote_name"><a href="'.$this->api->url('/manager/quotes/rfq/view',array('quote_id'=>$this->current_row['id'])).'">'.$this->current_row['name'].'</a></div>'.
                 '<div class="quote_project"><span>Project:</span>'.$this->current_row['project'].'</div>'.
                 '<div class="quote_client"><span>User:</span>'.$this->current_row['user'].'</div>'
         ;
