@@ -1,6 +1,21 @@
 <?php
 
 class page_manager_tasks extends page_tasksfunctions {
+    function init() {
+        parent::init();
+
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Tasks',
+                    'url' => 'manager/tasks',
+                ),
+            )
+        ));
+    }
 
     function initMainPage() {
     	$s=$this->add('View_Switcher');
