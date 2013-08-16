@@ -1,16 +1,28 @@
 <?php
 class Grid_Quotes extends Grid {
+    public $allowed_actions = array();
+    public $role = null;
     public $posible_actions = array(
         'requirements'   => array('status'=>'Quotation Requested','name'=>'Requirements',            'get_var'=>'requirements'),
         'estimation'     => array('status'=>'Quotation Requested','name'=>'Request for estimate',    'get_var'=>'estimation'),
         'send_to_client' => array('status'=>'Estimated',          'name'=>'Send Quote to the client','get_var'=>'send_to_client'),
         'approve'        => array('status'=>'Estimated',          'name'=>'Approve Estimation',      'get_var'=>'approve'),
         'estimate'       => array('status'=>'Estimate Needed',    'name'=>'Estimate',                'get_var'=>'estimate'),
+        'details'        => array('status'=>'any',                'name'=>'Details',                 'get_var'=>'details'),
     );
     function init() {
         parent::init();
-        if (!isset($this->owner->allowed_actions)) {
+
+        if (!count($this->allowed_actions) && isset($this->owner->allowed_actions)) {
+            $this->allowed_actions = $this->owner->allowed_actions;
+        } else if ( !count($this->allowed_actions) ) {
             throw $this->exception('What actions are allowed?');
+        }
+
+        if (!$this->role && isset($this->owner->role)) {
+            $this->role = $this->owner->role;
+        } else if ( !$this->role ) {
+            throw $this->exception('What is a role?');
         }
 
 
@@ -22,8 +34,8 @@ class Grid_Quotes extends Grid {
 
         // estimate
         if( $_GET['estimate'] ) {
-            if ( in_array('estimate',$this->owner->allowed_actions) ) {
-                $this->js()->univ()->redirect($this->api->url('/'.$this->owner->role.'/quotes/rfq/estimate',
+            if ( in_array('estimate',$this->allowed_actions) ) {
+                $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/estimate',
                			array('quote_id'=>$_GET['estimate'])))->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['estimate']['name'].'" is not allowed!')->execute();
@@ -32,8 +44,8 @@ class Grid_Quotes extends Grid {
 
         // requirements
         if( $_GET['requirements'] ) {
-            if ( in_array('requirements',$this->owner->allowed_actions) ) {
-                $this->js()->univ()->redirect($this->api->url('/'.$this->owner->role.'/quotes/rfq/step2',
+            if ( in_array('requirements',$this->allowed_actions) ) {
+                $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/step2',
                			array('quote_id'=>$_GET['requirements'])))->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['requirements']['name'].'" is not allowed')->execute();
@@ -42,7 +54,7 @@ class Grid_Quotes extends Grid {
 
         // estimation
         if( $_GET['estimation'] ){
-            if ( in_array('estimation',$this->owner->allowed_actions) ) {
+            if ( in_array('estimation',$this->allowed_actions) ) {
                 $quote=$this->add('Model_Quote')->load($_GET['estimation']);
                	$quote->set('status','estimate_needed');
                	$quote->save();
@@ -54,7 +66,7 @@ class Grid_Quotes extends Grid {
 
         // approve
         if( $_GET['approve'] ){
-            if ( in_array('approve',$this->owner->allowed_actions) ) {
+            if ( in_array('approve',$this->allowed_actions) ) {
                 $quote=$this->add('Model_Quote')->load($_GET['approve']);
                	$quote->set('status','estimation_approved');
                	$quote->save();
@@ -66,10 +78,20 @@ class Grid_Quotes extends Grid {
 
         // send_to_client
         if( $_GET['send_to_client'] ){
-            if ( in_array('send_to_client',$this->owner->allowed_actions) ) {
+            if ( in_array('send_to_client',$this->allowed_actions) ) {
                 $this->sendEmailToClient($_GET['send_to_client']);
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['send_to_client']['name'].'" is not allowed')->execute();
+            }
+        }
+
+        // send_to_client
+        if( $_GET['details'] ){
+            if ( in_array('details',$this->allowed_actions) ) {
+                $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/view',
+                        array('quote_id'=>$_GET['details'])))->execute();
+            } else {
+                $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['details']['name'].'" is not allowed')->execute();
             }
         }
 
@@ -110,7 +132,7 @@ class Grid_Quotes extends Grid {
     	}
 
         $this->current_row_html['quotation'] =
-                '<div class="quote_name"><a href="'.$this->api->url('/manager/quotes/rfq/view',array('quote_id'=>$this->current_row['id'])).'">'.$this->current_row['name'].'</a></div>'.
+                '<div class="quote_name"><a href="'.$this->api->url('/'.$this->role.'/quotes/rfq/view',array('quote_id'=>$this->current_row['id'])).'">'.$this->current_row['name'].'</a></div>'.
                 '<div class="quote_project"><span>Project:</span>'.$this->current_row['project'].'</div>'.
                 '<div class="quote_client"><span>User:</span>'.$this->current_row['user'].'</div>'
         ;
@@ -152,8 +174,8 @@ class Grid_Quotes extends Grid {
 
         // actions
         $v = $this->add('View','action_'.$this->current_id,'content');
-        foreach ($this->owner->allowed_actions as $action) {
-            if ($this->current_row['status'] == $this->posible_actions[$action]['status']) {
+        foreach ($this->allowed_actions as $action) {
+            if ($this->current_row['status'] == $this->posible_actions[$action]['status'] || $this->posible_actions[$action]['status'] == 'any') {
                 $v->add('View')->set($this->posible_actions[$action]['name'])->addClass('a_look')
                         ->js('click')->univ()->ajaxec($this->api->url(null,array($this->posible_actions[$action]['get_var']=>$this->current_id)));
             }
