@@ -10,9 +10,6 @@ class Model_Project_Base extends Model_BaseTable {
 
         $this->addField('client_id')->refModel('Model_Client');
 
-        $this->addField('budgets')->calculated(true)->type('int');
-        $this->addField('quotations')->calculated(true)->type('int');
-
         $this->addField('demo_url');
         $this->addField('prod_url');
 
@@ -25,18 +22,4 @@ class Model_Project_Base extends Model_BaseTable {
         $this->setOrder('name');
     }
 
-    function calculate_budgets(){
-        return $this->add('Model_Budget')
-            ->dsql()
-            ->field('count(*)')
-            ->where('bu.project_id=pr.id')
-            ->select();
-    }
-    function calculate_quotations(){
-        return $this->add('Model_Quote')
-            ->dsql()
-            ->field('count(*)')
-            ->where('quote.project_id=pr.id')
-            ->select();
-    }
 }
