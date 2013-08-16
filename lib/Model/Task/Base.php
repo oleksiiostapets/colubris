@@ -74,6 +74,7 @@ class Model_Task_Base extends Model_BaseTable {
                 ->table('task_time')
                 ->field('sum(task_time.spent_time)')
                 ->where('task_time.task_id',$q->getField('id'))
+                ->where('task_time.remove_billing',false)
                 ;
         });
     }

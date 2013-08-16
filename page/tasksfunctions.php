@@ -10,10 +10,17 @@ class page_tasksfunctions extends Page {
     	$this->api->stickyGet('task_id');
       	$model=$this->add('Model_TaskTime')->addCondition('task_id',$_GET['task_id']);
        	$crud=$this->add('CRUD');
-       	$crud->setModel($model,
-       			array('spent_time','comment','date'),
-       			array('user','spent_time','comment','date')
-       	);
+        if ($this->api->auth->model['is_client']){
+            $crud->setModel($model,
+                    array('spent_time','comment','date'),
+                    array('user','spent_time','comment','date','remove_billing')
+            );
+        }else{
+            $crud->setModel($model,
+                array('spent_time','comment','date','remove_billing'),
+                array('user','spent_time','comment','date','remove_billing')
+            );
+        }
        	if ($crud->grid){
        		$crud->add_button->setLabel('Add Time');
        	}
