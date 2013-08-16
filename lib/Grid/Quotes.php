@@ -3,12 +3,14 @@ class Grid_Quotes extends Grid {
     public $allowed_actions = array();
     public $role = null;
     public $posible_actions = array(
-        'requirements'   => array('status'=>'Quotation Requested','name'=>'Requirements',            'get_var'=>'requirements'),
-        'estimation'     => array('status'=>'Quotation Requested','name'=>'Request for estimate',    'get_var'=>'estimation'),
-        'send_to_client' => array('status'=>'Estimated',          'name'=>'Send Quote to the client','get_var'=>'send_to_client'),
-        'approve'        => array('status'=>'Estimated',          'name'=>'Approve Estimation',      'get_var'=>'approve'),
-        'estimate'       => array('status'=>'Estimate Needed',    'name'=>'Estimate',                'get_var'=>'estimate'),
-        'details'        => array('status'=>'any',                'name'=>'Details',                 'get_var'=>'details'),
+        'requirements'   => array('status'=>array('Quotation Requested'),'name'=>'Requirements',            'get_var'=>'requirements'),
+        'estimation'     => array('status'=>array('Quotation Requested'),'name'=>'Request for estimate',    'get_var'=>'estimation'),
+        'send_to_client' => array('status'=>array('Estimated'),          'name'=>'Send Quote to the client','get_var'=>'send_to_client'),
+        'approve'        => array('status'=>array('Estimated'),          'name'=>'Approve Estimation',      'get_var'=>'approve'),
+        'estimate'       => array('status'=>array('Estimate Needed'),    'name'=>'Estimate',                'get_var'=>'estimate'),
+        'details'        => array('status'=>array('any'),                'name'=>'Details',                 'get_var'=>'details'),
+        'edit_details'   => array('status'=>array('Not Estimated','Quotation Requested'),
+                                                                         'name'=>'Edit Details',                 'get_var'=>'edit_details'),
     );
     function init() {
         parent::init();
@@ -85,13 +87,23 @@ class Grid_Quotes extends Grid {
             }
         }
 
-        // send_to_client
+        // details
         if( $_GET['details'] ){
             if ( in_array('details',$this->allowed_actions) ) {
                 $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/view',
                         array('quote_id'=>$_GET['details'])))->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['details']['name'].'" is not allowed')->execute();
+            }
+        }
+
+        // edit_details
+        if( $_GET['edit_details'] ){
+            if ( in_array('edit_details',$this->allowed_actions) ) {
+            $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/step2',
+                array('quote_id'=>$_GET['edit_details'])))->execute();
+            } else {
+                $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['edit_details']['name'].'" is not allowed')->execute();
             }
         }
 
@@ -122,14 +134,6 @@ class Grid_Quotes extends Grid {
     function formatRow() {
     	parent::formatRow();
     	//$this->js('click')->_selector('[data-id='.$this->current_row['id'].']')->univ()->redirect($this->current_row['id']);
-
-    	if ($this->api->auth->model['is_client']){
-	    	if ( ($this->current_row['status']=='Not Estimated') || ($this->current_row['status']=='Quotation Requested') ){
-	    		//$this->current_row_html['edit']="<button type=\"button\" class=\"button_edit\" onclick=\"$(this).univ().ajaxec('/public/?page=client/quotes&edit=".$this->current_row['id']."&colubris_client_quotes_client_quotes_grid_quotes_edit=".$this->current_row['id']."')\">Edit</button>";
-	    	} else {
-	    		$this->current_row_html['edit']="";
-	    	}
-    	}
 
         $this->current_row_html['quotation'] =
                 '<div class="quote_name"><a href="'.$this->api->url('/'.$this->role.'/quotes/rfq/view',array('quote_id'=>$this->current_row['id'])).'">'.$this->current_row['name'].'</a></div>'.
@@ -175,7 +179,10 @@ class Grid_Quotes extends Grid {
         // actions
         $v = $this->add('View','action_'.$this->current_id,'content');
         foreach ($this->allowed_actions as $action) {
-            if ($this->current_row['status'] == $this->posible_actions[$action]['status'] || $this->posible_actions[$action]['status'] == 'any') {
+            if (
+                in_array($this->current_row['status'], $this->posible_actions[$action]['status']) ||
+                in_array('any', $this->posible_actions[$action]['status'])
+            ) {
                 $v->add('View')->set($this->posible_actions[$action]['name'])->addClass('a_look')
                         ->js('click')->univ()->ajaxec($this->api->url(null,array($this->posible_actions[$action]['get_var']=>$this->current_id)));
             }
