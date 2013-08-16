@@ -29,7 +29,6 @@ class Manager_Quotes extends View {
                 'estimation',
                 'send_to_client',
                 'approve',
-                //'estimate',
             )
         ));
         $m=$this->add('Model_Quote');
