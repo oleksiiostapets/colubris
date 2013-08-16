@@ -6,11 +6,9 @@ class Model_Reqcomment extends Model_Table {
 		$this->hasOne('Requirement');
 		$this->hasOne('User')->Caption('Creator');
 		$this->addField('text')->type('text')->mandatory('required');
-		
-		$this->add('filestore/Field_File', array(
-				'name'=>'file_id',
-				'use_model'=>'Model_Myfile'
-		));
+
+        $attach = $this->add('filestore/Field_Image','file_id')->setModel('Model_Myfile');
+              $attach->addThumb();
 		
 		$this->addField('created_dts')->Caption('Created At')->sortable(true);
 		

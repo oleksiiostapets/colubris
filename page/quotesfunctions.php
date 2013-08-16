@@ -15,12 +15,12 @@ class page_quotesfunctions extends Page {
     			->addCondition('requirement_id',$_GET['requirement_id']);
     	$cr->setModel($m,
     			array('text','file_id'),
-    			array('text','user','file','created_dts')
+    			array('text','user','file','file_thumb','created_dts')
     	);
     	if($cr->grid){
     		$cr->add_button->setLabel('Add Comment');
     		$cr->grid->setFormatter('text','text');
-    		$cr->grid->addFormatter('file','download');
+    		//$cr->grid->addFormatter('file','download');
     	}
     	if($_GET['delete']){
     		$comment=$this->add('Model_Reqcomment')->load($_GET['delete']);
