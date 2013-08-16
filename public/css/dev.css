@@ -85,14 +85,37 @@
 
 .quote_project, .quote_client {
     white-space:nowrap;
-    color: #a9a9a9;
     font-weight: normal;
+    font-style: italic;
+    padding: 0 10px;
+    color: #565656;
 }
 .quote_project > span, .quote_client > span {
-    font-style: italic;
-    padding: 0 3px;
-    color: #565656;
+    font-style: normal;
+    padding: 0 5px 0 0;
+    color: #a9a9a9;
+    display: inline-block;
+    width: 50px;
 }
 .quote_name {
     white-space:nowrap;
+    font-weight: bold;
+}
+.quote_name > a {
+    color: #1d0d6d;
+    text-decoration: none;
+}
+.quote_name > a:hover {
+    color: #98081b;
+    text-decoration: underline;
+}
+
+.quote_estimated, .quote_estimpay, .quote_rate, .quote_spent_time {
+    white-space:nowrap;
+    font-weight: normal;
+}
+.quote_estimated > span, .quote_estimpay > span, .quote_rate > span, .quote_spent_time > span {
+    display: inline-block;
+    width: 60px;
+    color: #707070;
 }
