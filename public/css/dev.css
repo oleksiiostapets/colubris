@@ -119,3 +119,17 @@
     width: 60px;
     color: #707070;
 }
+.a_look {
+    display: block;
+    padding: 2px 0 2px 0;
+    margin: 0;
+    color: #3216ba;
+    font-weight: normal;
+    font-size: 12px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.a_look:hover {
+    color: #c30821;
+    text-decoration: none;
+}
