@@ -8,9 +8,11 @@ class View_Report extends View {
 
         $j = $m->join('task_time.task_id','id','left','_tt');
         $j->addField('spent','spent_time');
+        $j->addField('remove_billing','remove_billing');
         $j->addField('date','date');
         $j->addField('performer_id','user_id');
         $m->addCondition('spent','>','0');
+        $m->addCondition('remove_billing',false);
 
         $ju = $j->join('user.id','user_id','left','_tu');
         $ju->addField('performer','name');
