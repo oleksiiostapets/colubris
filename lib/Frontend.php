@@ -178,6 +178,7 @@ class Frontend extends ApiFrontend {
             	$sm->addMenuItem('team/projects','Projects');
                 $sm->addMenuItem('team/quotes','Quotes');
                 $sm->addMenuItem('team/reports','Reports');
+                $sm->addMenuItem('team/deleted','Deleted');
                 //$m->addMenuItem('team/entry','Time Entry');
                 //$m->addMenuItem('team/timesheets','Development Priorities');
                 //$m->addMenuItem('team/timesheets','Timesheets');
@@ -191,6 +192,7 @@ class Frontend extends ApiFrontend {
                 $sm->addMenuItem('manager/quotes','Quotes');
                 $sm->addMenuItem('manager/clients','Clients');
                 $sm->addMenuItem('manager/reports','Reports');
+                $sm->addMenuItem('manager/deleted','Deleted');
                 //$sm->addMenuItem('manager/projects','Projects'); // Admin can setup projects and users here
                 //$m->addMenuItem('manager/statistics','Statistics');
                 //$m->addMenuItem('manager/timesheets','Timesheets'); // review all reports in system - temporary
