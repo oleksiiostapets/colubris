@@ -10,7 +10,7 @@ class page_client_quotes_rfq_step2 extends page_quotesfunctions {
     	    	
         $this->add('P');
         
-        $v=$this->add('View')->setClass('left');
+        $v=$this->add('View');//->setClass('left');
         $v->add('H1')->set('Requirements for Quotation');
 
         $quote=$this->add('Model_Quote')->load($_GET['quote_id']);
