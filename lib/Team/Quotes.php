@@ -19,24 +19,16 @@ class Team_Quotes extends View {
         */
         $this->add('P');
         
-        $cr=$this->add('Grid_Quotes');
+        $cr=$this->add('Grid_Quotes',array(
+            'role'=>'team',
+            'allowed_actions'=>array(
+                'details',
+                'estimate',
+            )
+        ));
         $m=$this->add('Model_Quote_Participant');
         $cr->setModel($m,array('project','user','name','estimated','spent_time','durdead','status'));
         $cr->addFormatter('status','status');
-        
-        $cr->addColumn('button','details');
-        if($_GET['details']){
-        	$this->js()->univ()->redirect($this->api->url('/team/quotes/rfq/view',
-        			array('quote_id'=>$_GET['details'])))
-        			->execute();
-        }
-        
-        $cr->addColumn('button','estimate');
-        if($_GET['estimate']){
-        	$this->js()->univ()->redirect($this->api->url('/team/quotes/rfq/estimate',
-        			array('quote_id'=>$_GET['estimate'])))
-        			->execute();
-        }
         
         $this->add('P');
     }
