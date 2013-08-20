@@ -28,8 +28,8 @@ class Model_Task_Base extends Model_BaseTable {
 
         $this->addField('project_id')->refModel('Model_Project')->mandatory(true)->sortable(true);
         $this->addField('requirement_id')->refModel('Model_Requirement');
-        $this->addField('requester_id')->refModel('Model_User');
-        $this->addField('assigned_id')->refModel('Model_User');
+        $this->addField('requester_id')->refModel('Model_User_Organisation');
+        $this->addField('assigned_id')->refModel('Model_User_Organisation');
 
         if($this->api->auth->model['is_client']){
             $j = $this->join('project.id','project_id','left','_p');
@@ -41,6 +41,9 @@ class Model_Task_Base extends Model_BaseTable {
         $this->addField('updated_dts')->caption('Updated')->sortable(true);
 
         $this->addField('is_deleted')->type('boolean')->defaultValue('0');
+
+        $this->addField('organisation_id')->refModel('Model_Organisation');
+        $this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
 
         $this->addHook('beforeInsert', function($m,$q){
             $q->set('created_dts', $q->expr('now()'));

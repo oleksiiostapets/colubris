@@ -54,7 +54,7 @@ class View_ReportsSwitcher extends View {
 		$fq->set($this->api->recall('quote_id'));
 		
         // Performer
-        $ma=$this->add('Model_User')->setOrder('name');
+        $ma=$this->add('Model_User_Organisation')->setOrder('name');
         $a_arr=$ma->getRows();
         $u_arr['0']='all';
         foreach($a_arr as $a){

@@ -20,6 +20,10 @@ class View_Report extends View {
         $jr = $m->join('requirement','requirement_id','left','_req');
         $jr->addField('quote_id','quote_id');
 
+        $jp = $m->join('project','project_id','left','_pr');
+        $jp->addField('organisation_id','organisation_id');
+        $m->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+
         if($this->api->recall('project_id')>0){
             $m->addCondition('project_id',$this->api->recall('project_id'));
         }
