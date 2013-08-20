@@ -23,7 +23,7 @@ class View_TasksCRUD extends View {
         );
         
         if($cr->grid){
-            $cr->grid->addPaginator();
+            $cr->grid->addPaginator(10);
         	$cr->grid->js('reload')->reload();
         	
         	if(!$this->api->auth->model['is_client']){

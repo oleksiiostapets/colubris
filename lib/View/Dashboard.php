@@ -45,6 +45,8 @@ class View_Dashboard extends View {
             $cr->grid->addColumn('expander','more');
             
         	$cr->grid->addFormatter('status','status');
+            $cr->grid->addPaginator(10);
+
         }
     }
 }

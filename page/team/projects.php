@@ -19,6 +19,7 @@ class page_team_projects extends page_projectsfunctions {
         $cr=$this->add('CRUD',array('allow_del'=>false,'allow_edit'=>false,'allow_add'=>false));
         $cr->setModel('Project_Participant',array('name','descr','client','demo_url','prod_url'));
         if($cr->grid){
+            $cr->grid->addPaginator(10);
 			$cr->grid->addColumn('expander','tasks');
         }
 
