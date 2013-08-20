@@ -44,6 +44,7 @@ class View_TasksCRUD extends View {
             */
             $cr->grid->addColumn('expander','more');
         	$cr->grid->addFormatter('status','status');
+            $cr->grid->addFormatter('name','wrap');
         }
     }
 
