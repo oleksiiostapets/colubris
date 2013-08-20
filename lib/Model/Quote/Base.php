@@ -4,6 +4,7 @@ class Model_Quote_Base extends Model_BaseTable {
     function init(){
         parent::init(); //$this->debug();
         $this->hasOne('Project')->display(array('form'=>'Form_Field_AutoEmpty'))->mandatory('required');
+
         //$this->addField('project_id')->refModel('Model_Project');
         //->display(array('form'=>'autocomplete/basic'));
         $this->hasOne('User');
@@ -44,6 +45,9 @@ class Model_Quote_Base extends Model_BaseTable {
         )->mandatory('Cannot be empty');
 
         $this->addField('is_deleted')->type('boolean')->defaultValue('0');
+
+        $this->addField('organisation_id')->refModel('Model_Organisation');
+        $this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
 
         $this->addExpression('client_id')->set(function($m,$q){
             return $q->dsql()

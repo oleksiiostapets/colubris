@@ -8,7 +8,7 @@ config.php
 composer.phar
 composer.lock
 /vendor/*
-/atk4/*
+atk4
 atk4-addons
 upload
 nbproject
