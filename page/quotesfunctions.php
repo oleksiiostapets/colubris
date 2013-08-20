@@ -20,7 +20,6 @@ class page_quotesfunctions extends Page {
     	if($cr->grid){
     		$cr->add_button->setLabel('Add Comment');
     		$cr->grid->setFormatter('text','text');
-    		//$cr->grid->addFormatter('file','download');
     	}
     	if($_GET['delete']){
     		$comment=$this->add('Model_Reqcomment')->load($_GET['delete']);
