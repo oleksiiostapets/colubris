@@ -1,5 +1,5 @@
 <?
-class page_manager_projects extends Page {
+class page_manager_projects extends page_projectsfunctions {
     function page_index(){
 
         $this->add('x_bread_crumb/View_BC',array(
@@ -32,18 +32,5 @@ class page_manager_projects extends Page {
         $this->add('CRUD')->setModel($this->add('Model_Participant')
                 ->addCondition('project_id',$_GET['project_id'])
                 );
-    }
-    function page_tasks(){
-        $this->api->stickyGET('project_id');
-        $cr=$this->add('CRUD',array('grid_class'=>'Grid_Tasks'));
-        $m=$this->add('Model_Task')
-                ->addCondition('project_id',$_GET['project_id']);
-        $cr->setModel($m,
-        		array('name','descr_original','priority','status','estimate','spent_time','assigned_id'),
-        		array('name','descr_original','priority','status','estimate','spent_time','assigned')
-        		);
-        if($cr->grid){
-        	$cr->grid->addFormatter('status','status');
-        }
     }
 }
