@@ -34,6 +34,7 @@ class Client_Quotes extends View {
 
         $cr->setModel($m,array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status'));
         $cr->addFormatter('status','status');
+        $cr->addPaginator(10);
 
         $this->add('P');
     }

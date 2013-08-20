@@ -29,7 +29,8 @@ class Team_Quotes extends View {
         $m=$this->add('Model_Quote_Participant');
         $cr->setModel($m,array('project','user','name','estimated','spent_time','durdead','status'));
         $cr->addFormatter('status','status');
-        
+        $cr->addPaginator(10);
+
         $this->add('P');
     }
 }
