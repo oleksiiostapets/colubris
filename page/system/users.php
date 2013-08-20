@@ -1,10 +1,9 @@
 <?
-class page_admin_users extends Page {
+class page_system_users extends Page {
     function init(){
         parent::init();
 
     }
-    
     function page_index(){
 
         $this->add('x_bread_crumb/View_BC',array(
@@ -26,8 +25,8 @@ class page_admin_users extends Page {
         $model = $this->add('Model_User')->setOrder('name');
 
         $crud->setModel($model,
-            array('email','name','client_id','is_admin','is_manager','is_developer','is_timereport','password'),
-            array('email','name','client','is_admin','is_manager','is_developer','is_timereport','is_client')
+            array('email','name','organisation_id','is_admin','is_manager','is_developer','is_timereport'/*,'is_client'*/,'client_id','password'),
+            array('email','name','organisation','is_admin','is_manager','is_developer','is_timereport'/*,'is_client'*/,'client')
         );
 
         if($crud->grid){
