@@ -15,8 +15,8 @@ class View_RFQRequirements extends View {
         	$cr->grid->addColumn('text','#');
         	$cr->grid->addFormatter('#','number');
         	$cr->grid->addColumn('expander','more');
-        	$cr->grid->addFormatter('file','download');
-        	$cr->grid->addFormatter('estimate','estimate');
+        	//$cr->grid->addFormatter('file','download');
+        	//$cr->grid->addFormatter('estimate','estimate');
         	$cr->grid->setFormatter('name','text');
         	$cr->grid->addOrder()->move('#','first')->now();
         }
