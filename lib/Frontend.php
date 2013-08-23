@@ -36,6 +36,7 @@ class Frontend extends ApiFrontend {
             ->setModel('Model_User_All', 'email', 'password')
         ;
         $this->api->auth->add('auth/Controller_Cookie');
+        $this->add('x_breakpoint/Controller_Breakpoint');
 
         if(!$this->api->auth->model['id']){
         	if($_COOKIE["colubris_auth_useremail"] != NULL){
@@ -156,6 +157,7 @@ class Frontend extends ApiFrontend {
             case 'home':
             case 'account':
             case 'about':
+            case 'trace':
                 break;
             default:
                 throw $this->exception('There is no shuch a role '.$p[0]);
