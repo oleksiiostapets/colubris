@@ -5,7 +5,7 @@ class page_team_tasks extends page_tasksfunctions {
         parent::init();
     }
 
-    function initMainPage() {
+    function page_index() {
 
         $this->add('x_bread_crumb/View_BC',array(
             'routes' => array(
