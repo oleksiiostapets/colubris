@@ -3,6 +3,9 @@
 class page_team_tasks extends page_tasksfunctions {
     function init() {
         parent::init();
+    }
+
+    function initMainPage() {
 
         $this->add('x_bread_crumb/View_BC',array(
             'routes' => array(
@@ -15,9 +18,7 @@ class page_team_tasks extends page_tasksfunctions {
                 ),
             )
         ));
-    }
 
-    function initMainPage() {
     	$s=$this->add('View_Switcher');
     	
     	$this->add('View_TasksCRUD',array(
