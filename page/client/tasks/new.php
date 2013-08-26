@@ -2,7 +2,7 @@
 
 class page_client_tasks_new extends Page {
 
-    function initMainPage() {
+    function page_index() {
         $this->add('x_bread_crumb/View_BC',array(
             'routes' => array(
                 0 => array(
