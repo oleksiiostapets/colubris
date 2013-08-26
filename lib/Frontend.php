@@ -156,6 +156,7 @@ class Frontend extends ApiFrontend {
             case 'home':
             case 'account':
             case 'about':
+            case 'denied':
                 break;
             default:
                 throw $this->exception('There is no shuch a role '.$p[0]);
@@ -298,7 +299,6 @@ class Frontend extends ApiFrontend {
                     'client',
                     'manager',
                     'team',
-                    'denied',
                     'admin',
             	));
             }
