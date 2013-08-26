@@ -2,7 +2,8 @@
 class page_manager_quotes extends Page {
     function init(){
         parent::init();
-
+    }
+    function page_index() {
         $this->add('x_bread_crumb/View_BC',array(
             'routes' => array(
                 0 => array(

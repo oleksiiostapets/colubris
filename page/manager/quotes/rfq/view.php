@@ -3,6 +3,9 @@
 class page_manager_quotes_rfq_view extends page_quotesfunctions {
     function page_index(){
 
+        if (!isset($_GET['quote_id'])) {
+            throw $this->exception('Provide $_GET[\'quote_id\']');
+        }
     	$this->api->stickyGet('quote_id');
     	
         $this->add('View_RFQBread',array('quotes_link'=>'manager/quotes'));
