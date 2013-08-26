@@ -17,7 +17,7 @@ class page_team_reports extends page_reportsfunctions {
         ));
     }
 
-    function initMainPage() {
+    function page_index() {
         $this->add('View_ReportsSwitcher');
 
         $this->add('View_Report',array('grid_show_fields'=>array('project','quote','name','status','type','estimate','spent','date','performer')));
