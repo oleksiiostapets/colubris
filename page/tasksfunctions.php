@@ -95,9 +95,9 @@ class page_tasksfunctions extends Page {
         // right view
         $right_view = $v->add('View')->setClass('span6 left');
         $right_view->add('H4')->set('Comments');
-    
+
     	$cr=$right_view->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
-    
+
     	$m=$right_view->add('Model_Taskcomment')
     			->addCondition('task_id',$_GET['task_id']);
     	$cr->setModel($m,

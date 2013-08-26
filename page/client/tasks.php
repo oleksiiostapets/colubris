@@ -3,6 +3,19 @@
 class page_client_tasks extends page_tasksfunctions {
 
     function initMainPage() {
+
+        $this->add('View')->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Tasks',
+                    'url' => 'manager/tasks',
+                ),
+            )
+        ));
+
     	$s=$this->add('View_Switcher');
     	
     	$this->add('View_TasksCRUD',array(
