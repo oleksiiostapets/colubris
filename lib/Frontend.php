@@ -298,6 +298,7 @@ class Frontend extends ApiFrontend {
                     'client',
                     'manager',
                     'team',
+                    'denied',
                     'admin',
             	));
             }
