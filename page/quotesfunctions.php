@@ -2,6 +2,9 @@
 
 class page_quotesfunctions extends Page {
     function page_more(){
+        if (!isset($_GET['requirement_id'])) {
+            throw $this->exception('Provide $_GET[\'requirement_id\']');
+        }
     	$this->api->stickyGET('requirement_id');
     	$req=$this->add('Model_Requirement')->load($_GET['requirement_id']);
     	
