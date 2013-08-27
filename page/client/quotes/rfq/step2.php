@@ -31,7 +31,10 @@ class page_client_quotes_rfq_step2 extends page_quotesfunctions {
         $requirements=$this->add('Model_Requirement');
         $requirements->addCondition('quote_id',$_GET['quote_id']);
 
-        $this->add('View_RFQRequirements',array('requirements'=>$requirements,'allow_add'=>false,'allow_edit'=>true,'allow_del'=>true));
+        $this->add('View_RFQRequirements',array(
+            'requirements'=>$requirements,'quote'=>$quote,
+            'allow_add'=>false,'allow_edit'=>true,'allow_del'=>true
+        ));
                 
         $this->add('View_RFQRequirement');
                 

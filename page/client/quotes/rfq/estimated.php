@@ -27,7 +27,10 @@ class page_client_quotes_rfq_estimated extends page_quotesfunctions {
         $requirements=$this->add('Model_Requirement');
         $requirements->addCondition('quote_id',$_GET['quote_id']);
 
-        $this->add('View_RFQRequirements',array('requirements'=>$requirements,'allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
+        $this->add('View_RFQRequirements',array(
+            'requirements'=>$requirements,'quote'=>$quote,
+            'allow_add'=>false,'allow_edit'=>false,'allow_del'=>false
+        ));
         
         $approve=$this->add('Button')->set('Approve estimation','approve');
         $approve->js('click', array(

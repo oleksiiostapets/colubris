@@ -7,26 +7,31 @@
  * To change this template use File | Settings | File Templates.
  */
 class Grid_Requirements extends Grid_CountLines {
-    private $quote;
-    private $cannot_toggle_statuses = array('estimation_approved','finished',);
-    private $can_toggle = false;
+    public $allow_included = true;
     public $total_view;
+    private $quote;
+    private $can_toggle = false;
     function init() {
         parent::init();
         $this->quote = $this->owner->quote;
         $this->total_view = $this->owner->total_view;
-        $this->can_toggle = (in_array($this->quote['status'],$this->cannot_toggle_statuses)?false:true);
+        $this->allow_included = $this->owner->allow_included;
+        $this->can_toggle = $this->quote->canToggle($this->api->auth->model);
 
-        $this->js('reload',array(
+        $this->owner->js('reload',array(
             $this->total_view->js()->trigger('reload')
-        ))->reload();
+        ))/*->reload()*/;
     }
     function setModel($model, $actual_fields = UNDEFINED) {
         parent::setModel($model, $actual_fields);
         if ($this->hasColumn('count_comments')) {
             $this->getColumn('count_comments')->setCaption('Comm.');
         }
-        $this->getColumn('is_included')->setCaption('✔');
+        if ($this->allow_included) {
+            $this->getColumn('is_included')->setCaption('✔');
+        } else {
+            $this->removeColumn('is_included');
+        }
 
         if ($this->can_toggle) {
             $this->js(true)->colubris()->toggle_is_included(
@@ -41,22 +46,26 @@ class Grid_Requirements extends Grid_CountLines {
         }
 
     }
-    function setCaption($name) {
-        $this->columns[$this->last_column]['descr'] = $name;
-        return $this;
-    }
     function formatRow() {
         parent::formatRow();
 
         // http://vazelin.org.ua/archives/1573/utf-8-simvoly/
         if ( $this->current_row['is_included'] && $this->current_row['is_included'] !== 'N' ) {
             $this->current_row_html['is_included'] =
-                '<div id="is_included_'.$this->current_row['id'].'" data-id="'.$this->current_row['id'].'" class="toggle_is_included active" style="'.($this->can_toggle?'cursor:pointer':'').'"  align=center>'.
+                '<div id="is_included_'.$this->current_row['id'].'"
+                    data-id="'.$this->current_row['id'].'"
+                    class="toggle_is_included active"
+                    style="'.($this->can_toggle?'cursor:pointer':'').'"
+                    align=center>'.
                     '☑'.
                 '</div>';
         } else {
             $this->current_row_html['is_included'] =
-                '<div id="is_included_'.$this->current_row['id'].'" data-id="'.$this->current_row['id'].'" class="toggle_is_included not-active" style="cursor: pointer;" align=center>'.
+                '<div id="is_included_'.$this->current_row['id'].'"
+                    data-id="'.$this->current_row['id'].'"
+                    class="toggle_is_included not-active"
+                    style="'.($this->can_toggle?'cursor:pointer':'').'"  
+                    align=center>'.
                     '<span class="">☐</span>'.
                 '</div>';
         }
@@ -88,8 +97,7 @@ class Grid_Requirements extends Grid_CountLines {
             );
             $requirements->save();
             $this->js(null,array(
-                $this->js()->trigger('reload'),
-                //$this->js()->_selector('.estimate_total_time_to_reload')->reload()
+                $this->owner->js()->trigger('reload'),
             ))->execute();
 
         } else {

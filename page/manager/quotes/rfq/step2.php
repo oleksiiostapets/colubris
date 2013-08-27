@@ -35,9 +35,12 @@ class page_manager_quotes_rfq_step2 extends page_quotesfunctions {
         	$this->api->redirect($this->api->url('/manager/quotes'));
         }
 
-        $this->add('View_RFQQuote',array('quote'=>$quote));
-        
-        $this->add('View_RFQRequirements',array('requirements'=>$requirements,'allow_add'=>false,'allow_edit'=>true,'allow_del'=>true));
+        $RFQQuote = $this->add('View_RFQQuote',array('quote'=>$quote));
+
+        $this->add('View_RFQRequirements',array(
+            'requirements'=>$requirements,'quote'=>$quote,'total_view'=>$RFQQuote->total_view,
+            'allow_add'=>false,'allow_edit'=>true,'allow_del'=>true
+        ));
         
         $this->add('View_RFQRequirement');
         

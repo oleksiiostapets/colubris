@@ -51,4 +51,14 @@ class Model_Quote extends Model_Quote_Base {
             throw $this->exception('The project of this quote has no client!','Exception_QuoteHasNoClient');
        	}
     }
+
+    // check if this user can change 'is_included' flag of requirement
+    private $cannot_toggle_statuses = array('estimation_approved','finished',);
+    function canToggle($user) {
+        if ($user['is_developer']) {
+            return false;
+        }
+        return (in_array($this['status'],$this->cannot_toggle_statuses)?false:true);
+
+    }
 }

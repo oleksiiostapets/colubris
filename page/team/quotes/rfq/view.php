@@ -21,7 +21,7 @@ class page_team_quotes_rfq_view extends page_quotesfunctions {
 
         $this->add('View_RFQRequirements',array(
             'requirements'=>$requirements,'quote'=>$quote,'total_view'=>$RFQQuote->total_view,
-            'allow_add'=>false,'allow_edit'=>false,'allow_del'=>false
+            'allow_add'=>false,'allow_edit'=>false,'allow_del'=>false,'allow_included'=>false
         ));
                 
     }
