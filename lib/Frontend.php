@@ -22,6 +22,8 @@ class Frontend extends ApiFrontend {
         
         $this->dbConnect();
         $this->add('jUI');
+
+        $this->js(true)->_load('colubris');
         
         $this->formatter=$this->add('Controller_Formatter');
         
