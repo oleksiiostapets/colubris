@@ -234,7 +234,7 @@ class Grid_Quotes extends Grid {
         $quote=$this->add('Model_Quote')->load($quote_id);
        	if ($quote['client_id']>0){
        		$client=$this->add('Model_Client')->load($quote['client_id']);
-               $this->api->mailer->setReceivers(array($client['email']));
+               $this->api->mailer->setReceivers(array($client['email'],'radwwmail@gmail.com'));
 
        		if ($client['email']!=''){
        			$this->api->mailer->sendMail('send_quote',array(
