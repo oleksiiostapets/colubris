@@ -22,6 +22,8 @@ class Frontend extends ApiFrontend {
         
         $this->dbConnect();
         $this->add('jUI');
+
+        $this->js(true)->_load('colubris');
         
         $this->formatter=$this->add('Controller_Formatter');
         
@@ -249,7 +251,7 @@ class Frontend extends ApiFrontend {
                 exit;
             }
             unset($u['password']);
-            $this->api->auth->addInfo($u);
+            $this->api->auth->addInfo('user',$u);
             $this->api->auth->login($u['email']);
         }
     }

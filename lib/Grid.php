@@ -37,5 +37,4 @@ class Grid extends Grid_Advanced {
         $this->columns[$this->last_column]['descr'] = $name;
         return $this;
     }
-    
 }

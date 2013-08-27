@@ -62,6 +62,7 @@ class Model_Quote_Base extends Model_BaseTable {
                 ->table('requirement')
                 ->field('sum(estimate)')
                 ->where('requirement.quote_id',$q->getField('id'))
+                ->where('requirement.is_included','1')
                 ;
         });
 
@@ -70,6 +71,7 @@ class Model_Quote_Base extends Model_BaseTable {
                 ->table('requirement')
                 ->field('sum(estimate)*'.$q->getField('rate'))
                 ->where('requirement.quote_id',$q->getField('id'))
+                ->where('requirement.is_included','1')
                 ;
         });
 

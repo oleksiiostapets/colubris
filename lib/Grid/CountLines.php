@@ -9,12 +9,11 @@
 class Grid_CountLines extends Grid {
     function init() {
         parent::init();
-        $this->addColumn('text','#');
-        $this->addFormatter('#','number');
+        $this->addColumn('text','count')->setCaption('#');
     }
     public $number_count = 0;
     function formatRow() {
         parent::formatRow();
-        $this->current_row['#'] = ++$this->number_count;
+        $this->current_row['count'] = ++$this->number_count;
     }
 }

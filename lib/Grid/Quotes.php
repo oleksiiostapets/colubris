@@ -10,7 +10,7 @@ class Grid_Quotes extends Grid {
         'estimate'       => array('status'=>array('Estimate Needed'),    'name'=>'Estimate',                'get_var'=>'estimate'),
         'details'        => array('status'=>array('any'),                'name'=>'Details',                 'get_var'=>'details'),
         'edit_details'   => array('status'=>array('Not Estimated','Quotation Requested'),
-                                                                         'name'=>'Edit Details',                 'get_var'=>'edit_details'),
+                                                                         'name'=>'Edit Details',            'get_var'=>'edit_details'),
     );
     function init() {
         parent::init();
@@ -69,9 +69,7 @@ class Grid_Quotes extends Grid {
         // approve
         if( $_GET['approve'] ){
             if ( in_array('approve',$this->allowed_actions) ) {
-                $quote=$this->add('Model_Quote')->load($_GET['approve']);
-               	$quote->set('status','estimation_approved');
-               	$quote->save();
+                $this->add('Model_Quote')->load($_GET['approve'])->approve();
                 $this->js()->reload()->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['approve']['name'].'" is not allowed')->execute();
@@ -81,7 +79,14 @@ class Grid_Quotes extends Grid {
         // send_to_client
         if( $_GET['send_to_client'] ){
             if ( in_array('send_to_client',$this->allowed_actions) ) {
-                $this->sendEmailToClient($_GET['send_to_client']);
+                try {
+                    $client = $this->add('Model_Quote')->load($_GET['send_to_client'])->sendEmailToClient();
+                } catch (Exception_QuoteHasNoClient $e) {
+                    $this->js()->univ()->errorMessage('The project of this quote has no client!')->execute();
+                } catch (Exception_ClientHasNoEmail $e) {
+                    $this->js()->univ()->errorMessage('Error! The client '.$e->more_info['name'].' has no email. Please add email for the client.')->execute();
+                }
+                $this->js()->univ()->successMessage('Mail sent to '.$client['email'])->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['send_to_client']['name'].'" is not allowed')->execute();
             }
@@ -229,27 +234,7 @@ class Grid_Quotes extends Grid {
     function defaultTemplate() {
     	return array('grid/colored');
     }
-
-    function sendEmailToClient($quote_id) {
-        $quote=$this->add('Model_Quote')->load($quote_id);
-       	if ($quote['client_id']>0){
-       		$client=$this->add('Model_Client')->load($quote['client_id']);
-               $this->api->mailer->setReceivers(array($client['email'],'radwwmail@gmail.com'));
-
-       		if ($client['email']!=''){
-       			$this->api->mailer->sendMail('send_quote',array(
-                       'link'=>$this->api->siteURL().$this->api->url('client/quotes/rfq/estimated',array('quote_id'=>$quote_id))
-                   ),true);
-
-	            $this->js()->univ()->successMessage('Mail sent to '.$client['email'])->execute();
-       		} else {
-       			$this->js()->univ()->successMessage('Error! The client '.$client->get('name').' has no email. Please add email for the client.')->execute();
-       		}
-       	} else {
-       		$this->js()->univ()->successMessage('The project of this quote has no client!')->execute();
-       	}
-    }
-    
+   
     function precacheTemplate() {
     	$this->row_t->trySetHTML('painted', '<?$painted?>');
     	parent::precacheTemplate();

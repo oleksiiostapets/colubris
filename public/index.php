@@ -19,7 +19,7 @@ class RootedFrontend extends Frontend{
         ;
 
         // this public location cotains YOUR js, css and images, but not templates
-        $this->public_location = $this->pathfinder->addLocation('my-public',array(
+        $this->public_location = $this->pathfinder->addLocation('my-public/..',array(
             'js'=>'js',
             'css'=>'css',
             'public'=>'.',  // use with < ?public? > tag in your template
