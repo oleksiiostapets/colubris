@@ -1,5 +1,6 @@
 <?php
 class View_RFQRequirements extends View {
+    public $allow_included = true;
     public $quote;
     public $total_view;
     function init(){
@@ -13,7 +14,8 @@ class View_RFQRequirements extends View {
         $cr = $this->add('CRUD',
             array(
                 'allow_add'=>$this->allow_add,'allow_edit'=>$this->allow_edit,'allow_del'=>$this->allow_del,
-                'grid_class'=>'Grid_Requirements','quote'=>$this->quote,'total_view'=>$this->total_view
+                'grid_class'=>'Grid_Requirements','quote'=>$this->quote,'total_view'=>$this->total_view,
+                'allow_included'=>$this->allow_included
             )
         );
       	$cr->setModel($this->requirements,
