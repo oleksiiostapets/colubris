@@ -251,7 +251,7 @@ class Frontend extends ApiFrontend {
                 exit;
             }
             unset($u['password']);
-            $this->api->auth->addInfo($u);
+            $this->api->auth->addInfo('user',$u);
             $this->api->auth->login($u['email']);
         }
     }
