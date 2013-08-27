@@ -1,8 +1,13 @@
 <?php
 class View_RFQRequirements extends View {
+    public $quote;
     public $total_view;
     function init(){
         parent::init();
+        // $this->quote must be setted
+        if (is_null($this->quote)) {
+            throw $this->exception('Set $this->quote while adding.');
+        }
 
         if(!isset($this->edit_fields)) $this->edit_fields=array('name','descr','estimate','file_id');
         $cr = $this->add('CRUD',
