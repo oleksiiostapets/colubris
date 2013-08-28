@@ -64,7 +64,7 @@ class Grid_Requirements extends Grid_CountLines {
                 '<div id="is_included_'.$this->current_row['id'].'"
                     data-id="'.$this->current_row['id'].'"
                     class="toggle_is_included not-active"
-                    style="'.($this->can_toggle?'cursor:pointer':'').'"  
+                    style="'.($this->can_toggle?'cursor:pointer':'').'"
                     align=center>'.
                     '<span class="">☐</span>'.
                 '</div>';

@@ -10,7 +10,7 @@ class View_RFQQuote extends View {
             throw $this->exception('Set $this->quote while adding.');
         }
 
-        $v=$this->add('View')->setClass('left');
+        $v=$this->add('View')->setClass('left span6');
         
         $v->add('H4')->set('Quote:');
         $v->add('P')->set('Project - '.$this->quote->get('project'));
