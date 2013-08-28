@@ -19,15 +19,22 @@ class Grid_Requirements extends Grid_CountLines {
         $this->allow_included = $this->owner->allow_included;
         $this->can_toggle = $this->quote->canToggle($this->api->auth->model);
 
+
+        if (is_object($this->total_view)) {
+            $total_view_js = $this->total_view->js()->trigger('reload');
+        } else {
+            $total_view_js = '';
+        }
+
         if (is_subclass_of($this->owner, 'CRUD')) {
             $this->reload_object = $this->owner;
             $this->owner->js('reload',array(
-                $this->total_view->js()->trigger('reload')
+                $total_view_js
             ))/*->reload()*/;
         } else {
             $this->reload_object = $this;
             $this->js('reload',array(
-                $this->total_view->js()->trigger('reload')
+                $total_view_js
             ))->reload();
         }
     }
