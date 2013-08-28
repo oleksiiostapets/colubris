@@ -11,6 +11,7 @@ class Grid_Requirements extends Grid_CountLines {
     public $total_view;
     private $quote;
     private $can_toggle = false;
+    private $reload_object;
     function init() {
         parent::init();
         $this->quote = $this->owner->quote;
@@ -18,9 +19,17 @@ class Grid_Requirements extends Grid_CountLines {
         $this->allow_included = $this->owner->allow_included;
         $this->can_toggle = $this->quote->canToggle($this->api->auth->model);
 
-        $this->owner->js('reload',array(
-            $this->total_view->js()->trigger('reload')
-        ))/*->reload()*/;
+        if (is_subclass_of($this->owner, 'CRUD')) {
+            $this->reload_object = $this->owner;
+            $this->owner->js('reload',array(
+                $this->total_view->js()->trigger('reload')
+            ))/*->reload()*/;
+        } else {
+            $this->reload_object = $this;
+            $this->js('reload',array(
+                $this->total_view->js()->trigger('reload')
+            ))->reload();
+        }
     }
     function setModel($model, $actual_fields = UNDEFINED) {
         parent::setModel($model, $actual_fields);
@@ -97,7 +106,7 @@ class Grid_Requirements extends Grid_CountLines {
             );
             $requirements->save();
             $this->js(null,array(
-                $this->owner->js()->trigger('reload'),
+                $this->reload_object->js()->trigger('reload'),
             ))->execute();
 
         } else {
