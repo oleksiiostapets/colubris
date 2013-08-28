@@ -30,6 +30,7 @@ $.each({
 	},
     floating_total: function(el_id){
 
+        var left = 50;
         var min_top = 20;
         var max_top = 390;
         var top = max_top;
@@ -53,8 +54,10 @@ $.each({
 
             if ( window_top < max_top ) {
                 top = max_top - window_top;
+                left = 50;
             } else if ( window_top > min_top ) {
                 top = min_top;
+                left = 160;
             }
 
             // if window is too small
@@ -64,8 +67,8 @@ $.each({
 
             element
                     .css('position','fixed')
-                    .css('top',top + 'px')
-                    .css('right','50px')
+                    .css('top', top + 'px')
+                    .css('right', left + 'px')
                     .css('z-index','5')
             ;
         }
