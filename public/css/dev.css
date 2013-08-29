@@ -11,6 +11,13 @@
     float:right;
 }
 
+.green-button > span {
+    background-color: rgba(0, 207, 0, 0.10);
+}
+.red-button > span {
+    background-color: rgba(207, 11, 23, 0.10);
+}
+
 .horizontal .atk-form-row {
 	float:left;
 	margin:0 0 0 20px !important;

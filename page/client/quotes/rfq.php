@@ -40,7 +40,7 @@ class page_client_quotes_rfq extends Page {
         	$js=array();
         	$form->model->set('user_id',$this->api->auth->model['id']);
         	$form->update();
-        	$this->api->redirect($this->api->url('/client/quotes/rfq/step2',array('quote_id'=>$form->model->get('id'))));
+        	$this->api->redirect($this->api->url('/client/quotes/rfq/requirements',array('quote_id'=>$form->model->get('id'))));
         }
         
     }

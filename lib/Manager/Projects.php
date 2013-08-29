@@ -15,7 +15,7 @@ class Manager_Projects extends View {
         $grid->addColumn('button','edit');
         $grid->addColumn('button','estimation','Request for estimate');
         if($_GET['edit']){
-            $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/step2',
+            $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/requirements',
                         array('quote_id'=>$_GET['edit'])))
                 ->execute();
         }
@@ -32,7 +32,7 @@ class Manager_Projects extends View {
         $m->addCondition('status','not_estimated');
         $grid->addColumn('button','edit');
         if($_GET['edit']){
-            $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/step2',
+            $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/requirements',
                         array('quote_id'=>$_GET['edit'])))
                 ->execute();
         }
@@ -43,7 +43,7 @@ class Manager_Projects extends View {
         $m->addCondition('status','estimated');
         $grid->addColumn('button','edit');
         if($_GET['edit']){
-            $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/step2',
+            $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/requirements',
                         array('quote_id'=>$_GET['edit'])))
                 ->execute();
         }
@@ -75,7 +75,7 @@ class Manager_Projects extends View {
         $m->addCondition('status','estimate_needed');
         $grid->addColumn('button','edit');
         if($_GET['edit']){
-            $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/step2',
+            $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/requirements',
                         array('quote_id'=>$_GET['edit'])))
                 ->execute();
         }
