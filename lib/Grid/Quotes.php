@@ -37,7 +37,7 @@ class Grid_Quotes extends Grid {
         // estimate
         if( $_GET['estimate'] ) {
             if ( in_array('estimate',$this->allowed_actions) ) {
-                $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/estimate',
+                $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/requirements',
                			array('quote_id'=>$_GET['estimate'])))->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['estimate']['name'].'" is not allowed!')->execute();
@@ -47,7 +47,7 @@ class Grid_Quotes extends Grid {
         // requirements
         if( $_GET['requirements'] ) {
             if ( in_array('requirements',$this->allowed_actions) ) {
-                $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/step2',
+                $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/requirements',
                			array('quote_id'=>$_GET['requirements'])))->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['requirements']['name'].'" is not allowed')->execute();
@@ -95,7 +95,7 @@ class Grid_Quotes extends Grid {
         // details
         if( $_GET['details'] ){
             if ( in_array('details',$this->allowed_actions) ) {
-                $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/view',
+                $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/requirements',
                         array('quote_id'=>$_GET['details'])))->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['details']['name'].'" is not allowed')->execute();
@@ -105,7 +105,7 @@ class Grid_Quotes extends Grid {
         // edit_details
         if( $_GET['edit_details'] ){
             if ( in_array('edit_details',$this->allowed_actions) ) {
-            $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/step2',
+            $this->js()->univ()->redirect($this->api->url('/'.$this->role.'/quotes/rfq/requirements',
                 array('quote_id'=>$_GET['edit_details'])))->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['edit_details']['name'].'" is not allowed')->execute();
@@ -143,7 +143,7 @@ class Grid_Quotes extends Grid {
     	//$this->js('click')->_selector('[data-id='.$this->current_row['id'].']')->univ()->redirect($this->current_row['id']);
 
         $this->current_row_html['quotation'] =
-                '<div class="quote_name"><a href="'.$this->api->url('/'.$this->role.'/quotes/rfq/view',array('quote_id'=>$this->current_row['id'])).'">'.$this->current_row['name'].'</a></div>'.
+                '<div class="quote_name"><a href="'.$this->api->url('/'.$this->role.'/quotes/rfq/requirements',array('quote_id'=>$this->current_row['id'])).'">'.$this->current_row['name'].'</a></div>'.
                 '<div class="quote_project"><span>Project:</span>'.$this->current_row['project'].'</div>'.
                 '<div class="quote_client"><span>User:</span>'.$this->current_row['user'].'</div>'
         ;

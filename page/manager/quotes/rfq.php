@@ -50,7 +50,7 @@ class page_manager_quotes_rfq extends Page {
         	$form->model->set('user_id',$this->api->auth->model['id']);
         	$form->model->set('status','quotation_requested');
         	$form->update();
-        	$this->api->redirect($this->api->url('/manager/quotes/rfq/step2',array('quote_id'=>$form->model->get('id'))));
+        	$this->api->redirect($this->api->url('/manager/quotes/rfq/requirements',array('quote_id'=>$form->model->get('id'))));
         }
         
     }

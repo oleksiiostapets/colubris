@@ -19,13 +19,13 @@ class View_RFQQuote extends View {
         
         //$v=$this->add('View')->setClass('right');
         $page=explode('_',$this->api->page);
-        if($page[count($page)-1]!='step2'){
+        if($page[count($page)-1]!='requirements'){
         	if( !($this->api->auth->model['is_developer']) &&
                 ($this->quote->get('status')=='quotation_requested'
         			|| ( $this->api->auth->model['is_client'] && $this->quote->get('status')=='not_estimated' ))
             ){
 		        $b=$v->add('Button')->set('Edit requirements');
-		        $b->js('click')->univ()->redirect($this->api->url('/'.$page[0].'/quotes/rfq/step2',array('quote_id'=>$this->quote->get('id'))));
+		        $b->js('click')->univ()->redirect($this->api->url('/'.$page[0].'/quotes/rfq/requirements',array('quote_id'=>$this->quote->get('id'))));
             }
         }
         

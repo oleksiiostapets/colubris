@@ -24,7 +24,7 @@ class Frontend extends ApiFrontend {
         $this->js(true)->_load('colubris');
 
         // controllers
-        $this->collubris = $this->add('Controller_Colubris');
+        $this->colubris = $this->add('Controller_Colubris');
         $this->formatter=$this->add('Controller_Formatter');
         $this->mailer=$this->add('Controller_Mailer');
         
