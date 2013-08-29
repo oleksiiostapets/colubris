@@ -1,23 +1,18 @@
 <?php
-class page_client_quotes extends Page {
-    function init(){
-        parent::init();
+class page_client_quotes extends Page_Quotes {
 
-        $this->add('x_bread_crumb/View_BC',array(
-            'routes' => array(
-                0 => array(
-                    'name' => 'Home',
-                ),
-                1 => array(
-                    'name' => 'Quotes',
-                    'url' => 'client/quotes',
-                ),
-            )
-        ));
+    public $role = 'client';
 
-        $t=$this->add('H1');
-        $t->set('Quotes');
+    // CRUD config for this role
+    public $allow_add  = false;
+    public $allow_edit = false;
+    public $allow_del  = false;
+    public $allowed_actions  = array(
+            'details',
+            'edit_details',
+            'approve',
+    );
+    //public $form_fields  = array('project_id','name','general','rate','currency','duration','deadline','status');
+    public $grid_fields  = array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status');
 
-        $q=$this->add('Client_Quotes');
-    }
 }

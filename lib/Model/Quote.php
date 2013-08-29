@@ -2,7 +2,6 @@
 class Model_Quote extends Model_Quote_Base {
     function init(){
         parent::init(); //$this->debug();
-
         $this->addCondition('is_deleted',false);
     }
     function approve() {
@@ -52,13 +51,109 @@ class Model_Quote extends Model_Quote_Base {
        	}
     }
 
-    // check if this user can change 'is_included' flag of requirement
-    private $cannot_toggle_statuses = array('estimation_approved','finished',);
-    function canToggle($user) {
-        if ($user['is_developer']) {
-            return false;
-        }
-        return (in_array($this['status'],$this->cannot_toggle_statuses)?false:true);
 
+
+    /* **********************************
+     *
+     *      QUOTE ACCESS RULES
+     *
+     */
+    // check if this user can change 'is_included' flag of requirement
+    function hasUserIsIncludedAccess($user) {
+        $cannot_toggle_statuses = array('estimation_approved','finished',);
+
+        // accesses by role because user can have multiple roles
+        $has_admin_access   = false;
+        $has_manager_access = false;
+        $has_dev_access     = false;
+        $has_client_access  = false;
+
+        // admin cannot toggle requirements
+        if ($user['is_admin']) $has_admin_access = false;
+
+        // manager can toggle requirements if status is not 'estimation_approved' or 'finished'
+        if ( $user['is_manager'] )
+        if ( !in_array($this['status'],$cannot_toggle_statuses) ) {
+            $has_manager_access = true;
+        }
+
+        // dev cannot toggle requirements
+        if ($user['is_developer']) $has_dev_access = false;
+
+        // client can toggle requirements if status is not 'estimation_approved' or 'finished'
+        if ( $user['is_client'] )
+        if ( !in_array($this['status'],$cannot_toggle_statuses) ) {
+            $has_manager_access = true;
+        }
+
+        return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
+    }
+
+    // ONLY manager and client have access to quote price
+    function hasUserSeePriceAccess($user) {
+        return ($user['is_manager'] || $user['is_client']);
+    }
+
+    function hasUserReadAccess($user) {
+    }
+
+    // ONLY developer have access to estimate quote
+    function hasUserEstimateAccess($user) {
+        if ($user['is_developer']) return true;
+        return false;
+    }
+
+    function hasUserRequestForEstimateAccess($user) {
+
+        // accesses by role because user can have multiple roles
+        $has_admin_access   = false;
+        $has_manager_access = false;
+        $has_dev_access     = false;
+        $has_client_access  = false;
+
+        // admin cannot send request for estimate
+        if ($user['is_admin']) $has_admin_access = false;
+
+        // manager can send request for estimate if status 'quotation_requested' or 'not_estimated'
+        if ($user['is_manager'])
+        if ( $this['status']=='quotation_requested' || $this['status']=='not_estimated' ) {
+            $has_manager_access = true;
+        }
+
+        // dev cannot send request for estimate
+        if ($user['is_developer']) $has_dev_access = false;
+
+        // client cannot send request for estimate
+        if ($user['is_client']) $has_dev_access = false;
+
+        return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
+    }
+
+    function hasUserDeleteAccess($user) {
+    }
+
+    function hasUserEditRequirementsAccess($user) {
+
+        // accesses by role because user can have multiple roles
+        $has_admin_access   = false;
+        $has_manager_access = false;
+        $has_dev_access     = false;
+        $has_client_access  = false;
+
+        // admin don't have access to quote
+        if ($user['is_admin']) $has_admin_access = false;
+
+        // manager have access to all quotes
+        if ($user['is_manager']) $has_manager_access = true;
+
+        // dev have no access to projects
+        if ($user['is_developer']) $has_dev_access = false;
+
+        // client have access to quotes with statuses 'quotation_requested' and 'not_estimated'
+        if ($user['is_client'] && ($this['status']=='quotation_requested' || $this['status']=='not_estimated' )) {
+            $has_dev_access = true;
+        }
+
+        return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
     }
 }

@@ -129,12 +129,14 @@ class Grid_Quotes extends Grid {
         $this->removeColumn('spent_time');
         $this->removeColumn('estimated');
 
-        // formatters
-        $this->addFormatter('status','wrap');
-
-
         // add columns after model columns
         $this->addColumn('actions');
+
+        // formatters
+        $this->addFormatter('status','wrap');
+        $this->addFormatter('status','status');
+
+        $this->addPaginator(25);
     }
     function formatRow() {
     	parent::formatRow();

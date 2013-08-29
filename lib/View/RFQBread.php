@@ -1,5 +1,6 @@
 <?php
 class View_RFQBread extends View {
+    public $quotes_link;
     function init(){
         parent::init();
 

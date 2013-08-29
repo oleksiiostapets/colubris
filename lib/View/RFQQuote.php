@@ -10,16 +10,14 @@ class View_RFQQuote extends View {
             throw $this->exception('Set $this->quote while adding.');
         }
 
-        $v=$this->add('View')->setClass('left span6');
-        
+        $v=$this->add('View');//->setClass('left span6');
+
+        // quote description
         $v->add('H4')->set('Quote:');
-        $v->add('P')->set('Project - '.$this->quote->get('project'));
-        $v->add('P')->set('User - '.$this->quote->get('user'));
-        $v->add('P')->set('Name - '.$this->quote->get('name'));
-        $v->add('P')->set('Estimated - '.$this->quote->get('estimated'));
-        $v->add('P')->set('General requirement - '.$this->quote->get('general'));
+        $fields_required = array('project','user','name',/*'estimated',*/'general',);
+        $this->addQuoteInfoGrid($v, $fields_required);
         
-        $v=$this->add('View')->setClass('right');
+        //$v=$this->add('View')->setClass('right');
         $page=explode('_',$this->api->page);
         if($page[count($page)-1]!='step2'){
         	if( !($this->api->auth->model['is_developer']) &&
@@ -46,5 +44,23 @@ class View_RFQQuote extends View {
 
         $v=$this->add('View')->setClass('clear');
         
+    }
+
+
+    function addQuoteInfoGrid($v,$fields_required) {
+        $count = 0;
+        $source = array();
+        foreach ($this->quote->get() as $key=>$value) {
+            if (in_array($key,$fields_required)) {
+                $source[$count]['name'] = ucwords($key);
+                $source[$count]['value'] = $value;
+                $count++;
+            }
+        }
+        $gr = $v->add('Grid');
+        $gr->addColumn('text','name','');
+        $gr->addColumn('text','value','');
+        $gr->setSource($source);
+
     }
 }
