@@ -44,7 +44,7 @@ class Page_Requirements extends page_quotesfunctions {
          *          HTML
          *
          */
-        $this->addBreacrumb($this,$this->role.'/quotes');
+        $this->addBreacrumb($this);
 
         // | *** LEFT *** |
         $left = $this->add('View')
@@ -78,13 +78,8 @@ class Page_Requirements extends page_quotesfunctions {
         $this->add('View')->setClass('clear');
 
         // grid with requirements
-        $cr = $this->addRFQRequirements($this, $quote, $requirements, $this->requirements_rights, $total_view, $this->edit_fields);
-
-
-        // Checking client's edit permission to this quote and redirect to denied if required
-        if( $quote->hasUserEditRequirementsAccess($this->api->currentUser()) ){
-            $this->addRequirementForm($this, $quote, $cr);
-        }
+        $cr = $this->addRequirementsCRUD($this, $quote, $requirements, $this->requirements_rights, $total_view, $this->edit_fields);
+        $this->addRequirementForm($this, $quote, $cr);
 
     }
 
@@ -92,7 +87,7 @@ class Page_Requirements extends page_quotesfunctions {
 
 
 
-    function addBreacrumb($view,$quotes_link){
+    function addBreacrumb($view){
         $view->add('x_bread_crumb/View_BC',array(
             'routes' => array(
                 0 => array(
@@ -100,7 +95,7 @@ class Page_Requirements extends page_quotesfunctions {
                 ),
                 1 => array(
                     'name' => 'Quotes',
-                    'url' => $quotes_link,
+                    'url' => $this->role.'/quotes',
                 ),
                 2 => array(
                     'name' => 'Details of Quotation (requirements)',
@@ -219,11 +214,11 @@ class Page_Requirements extends page_quotesfunctions {
         $v = $view->add('View')->setClass('floating_total radius_10');
         $v->js(true)->colubris()->floating_total($v->name);
         $quote['estimated']>0?$estimate=$quote['estimated']:$estimate=0;
-        $this->total_view = $v->add('View')
+        $total_view = $v->add('View')
                 ->setClass('estimate_total_time_to_reload')
                 ->set('Estimated: '.$estimate.'hours');
-        $this->total_view->js('reload')->reload();
-        return $this->total_view;
+        $total_view->js('reload')->reload();
+        return $total_view;
     }
 
     function addEditRequirementButton($view, $quote, $role) {
@@ -237,12 +232,11 @@ class Page_Requirements extends page_quotesfunctions {
 
     public $allow_included = true;
     public $edit_fields = array('name','descr','estimate','file_id');
-    function addRFQRequirements($view, $quote, $requirements, $rights, $total_view, $edit_fields) {
+    function addRequirementsCRUD($view, $quote, $requirements, $rights, $total_view, $edit_fields) {
         $cr = $view->add('CRUD',
             array(
                 'allow_add'=>$rights['allow_add'],'allow_edit'=>$rights['allow_edit'],'allow_del'=>$rights['allow_del'],
                 'grid_class'=>'Grid_Requirements','quote'=>$quote,'total_view'=>$total_view,
-                'allow_included'=>$quote->hasUserIsIncludedAccess($this->api->currentUser())
             )
         );
 
@@ -261,22 +255,25 @@ class Page_Requirements extends page_quotesfunctions {
     }
 
     function addRequirementForm($view, $quote, $crud) {
+        // Checking client's edit permission to this quote and redirect to denied if required
+        if( $quote->hasUserEditRequirementsAccess($this->api->currentUser()) ){
 
-        $view->add('H4')->set('New Requirement:');
+            $view->add('H4')->set('New Requirement:');
 
-        $form=$view->add('Form');
-        $m=$this->setModel('Model_Requirement');
-        $form->setModel($m,array('name','descr','file_id'));
-        $form->addSubmit('Save');
+            $form=$view->add('Form');
+            $m=$this->setModel('Model_Requirement');
+            $form->setModel($m,array('name','descr','file_id'));
+            $form->addSubmit('Save');
 
-        if($form->isSubmitted()){
-        	$form->model->set('user_id',$this->api->auth->model['id']);
-        	$form->model->set('quote_id',$quote['id']);
-        	$form->update();
+            if($form->isSubmitted()){
+            	$form->model->set('user_id',$this->api->auth->model['id']);
+            	$form->model->set('quote_id',$quote['id']);
+            	$form->update();
 
-            $form->js(null,array(
-                $crud->js()->trigger('reload'),
-            ))->reload()->execute();
+                $form->js(null,array(
+                    $crud->js()->trigger('reload'),
+                ))->reload()->execute();
+            }
         }
     }
 
