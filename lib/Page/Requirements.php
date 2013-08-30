@@ -7,6 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 class Page_Requirements extends Page {
+    public $role = '';
 
     function page_index(){
 

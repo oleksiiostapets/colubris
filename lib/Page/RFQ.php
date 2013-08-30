@@ -7,6 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 class Page_RFQ extends Page {
+    public $role = '';
 
     function init() {
         parent::init();
