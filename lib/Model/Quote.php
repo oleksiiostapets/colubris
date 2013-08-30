@@ -101,9 +101,11 @@ class Model_Quote extends Model_Quote_Base {
     }
 
     function canUserDeleteRequirement($user) {
+        return $user['is_manager'];
     }
 
     function canUserDeleteQuote($user) {
+        return $user['is_manager'];
     }
 
     // ONLY developer have access to estimate quotes with status 'estimate_needed'
@@ -112,6 +114,35 @@ class Model_Quote extends Model_Quote_Base {
             return true;
         }
         return false;
+    }
+
+    function canUserEditQuote($user) {
+
+        // accesses by role because user can have multiple roles
+        $has_admin_access   = false;
+        $has_manager_access = false;
+        $has_dev_access     = false;
+        $has_client_access  = false;
+
+        // admin cannot
+        if ($user['is_admin']) $has_admin_access = false;
+
+        // manager can
+        if ($user['is_manager']) $has_manager_access = true;
+
+        // dev can only certain fields if status 'estimate_needed'
+        if ($user['is_developer'])
+        if ($this['status'] == 'estimate_needed') {
+            $has_dev_access = true;
+        }
+
+        // client can if status 'estimate_needed'
+        if ($user['is_client'])
+        if ($this['status'] == 'quotation_requested') {
+            $has_client_access = true;
+        }
+
+        return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
     }
 
     function canUserRequestForEstimate($user) {
@@ -138,7 +169,10 @@ class Model_Quote extends Model_Quote_Base {
         if ($user['is_manager']) $has_manager_access = true;
 
         // dev have no access to projects
-        if ($user['is_developer']) $has_dev_access = true;
+        if ($user['is_developer'])
+        if ($this['status'] != 'quotation_requested') {
+            $has_dev_access = true;
+        }
 
         // TODO !!!!!  ~~>  client have access to quotes of its projects ONLY!
         if ($user['is_client']) {
@@ -163,7 +197,10 @@ class Model_Quote extends Model_Quote_Base {
         if ($user['is_manager']) $has_manager_access = true;
 
         // dev have no access to projects
-        if ($user['is_developer']) $has_dev_access = false;
+        if ($user['is_developer'])
+        if ($this['status'] == 'estimate_needed') {
+            $has_dev_access = true;
+        }
 
         // client have access to quotes with statuses 'quotation_requested' and 'not_estimated'
         if ($user['is_client'] && ($this['status']=='quotation_requested' || $this['status']=='not_estimated' )) {
@@ -172,5 +209,30 @@ class Model_Quote extends Model_Quote_Base {
 
         return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
     }
-    
+
+    function whatRequirementFieldsUserCanEdit($user) {
+
+        $fields_total = array();
+
+        // accesses by role because user can have multiple roles
+        $admin_fields   = array();
+        $manager_fields = array('name','descr','estimate','file_id');
+        $dev_fields     = array('estimate');
+        $client_fields  = array('name','descr','file_id');
+
+        // admin don't have access to quote
+        if ($user['is_admin']) $fields_total = array_merge($fields_total, $admin_fields);
+
+        // manager have access to all quotes
+        if ($user['is_manager']) $fields_total = array_merge($fields_total, $manager_fields);
+
+        // dev have no access to projects
+        if ($user['is_developer']) $fields_total = array_merge($fields_total, $dev_fields);
+
+        // client have access to quotes with statuses 'quotation_requested' and 'not_estimated'
+        if ($user['is_client'] ) $fields_total = array_merge($fields_total, $client_fields);
+
+        return array_unique($fields_total);
+    }
+
 }
