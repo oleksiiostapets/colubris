@@ -5,12 +5,15 @@ class MyMenu extends Menu_Basic {
 
         if ($this->api->currentUser()->isManager()) {
         	$this->addMenuItem('manager/dashboard','Manager');
+        	$this->addMenuItem('quotes','Quotes');
         }
         if ($this->api->currentUser()->isDeveloper()) {
         	$this->addMenuItem('team/dashboard','Developer');
+            $this->addMenuItem('quotes','Quotes');
         }
         if ($this->api->currentUser()->isClient()) {
         	$this->addMenuItem('client/dashboard','Client');
+            $this->addMenuItem('quotes','Quotes');
         }
         if ($this->api->currentUser()->isAdmin()) {
         	$this->addMenuItem('admin/users','Admin');
@@ -43,6 +46,8 @@ class MyMenu extends Menu_Basic {
 		if ( (substr($href,0,6)=='client' && substr($this->api->page,0,6)=='client') ) { return true; }
 		if ( (substr($href,0,6)=='system' && substr($this->api->page,0,6)=='system') ) { return true; }
 
-		return $href==$this->api->page||$href==';'.$this->api->page||$href.$this->api->getConfig('url_postfix','')==$this->api->page;
+        if ( (substr($href,0,6)=='quotes' && substr($this->api->page,0,6)=='quotes') ) { return true; }
+
+        return $href==$this->api->page||$href==';'.$this->api->page||$href.$this->api->getConfig('url_postfix','')==$this->api->page;
 	}
 }

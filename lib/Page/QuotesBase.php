@@ -6,7 +6,8 @@
  * Time: 1:02 PM
  * To change this template use File | Settings | File Templates.
  */
-class Page_Quotes extends Page {
+class Page_QuotesBase extends Page {
+    public $role = '';
     public $quote;
     function init() {
         parent::init();
