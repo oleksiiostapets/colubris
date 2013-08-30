@@ -7,17 +7,14 @@
  * To change this template use File | Settings | File Templates.
  */
 class Page_Quotes extends Page {
+    public $quote;
+    function init() {
+        parent::init();
+        $this->quote = $this->add('Model_Quote');//->debug();
+    }
     function page_index() {
-
-//        if (!isset($_GET['id'])) {
-//            throw $this->exception('No $_GET[\'id\']');
-//        }
-//        $this->api->stickyGET('id');
-
         $this->addBreadCrumb($this);
-
         $this->add('H1')->set('Quotes');
-
         $this->addRequestForQuotationButton($this);
         $this->addQuotesCRUD($this);
     }
@@ -61,15 +58,7 @@ class Page_Quotes extends Page {
             'role'            => $this->role,
             'allowed_actions' => $this->allowed_actions
         ));
-        $m=$this->add('Model_Quote');
 
-        // show only client's quotes
-        if ($this->api->currentUser()->isClient()) {
-            $pr = $m->join('project','project_id','left','_pr');
-            $pr->addField('pr_client_id','client_id');
-            $m->addCondition('pr_client_id',$this->api->auth->model['client_id']);
-        }
-
-        $cr->setModel( $m, $this->form_fields, $this->grid_fields );
+        $cr->setModel( $this->quote, $this->form_fields, $this->grid_fields );
     }
 }

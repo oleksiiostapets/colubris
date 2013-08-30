@@ -1,6 +1,6 @@
 <?php
 
-class page_quotesfunctions extends Page {
+class _page_quotesfunctions extends Page {
     function page_more(){
         if (!isset($_GET['requirement_id'])) {
             throw $this->exception('Provide $_GET[\'requirement_id\']');

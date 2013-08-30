@@ -16,7 +16,7 @@ class Grid_Requirements extends Grid_CountLines {
         parent::init();
         $this->quote = $this->owner->quote;
         $this->total_view = $this->owner->total_view;
-        $this->can_toggle = $this->quote->hasUserIsIncludedAccess($this->api->currentUser());
+        $this->can_toggle = $this->quote->canUserChangeIsIncluded($this->api->currentUser());
 
 
         if (is_object($this->total_view)) {
