@@ -23,6 +23,7 @@ class Page_Requirements extends Page {
         // Does Project of this quotetion exist?
         $project=$this->add('Model_Project')->tryLoad($quote->get('project_id'));
         if( !$project->loaded() ){
+            throw $this->exception('There is no such a project'); // temp
         	$this->api->redirect('/denied');
         	// TODO nice UI to explain user that there is no such a project
             // TODO just redirect to denied is not clear
@@ -33,6 +34,7 @@ class Page_Requirements extends Page {
 
         // Checking client's read permission to this quote and redirect to denied if required
         if( !$quote->canUserReadRequirements($this->api->currentUser()) ){
+            throw $this->exception('You cannot see requirements of this quote'); // temp
             $this->api->redirect('/denied');
         }
 
@@ -78,7 +80,7 @@ class Page_Requirements extends Page {
         $this->add('View')->setClass('clear');
 
         // grid with requirements
-        $cr = $this->addRequirementsCRUD($this, $quote, $requirements, $this->requirements_rights, $total_view, $this->edit_fields);
+        $cr = $this->addRequirementsCRUD($this, $quote, $requirements, $total_view);
         $this->addRequirementForm($this, $quote, $cr);
 
     }
@@ -261,16 +263,20 @@ class Page_Requirements extends Page {
 
     public $allow_included = true;
     public $edit_fields = array('name','descr','estimate','file_id');
-    function addRequirementsCRUD($view, $quote, $requirements, $rights, $total_view, $edit_fields) {
+    function addRequirementsCRUD($view, $quote, $requirements, $total_view) {
         $cr = $view->add('CRUD',
             array(
-                'allow_add'=>$rights['allow_add'],'allow_edit'=>$rights['allow_edit'],'allow_del'=>$rights['allow_del'],
-                'grid_class'=>'Grid_Requirements','quote'=>$quote,'total_view'=>$total_view,
+                'allow_add'    => false, // we cannot add from crud TODO make add from CRUD only
+                'allow_edit'   => $quote->canUserEditRequirements($this->api->currentUser()),
+                'allow_del'    => $quote->canUserDeleteRequirement($this->api->currentUser()),
+                'grid_class'   => 'Grid_Requirements',
+                'quote'        =>$quote,
+                'total_view'   =>$total_view,
             )
         );
 
         $cr->setModel($requirements,
-                $edit_fields,
+                $quote->whatRequirementFieldsUserCanEdit($this->api->currentUser()),
         		array('is_included','name','estimate','spent_time','file','user','count_comments')
          );
 
