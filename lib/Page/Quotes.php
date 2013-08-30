@@ -11,6 +11,20 @@ class Page_Quotes extends Page {
     function init() {
         parent::init();
         $this->quote = $this->add('Model_Quote');//->debug();
+
+        if ($this->api->currentUser()->isClient()) {
+            // show only client's quotes
+            $pr = $this->quote->join('project','project_id','left','_pr');
+            $pr->addField('pr_client_id','client_id');
+            $this->quote->addCondition('pr_client_id',$this->api->auth->model['client_id']);
+        }
+
+        if ($this->api->currentUser()->isDeveloper()) {
+            // developer do not see not well prepared (quotation_requested status) and finished projects
+            $this->quote->addCondition('status',array(
+                'estimate_needed','not_estimated','estimated','estimation_approved'
+            ));
+        }
     }
     function page_index() {
         $this->addBreadCrumb($this);
@@ -43,22 +57,21 @@ class Page_Quotes extends Page {
         }
     }
 
-    public $allow_add  = false;         // TODO move to model !!!
-    public $allow_edit = false;         // TODO move to model !!!
-    public $allow_del  = false;         // TODO move to model !!!
-    public $allowed_actions  = array(); // TODO move to model !!!
-    public $form_fields  = array();
-    public $grid_fields  = array();
     function addQuotesCRUD($view) {
+        $user = $this->api->currentUser();
         $cr = $view->add('CRUD', array(
             'grid_class'      => 'Grid_Quotes',
-            'allow_add'       => $this->allow_add,
-            'allow_edit'      => $this->allow_edit,
-            'allow_del'       => $this->allow_del,
+            'allow_add'       => false,
+            'allow_edit'      => $this->quote->canUserEditQuote($user),
+            'allow_del'       => $this->quote->canUserDeleteQuote($user),
             'role'            => $this->role,
-            'allowed_actions' => $this->allowed_actions
+            'allowed_actions' => $this->quote->userAllowedActions($user),
         ));
 
-        $cr->setModel( $this->quote, $this->form_fields, $this->grid_fields );
+        $cr->setModel(
+            $this->quote,
+            $this->quote->whatQuoteFieldsUserCanEdit($user),
+            $this->quote->whatQuoteFieldsUserCanSee($user)
+        );
     }
 }
