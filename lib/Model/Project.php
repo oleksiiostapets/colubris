@@ -12,15 +12,15 @@ class Model_Project extends Model_Project_Base {
      *      PROJECT ACCESS RULES
      *
      */
-    function hasUserReadAccess($user) {
+    function canUserSee($user) {
     }
 
-    function hasUserEstimateAccess($user) {
+    function canUserCreate($user) {
     }
 
-    function hasUserDeleteAccess($user) {
+    function canUserDelete($user) {
     }
 
-    function hasUserEditAccess($user) {
+    function canUserEdit($user) {
     }
 }

@@ -59,7 +59,7 @@ class Model_Quote extends Model_Quote_Base {
      *
      */
     // check if this user can change 'is_included' flag of requirement
-    function hasUserIsIncludedAccess($user) {
+    function canUserChangeIsIncluded($user) {
         $cannot_toggle_statuses = array('estimation_approved','finished',);
 
         // accesses by role because user can have multiple roles
@@ -90,51 +90,40 @@ class Model_Quote extends Model_Quote_Base {
     }
 
     // ONLY manager and client have access to quote price
-    function hasUserSeePriceAccess($user) {
+    function canUserSeePrice($user) {
         return ($user['is_manager'] || $user['is_client']);
     }
 
-    function hasUserReadAccess($user) {
+    function canUserSeeRequirements($user) {
     }
 
-    function hasUserDeleteAccess($user) {
+    function canUserSeeQuote($user) {
+    }
+
+    function canUserDeleteRequirement($user) {
+    }
+
+    function canUserDeleteQuote($user) {
     }
 
     // ONLY developer have access to estimate quotes with status 'estimate_needed'
-    function hasUserEstimateAccess($user) {
+    function canUserEstimateQuote($user) {
         if ($user['is_developer'] && $this['status']=='estimate_needed') {
             return true;
         }
         return false;
     }
 
-    function hasUserRequestForEstimateAccess($user) {
-
-        // accesses by role because user can have multiple roles
-        $has_admin_access   = false;
-        $has_manager_access = false;
-        $has_dev_access     = false;
-        $has_client_access  = false;
-
-        // admin cannot send request for estimate
-        if ($user['is_admin']) $has_admin_access = false;
-
+    function canUserRequestForEstimate($user) {
         // manager can send request for estimate if status 'quotation_requested' or 'not_estimated'
         if ($user['is_manager'])
         if ( $this['status']=='quotation_requested' || $this['status']=='not_estimated' ) {
-            $has_manager_access = true;
+            return true;
         }
-
-        // dev cannot send request for estimate
-        if ($user['is_developer']) $has_dev_access = false;
-
-        // client cannot send request for estimate
-        if ($user['is_client']) $has_client_access = false;
-
-        return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
+        return false;
     }
 
-    function hasUserReadRequirementsAccess($user) {
+    function canUserReadRequirements($user) {
 
         // accesses by role because user can have multiple roles
         $has_admin_access   = false;
@@ -159,7 +148,7 @@ class Model_Quote extends Model_Quote_Base {
         return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
     }
 
-    function hasUserEditRequirementsAccess($user) {
+    function canUserEditRequirements($user) {
 
         // accesses by role because user can have multiple roles
         $has_admin_access   = false;
@@ -183,4 +172,5 @@ class Model_Quote extends Model_Quote_Base {
 
         return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
     }
+    
 }
