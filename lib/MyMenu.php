@@ -7,14 +7,17 @@ class MyMenu extends Menu_Basic {
         	$this->addMenuItem('manager/dashboard','Manager');
         	$this->addMenuItem('quotes','Quotes');
             $this->addMenuItem('clients','Clients');
+            $this->addMenuItem('projects','Projects');
         }
         if ($this->api->currentUser()->isDeveloper()) {
         	$this->addMenuItem('team/dashboard','Developer');
             $this->addMenuItem('quotes','Quotes');
+            $this->addMenuItem('projects','Projects');
         }
         if ($this->api->currentUser()->isClient()) {
         	$this->addMenuItem('client/dashboard','Client');
             $this->addMenuItem('quotes','Quotes');
+            $this->addMenuItem('projects','Projects');
         }
         if ($this->api->currentUser()->isAdmin()) {
         	$this->addMenuItem('admin/users','Admin');

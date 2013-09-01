@@ -114,4 +114,47 @@ class Model_User_Base extends Model_BaseTable {
     function canUserMenageClients() {
         return $this['is_manager'];
     }
+
+
+
+    /* **********************************
+     *
+     *      PROJECT ACCESS RULES
+     *
+     */
+    function canSeeProject($project) {
+    }
+    function canCreateProject() {
+        // accesses by role because user can have multiple roles
+        $has_admin_access   = false;
+        $has_manager_access = false;
+        $has_dev_access     = false;
+        $has_client_access  = false;
+
+        // admin cannot
+        if ($this['is_admin']) $has_admin_access = false;
+
+        // manager can
+        if ($this['is_manager']) $has_manager_access = true;
+
+        // dev cannot
+        if ($this['is_developer']) $has_dev_access = false;
+
+        // client cannot
+        if ($this['is_client']) $has_manager_access = true;
+
+        return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
+    }
+    function canDeleteProject() {
+        return $this->isManager();
+    }
+    function canEditProject() {
+        return $this->isManager();
+    }
+    function canSeeProjectParticipantes() {
+        return $this->isManager();
+    }
+    function canSeeProjectTasks() {
+        return true;
+    }
 }
