@@ -18,10 +18,6 @@ class Model_Project_Base extends Model_BaseTable {
 
         $this->addField('is_deleted')->type('boolean')->defaultValue('0');
 
-        if($this->api->auth->model['is_client']){
-            $this->addCondition('client_id',$this->api->auth->model['client_id']);
-        }
-
         $this->setOrder('name');
     }
 

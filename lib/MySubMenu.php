@@ -10,7 +10,7 @@ class MySubMenu extends Menu_Basic {
             case 'client':
                 $this->addMenuItem('client/dashboard','Dashboard');
             	$this->addMenuItem('client/tasks','Tasks');
-            	$this->addMenuItem('client/projects','Projects');
+            	//$this->addMenuItem('client/projects','Projects');
                 //$this->addMenuItem('quotes','Quotes');
                 $this->addMenuItem('client/reports','Reports');
                 //$this->addMenuItem('client/quotes/rfq','Request For Quotation');
@@ -23,7 +23,7 @@ class MySubMenu extends Menu_Basic {
             case 'team':
                 $this->addMenuItem('team/dashboard','Dashboard');
             	$this->addMenuItem('team/tasks','Tasks');
-            	$this->addMenuItem('team/projects','Projects');
+            	//$this->addMenuItem('team/projects','Projects');
                 //$this->addMenuItem('quotes','Quotes');
                 $this->addMenuItem('team/reports','Reports');
                 $this->addMenuItem('team/deleted','Deleted');
@@ -35,7 +35,7 @@ class MySubMenu extends Menu_Basic {
             case 'manager':
                 $this->addMenuItem('manager/dashboard','Dashboard');
             	$this->addMenuItem('manager/tasks','Tasks');
-            	$this->addMenuItem('manager/projects','Projects');
+            	//$this->addMenuItem('manager/projects','Projects');
                 //$this->addMenuItem('quotes','Quotes');
                 //$this->addMenuItem('manager/clients','Clients');
                 $this->addMenuItem('manager/reports','Reports');
