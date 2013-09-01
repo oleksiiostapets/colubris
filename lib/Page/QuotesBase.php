@@ -7,7 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */
 class Page_QuotesBase extends Page {
-    public $role = '';
     public $quote;
     function init() {
         parent::init();
@@ -42,7 +41,7 @@ class Page_QuotesBase extends Page {
                 ),
                 1 => array(
                     'name' => 'Quotes',
-                    'url' => $this->role.'/quotes',
+                    'url' => 'quotes',
                 ),
             )
         ));
@@ -53,7 +52,7 @@ class Page_QuotesBase extends Page {
             $b = $view->add('Button')->set('Request For Quotation');
             $b->addStyle('margin-bottom','10px');
             $b->js('click', array(
-                $this->js()->univ()->redirect($this->api->url($this->role.'/quotes/rfq'))
+                $this->js()->univ()->redirect($this->api->url('quotes/rfq'))
             ));
         }
     }
@@ -65,7 +64,6 @@ class Page_QuotesBase extends Page {
             'allow_add'       => false,
             'allow_edit'      => $this->quote->canUserEditQuote($user),
             'allow_del'       => $this->quote->canUserDeleteQuote($user),
-            'role'            => $this->role,
             'allowed_actions' => $this->quote->userAllowedActions($user),
         ));
 

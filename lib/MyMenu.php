@@ -6,6 +6,7 @@ class MyMenu extends Menu_Basic {
         if ($this->api->currentUser()->isManager()) {
         	$this->addMenuItem('manager/dashboard','Manager');
         	$this->addMenuItem('quotes','Quotes');
+            $this->addMenuItem('clients','Clients');
         }
         if ($this->api->currentUser()->isDeveloper()) {
         	$this->addMenuItem('team/dashboard','Developer');
@@ -47,6 +48,7 @@ class MyMenu extends Menu_Basic {
 		if ( (substr($href,0,6)=='system' && substr($this->api->page,0,6)=='system') ) { return true; }
 
         if ( (substr($href,0,6)=='quotes' && substr($this->api->page,0,6)=='quotes') ) { return true; }
+        if ( (substr($href,0,7)=='clients' && substr($this->api->page,0,7)=='clients') ) { return true; }
 
         return $href==$this->api->page||$href==';'.$this->api->page||$href.$this->api->getConfig('url_postfix','')==$this->api->page;
 	}

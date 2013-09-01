@@ -7,12 +7,11 @@
  * To change this template use File | Settings | File Templates.
  */
 class Page_RFQ extends Page {
-    public $role = '';
 
     function init() {
         parent::init();
         if (!$this->api->currentUser()->canSendRequestForQuotation()) {
-            throw $this->exception('This user cannot send quotation request');
+            throw $this->exception('This user cannot send quotation request','Exception_Denied');
         }
     }
 
@@ -31,11 +30,11 @@ class Page_RFQ extends Page {
                 ),
                 1 => array(
                     'name' => 'Quotes',
-                    'url' => $this->role.'/quotes',
+                    'url' => 'quotes',
                 ),
                 2 => array(
                     'name' => 'Request for Quotation (create)',
-                    'url' => 'manager/quotes/rfq',
+                    'url' => 'quotes/rfq',
                 ),
             )
         ));

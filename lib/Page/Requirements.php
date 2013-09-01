@@ -7,7 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */
 class Page_Requirements extends Page {
-    public $role = '';
 
     function page_index(){
 
@@ -24,8 +23,7 @@ class Page_Requirements extends Page {
         // Does Project of this quotetion exist?
         $project=$this->add('Model_Project')->tryLoad($quote->get('project_id'));
         if( !$project->loaded() ){
-            throw $this->exception('There is no such a project'); // temp
-        	$this->api->redirect('/denied');
+            throw $this->exception('There is no such a project','Exception_Denied');
         	// TODO nice UI to explain user that there is no such a project
             // TODO just redirect to denied is not clear
         }
@@ -35,8 +33,7 @@ class Page_Requirements extends Page {
 
         // Checking client's read permission to this quote and redirect to denied if required
         if( !$quote->canUserReadRequirements($this->api->currentUser()) ){
-            throw $this->exception('You cannot see requirements of this quote'); // temp
-            $this->api->redirect('/denied');
+            throw $this->exception('You cannot see requirements of this quote','Exception_Denied');
         }
 
 
@@ -127,7 +124,7 @@ class Page_Requirements extends Page {
                 ),
                 1 => array(
                     'name' => 'Quotes',
-                    'url' => $this->role.'/quotes',
+                    'url' => 'quotes',
                 ),
                 2 => array(
                     'name' => 'Details of Quotation (requirements)',
@@ -253,11 +250,11 @@ class Page_Requirements extends Page {
         return $total_view;
     }
 
-    function addEditRequirementButton($view, $quote, $role) {
+    function addEditRequirementButton($view, $quote) {
         if ($quote->canUserEditRequirements($this->api->currentUser())) {
             $b=$view->add('Button')->set('Edit requirements');
             $b->js('click')->univ()->redirect(
-                $this->api->url('/'.$role.'/quotes/rfq/requirements',array('quote_id'=>$this->quote->get('id')))
+                $this->api->url('quotes/rfq/requirements',array('quote_id'=>$this->quote->get('id')))
             );
         }
     }
