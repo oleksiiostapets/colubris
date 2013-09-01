@@ -111,4 +111,7 @@ class Model_User_Base extends Model_BaseTable {
 
         return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
     }
+    function canUserMenageClients() {
+        return $this['is_manager'];
+    }
 }

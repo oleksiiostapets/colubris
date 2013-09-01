@@ -11,7 +11,7 @@ class MySubMenu extends Menu_Basic {
                 $this->addMenuItem('client/dashboard','Dashboard');
             	$this->addMenuItem('client/tasks','Tasks');
             	$this->addMenuItem('client/projects','Projects');
-                $this->addMenuItem('quotes','Quotes');
+                //$this->addMenuItem('quotes','Quotes');
                 $this->addMenuItem('client/reports','Reports');
                 //$this->addMenuItem('client/quotes/rfq','Request For Quotation');
                 //$m->addMenuItem('client/budgets','Budgets');
@@ -24,7 +24,7 @@ class MySubMenu extends Menu_Basic {
                 $this->addMenuItem('team/dashboard','Dashboard');
             	$this->addMenuItem('team/tasks','Tasks');
             	$this->addMenuItem('team/projects','Projects');
-                $this->addMenuItem('quotes','Quotes');
+                //$this->addMenuItem('quotes','Quotes');
                 $this->addMenuItem('team/reports','Reports');
                 $this->addMenuItem('team/deleted','Deleted');
                 //$m->addMenuItem('team/entry','Time Entry');
@@ -36,8 +36,8 @@ class MySubMenu extends Menu_Basic {
                 $this->addMenuItem('manager/dashboard','Dashboard');
             	$this->addMenuItem('manager/tasks','Tasks');
             	$this->addMenuItem('manager/projects','Projects');
-                $this->addMenuItem('quotes','Quotes');
-                $this->addMenuItem('manager/clients','Clients');
+                //$this->addMenuItem('quotes','Quotes');
+                //$this->addMenuItem('manager/clients','Clients');
                 $this->addMenuItem('manager/reports','Reports');
                 $this->addMenuItem('manager/deleted','Deleted');
                 //$this->addMenuItem('manager/projects','Projects'); // Admin can setup projects and users here

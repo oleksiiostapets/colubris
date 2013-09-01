@@ -80,8 +80,13 @@ class Frontend extends ApiFrontend {
             ->add('Text')->set($this->api->auth->model['name'] . ' @ ' .'Colubris Team Manager');
 
         $this->template->trySet('year',date('Y',time()));
-        
-        parent::initLayout();
+
+        try {
+            parent::initLayout();
+        } catch (Exception_Denied $e) {
+            // TODO show denied page
+            throw $e;
+        }
     }
     
     function getUserType(){
@@ -128,13 +133,13 @@ class Frontend extends ApiFrontend {
         if (!$this->currentUser()->isSystem()) {
             // Access for all non-system roles
             $this->addAllowedPages(array(
-                'account', 'about', 'home', 'quotes',
+                'account', 'about', 'home', 'quotes','clients'
             ));
 
             // Access for managers
             if($this->currentUser()->isManager()) {
                 $this->addAllowedPages(array(
-                    'manager',
+                    'manager'
                 ));
             }
             // Access for developers
@@ -158,7 +163,7 @@ class Frontend extends ApiFrontend {
         }
 
         if(!$this->api->auth->isPageAllowed($this->page)){
-            $this->api->redirect('denied');
+            throw $this->exception('This user cannot see this page','Exception_Denied');
         }
     }
     private $allowed_pages=array();
