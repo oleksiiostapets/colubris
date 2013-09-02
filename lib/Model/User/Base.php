@@ -148,7 +148,7 @@ class Model_User_Base extends Model_BaseTable {
     function canSeeQuotesList() {
         return $this->checkRoleSimpleRights(array(false,true,true,true));
     }
-    function canSeeUsersList() {
+    function canSeeUserList() {
         return $this->checkRoleSimpleRights(array(true,false,false,false));
     }
     function canSeeDevList() {
@@ -156,6 +156,15 @@ class Model_User_Base extends Model_BaseTable {
     }
     function canSeeDeleted() {
         return $this->checkRoleSimpleRights(array(false,true,false,false));
+    }
+    function canSeeReportList() {
+        return $this->checkRoleSimpleRights(array(false,true,true,true));
+    }
+    function canSeeProjectList() {
+        return $this->checkRoleSimpleRights(array(false,true,true,true));
+    }
+    function canSeeTaskList() {
+        return $this->checkRoleSimpleRights(array(false,true,true,true));
     }
 
 

@@ -3,9 +3,9 @@ class page_tasks extends Page {
     function page_index(){
 
         // Checking client's read permission to this quote and redirect to denied if required
-        //if( !$this->api->currentUser()->canUserMenageClients() ){
-        //    throw $this->exception('You cannot see this page','Exception_Denied');
-        //}
+        if( !$this->api->currentUser()->canSeeTaskList() ){
+            throw $this->exception('You cannot see this page','Exception_Denied');
+        }
 
         $this->add('x_bread_crumb/View_BC',array(
             'routes' => array(
