@@ -6,6 +6,7 @@ class Model_Project extends Model_Project_Base {
     }
     function forClient() {
         $this->addCondition('client_id',$this->api->auth->model['client_id']);
+        return $this;
     }
 
     // TODO refactor this. Maybe join?
@@ -17,8 +18,9 @@ class Model_Project extends Model_Project_Base {
             else $projects_ids=$projects_ids.','.$p['project_id'];
         }
         $this->addCondition('id','in',$projects_ids);
+        return $this;
     }
     function forDeveloper() {
-        $this->participateIn();
+        return $this->participateIn();
     }
 }
