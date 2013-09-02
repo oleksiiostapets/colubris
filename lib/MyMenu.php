@@ -4,20 +4,28 @@ class MyMenu extends Menu_Basic {
         parent::init();
 
         if ($this->api->currentUser()->isManager()) {
-        	$this->addMenuItem('manager/dashboard','Manager');
+        	$this->addMenuItem('manager/dashboard','Dashboard');
+            $this->addMenuItem('tasks','Tasks');
         	$this->addMenuItem('quotes','Quotes');
             $this->addMenuItem('clients','Clients');
             $this->addMenuItem('projects','Projects');
+            $this->addMenuItem('reports','Reports');
+            $this->addMenuItem('deleted','Deleted');
         }
         if ($this->api->currentUser()->isDeveloper()) {
-        	$this->addMenuItem('team/dashboard','Developer');
+        	$this->addMenuItem('team/dashboard','Dashboard');
+            $this->addMenuItem('tasks','Tasks');
             $this->addMenuItem('quotes','Quotes');
             $this->addMenuItem('projects','Projects');
+            $this->addMenuItem('reports','Reports');
+            $this->addMenuItem('deleted','Deleted');
         }
         if ($this->api->currentUser()->isClient()) {
-        	$this->addMenuItem('client/dashboard','Client');
+        	$this->addMenuItem('client/dashboard','Dashboard');
+            $this->addMenuItem('tasks','Tasks');
             $this->addMenuItem('quotes','Quotes');
             $this->addMenuItem('projects','Projects');
+            $this->addMenuItem('reports','Reports');
         }
         if ($this->api->currentUser()->isAdmin()) {
         	$this->addMenuItem('admin/users','Admin');
