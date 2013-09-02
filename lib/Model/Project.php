@@ -22,6 +22,5 @@ class Model_Project extends Model_Project_Base {
     }
     function forDeveloper() {
         return $this->participateIn();
->>>>>>> Stashed changes
     }
 }

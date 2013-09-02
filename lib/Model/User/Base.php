@@ -55,4 +55,109 @@ class Model_User_Base extends Model_BaseTable {
     function resetPassword(){
         throw $this->exception('Function resetPassword is not implemented yet');
     }
+
+
+
+    /* *********************************
+     *
+     *             GET ROLES
+     *
+     */
+    function isAdmin() {
+        return ($this['is_admin']?true:false);
+    }
+    function isDeveloper() {
+        return ($this['is_developer']?true:false);
+    }
+    function isClient() {
+        return ($this['is_client']?true:false);
+    }
+    function isManager() {
+        return ($this['is_manager']?true:false);
+    }
+    function isSystem() {
+        return ($this['is_system']?true:false);
+    }
+
+
+
+
+
+
+    /* **********************************
+     *
+     *           USER RIGHTS
+     *
+     */
+
+    function canSendRequestForQuotation() {
+        // accesses by role because user can have multiple roles
+        $has_admin_access   = false;
+        $has_manager_access = false;
+        $has_dev_access     = false;
+        $has_client_access  = false;
+
+        // admin cannot
+        if ($this['is_admin']) $has_admin_access = false;
+
+        // manager can
+        if ($this['is_manager']) $has_manager_access = true;
+
+        // dev cannot
+        if ($this['is_developer']) $has_dev_access = false;
+
+        // client cannot
+        if ($this['is_client']) $has_manager_access = true;
+
+        return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
+    }
+    function canUserMenageClients() {
+        return $this['is_manager'];
+    }
+    function canUserMenageDeleted() {
+        return ($this['is_manager'] || $this['is_developer']);
+    }
+
+
+
+    /* **********************************
+     *
+     *      PROJECT ACCESS RULES
+     *
+     */
+    function canSeeProject($project) {
+    }
+    function canCreateProject() {
+        // accesses by role because user can have multiple roles
+        $has_admin_access   = false;
+        $has_manager_access = false;
+        $has_dev_access     = false;
+        $has_client_access  = false;
+
+        // admin cannot
+        if ($this['is_admin']) $has_admin_access = false;
+
+        // manager can
+        if ($this['is_manager']) $has_manager_access = true;
+
+        // dev cannot
+        if ($this['is_developer']) $has_dev_access = false;
+
+        // client cannot
+        if ($this['is_client']) $has_manager_access = true;
+
+        return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
+    }
+    function canDeleteProject() {
+        return $this->isManager();
+    }
+    function canEditProject() {
+        return $this->isManager();
+    }
+    function canSeeProjectParticipantes() {
+        return $this->isManager();
+    }
+    function canSeeProjectTasks() {
+        return true;
+    }
 }

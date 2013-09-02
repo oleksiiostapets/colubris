@@ -16,8 +16,7 @@ class Grid_Requirements extends Grid_CountLines {
         parent::init();
         $this->quote = $this->owner->quote;
         $this->total_view = $this->owner->total_view;
-        $this->allow_included = $this->owner->allow_included;
-        $this->can_toggle = $this->quote->canToggle($this->api->auth->model);
+        $this->can_toggle = $this->quote->canUserChangeIsIncluded($this->api->currentUser());
 
 
         if (is_object($this->total_view)) {
@@ -43,10 +42,8 @@ class Grid_Requirements extends Grid_CountLines {
         if ($this->hasColumn('count_comments')) {
             $this->getColumn('count_comments')->setCaption('Comm.');
         }
-        if ($this->allow_included) {
+        if ($this->hasColumn('is_included')) {
             $this->getColumn('is_included')->setCaption('✔');
-        } else {
-            $this->removeColumn('is_included');
         }
 
         if ($this->can_toggle) {
