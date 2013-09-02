@@ -114,6 +114,9 @@ class Model_User_Base extends Model_BaseTable {
     function canUserMenageClients() {
         return $this['is_manager'];
     }
+    function canUserMenageDeleted() {
+        return ($this['is_manager'] || $this['is_developer']);
+    }
 
 
 

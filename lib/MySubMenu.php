@@ -8,11 +8,10 @@ class MySubMenu extends Menu_Basic {
         $sub_menu_role = $p[0];
         switch ($sub_menu_role) {
             case 'client':
-                $this->addMenuItem('client/dashboard','Dashboard');
-            	$this->addMenuItem('client/tasks','Tasks');
+                $this->addMenuItem('client/dashboard','Client');
             	//$this->addMenuItem('client/projects','Projects');
                 //$this->addMenuItem('quotes','Quotes');
-                $this->addMenuItem('client/reports','Reports');
+                //$this->addMenuItem('client/reports','Reports');
                 //$this->addMenuItem('client/quotes/rfq','Request For Quotation');
                 //$m->addMenuItem('client/budgets','Budgets');
                 //$m->addMenuItem('client/status','Project Status');
@@ -21,25 +20,23 @@ class MySubMenu extends Menu_Basic {
                 //}
                 break;
             case 'team':
-                $this->addMenuItem('team/dashboard','Dashboard');
-            	$this->addMenuItem('team/tasks','Tasks');
+                $this->addMenuItem('team/dashboard','Developer');
             	//$this->addMenuItem('team/projects','Projects');
                 //$this->addMenuItem('quotes','Quotes');
-                $this->addMenuItem('team/reports','Reports');
-                $this->addMenuItem('team/deleted','Deleted');
+                //$this->addMenuItem('team/reports','Reports');
+                //$this->addMenuItem('team/deleted','Deleted');
                 //$m->addMenuItem('team/entry','Time Entry');
                 //$m->addMenuItem('team/timesheets','Development Priorities');
                 //$m->addMenuItem('team/timesheets','Timesheets');
                 //$m->addMenuItem('team/budgets','Budgets');
                 break;
             case 'manager':
-                $this->addMenuItem('manager/dashboard','Dashboard');
-            	$this->addMenuItem('manager/tasks','Tasks');
+                $this->addMenuItem('manager/dashboard','Manager');
             	//$this->addMenuItem('manager/projects','Projects');
                 //$this->addMenuItem('quotes','Quotes');
                 //$this->addMenuItem('manager/clients','Clients');
-                $this->addMenuItem('manager/reports','Reports');
-                $this->addMenuItem('manager/deleted','Deleted');
+                //$this->addMenuItem('manager/reports','Reports');
+                //$this->addMenuItem('manager/deleted','Deleted');
                 //$this->addMenuItem('manager/projects','Projects'); // Admin can setup projects and users here
                 //$m->addMenuItem('manager/statistics','Statistics');
                 //$m->addMenuItem('manager/timesheets','Timesheets'); // review all reports in system - temporary
@@ -49,7 +46,7 @@ class MySubMenu extends Menu_Basic {
                 //$m->addMenuItem('manager/budgets','Budgets'); // Admin can setup projects and users here
                 break;
             case 'admin':
-                $this->addMenuItem('admin/users','Users');
+                $this->addMenuItem('admin/users','Admin');
                 $this->addMenuItem('admin/developers','Developers');
                 //$m->addMenuItem('manager/clients','Clients');
                 //$m->addMenuItem('admin/filestore','Files');
