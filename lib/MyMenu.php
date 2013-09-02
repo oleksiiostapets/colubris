@@ -15,7 +15,7 @@ class MyMenu extends Menu_Basic {
 
 
         $this->addMenuItem('tasks','Tasks');
-    	$this->addMenuItem('quotes','Quotes');
+        if ($this->api->currentUser()->canSeeQuotesList()) $this->addMenuItem('quotes','Quotes');
         if ($this->api->currentUser()->canUserMenageClients()) $this->addMenuItem('clients','Clients');
         $this->addMenuItem('projects','Projects');
         $this->addMenuItem('reports','Reports');

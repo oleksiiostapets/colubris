@@ -10,6 +10,13 @@ class Page_QuotesBase extends Page {
     public $quote;
     function init() {
         parent::init();
+
+        // Checking client's read permission to this quote and redirect to denied if required
+        if( !$this->api->currentUser()->canSeeQuotesList() ){
+            throw $this->exception('You cannot see this page','Exception_Denied');
+        }
+
+
         $this->quote = $this->add('Model_Quote');//->debug();
 
         if ($this->api->currentUser()->isClient()) {

@@ -71,9 +71,9 @@ class Frontend extends ApiFrontend {
 
     function initLayout(){
 
+        $this->role_menu = $this->add('RoleMenu', 'SubMenu', 'SubMenu');
         $this->add('MyMenu', 'Menu', 'Menu');
         //$this->add('MySubMenu', 'SubMenu', 'SubMenu');
-        $this->role_menu = $this->add('RoleMenu', 'SubMenu', 'SubMenu');
 
         // show current user name
         $this->add('View', null, 'name')

@@ -82,40 +82,22 @@ class Model_User_Base extends Model_BaseTable {
 
 
 
-
-
     /* **********************************
      *
-     *           USER RIGHTS
+     *          CURRENT USER ROLE
      *
      */
-
-    function canSendRequestForQuotation() {
-        // accesses by role because user can have multiple roles
-        $has_admin_access   = false;
-        $has_manager_access = false;
-        $has_dev_access     = false;
-        $has_client_access  = false;
-
-        // admin cannot
-        if ($this['is_admin']) $has_admin_access = false;
-
-        // manager can
-        if ($this['is_manager']) $has_manager_access = true;
-
-        // dev cannot
-        if ($this['is_developer']) $has_dev_access = false;
-
-        // client cannot
-        if ($this['is_client']) $has_manager_access = true;
-
-        return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
+    function isCurrentUserAdmin() {
+        return ($this->api->getCurrentUserRole() == 'admin');
     }
-    function canUserMenageClients() {
-        return $this['is_manager'];
+    function isCurrentUserManager() {
+        return ($this->api->getCurrentUserRole() == 'manager');
     }
-    function canUserMenageDeleted() {
-        return ($this['is_manager'] || $this['is_developer']);
+    function isCurrentUserDev() {
+        return ($this->api->getCurrentUserRole() == 'developer');
+    }
+    function isCurrentUserClient() {
+        return ($this->api->getCurrentUserRole() == 'client');
     }
 
 
@@ -128,48 +110,65 @@ class Model_User_Base extends Model_BaseTable {
     function canSeeProject($project) {
     }
     function canCreateProject() {
-        // accesses by role because user can have multiple roles
-        $has_admin_access   = false;
-        $has_manager_access = false;
-        $has_dev_access     = false;
-        $has_client_access  = false;
-
-        // admin cannot
-        if ($this['is_admin']) $has_admin_access = false;
-
-        // manager can
-        if ($this['is_manager']) $has_manager_access = true;
-
-        // dev cannot
-        if ($this['is_developer']) $has_dev_access = false;
-
-        // client cannot
-        if ($this['is_client']) $has_manager_access = true;
-
-        return ($has_admin_access || $has_manager_access || $has_dev_access || $has_client_access);
+        return $this->checkRoleSimpleRights(array(false,true,false,true));
     }
     function canDeleteProject() {
-        return $this->isManager();
+        return $this->checkRoleSimpleRights(array(false,true,false,false));
     }
     function canEditProject() {
-        return $this->isManager();
+        return $this->checkRoleSimpleRights(array(false,true,false,false));
     }
     function canSeeProjectParticipantes() {
-        return $this->isManager();
+        return $this->checkRoleSimpleRights(array(false,true,false,false));
     }
     function canSeeProjectTasks() {
-        return true;
+        return $this->checkRoleSimpleRights(array(true,true,true,true));
     }
 
 
 
+
+
+
+    /* **********************************
+     *
+     *           USER RIGHTS
+     *
+     */
+
+    function canSendRequestForQuotation() {
+        return $this->checkRoleSimpleRights(array(false,true,false,true));
+    }
+    function canUserMenageClients() {
+        return $this->checkRoleSimpleRights(array(false,true,false,false));
+    }
+
+
+
+    function canSeeQuotesList() {
+        return $this->checkRoleSimpleRights(array(false,true,true,true));
+    }
     function canSeeUsersList() {
-        return $this->isAdmin();
+        return $this->checkRoleSimpleRights(array(true,false,false,false));
     }
     function canSeeDevList() {
-        return $this->isAdmin();
+        return $this->checkRoleSimpleRights(array(true,false,false,false));
     }
     function canSeeDeleted() {
-        return ($this->isAdmin() || $this->isManager());
+        return $this->checkRoleSimpleRights(array(false,true,false,false));
+    }
+
+
+    function checkRoleSimpleRights($rights) {
+        if ($this->isCurrentUserAdmin()) {
+            return $rights[0];
+        } else if ($this->isCurrentUserManager()) {
+            return $rights[1];
+        } else if ($this->isCurrentUserDev()) {
+            return $rights[2];
+        } else if ($this->isCurrentUserClient()) {
+            return $rights[3];
+        }
+        throw $this->exception('Wrong role');
     }
 }
