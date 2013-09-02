@@ -30,7 +30,7 @@ class page_reports extends Page {
         if ($this->api->currentUser()->isManager()) {
             $grid_show_fields=array('project','quote','name','status','type','estimate','spent','date','performer','quote_id');
         }
-        $this->add('View_Report',$grid_show_fields);
+        $this->add('View_Report',array('grid_show_fields'=>$grid_show_fields));
 
     }
 }
