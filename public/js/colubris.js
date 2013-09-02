@@ -32,7 +32,7 @@ $.each({
 
         var left = 50;
         var min_top = 20;
-        var max_top = 390;
+        var max_top = 250;
         var top = max_top;
         var window_top;
         var window_height;

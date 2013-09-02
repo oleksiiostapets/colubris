@@ -1,6 +1,6 @@
 <?php
 
-class page_quotesfunctions extends Page {
+class _page_quotesfunctions extends Page {
     function page_more(){
         if (!isset($_GET['requirement_id'])) {
             throw $this->exception('Provide $_GET[\'requirement_id\']');
@@ -8,7 +8,7 @@ class page_quotesfunctions extends Page {
     	$this->api->stickyGET('requirement_id');
     	$req=$this->add('Model_Requirement')->load($_GET['requirement_id']);
     	
-    	$this->add('View')->setHtml('<strong>Description:</strong> '.$this->api->makeUrls($req->get('descr')));
+    	$this->add('View')->setHtml('<strong>Description:</strong> '.$this->api->colubris->makeUrls($req->get('descr')));
 
     	$this->add('View')->setHtml('<hr /><strong>Comments:</strong> ');
     	 
