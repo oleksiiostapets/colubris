@@ -28,7 +28,8 @@ class MyMenu extends Menu_Basic {
             $this->addMenuItem('reports','Reports');
         }
         if ($this->api->currentUser()->isAdmin()) {
-        	$this->addMenuItem('admin/users','Admin');
+        	$this->addMenuItem('users','Users');
+            $this->addMenuItem('developers','Developers');
         }
         if ($this->api->currentUser()->isSystem()) {
         	$this->addMenuItem('system/organisation','System');
@@ -60,6 +61,8 @@ class MyMenu extends Menu_Basic {
 
         if ( (substr($href,0,6)=='quotes' && substr($this->api->page,0,6)=='quotes') ) { return true; }
         if ( (substr($href,0,7)=='clients' && substr($this->api->page,0,7)=='clients') ) { return true; }
+        if ( (substr($href,0,5)=='users' && substr($this->api->page,0,5)=='users') ) { return true; }
+        if ( (substr($href,0,10)=='developers' && substr($this->api->page,0,10)=='developers') ) { return true; }
 
         return $href==$this->api->page||$href==';'.$this->api->page||$href.$this->api->getConfig('url_postfix','')==$this->api->page;
 	}

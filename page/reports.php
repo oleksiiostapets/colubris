@@ -20,17 +20,18 @@ class page_reports extends Page {
         ));
 
         $this->add('View_ReportsSwitcher');
+        $this->add('View_Report',array('grid_show_fields'=>$this->getGridFields()));
 
+    }
+    function getGridFields() {
         if ($this->api->currentUser()->isClient()) {
-            $grid_show_fields=array('project','quote','name','status','type','estimate','spent','date');
+            return array('project','quote','name','status','type','estimate','spent','date');
         }
         if ($this->api->currentUser()->isDeveloper()) {
-            $grid_show_fields=array('project','quote','name','status','type','estimate','spent','date','performer');
+            return array('project','quote','name','status','type','estimate','spent','date','performer');
         }
         if ($this->api->currentUser()->isManager()) {
-            $grid_show_fields=array('project','quote','name','status','type','estimate','spent','date','performer','quote_id');
+            return array('project','quote','name','status','type','estimate','spent','date','performer','quote_id');
         }
-        $this->add('View_Report',array('grid_show_fields'=>$grid_show_fields));
-
     }
 }

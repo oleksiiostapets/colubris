@@ -1,5 +1,5 @@
 <?php
-class page_admin_developers extends Page {
+class page_developers extends Page {
 	function init(){
 		parent::init();
 
