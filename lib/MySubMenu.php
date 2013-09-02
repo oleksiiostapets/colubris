@@ -46,8 +46,8 @@ class MySubMenu extends Menu_Basic {
                 //$m->addMenuItem('manager/budgets','Budgets'); // Admin can setup projects and users here
                 break;
             case 'admin':
-                $this->addMenuItem('admin/users','Admin');
-                $this->addMenuItem('admin/developers','Developers');
+                //$this->addMenuItem('admin/users','Admin');
+                //$this->addMenuItem('admin/developers','Developers');
                 //$m->addMenuItem('manager/clients','Clients');
                 //$m->addMenuItem('admin/filestore','Files');
                 break;
