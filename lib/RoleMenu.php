@@ -76,8 +76,8 @@ class RoleMenu extends CompleteLister {
                 throw $this->exception('There is no such a role for You');
             } else {
                 $this->setRole($_POST['new_role']);
-                //$this->api->js(null,"$(location).attr('href', '".$this->api->url()."');")->execute();
-                $this->api->js(null,"$(location).attr('href', '".$_POST['redir']."');")->execute();
+                $this->api->js(null,"$(location).attr('href', '".$this->api->url()."');")->execute();
+                //$this->api->js(null,"$(location).attr('href', '".$_POST['redir']."');")->execute();
             }
         }
     }
