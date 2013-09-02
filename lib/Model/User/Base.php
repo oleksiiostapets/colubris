@@ -160,4 +160,16 @@ class Model_User_Base extends Model_BaseTable {
     function canSeeProjectTasks() {
         return true;
     }
+
+
+
+    function canSeeUsersList() {
+        return $this->isAdmin();
+    }
+    function canSeeDevList() {
+        return $this->isAdmin();
+    }
+    function canSeeDeleted() {
+        return ($this->isAdmin() || $this->isManager());
+    }
 }

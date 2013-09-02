@@ -20,6 +20,13 @@ $.each({
 	alert: function(text){
 		alert(text);		
 	},
+	roleMenuClick: function(id, url, data){
+        $('#' + id).bind('click',function(ev) {
+            ev.preventDefault();ev.stopPropagation();
+            //alert(id);
+            $(this).univ().ajaxec(url, data);
+        });
+	},
     toggle_is_included: function(url,reload_views){
         $(".toggle_is_included").each(function(i,e){
             $(e).bind("click",function(ev){
