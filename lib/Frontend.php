@@ -87,6 +87,7 @@ class Frontend extends ApiFrontend {
             // TODO show denied page
             throw $e;
         }
+        
     }
     
     function getUserType(){
