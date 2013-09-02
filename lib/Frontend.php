@@ -24,9 +24,9 @@ class Frontend extends ApiFrontend {
         $this->js(true)->_load('colubris');
 
         // controllers
-        $this->colubris = $this->add('Controller_Colubris');
-        $this->formatter=$this->add('Controller_Formatter');
-        $this->mailer=$this->add('Controller_Mailer');
+        $this->colubris  = $this->add('Controller_Colubris');
+        $this->formatter = $this->add('Controller_Formatter');
+        $this->mailer    = $this->add('Controller_Mailer');
         
         if($this->page=='logout'){
         	setcookie("colubris_auth_useremail", "", time()-3600);
@@ -72,7 +72,8 @@ class Frontend extends ApiFrontend {
     function initLayout(){
 
         $this->add('MyMenu', 'Menu', 'Menu');
-        $this->add('MySubMenu', 'SubMenu', 'SubMenu');
+        //$this->add('MySubMenu', 'SubMenu', 'SubMenu');
+        $this->role_menu = $this->add('RoleMenu', 'SubMenu', 'SubMenu');
 
         // show current user name
         $this->add('View', null, 'name')
@@ -96,6 +97,10 @@ class Frontend extends ApiFrontend {
     	if ($this->currentUser()->isClient()) return 'client';
     	if ($this->currentUser()->isAdmin()) return 'admin';
     	//if ($this->auth->model['is_system']) return 'system';
+    }
+
+    function getCurrentUserRole(){
+        return $this->role_menu->getCurrentUserRole();
     }
 
     function siteURL(){
@@ -136,31 +141,6 @@ class Frontend extends ApiFrontend {
             $this->addAllowedPages(array(
                 'account', 'about', 'home', 'quotes','clients','projects','tasks','reports','deleted','developers','users'
             ));
-
-            // Access for managers
-            if($this->currentUser()->isManager()) {
-                $this->addAllowedPages(array(
-                    'manager'
-                ));
-            }
-            // Access for developers
-            if($this->currentUser()->isDeveloper()) {
-                $this->addAllowedPages(array(
-                    'team',
-                ));
-            }
-            // Access for clients
-            if($this->currentUser()->isClient()) {
-            	$this->addAllowedPages(array(
-                    'client',
-            	));
-            }
-            // Access for admin
-            if($this->currentUser()->isAdmin()) {
-            	$this->addAllowedPages(array(
-                    'client', 'manager', 'team', 'admin',
-            	));
-            }
         }
 
         if(!$this->api->auth->isPageAllowed($this->page)){

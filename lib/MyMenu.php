@@ -5,32 +5,28 @@ class MyMenu extends Menu_Basic {
 
         if ($this->api->currentUser()->isManager()) {
         	$this->addMenuItem('manager/dashboard','Dashboard');
-            $this->addMenuItem('tasks','Tasks');
-        	$this->addMenuItem('quotes','Quotes');
-            $this->addMenuItem('clients','Clients');
-            $this->addMenuItem('projects','Projects');
-            $this->addMenuItem('reports','Reports');
-            $this->addMenuItem('deleted','Deleted');
         }
         if ($this->api->currentUser()->isDeveloper()) {
         	$this->addMenuItem('team/dashboard','Dashboard');
-            $this->addMenuItem('tasks','Tasks');
-            $this->addMenuItem('quotes','Quotes');
-            $this->addMenuItem('projects','Projects');
-            $this->addMenuItem('reports','Reports');
-            $this->addMenuItem('deleted','Deleted');
         }
         if ($this->api->currentUser()->isClient()) {
         	$this->addMenuItem('client/dashboard','Dashboard');
-            $this->addMenuItem('tasks','Tasks');
-            $this->addMenuItem('quotes','Quotes');
-            $this->addMenuItem('projects','Projects');
-            $this->addMenuItem('reports','Reports');
         }
-        if ($this->api->currentUser()->isAdmin()) {
-        	$this->addMenuItem('users','Users');
-            $this->addMenuItem('developers','Developers');
-        }
+
+
+        $this->addMenuItem('tasks','Tasks');
+    	$this->addMenuItem('quotes','Quotes');
+        if ($this->api->currentUser()->canUserMenageClients()) $this->addMenuItem('clients','Clients');
+        $this->addMenuItem('projects','Projects');
+        $this->addMenuItem('reports','Reports');
+        if ($this->api->currentUser()->canSeeUsersList()) $this->addMenuItem('users','Users');
+        if ($this->api->currentUser()->canSeeDevList()) $this->addMenuItem('developers','Developers');
+        if ($this->api->currentUser()->canSeeDeleted()) $this->addMenuItem('deleted','Deleted');
+
+
+
+
+
         if ($this->api->currentUser()->isSystem()) {
         	$this->addMenuItem('system/organisation','System');
         }

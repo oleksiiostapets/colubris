@@ -2,6 +2,10 @@
 class page_users extends Page {
     function init(){
         parent::init();
+        // Checking client's read permission to this quote and redirect to denied if required
+        if( !$this->api->currentUser()->canSeeUsersList() ){
+            throw $this->exception('You cannot see this page','Exception_Denied');
+        }
 
     }
     
@@ -48,8 +52,8 @@ class page_users extends Page {
         $this->api->stickyGet('user_id');
         $m=$this->add('Model_Participant')->tryLoadBy('user_id',$_GET['user_id']);
         $this->add('CRUD')->setModel($m,
-                array('budget_id','user_id','role'),
-                array('budget','user','role')
-                );
+            array('budget_id','user_id','role'),
+            array('budget','user','role')
+        );
     }
 }

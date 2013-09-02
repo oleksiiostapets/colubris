@@ -162,3 +162,19 @@
     font-weight: bold;
     font-size: 18px;
 }
+
+ul.role-menu-lister {
+    float: right;
+    padding: 5px;
+    margin: 10px;
+}
+ul.role-menu-lister > li {
+    float: left;
+    padding: 5px 5px;
+    margin: 0;
+    list-style-type: none;
+}
+ul.role-menu-lister > li > div.current_role {
+    text-decoration: none;
+    color:red;
+}
