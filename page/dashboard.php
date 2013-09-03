@@ -4,7 +4,7 @@ class page_dashboard extends Page {
     function page_index(){
 
         // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->api->currentUser()->canSeeTaskList() ){
+        if( !$this->api->currentUser()->canSeeDashboard() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
 
@@ -21,24 +21,10 @@ class page_dashboard extends Page {
         ));
 
         $this->add('View_Switcher');
-
-        if ($this->api->currentUser()->isClient()) {
-            $edit_fields=array('name','descr_original','priority','status','requester_id','assigned_id');
-            $show_fields=array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
-        }
-        if ($this->api->currentUser()->isDeveloper()) {
-            $edit_fields=array('project_id','name','descr_original','priority','status','estimate','requester_id','assigned_id');
-            $show_fields=array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
-        }
-        if ($this->api->currentUser()->isManager()) {
-            $edit_fields=array('project_id','name','descr_original','priority','status','estimate','requester_id','assigned_id');
-            $show_fields=array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
-        }
-
         $this->add('View_Dashboard',array(
             'allow_add'=>false,'allow_edit'=>true,'allow_del'=>true,
-            'edit_fields'=>$edit_fields,
-            'show_fields'=>$show_fields,
+            'edit_fields'=>$this->api->currentUser()->getDashboardFormFields(),
+            'show_fields'=>$this->api->currentUser()->getDashboardGridFields(),
         ));
 
     }
