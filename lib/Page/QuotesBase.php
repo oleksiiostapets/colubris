@@ -19,14 +19,14 @@ class Page_QuotesBase extends Page {
 
         $this->quote = $this->add('Model_Quote');//->debug();
 
-        if ($this->api->currentUser()->isClient()) {
+        if ($this->api->currentUser()->isCurrentUserClient()) {
             // show only client's quotes
             $pr = $this->quote->join('project','project_id','left','_pr');
             $pr->addField('pr_client_id','client_id');
             $this->quote->addCondition('pr_client_id',$this->api->auth->model['client_id']);
         }
 
-        if ($this->api->currentUser()->isDeveloper()) {
+        if ($this->api->currentUser()->isCurrentUserDev()) {
             // developer do not see not well prepared (quotation_requested status) and finished projects
             $this->quote->addCondition('status',array(
                 'estimate_needed','not_estimated','estimated','estimation_approved'
