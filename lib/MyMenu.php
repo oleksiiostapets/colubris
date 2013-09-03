@@ -27,10 +27,6 @@ class MyMenu extends Menu_Basic {
         	$this->addMenuItem('account','Settings');
         }
         $this->addMenuItem('about','About');
-
-        if ($this->api->auth->isLoggedIn() && !$this->api->currentUser()->isClient()) {
-            //$this->addMenuItem('index','Main Menu');
-        }
         if ($this->api->auth->isLoggedIn()){
             $this->addMenuItem('logout');
         }else{
