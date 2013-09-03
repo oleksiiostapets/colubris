@@ -124,6 +124,30 @@ class Model_User_Base extends Model_BaseTable {
     function canSeeProjectTasks() {
         return $this->checkRoleSimpleRights(array(true,true,true,true));
     }
+    function getProjectFormFields() {
+        if ($this->isCurrentUserAdmin()) {
+            return false;
+        } else if ($this->isCurrentUserManager()) {
+            return array('name','descr','client_id','demo_url','prod_url','repository');
+        } else if ($this->isCurrentUserDev()) {
+            return array('name','descr','client_id','demo_url','prod_url');
+        } else if ($this->isCurrentUserClient()) {
+            return array('name','descr');
+        }
+        throw $this->exception('Wrong role');
+    }
+    function getProjectGridFields() {
+        if ($this->isCurrentUserAdmin()) {
+            return false;
+        } else if ($this->isCurrentUserManager()) {
+            return array('name','descr','client','demo_url','prod_url','repository');
+        } else if ($this->isCurrentUserDev()) {
+            return array('name','descr','client','demo_url','prod_url','repository');
+        } else if ($this->isCurrentUserClient()) {
+            return array('name','descr','client','demo_url','prod_url');
+        }
+        throw $this->exception('Wrong role');
+    }
 
 
 
