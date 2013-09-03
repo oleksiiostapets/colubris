@@ -177,7 +177,9 @@ class Model_User_Base extends Model_BaseTable {
             return $rights[2];
         } else if ($this->isCurrentUserClient()) {
             return $rights[3];
+        } else {
+            return false;
+            //throw $this->exception('Wrong role');
         }
-        throw $this->exception('Wrong role');
     }
 }
