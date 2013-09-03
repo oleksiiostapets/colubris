@@ -13,15 +13,16 @@ class MyMenu extends Menu_Basic {
         	$this->addMenuItem('client/dashboard','Dashboard');
         }
 
-
-        if ($this->api->currentUser()->canSeeTaskList()) $this->addMenuItem('tasks','Tasks');
-        if ($this->api->currentUser()->canSeeQuotesList()) $this->addMenuItem('quotes','Quotes');
-        if ($this->api->currentUser()->canUserMenageClients()) $this->addMenuItem('clients','Clients');
-        if ($this->api->currentUser()->canSeeProjectList()) $this->addMenuItem('projects','Projects');
-        if ($this->api->currentUser()->canSeeReportList()) $this->addMenuItem('reports','Reports');
-        if ($this->api->currentUser()->canSeeUserList()) $this->addMenuItem('users','Users');
-        if ($this->api->currentUser()->canSeeDevList()) $this->addMenuItem('developers','Developers');
-        if ($this->api->currentUser()->canSeeDeleted()) $this->addMenuItem('deleted','Deleted');
+        if($this->api->auth->isLoggedIn()) {
+            if ($this->api->currentUser()->canSeeTaskList()) $this->addMenuItem('tasks','Tasks');
+            if ($this->api->currentUser()->canSeeQuotesList()) $this->addMenuItem('quotes','Quotes');
+            if ($this->api->currentUser()->canUserMenageClients()) $this->addMenuItem('clients','Clients');
+            if ($this->api->currentUser()->canSeeProjectList()) $this->addMenuItem('projects','Projects');
+            if ($this->api->currentUser()->canSeeReportList()) $this->addMenuItem('reports','Reports');
+            if ($this->api->currentUser()->canSeeUserList()) $this->addMenuItem('users','Users');
+            if ($this->api->currentUser()->canSeeDevList()) $this->addMenuItem('developers','Developers');
+            if ($this->api->currentUser()->canSeeDeleted()) $this->addMenuItem('deleted','Deleted');
+        }
 
 
 
