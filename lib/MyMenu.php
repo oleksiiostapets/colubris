@@ -3,17 +3,7 @@ class MyMenu extends Menu_Basic {
     function init() {
         parent::init();
 
-        if ($this->api->currentUser()->isManager()) {
-        	$this->addMenuItem('manager/dashboard','Dashboard');
-        }
-        if ($this->api->currentUser()->isDeveloper()) {
-        	$this->addMenuItem('team/dashboard','Dashboard');
-        }
-        if ($this->api->currentUser()->isClient()) {
-        	$this->addMenuItem('client/dashboard','Dashboard');
-        }
-
-
+        if ($this->api->currentUser()->canSeeDashboard()) $this->addMenuItem('dashboard','Dashboard');
         if ($this->api->currentUser()->canSeeTaskList()) $this->addMenuItem('tasks','Tasks');
         if ($this->api->currentUser()->canSeeQuotesList()) $this->addMenuItem('quotes','Quotes');
         if ($this->api->currentUser()->canUserMenageClients()) $this->addMenuItem('clients','Clients');
