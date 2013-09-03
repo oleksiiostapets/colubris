@@ -30,15 +30,23 @@ class page_users extends Page {
         $model = $this->add('Model_User_Organisation')->setOrder('name');
 
         $crud->setModel($model,
-            array('email','name','client_id','is_admin','is_manager','is_developer','is_timereport','password'),
-            array('email','name','client','is_admin','is_manager','is_developer','is_timereport','is_client')
+            array('email','name','password','is_admin','is_manager','is_developer','client_id'),
+            array('email','name','client','is_admin','is_manager','is_developer','is_client')
         );
 
         if($crud->grid){
+            $crud->grid->addClass('zebra bordered');
             //$crud->grid->addColumn('expander','projects');
             
             $crud->grid->addColumn('button','login');
             if($_GET['login']){
+                $u=$this->api->currentUser();
+                $u->set('hash',md5(time()));
+                $u->save();
+
+                setcookie("fuser",$u['id'],time()+60*60*24);
+                setcookie("fhash",$u['hash'],time()+60*60*24);
+
                 $u=$this->add("Model_User_Organisation")->load($_GET['login']);
                 $u->set('hash',md5(time()));
                 $u->save();

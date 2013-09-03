@@ -1,5 +1,9 @@
 <?php
 class Grid_Tasks extends Grid_Advanced {
+    function init() {
+        parent::init();
+        $this->addClass('zebra bordered');
+    }
     function setModel($model, $actual_fields = UNDEFINED) {
         parent::setModel($model, $actual_fields);
         $this->removeColumn('estimate');

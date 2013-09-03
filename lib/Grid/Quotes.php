@@ -3,7 +3,7 @@ class Grid_Quotes extends Grid {
     public $allowed_actions = array();
     public $posible_actions = array(
         'requirements'   => array('status'=>array('Quotation Requested'),'name'=>'Requirements',            'get_var'=>'requirements'),
-        'estimation'     => array('status'=>array('Quotation Requested'),'name'=>'Request for estimate',    'get_var'=>'estimation'),
+        'estimation'     => array('status'=>array('Quotation Requested'),'name'=>'Submit for Quotation',    'get_var'=>'estimation'),
         'send_to_client' => array('status'=>array('Estimated'),          'name'=>'Send Quote to the client','get_var'=>'send_to_client'),
         'approve'        => array('status'=>array('Estimated'),          'name'=>'Approve Estimation',      'get_var'=>'approve'),
         'estimate'       => array('status'=>array('Estimate Needed'),    'name'=>'Estimate',                'get_var'=>'estimate'),
@@ -13,6 +13,8 @@ class Grid_Quotes extends Grid {
     );
     function init() {
         parent::init();
+
+        $this->addClass('zebra bordered');
 
         if (!count($this->allowed_actions) && isset($this->owner->allowed_actions)) {
             $this->allowed_actions = $this->owner->allowed_actions;

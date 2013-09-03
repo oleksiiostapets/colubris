@@ -25,11 +25,12 @@ class page_system_admins extends Page {
         $model = $this->add('Model_User')/*->debug()*/->addCondition('is_admin',true)->setOrder('name');
 
         $crud->setModel($model,
-            array('name','email','client_id','is_manager','is_developer','is_timereport','password'),
-            array('name','email','client','is_admin','is_manager','is_developer','is_timereport','is_client')
+            array('name','email','client_id','is_manager','is_developer','password'),
+            array('name','email','client','is_admin','is_manager','is_developer','is_client')
         );
 
         if($crud->grid){
+            $crud->grid->addClass('zebra bordered');
             $crud->grid->addColumn('button','login');
             if($_GET['login']){
                 $u=$this->add("Model_User")->load($_GET['login']);

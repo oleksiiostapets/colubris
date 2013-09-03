@@ -28,6 +28,7 @@ class page_deleted extends Page {
         );
 
         if($cr->grid){
+            $cr->grid->addClass('zebra bordered');
             $cr->grid->addPaginator();
 
             $cr->grid->addColumn('button','restore');
@@ -55,6 +56,7 @@ class page_deleted extends Page {
         );
 
         if($cr->grid){
+            $cr->grid->addClass('zebra bordered');
             $cr->grid->addPaginator();
 
             $cr->grid->addColumn('button','restore');
@@ -82,6 +84,7 @@ class page_deleted extends Page {
         );
 
         if($cr->grid){
+            $cr->grid->addClass('zebra bordered');
             $cr->grid->addPaginator();
 
             $cr->grid->addColumn('button','restore');
@@ -105,10 +108,11 @@ class page_deleted extends Page {
                 'allow_del'=>false)
         );
         $cr->setModel($m,
-            array('email','name','client','is_admin','is_manager','is_developer','is_timereport','is_client')
+            array('email','name','client','is_admin','is_manager','is_developer','is_client')
         );
 
         if($cr->grid){
+            $cr->grid->addClass('zebra bordered');
             $cr->grid->addPaginator();
 
             $cr->grid->addColumn('button','restore');
@@ -135,6 +139,7 @@ class page_deleted extends Page {
         );
 
         if($cr->grid){
+            $cr->grid->addClass('zebra bordered');
             $cr->grid->addPaginator();
 
             $cr->grid->addColumn('button','restore');

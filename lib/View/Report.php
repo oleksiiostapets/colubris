@@ -4,6 +4,7 @@ class View_Report extends View {
         parent::init();
 
         $cr=$this->add('Grid');
+        $cr->addClass('zebra bordered');
         $m=$this->add('Model_Task_Report');//->debug();
 
         $j = $m->join('task_time.task_id','id','left','_tt');

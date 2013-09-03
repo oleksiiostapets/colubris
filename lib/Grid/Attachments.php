@@ -7,9 +7,9 @@
  * To change this template use File | Settings | File Templates.
  */
 class Grid_Attachments extends Grid {
-
     function init() {
         parent::init();
+        $this->addClass('zebra bordered');
     }
     function setModel($model, $actual_fields = UNDEFINED) {
         parent::setModel($model, $actual_fields);

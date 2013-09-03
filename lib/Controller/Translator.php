@@ -22,6 +22,7 @@ class Controller_Translator extends Controller {
 
         'Add User Notdeleted'		=>'Add User',
         'Adding new User Notdeleted'=>'Adding new User',
-
+        'Add User Organisation'     =>'Add User',
+        'Adding new User Organisation'     =>'Adding new User',
     );
 }

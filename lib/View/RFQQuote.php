@@ -14,7 +14,7 @@ class View_RFQQuote extends View {
 
         // quote description
         $v->add('H4')->set('Quote:');
-        $fields_required = array('project','user','name',/*'estimated',*/'general',);
+        $fields_required = array('project','user','name',/*'estimated',*/'general_description',);
         $this->addQuoteInfoGrid($v, $fields_required);
         
         //$v=$this->add('View')->setClass('right');
@@ -58,6 +58,7 @@ class View_RFQQuote extends View {
             }
         }
         $gr = $v->add('Grid');
+        $gr->addClass('zebra bordered');
         $gr->addColumn('text','name','');
         $gr->addColumn('text','value','');
         $gr->setSource($source);

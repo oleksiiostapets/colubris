@@ -64,6 +64,7 @@ class page_tasks extends Page {
             );
         }
         if ($crud->grid){
+            $crud->grid->addClass('zebra bordered');
             $crud->add_button->setLabel('Add Time');
         }
 
@@ -121,6 +122,7 @@ class page_tasks extends Page {
 //    			array()
         );
         if($cr->grid){
+            $cr->grid->addClass('zebra bordered');
             $cr->add_button->setLabel('Add Comment');
             //$cr->grid->setFormatter('text','text');
             //$cr->grid->addFormatter('file','download');

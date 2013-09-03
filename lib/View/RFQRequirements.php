@@ -24,6 +24,7 @@ class View_RFQRequirements extends View {
         );
         
         if($cr->grid){
+            $cr->grid->addClass('zebra bordered');
         	$cr->grid->addColumn('expander','more');
         	//$cr->grid->addFormatter('file','download');
         	//$cr->grid->addFormatter('estimate','estimate');

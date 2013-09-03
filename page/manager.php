@@ -39,7 +39,7 @@ class page_manager extends Page {
 
 //
         $g = $this->add('Grid_ManagerDeveloperStats', null, 'developer_stats');
-        $m = $g->setModel('Developer_Stats', array('id','name', 'hours_today', 'hours_lastday', 'hours_week', 'hours_lastweek', 'hours_month', 'hours_lastmonth','weekly_target'));
+        $m = $g->setModel('Developer_Stats', array('id','name', 'hours_today', 'hours_lastday', 'hours_week', 'hours_lastweek', 'hours_month', 'hours_lastmonth'));
 //  $g->dq->where('date>now()-interval 1 week');
         $g->addColumnPlain('expander', 'userprojects', 'View Projects');
         $g->addPaginator(10);

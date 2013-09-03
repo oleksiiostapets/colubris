@@ -56,7 +56,7 @@ class Page_Requirements extends Page {
 
         // auote info grid
         $left->add('H4')->set('Quote:');
-        $fields_required = array('project','user','name',/*'estimated',*/'general',);
+        $fields_required = array('project','user','name',/*'estimated',*/'general_description',);
         $this->addQuoteInfoGrid($left, $fields_required,$quote);
 
         // requirements
@@ -102,6 +102,7 @@ class Page_Requirements extends Page {
     			array('text','user','file','file_thumb','created_dts')
     	);
     	if($cr->grid){
+            $cr->grid->addClass('zebra bordered');
     		$cr->add_button->setLabel('Add Comment');
     		$cr->grid->setFormatter('text','text');
     	}
@@ -143,7 +144,7 @@ class Page_Requirements extends Page {
             	$this->api->redirect($this->api->url('/manager/quotes'));
             }
 
-   	        $but=$view->add('Button')->setClass('right')->set('Request for estimate','estimation');
+   	        $but=$view->add('Button')->setClass('right')->set('Submit for Quotation','estimation');
             if ( count($requirements->getRows()) <= 0 ) $but->js(true)->attr('disabled','disabled');
             $but->js('click', array(
    	            $this->js()->univ()->redirect($this->api->url(null,array('quote_id'=>$quote['id'],'action'=>'estimation')))
@@ -188,7 +189,7 @@ class Page_Requirements extends Page {
 
         // quote description
         $v->add('H4')->set('Quote:');
-        $fields_required = array('project','user','name',/*'estimated',*/'general',);
+        $fields_required = array('project','user','name',/*'estimated',*/'general_description',);
         $this->addQuoteInfoGrid($v, $fields_required,$quote);
 
         //$v=$this->add('View')->setClass('right');
@@ -276,14 +277,15 @@ class Page_Requirements extends Page {
         $cr->setModel($requirements,
                 $quote->whatRequirementFieldsUserCanEdit($this->api->currentUser()),
         		array('is_included','name','estimate','spent_time','file','user','count_comments')
-         );
+        );
 
-         if($cr->grid){
+        if($cr->grid){
+            $cr->grid->addClass('zebra bordered');
          	$cr->grid->addColumn('expander','more');
          	//$cr->grid->addFormatter('file','download');
          	//$cr->grid->addFormatter('estimate','estimate');
          	$cr->grid->setFormatter('name','wrap');
-         }
+        }
         return $cr;
     }
 

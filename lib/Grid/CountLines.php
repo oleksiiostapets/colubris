@@ -9,6 +9,7 @@
 class Grid_CountLines extends Grid {
     function init() {
         parent::init();
+        $this->addClass('zebra bordered');
         $this->addColumn('text','count')->setCaption('#');
     }
     public $number_count = 0;

@@ -1,5 +1,9 @@
 <?php
 class Grid extends Grid_Advanced {
+    function init() {
+        parent::init();
+        $this->addClass('zebra bordered');
+    }
     function format_download($field){//var_dump($this->current_row['migrated_image']);
     	if ($this->current_row[$field]!=""){
     		$name=$this->current_row[$field];

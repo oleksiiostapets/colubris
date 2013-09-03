@@ -20,6 +20,15 @@ class page_dashboard extends Page {
             )
         ));
 
+        if ($this->api->currentUser()->isClient()) {
+            $this->add('P');
+            $b = $this->add('Button')->set('Request For Quotation');
+            $b->addStyle('margin-bottom','10px');
+            $b->js('click', array(
+                $this->js()->univ()->redirect($this->api->url('quotes/rfq'))
+            ));
+        }
+
         $this->add('View_Switcher');
 
         if ($this->api->currentUser()->isClient()) {
@@ -64,6 +73,7 @@ class page_dashboard extends Page {
             );
         }
 		if ($crud->grid){
+            $crud->grid->addClass('zebra bordered');
 			$crud->add_button->setLabel('Add Time');
 		}
 	
@@ -122,6 +132,7 @@ class page_dashboard extends Page {
    //    			array()
        	);
        	if($cr->grid){
+            $cr->grid->addClass('zebra bordered');
        		$cr->add_button->setLabel('Add Comment');
        		//$cr->grid->setFormatter('text','text');
        		//$cr->grid->addFormatter('file','download');
