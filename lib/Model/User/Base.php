@@ -166,6 +166,9 @@ class Model_User_Base extends Model_BaseTable {
     function canSeeTaskList() {
         return $this->checkRoleSimpleRights(array(false,true,true,true));
     }
+    function canSeeDashboard() {
+        return $this->checkRoleSimpleRights(array(false,true,true,true));
+    }
 
 
     function checkRoleSimpleRights($rights) {
@@ -177,7 +180,9 @@ class Model_User_Base extends Model_BaseTable {
             return $rights[2];
         } else if ($this->isCurrentUserClient()) {
             return $rights[3];
+        } else {
+            return false;
+            //throw $this->exception('Wrong role');
         }
-        throw $this->exception('Wrong role');
     }
 }
