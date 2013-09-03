@@ -54,7 +54,9 @@ class Frontend extends ApiFrontend {
         
         $this->autoLogin();
 
-        $this->template->trySet('organisation','for '.$this->currentUser()->get('organisation'));
+        if($this->currentUser()){
+            $this->template->trySet('organisation','for '.$this->currentUser()->get('organisation'));
+        }
         $this->defineAllowedPages();
 
         $this->task_statuses = array(
