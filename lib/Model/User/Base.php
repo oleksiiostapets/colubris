@@ -127,6 +127,41 @@ class Model_User_Base extends Model_BaseTable {
 
 
 
+    /* **********************************
+     *
+     *      DASHBOARD ACCESS RULES
+     *
+     */
+    function canSeeDashboard() {
+        return $this->checkRoleSimpleRights(array(false,true,true,true));
+    }
+    function getDashboardFormFields() {
+        if ($this->isCurrentUserAdmin()) {
+            return false;
+        } else if ($this->isCurrentUserManager()) {
+            return array('project_id','name','descr_original','priority','status','estimate','requester_id','assigned_id');
+        } else if ($this->isCurrentUserDev()) {
+            return array('project_id','name','descr_original','priority','status','estimate','requester_id','assigned_id');
+        } else if ($this->isCurrentUserClient()) {
+            return array('name','descr_original','priority','status','requester_id','assigned_id');
+        }
+        throw $this->exception('Wrong role');
+    }
+    function getDashboardGridFields() {
+        if ($this->isCurrentUserAdmin()) {
+            return false;
+        } else if ($this->isCurrentUserManager()) {
+            return array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
+        } else if ($this->isCurrentUserDev()) {
+            return array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
+        } else if ($this->isCurrentUserClient()) {
+            return array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
+        }
+        throw $this->exception('Wrong role');
+    }
+
+
+
 
 
 
@@ -166,9 +201,6 @@ class Model_User_Base extends Model_BaseTable {
     function canSeeTaskList() {
         return $this->checkRoleSimpleRights(array(false,true,true,true));
     }
-    function canSeeDashboard() {
-        return $this->checkRoleSimpleRights(array(false,true,true,true));
-    }
 
 
     function checkRoleSimpleRights($rights) {
@@ -181,8 +213,8 @@ class Model_User_Base extends Model_BaseTable {
         } else if ($this->isCurrentUserClient()) {
             return $rights[3];
         } else {
-            return false;
-            //throw $this->exception('Wrong role');
+            throw $this->exception('Wrong role');
+            //return false;
         }
     }
 }
