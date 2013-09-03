@@ -207,7 +207,7 @@ class Model_Quote extends Model_Quote_Base {
         if ($user->isCurrentUserAdmin()) {
             return array();
         } else if ($user->isCurrentUserManager()) {
-            return array('name','project_id','general','rate','currency','duration','deadline','status');
+            return array('name','project_id','general_description','rate','currency','duration','deadline','status');
         } else if ($user->isCurrentUserDev()) {
             return array();
         } else if ($user->isCurrentUserClient()) {

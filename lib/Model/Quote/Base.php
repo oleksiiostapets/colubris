@@ -9,7 +9,7 @@ class Model_Quote_Base extends Model_BaseTable {
         //->display(array('form'=>'autocomplete/basic'));
         $this->hasOne('User');
         $this->addField('name')->mandatory('required');
-        $this->addField('general')->type('text')->allowHtml(true);
+        $this->addField('general_description')->type('text')->allowHtml(true);
         $this->addField('amount')->type('money')->mandatory(true);
         $this->addField('issued')->type('date');
 

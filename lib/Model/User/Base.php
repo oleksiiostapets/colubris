@@ -9,15 +9,15 @@ class Model_User_Base extends Model_BaseTable {
         $this->addField('email')->mandatory('required');
         $this->addField('name');
         $this->addField('password')->display(array('form'=>'password'))->mandatory('required');
-        $this->addField('client_id')->refModel('Model_Client');
         $this->addField('is_admin')->type('boolean');
         $this->addField('is_manager')->type('boolean');
-        $this->addField('is_developer')->type('boolean');
-        $this->addField('is_timereport')->type('boolean')->caption('Is Time Reports');
+        $this->addField('is_developer')->type('boolean')->caption('Is Team Member');
+//        $this->addField('is_timereport')->type('boolean')->caption('Is Time Reports');
         $this->addField('hash');
         $this->addField('mail_task_changes')->type('boolean')->caption('Send when task changed');
         $this->addField('is_deleted')->type('boolean')->defaultValue('0');
         $this->addField('is_system')->defaultValue('0')->type('boolean');
+        $this->addField('client_id')->refModel('Model_Client');
 
         $this->hasOne('Organisation')->mandatory('required');
 

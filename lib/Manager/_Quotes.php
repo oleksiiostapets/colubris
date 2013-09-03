@@ -31,7 +31,7 @@ class _Manager_Quotes extends View {
         ));
         $m=$this->add('Model_Quote');
         $cr->setModel($m,
-        		array('project_id','name','general','rate','currency','duration','deadline','status'),
+        		array('project_id','name','general_description','rate','currency','duration','deadline','status'),
         		array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status')
         		);
         if($cr->grid){

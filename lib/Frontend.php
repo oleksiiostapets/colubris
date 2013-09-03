@@ -1,5 +1,9 @@
 <?php
 class Frontend extends ApiFrontend {
+
+    function getVer(){
+        return 0.1;
+    }
     function init() {
         parent::init();
 
@@ -50,6 +54,7 @@ class Frontend extends ApiFrontend {
         
         $this->autoLogin();
 
+        $this->template->trySet('organisation','for '.$this->currentUser()->get('organisation'));
         $this->defineAllowedPages();
 
         $this->task_statuses = array(
@@ -78,7 +83,7 @@ class Frontend extends ApiFrontend {
         // show current user name
         $this->add('View', null, 'name')
             ->setStyle('width', '700px')->setStyle('text-align', 'right')
-            ->add('Text')->set($this->api->auth->model['name'] . ' @ ' .'Colubris Team Manager');
+            ->add('Text')->set($this->api->auth->model['name'] . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer());
 
         $this->template->trySet('year',date('Y',time()));
 
@@ -140,6 +145,10 @@ class Frontend extends ApiFrontend {
             // Access for all non-system roles
             $this->addAllowedPages(array(
                 'account', 'about', 'home', 'quotes','clients','projects','tasks','reports','deleted','developers','users','dashboard'
+            ));
+        }else{
+            $this->addAllowedPages(array(
+                'home'
             ));
         }
 

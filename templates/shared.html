@@ -22,8 +22,15 @@
 	<body>
 		<div id="atk-layout" class="atk-wrapper">
 			<div id="header">
-				<?logo?><div id="atk-logo" class="ui-widget-header float-left"><a 
-                                    href="<?page?>index<?/?>"><img src="<?template?>images/logo.png<?/?>" /></a></div><?/logo?>
+                <div id="header-left">
+                    <?logo?>
+                        <div id="atk-logo" class="ui-widget-header">
+                            <a href="<?page?>index<?/?>"><img src="<?template?>images/logo.png<?/?>" /></a>
+                        </div>
+                    <?/logo?>
+                    <div class="organization"><?$organisation?></div>
+                </div>
+
 				<div id="header-right">
 					<?Menu?>
                             <div class="atk-menu atk-menu-horizontal ui-widget">
@@ -32,7 +39,13 @@
                                 </ul>
 							</div>
 					<?/?>
-                    <?$SubMenu?>
+                    <div class="right">
+                        <?$SubMenu?>
+                    </div>
+                    <div class="right">
+                        <?$link2first_user?>
+                    </div>
+                    <div class="cc"></div>
 					<div id="atk-version"><b><?name?>Agile Toolkit™<?/?></b></div>
 				</div>
 			</div>

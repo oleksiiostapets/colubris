@@ -1,13 +1,14 @@
 <?php
-class Model_Developer extends Model_User {
+class Model_Developer extends Model_User_Organisation {
     function init(){
         parent::init();
 
         $this->addCondition('is_developer',true);
+        $this->addCondition('is_deleted',false);
 
         //$this->addField('timesheets_tw')->calculated(true);
         //$this->addField('reports_tw')->calculated(true);
-        $this->addField('weekly_target')->datatype('int');
+        //$this->addField('weekly_target')->datatype('int');
     }
 
     function reportsDQ(){

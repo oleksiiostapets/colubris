@@ -10,10 +10,11 @@ class Manager_Projects extends View {
 
         $this->add('H4')->set('1. Quotes requested from clients or managers');
         $this->quotes=$grid=$this->add('Grid');
+        $grid->addClass('zebra bordered');
         $m=$grid->setModel('Quote',array('project','user','name'));
         $m->addCondition('status','quotation_requested');
         $grid->addColumn('button','edit');
-        $grid->addColumn('button','estimation','Request for estimate');
+        $grid->addColumn('button','estimation','Submit for Quotation');
         if($_GET['edit']){
             $this->js()->univ()->redirect($this->api->url('/manager/quotes/rfq/requirements',
                         array('quote_id'=>$_GET['edit'])))
@@ -28,6 +29,7 @@ class Manager_Projects extends View {
         
         $this->add('H4')->set('2. Quotes not estimated (developer returned)');
         $this->quotes=$grid=$this->add('Grid');
+        $grid->addClass('zebra bordered');
         $m=$grid->setModel('Quote',array('project','user','name'));
         $m->addCondition('status','not_estimated');
         $grid->addColumn('button','edit');
@@ -39,6 +41,7 @@ class Manager_Projects extends View {
         
         $this->add('H4')->set('3. Quotes estimated (developer returned)');
         $this->quotes=$grid=$this->add('Grid');
+        $grid->addClass('zebra bordered');
         $m=$grid->setModel('Quote',array('project','user','name','estimated'));
         $m->addCondition('status','estimated');
         $grid->addColumn('button','edit');
@@ -71,6 +74,7 @@ class Manager_Projects extends View {
         
         $this->add('H4')->set('4. Quotes estimate requested (sent to developers for estimation)');
         $this->quotes=$grid=$this->add('Grid');
+        $grid->addClass('zebra bordered');
         $m=$grid->setModel('Quote',array('project','user','name'));
         $m->addCondition('status','estimate_needed');
         $grid->addColumn('button','edit');

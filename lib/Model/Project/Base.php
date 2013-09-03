@@ -12,6 +12,7 @@ class Model_Project_Base extends Model_BaseTable {
 
         $this->addField('demo_url');
         $this->addField('prod_url');
+        $this->addField('repository');
 
         $this->addField('organisation_id')->refModel('Model_Organisation');
         $this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);

@@ -21,6 +21,7 @@ class Model_Participant extends Model_Table {
                     'design'=>'Designer',
                     ));
 
+        $this->addField('hourly_rate');
 
-	}
+    }
 }

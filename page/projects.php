@@ -37,11 +37,26 @@ class page_projects extends Page {
             'allow_edit' =>  $this->api->currentUser()->canEditProject(),
             'allow_add'  =>  $this->api->currentUser()->canCreateProject()
         ));
+
+        if ($this->api->currentUser()->isClient()) {
+            $edit_fields=array('name','descr');
+            $show_fields=array('name','descr','client','demo_url','prod_url');
+        }
+        if ($this->api->currentUser()->isDeveloper()) {
+            $edit_fields=array('name','descr','client_id','demo_url','prod_url');
+            $show_fields=array('name','descr','client','demo_url','prod_url','repository');
+        }
+        if ($this->api->currentUser()->isManager()) {
+            $edit_fields=array('name','descr','client_id','demo_url','prod_url','repository');
+            $show_fields=array('name','descr','client','demo_url','prod_url','repository');
+        }
+
         $cr->setModel($m,
-            array('name','descr','client_id','demo_url','prod_url'),
-            array('name','descr','client','demo_url','prod_url')
+            $edit_fields,
+            $show_fields
         );
         if($cr->grid){
+            $cr->grid->addClass('zebra bordered');
             $cr->grid->addPaginator(25);
 			if ($this->api->currentUser()->canSeeProjectParticipantes()) {
                 $cr->grid->addColumn('expander','participants');

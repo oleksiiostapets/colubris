@@ -25,11 +25,12 @@ class page_system_users extends Page {
         $model = $this->add('Model_User')->setOrder('name');
 
         $crud->setModel($model,
-            array('email','name','organisation_id','is_admin','is_manager','is_developer','is_timereport'/*,'is_client'*/,'client_id','password'),
-            array('email','name','organisation','is_admin','is_manager','is_developer','is_timereport'/*,'is_client'*/,'client')
+            array('email','name','organisation_id','is_admin','is_manager','is_developer','client_id','password'),
+            array('email','name','organisation','is_admin','is_manager','is_developer','client')
         );
 
         if($crud->grid){
+            $crud->grid->addClass('zebra bordered');
             //$crud->grid->addColumn('expander','projects');
             
             $crud->grid->addColumn('button','login');
@@ -47,8 +48,8 @@ class page_system_users extends Page {
         $this->api->stickyGet('user_id');
         $m=$this->add('Model_Participant')->tryLoadBy('user_id',$_GET['user_id']);
         $this->add('CRUD')->setModel($m,
-                array('budget_id','user_id','role'),
-                array('budget','user','role')
+                array('budget_id','user_id','role','hourly_rate'),
+                array('budget','user','role','hourly_rate')
                 );
     }
 }

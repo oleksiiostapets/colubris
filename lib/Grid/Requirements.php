@@ -14,6 +14,7 @@ class Grid_Requirements extends Grid_CountLines {
     private $reload_object;
     function init() {
         parent::init();
+        $this->addClass('zebra bordered');
         $this->quote = $this->owner->quote;
         $this->total_view = $this->owner->total_view;
         $this->can_toggle = $this->quote->canUserChangeIsIncluded($this->api->currentUser());

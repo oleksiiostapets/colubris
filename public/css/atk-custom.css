@@ -11,6 +11,7 @@
 #header-right {float:right;}
 #header-right .atk-menu ul{float:right;}
 #header-right #atk-version {clear: both;float:right;margin-top:1em;}
+#header-left {float:left;}
 #navigation ul {overflow:hidden;}
 #navigation ul li {float:left;padding: 0.5em 1em;}
 #footer {text-align:center;}
@@ -19,4 +20,4 @@
 /* --------------------------------------------------------------------
 	Default Layout
 -------------------------------------------------------------------- */
-#atk-logo {border:none;font-size:0;line-height:0;width:163px;height:41px;overflow:hidden;}
+#atk-logo {border:none;font-size:0;line-height:0;width:163px}

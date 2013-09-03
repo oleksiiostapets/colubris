@@ -1,5 +1,9 @@
 <?php
 class Grid_Reqcomments extends Grid {
+    function init() {
+        parent::init();
+        $this->addClass('zebra bordered');
+    }
     function setModel($model, $actual_fields = UNDEFINED) {
         parent::setModel($model, $actual_fields);
         $this->removeColumn('user');
