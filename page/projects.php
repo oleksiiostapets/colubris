@@ -38,22 +38,9 @@ class page_projects extends Page {
             'allow_add'  =>  $this->api->currentUser()->canCreateProject()
         ));
 
-        if ($this->api->currentUser()->isClient()) {
-            $edit_fields=array('name','descr');
-            $show_fields=array('name','descr','client','demo_url','prod_url');
-        }
-        if ($this->api->currentUser()->isDeveloper()) {
-            $edit_fields=array('name','descr','client_id','demo_url','prod_url');
-            $show_fields=array('name','descr','client','demo_url','prod_url','repository');
-        }
-        if ($this->api->currentUser()->isManager()) {
-            $edit_fields=array('name','descr','client_id','demo_url','prod_url','repository');
-            $show_fields=array('name','descr','client','demo_url','prod_url','repository');
-        }
-
         $cr->setModel($m,
-            $edit_fields,
-            $show_fields
+            $this->api->currentUser()->getProjectFormFields(),
+            $this->api->currentUser()->getProjectGridFields()
         );
         if($cr->grid){
             $cr->grid->addClass('zebra bordered');
