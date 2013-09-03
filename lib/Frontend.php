@@ -90,6 +90,9 @@ class Frontend extends ApiFrontend {
         $this->template->trySet('year',date('Y',time()));
 
         try {
+            if(!$this->api->auth->isPageAllowed($this->page)){
+                throw $this->exception('This user cannot see this page','Exception_Denied');
+            }
             parent::initLayout();
         } catch (Exception_Denied $e) {
             // TODO show denied page
@@ -152,10 +155,6 @@ class Frontend extends ApiFrontend {
             $this->addAllowedPages(array(
                 'home'
             ));
-        }
-
-        if(!$this->api->auth->isPageAllowed($this->page)){
-            throw $this->exception('This user cannot see this page','Exception_Denied');
         }
     }
     private $allowed_pages=array();
