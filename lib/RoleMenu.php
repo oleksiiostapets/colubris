@@ -51,6 +51,7 @@ class RoleMenu extends CompleteLister {
 
             if (!in_array($session_role,$this->current_user_posible_roles)) {
                 $this->setRole($this->current_user_posible_roles[0]);
+                $this->api->redirect($this->api->url('/'));
             }
         }
     }
