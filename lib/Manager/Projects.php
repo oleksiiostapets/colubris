@@ -60,7 +60,8 @@ class Manager_Projects extends View {
 
                 if ($client['email']!=''){
                     $this->api->mailer->sendMail('send_quote',array(
-                        'link'=>$m->api->siteURL().$this->api->url('client/quotes/rfq/estimated',array('quote_id'=>$_GET['send_to_client']))
+                        'link'=>$m->api->siteURL().$this->api->url('quotes')
+//                        'link'=>$m->api->siteURL().$this->api->url('client/quotes/rfq/estimated',array('quote_id'=>$_GET['send_to_client']))
                     ),true);
 
                     $this->js()->univ()->successMessage('Sent')->execute();

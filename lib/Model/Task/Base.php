@@ -56,7 +56,7 @@ class Model_Task_Base extends Model_BaseTable {
             $m->api->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
             $m->api->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_edit',array(
-                'link'=>$m->api->siteURL().$m->api->url($m->api->getUserType().'/tasks'),
+                'link'=>$m->api->siteURL().$m->api->url('/tasks'),
                 'task_name'=>$m->get('name'),
             ));
         });
@@ -65,7 +65,7 @@ class Model_Task_Base extends Model_BaseTable {
             $m->api->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
             $m->api->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_delete',array(
-                'link'=>$m->api->siteURL().$m->api->url($m->api->getUserType().'/tasks'),
+                'link'=>$m->api->siteURL().$m->api->url('/tasks'),
                 'task_name'=>$m->get('name'),
             ));
         });
