@@ -8,7 +8,8 @@ class Model_Client extends Model_Client_Base {
         if ($this['email']!=''){
             $this->api->mailer->setReceivers(array($this['email']));
             $this->api->mailer->sendMail('send_quote',array(
-               'link'=>$this->api->siteURL().$this->api->url('client/quotes/rfq/estimated',array('quote_id'=>$quote_id))
+               'link'=>$this->api->siteURL().$this->api->url('quotes')
+//               'link'=>$this->api->siteURL().$this->api->url('client/quotes/rfq/estimated',array('quote_id'=>$quote_id))
             ),true);
         } else {
             throw $this->exception('The project of this quote has no client!','Exception_ClientHasNoEmail')
