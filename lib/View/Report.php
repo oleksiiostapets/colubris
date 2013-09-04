@@ -21,6 +21,18 @@ class View_Report extends View {
         $jr = $m->join('requirement','requirement_id','left','_req');
         $jr->addField('quote_id','quote_id');
 
+        if( ($this->api->currentUser()->isCurrentUserDev()) || $this->api->currentUser()->isCurrentUserClient() ){
+            $mp=$this->add('Model_Project');
+            if($this->api->currentUser()->isCurrentUserDev()) $projects=$mp->forDeveloper();
+            if($this->api->currentUser()->isCurrentUserClient()) $projects=$mp->forClient();
+            $projects_ids="";
+            foreach($projects->getRows() as $p){
+                if($projects_ids=="") $projects_ids=$p['id'];
+                else $projects_ids=$projects_ids.','.$p['id'];
+            }
+            $m->addCondition('project_id','in',$projects_ids);
+        }
+
         if($this->api->recall('project_id')>0){
             $m->addCondition('project_id',$this->api->recall('project_id'));
         }
