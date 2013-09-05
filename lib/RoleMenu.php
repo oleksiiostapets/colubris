@@ -39,6 +39,7 @@ class RoleMenu extends CompleteLister {
     private function defineCurrentRole() {
         if ($this->api->auth->isLoggedIn()) {
             // get all posible roles for current user
+            if ($this->api->currentUser()->isSystem())    $this->current_user_posible_roles[] = 'system';
             if ($this->api->currentUser()->isAdmin())     $this->current_user_posible_roles[] = 'admin';
             if ($this->api->currentUser()->isManager())   $this->current_user_posible_roles[] = 'manager';
             if ($this->api->currentUser()->isDeveloper()) $this->current_user_posible_roles[] = 'developer';

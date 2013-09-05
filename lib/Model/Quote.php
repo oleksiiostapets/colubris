@@ -82,7 +82,7 @@ class Model_Quote extends Model_Quote_Base {
 
     // ONLY manager and client have access to quote price
     function canUserSeePrice($user) {
-        return $user->checkRoleSimpleRights(array(false,true,false,true));
+        return $user->checkRoleSimpleRights(array(false,true,false,true,false));
     }
 
     function canUserSeeRequirements($user) {
@@ -92,11 +92,11 @@ class Model_Quote extends Model_Quote_Base {
     }
 
     function canUserDeleteRequirement($user) {
-        return $user->checkRoleSimpleRights(array(false,true,false,false));
+        return $user->checkRoleSimpleRights(array(false,true,false,false,false));
     }
 
     function canUserDeleteQuote($user) {
-        return $user->checkRoleSimpleRights(array(false,true,false,false));
+        return $user->checkRoleSimpleRights(array(false,true,false,false,false));
     }
 
     function canUserAddQuote($user) {
@@ -121,7 +121,7 @@ class Model_Quote extends Model_Quote_Base {
     }
 
     function canUserEditQuote($user) {
-        return $user->checkRoleSimpleRights(array(false,true,false,false));
+        return $user->checkRoleSimpleRights(array(false,true,false,false,false));
     }
 
     function canUserRequestForEstimate($user) {
