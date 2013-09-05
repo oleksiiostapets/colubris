@@ -1,5 +1,5 @@
 <?php
-class Model_Project_Base extends Model_BaseTable {
+class Model_Project_Base extends Model_Auditable {
     public $table='project';
 
     function init(){

@@ -1,5 +1,5 @@
 <?
-class Model_Requirement extends Model_Table {
+class Model_Requirement extends Model_Auditable {
 	public $table='requirement';
 	function init(){
 		parent::init();
