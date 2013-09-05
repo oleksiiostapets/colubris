@@ -226,7 +226,7 @@ class Model_User_Base extends Model_BaseTable {
         return $this->checkRoleSimpleRights(array(false,true,true,true));
     }
     function canSeeLogs() {
-        return $this->checkRoleSimpleRights(array(true,true,true,false));
+        return $this->checkRoleSimpleRights(array(true,false,false,false));
     }
 
 
