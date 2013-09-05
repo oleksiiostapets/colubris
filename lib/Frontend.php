@@ -49,13 +49,19 @@ class Frontend extends ApiFrontend {
         	}
         }
 
+        $this->role_menu = $this->add('RoleMenu', 'SubMenu', 'SubMenu');
+
 
         $this->template->set('page_title','Colubris');
         
         $this->autoLogin();
 
-        if($this->currentUser()){
-            $this->template->trySet('organisation','for '.$this->currentUser()->get('organisation'));
+        if($this->api->auth->model['id']>0){
+            if(!$this->currentUser()->isCurrentUserSystem()){
+                $this->template->trySet('organisation','for '.$this->currentUser()->get('organisation'));
+            }else{
+                $this->template->trySet('organisation','for System user');
+            }
         }
 
         $this->task_statuses = array(
@@ -77,7 +83,6 @@ class Frontend extends ApiFrontend {
 
     function initLayout(){
 
-        $this->role_menu = $this->add('RoleMenu', 'SubMenu', 'SubMenu');
         $this->add('MyMenu', 'Menu', 'Menu');
         //$this->add('MySubMenu', 'SubMenu', 'SubMenu');
 
