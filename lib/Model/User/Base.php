@@ -87,6 +87,9 @@ class Model_User_Base extends Model_BaseTable {
      *          CURRENT USER ROLE
      *
      */
+    function isCurrentUserSystem() {
+        return ($this->api->getCurrentUserRole() == 'system');
+    }
     function isCurrentUserAdmin() {
         return ($this->api->getCurrentUserRole() == 'admin');
     }
@@ -110,19 +113,19 @@ class Model_User_Base extends Model_BaseTable {
     function canSeeProject($project) {
     }
     function canCreateProject() {
-        return $this->checkRoleSimpleRights(array(false,true,false,true));
+        return $this->checkRoleSimpleRights(array(false,true,false,true,false));
     }
     function canDeleteProject() {
-        return $this->checkRoleSimpleRights(array(false,true,false,false));
+        return $this->checkRoleSimpleRights(array(false,true,false,false,false));
     }
     function canEditProject() {
-        return $this->checkRoleSimpleRights(array(false,true,false,false));
+        return $this->checkRoleSimpleRights(array(false,true,false,false,false));
     }
     function canSeeProjectParticipantes() {
-        return $this->checkRoleSimpleRights(array(false,true,false,false));
+        return $this->checkRoleSimpleRights(array(false,true,false,false,false));
     }
     function canSeeProjectTasks() {
-        return $this->checkRoleSimpleRights(array(true,true,true,true));
+        return $this->checkRoleSimpleRights(array(true,true,true,true,false));
     }
     function getProjectFormFields() {
         if ($this->isCurrentUserAdmin()) {
@@ -157,7 +160,7 @@ class Model_User_Base extends Model_BaseTable {
      *
      */
     function canSeeDashboard() {
-        return $this->checkRoleSimpleRights(array(false,true,true,true));
+        return $this->checkRoleSimpleRights(array(false,true,true,true,false));
     }
     function getDashboardFormFields() {
         if ($this->isCurrentUserAdmin()) {
@@ -196,37 +199,37 @@ class Model_User_Base extends Model_BaseTable {
      */
 
     function canSendRequestForQuotation() {
-        return $this->checkRoleSimpleRights(array(false,true,false,true));
+        return $this->checkRoleSimpleRights(array(false,true,false,true,false));
     }
     function canUserMenageClients() {
-        return $this->checkRoleSimpleRights(array(false,true,false,false));
+        return $this->checkRoleSimpleRights(array(false,true,false,false,false));
     }
 
 
 
     function canSeeQuotesList() {
-        return $this->checkRoleSimpleRights(array(false,true,true,true));
+        return $this->checkRoleSimpleRights(array(false,true,true,true,false));
     }
     function canSeeUserList() {
-        return $this->checkRoleSimpleRights(array(true,false,false,false));
+        return $this->checkRoleSimpleRights(array(true,false,false,false,false));
     }
     function canSeeDevList() {
-        return $this->checkRoleSimpleRights(array(true,false,false,false));
+        return $this->checkRoleSimpleRights(array(true,false,false,false,false));
     }
     function canSeeDeleted() {
-        return $this->checkRoleSimpleRights(array(false,true,false,false));
+        return $this->checkRoleSimpleRights(array(false,true,false,false,false));
     }
     function canSeeReportList() {
-        return $this->checkRoleSimpleRights(array(false,true,true,true));
+        return $this->checkRoleSimpleRights(array(false,true,true,true,false));
     }
     function canSeeProjectList() {
-        return $this->checkRoleSimpleRights(array(false,true,true,true));
+        return $this->checkRoleSimpleRights(array(false,true,true,true,false));
     }
     function canSeeTaskList() {
-        return $this->checkRoleSimpleRights(array(false,true,true,true));
+        return $this->checkRoleSimpleRights(array(false,true,true,true,false));
     }
     function canSeeLogs() {
-        return $this->checkRoleSimpleRights(array(true,false,false,false));
+        return $this->checkRoleSimpleRights(array(true,false,false,false,false));
     }
 
 
@@ -239,6 +242,8 @@ class Model_User_Base extends Model_BaseTable {
             return $rights[2];
         } else if ($this->isCurrentUserClient()) {
             return $rights[3];
+        } else if ($this->isCurrentUserSystem()) {
+            return $rights[4];
         } else {
             throw $this->exception('Wrong role');
             //return false;

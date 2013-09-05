@@ -154,7 +154,7 @@ class Frontend extends ApiFrontend {
             ));
         }else{
             $this->addAllowedPages(array(
-                'home'
+                'home','system','about'
             ));
         }
         if( ($this->auth->isLoggedIn()) && ($this->currentUser()->canSeeLogs()) ) {
