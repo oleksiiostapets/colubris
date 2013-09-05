@@ -1,6 +1,6 @@
 <?php
 
-class Model_Auditable extends Model_Table {
+class Model_Auditable extends Model_BaseTable {
 	public $modify_action;
 	function init(){
 		parent::init();

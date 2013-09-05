@@ -1,5 +1,5 @@
 <?
-class Model_TaskTime extends Model_Table {
+class Model_TaskTime extends Model_Auditable {
     public $table='task_time';
 
     function init(){

@@ -1,5 +1,5 @@
 <?php
-class Model_Quote_Base extends Model_BaseTable {
+class Model_Quote_Base extends Model_Auditable {
     public $table="quote";
     function init(){
         parent::init(); //$this->debug();
