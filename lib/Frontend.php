@@ -57,7 +57,6 @@ class Frontend extends ApiFrontend {
         if($this->currentUser()){
             $this->template->trySet('organisation','for '.$this->currentUser()->get('organisation'));
         }
-        $this->defineAllowedPages();
 
         $this->task_statuses = array(
                 'unstarted'=>'unstarted',
@@ -88,6 +87,8 @@ class Frontend extends ApiFrontend {
             ->add('Text')->set($this->api->auth->model['name'] . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer());
 
         $this->template->trySet('year',date('Y',time()));
+
+        $this->defineAllowedPages();
 
         try {
             if(!$this->api->auth->isPageAllowed($this->page)){
@@ -154,6 +155,11 @@ class Frontend extends ApiFrontend {
         }else{
             $this->addAllowedPages(array(
                 'home'
+            ));
+        }
+        if( ($this->auth->isLoggedIn()) && ($this->currentUser()->canSeeLogs()) ) {
+            $this->addAllowedPages(array(
+                'logs'
             ));
         }
     }

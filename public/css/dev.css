@@ -189,3 +189,7 @@ ul.role-menu-lister > li > div.current_role {
     text-decoration: none;
     color:red;
 }
+
+table.logs td{
+    padding:0 5px;
+}
