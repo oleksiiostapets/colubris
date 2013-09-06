@@ -6,6 +6,42 @@ class View_Dashboard extends View {
     function init(){
         parent::init();
 
+        if ($this->api->currentUser()->isCurrentUserClient()) {
+            $this->add('P');
+            $this->add('H2')->set('Comments to quotes');
+            $cr=$this->add('CRUD',array('grid_class'=>'Grid_Reqcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
+            $m=$this->add('Model_Reqcomment')
+                ->setOrder('created_dts',true);
+
+            $jr = $m->join('requirement.id','requirement_id','left','_req');
+            $jr->addField('requirement_name','name');
+            $jr->addField('quote_id','quote_id');
+
+            $jq = $jr->join('quote.id','quote_id','left','_quote');
+            $jq->addField('quote_name','name');
+            $jq->addField('quote_status','status');
+
+            $jp = $jq->join('project.id','project_id','left','_pr');
+            $jp->addField('project_name','name');
+
+            $m->addCondition('quote_status','IN',array('quotation_requested','estimate_needed','not_estimated','estimated'));
+
+            $cr->setModel($m,
+                array('text','file_id'),
+                array('text','user','file','file_thumb','created_dts','project_name','quote_name','quote_status','requirement_name','quote_id')
+            );
+
+            if ($cr->grid){
+                $cr->grid->addPaginator(5);
+                $cr->grid->addFormatter('project_name','wrap');
+                $cr->grid->addFormatter('quote_name','wrap');
+                $cr->grid->addFormatter('requirement_name','wrap');
+                $cr->grid->addFormatter('quote_id','toquote');
+//                $b=$cr->grid->add('Button')->set('to_quote');
+//                $b->js('click')->univ()->redirect($this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->quote->get('id'))));
+            }
+        }
+
         $this->add('H2')->set('My active tasks (requested by me or assigned to me)');
         $cr=$this->add('CRUD',array('grid_class'=>'Grid_Tasks','allow_add'=>$this->allow_add,'allow_edit'=>$this->allow_edit,'allow_del'=>$this->allow_del));
         $m=$this->add('Model_Task');
