@@ -20,16 +20,22 @@ class page_dashboard extends Page {
             )
         ));
 
-        if ($this->api->currentUser()->isClient()) {
-            $this->add('P');
+        if ($this->api->currentUser()->isCurrentUserClient()) {
+            $this->add('H3')->setText('Actions:');
             $b = $this->add('Button')->set('Request For Quotation');
             $b->addStyle('margin-bottom','10px');
             $b->js('click', array(
                 $this->js()->univ()->redirect($this->api->url('quotes/rfq'))
             ));
+
+            $b = $this->add('Button')->set('Create Task');
+            $b->addStyle('margin-bottom','10px');
+            $b->js('click', array(
+                $this->js()->univ()->redirect($this->api->url('tasks/new'))
+            ));
         }
 
-        $this->add('View_Switcher');
+        //$this->add('View_Switcher');
         $this->add('View_Dashboard',array(
             'allow_add'=>false,'allow_edit'=>true,'allow_del'=>true,
             'edit_fields'=>$this->api->currentUser()->getDashboardFormFields(),
@@ -101,7 +107,6 @@ class page_dashboard extends Page {
        	$crud->setModel($model,
        			array('description','file_id'),
        			array('description','file','file_thumb','updated_dts')
-   //    			array()
        	);
 
            // right view
@@ -115,7 +120,6 @@ class page_dashboard extends Page {
        	$cr->setModel($m,
        			array('text','file_id'),
        			array('text','user','file','file_thumb','created_dts')
-   //    			array()
        	);
        	if($cr->grid){
             $cr->grid->addClass('zebra bordered');
@@ -129,6 +133,7 @@ class page_dashboard extends Page {
        		$cr->js()->reload()->execute();
        	}
 
-	}
-	
+    }
+
+
 }

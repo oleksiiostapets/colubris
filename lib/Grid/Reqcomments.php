@@ -40,4 +40,7 @@ class Grid_Reqcomments extends Grid {
     		$this->current_row_html['delete']="";
     	}
     }
+    function format_toquote($field){
+        $this->current_row_html[$field] = '<a href="'.$this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->current_row[$field])).'">to quote</a>';
+    }
 }

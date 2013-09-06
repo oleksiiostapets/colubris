@@ -3,7 +3,7 @@ class Page_index extends Page {
     function init(){
         parent::init();
 
-        if($this->api->auth->isLoggedIn())$this->api->redirect('home');
+        if($this->api->auth->isLoggedIn())$this->api->redirect('dashboard');
 
         $form=$this->add('Frame')->setTitle('Client Log-in')->add('Form');
         $form->addField('line','email')->js(true)->focus();
@@ -22,7 +22,7 @@ class Page_index extends Page {
                 	setcookie("colubris_auth_useremail",$form->get('email'),time()+60*60*24*30*6);
                 }
                 
-                $form->js()->univ()->redirect('home')->execute();
+                $form->js()->univ()->redirect('dashboard')->execute();
             }
             $form->getElement('password')->displayFieldError('Incorrect login');
         }
