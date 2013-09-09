@@ -2,7 +2,7 @@
 class Frontend extends ApiFrontend {
 
     function getVer(){
-        return 0.1;
+        return 2.1;
     }
     function init() {
         parent::init();
