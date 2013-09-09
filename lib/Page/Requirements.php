@@ -141,7 +141,7 @@ class Page_Requirements extends Page {
             if($_GET['action']=='estimation'){
             	$quote->set('status','estimate_needed');
             	$quote->save();
-            	$this->api->redirect($this->api->url('/manager/quotes'));
+            	$this->api->redirect($this->api->url('/quotes'));
             }
 
    	        $but=$view->add('Button')->setClass('right')->set('Submit for Quotation','estimation');
