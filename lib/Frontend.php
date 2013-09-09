@@ -6,6 +6,7 @@ class Frontend extends ApiFrontend {
     }
     function init() {
         parent::init();
+        $this->checkCookies();
 
         /* ************************
          *   PATHFINDER
@@ -206,5 +207,16 @@ class Frontend extends ApiFrontend {
     	return $this->translations->__($string)."\xe2\x80\x8b";
 
     	//return $this->translations->__($string);
+    }
+
+    function checkCookies() {
+        $v = $this->getVer();
+
+        if ( !$_COOKIE['version'] || ($_COOKIE['version'] != $v) ){
+            //setcookie('colubris_auth_useremail',null);
+            //setcookie('colubris',null);
+            //setcookie('version',$v, 60*60*24*30*12*10,'/');
+        }
+//        $this->redirect($this->url('/'));
     }
 }
