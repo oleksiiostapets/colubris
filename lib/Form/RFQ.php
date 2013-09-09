@@ -19,7 +19,7 @@ class Form_RFQ extends Form {
         // TODO open frameURL instead of redirect
         $add_button = $this->add('Button')->set("New Project")->addClass('add_project');
         $add_button->js('click',
-                    $this->js()->univ()->redirect($this->api->url('manager/project/add',array('return'=>'manager/quotes/rfq')))
+                    $this->js()->univ()->redirect($this->api->url('project/add',array('return'=>'quotes/rfq')))
                 );
 
 
@@ -33,6 +33,6 @@ class Form_RFQ extends Form {
         $this->model->set('user_id',$this->api->auth->model['id']);
         $this->model->set('status','quotation_requested');
         $this->update();
-        $this->api->redirect($this->api->url('/manager/quotes/rfq/requirements',array('quote_id'=>$this->model->get('id'))));
+        $this->api->redirect($this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->model->get('id'))));
     }
 }
