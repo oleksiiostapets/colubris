@@ -6,9 +6,12 @@ class Model_Client extends Model_Client_Base {
     }
     function sendQuoteEmail($quote_id) {
         if ($this['email']!=''){
-            $this->api->mailer->setReceivers(array($this['email']));
+            $quote=$this->add('Model_Quote')->load($quote_id);
+            $this->api->mailer->setReceivers(array($this['name'].' <'.$this['email'].'>'));//'"'.$this['name'].' <'.$this['email'].'>"'));
             $this->api->mailer->sendMail('send_quote',array(
-               'link'=>$this->api->siteURL().$this->api->url('quotes')
+                'link'=>$this->api->siteURL().$this->api->url('quotes'),
+                'username'=>$this['name'],
+                'quotename'=>$quote['name'],
 //               'link'=>$this->api->siteURL().$this->api->url('client/quotes/rfq/estimated',array('quote_id'=>$quote_id))
             ),true);
         } else {
