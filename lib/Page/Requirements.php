@@ -282,7 +282,12 @@ class Page_Requirements extends Page {
         );
 
         $requirements->addExpression('cost')->set(function($m,$q)use($quote){
-            return "concat(round(estimate * ".$quote['rate']."),' ".$quote['currency']."' )";
+            if($quote['rate']!=''){
+                return "concat(round(estimate * ".$quote['rate']."),' ".$quote['currency']."' )";
+            }
+            else{
+                return true;
+            }
         });
         if ($this->api->currentUser()->isCurrentUserClient()){
             $requirements->getElement('estimate')->destroy();
