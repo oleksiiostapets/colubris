@@ -10,7 +10,7 @@ class View_Dashboard extends View {
             $this->add('P');
             $this->add('H2')->set('Comments to quotes');
             $cr=$this->add('CRUD',array('grid_class'=>'Grid_Reqcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
-            $m=$this->add('Model_Reqcomment')
+            $m=$this->add('Model_Reqcomment_Client')
                 ->setOrder('created_dts',true);
 
             $jr = $m->join('requirement.id','requirement_id','left','_req');
