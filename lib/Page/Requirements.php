@@ -286,7 +286,7 @@ class Page_Requirements extends Page {
                 return "concat(round(estimate * ".$quote['rate']."),' ".$quote['currency']."' )";
             }
             else{
-                return true;
+                return 1;
             }
         });
         if ($this->api->currentUser()->isCurrentUserClient()){
