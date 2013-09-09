@@ -243,10 +243,17 @@ class Page_Requirements extends Page {
     function addFloatingTotal($view, $quote) {
         $v = $view->add('View')->setClass('floating_total radius_10');
         $v->js(true)->colubris()->floating_total($v->name);
-        $quote['estimated']>0?$estimate=$quote['estimated']:$estimate=0;
+        $quote['estimated']>0?$estimate=$quote['estimated'].' hours':$estimate='0 hours';
+        if ($this->api->currentUser()->isCurrentUserClient()){
+            if ($quote['estimpay'] != '') {
+                $estimate = $quote['estimpay'].' '.$quote['currency'];
+            } else {
+                $estimate = '-';
+            }
+        }
         $total_view = $v->add('View')
                 ->setClass('estimate_total_time_to_reload')
-                ->set('Estimated: '.$estimate.'hours');
+                ->set('Estimated: '.$estimate);
         $total_view->js('reload')->reload();
         return $total_view;
     }
@@ -274,9 +281,15 @@ class Page_Requirements extends Page {
             )
         );
 
+        $requirements->addExpression('cost')->set(function($m,$q)use($quote){
+            return "concat(round(estimate * ".$quote['rate']."),' ".$quote['currency']."' )";
+        });
+        if ($this->api->currentUser()->isCurrentUserClient()){
+            $requirements->getElement('estimate')->destroy();
+        }
         $cr->setModel($requirements,
                 $quote->whatRequirementFieldsUserCanEdit($this->api->currentUser()),
-        		array('is_included','name','estimate','spent_time','file','user','count_comments')
+        		array('is_included','name','estimate','cost','spent_time','file','user','count_comments')
         );
 
         if($cr->grid){
