@@ -160,7 +160,7 @@ class Model_User_Base extends Model_BaseTable {
      *
      */
     function canSeeDashboard() {
-        return $this->checkRoleSimpleRights(array(false,true,true,true,false));
+        return $this->checkRoleSimpleRights(array(true,true,true,true,true));
     }
     function getDashboardFormFields() {
         if ($this->isCurrentUserAdmin()) {
