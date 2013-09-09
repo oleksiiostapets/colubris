@@ -60,6 +60,7 @@ class View_Dashboard extends View {
         );
         
 		if($cr->grid){
+            $cr->grid->addFormatter('name','wrap');
         	$cr->grid->js('reload')->reload();
         	
         	if(!$this->api->auth->model['is_client']){
