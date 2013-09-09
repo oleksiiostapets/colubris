@@ -283,7 +283,6 @@ class Page_Requirements extends Page {
 
         $requirements->addExpression('cost')->set(function($m,$q)use($quote){
             if($quote['rate']!=''){
-                var_dump($quote['rate']);exit;
                 return "concat(round(estimate * ".$quote['rate']."),' ".$quote['currency']."' )";
             }
             else{
