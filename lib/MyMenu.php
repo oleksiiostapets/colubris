@@ -20,9 +20,10 @@ class MyMenu extends Menu_Basic {
 
 
 
-        if ($this->api->currentUser()->isSystem()) {
-        	$this->addMenuItem('system/organisation','System');
-        }
+        if ($this->api->currentUser()->isSystem()) {        
+            $this->addMenuItem('system/system','System');
+            $this->addMenuItem('system/organisation','Organisation');
+	}
 
         if($this->api->auth->isLoggedIn() && !$this->api->currentUser()->isSystem()) {
         	$this->addMenuItem('account','Settings');
@@ -48,7 +49,10 @@ class MyMenu extends Menu_Basic {
 		if ( (substr($href,0,5)=='admin' && substr($this->api->page,0,5)=='admin') ) { return true; }
 		if ( (substr($href,0,4)=='team' && substr($this->api->page,0,4)=='team') ) { return true; }
 		if ( (substr($href,0,6)=='client' && substr($this->api->page,0,6)=='client') ) { return true; }
-		if ( (substr($href,0,6)=='system' && substr($this->api->page,0,6)=='system') ) { return true; }
+		if ( (substr($href,0,13)=='system/system' && substr($this->api->page,0,13)=='system/system') ) { return true; }
+		if ( (substr($href,0,18)=='system/organisation' && substr($this->api->page,0,18)=='system/organisation') ) { return true; }
+
+
 
         if ( (substr($href,0,6)=='quotes' && substr($this->api->page,0,6)=='quotes') ) { return true; }
         if ( (substr($href,0,7)=='clients' && substr($this->api->page,0,7)=='clients') ) { return true; }
