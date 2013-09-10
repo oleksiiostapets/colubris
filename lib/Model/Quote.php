@@ -194,11 +194,11 @@ class Model_Quote extends Model_Quote_Base {
         if ($user->isCurrentUserAdmin()) {
             return array();
         } else if ($user->isCurrentUserManager()) {
-            return array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status');
+            return array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status','updated_dts');
         } else if ($user->isCurrentUserDev()) {
-            return array('project','user','name','estimated','spent_time','durdead','status');
+            return array('project','user','name','estimated','spent_time','durdead','status','updated_dts');
         } else if ($user->isCurrentUserClient()) {
-            return array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status');
+            return array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status','updated_dts');
         }
         throw $this->exception('Wrong role');
     }

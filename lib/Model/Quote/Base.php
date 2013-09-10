@@ -49,6 +49,17 @@ class Model_Quote_Base extends Model_Auditable {
         $this->addField('organisation_id')->refModel('Model_Organisation');
         $this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
 
+        $this->addField('created_dts');
+        $this->addField('updated_dts')->caption('Updated')->sortable(true);
+
+        $this->addHook('beforeInsert', function($m,$q){
+            $q->set('created_dts', $q->expr('now()'));
+        });
+
+        $this->addHook('beforeSave', function($m){
+            $m['updated_dts']=date('Y-m-d G:i:s', time());
+        });
+
         $this->addExpression('client_id')->set(function($m,$q){
             return $q->dsql()
                 ->table('project')
