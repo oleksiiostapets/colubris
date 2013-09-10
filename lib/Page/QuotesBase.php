@@ -17,7 +17,7 @@ class Page_QuotesBase extends Page {
         }
 
 
-        $this->quote = $this->add('Model_Quote');//->debug();
+        $this->quote = $this->add('Model_Quote')->setOrder('updated_dts');//->debug();
 
         if ($this->api->currentUser()->isCurrentUserClient()) {
             // show only client's quotes
