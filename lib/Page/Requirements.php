@@ -83,6 +83,7 @@ class Page_Requirements extends Page {
 
     }
     function page_more(){
+        //$this->add('Model_Reqcomment')->delete(29);
         if (!isset($_GET['requirement_id'])) {
             throw $this->exception('Provide $_GET[\'requirement_id\']');
         }
@@ -95,6 +96,16 @@ class Page_Requirements extends Page {
 
     	$cr=$this->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
 
+        if($_GET['delete']){
+            //exit($_GET['delete']);
+            //$comment=$this->add('Model_Reqcomment')->load($_GET['delete']);
+            $this->add('Model_Reqcomment')->delete($_GET['delete']);
+            //$comment->set('text','212333');
+            //$comment->save();
+            //$comment->delete();
+            $cr->js()->reload()->execute();
+        }
+
     	$m=$this->add('Model_Reqcomment')
     			->addCondition('requirement_id',$_GET['requirement_id']);
     	$cr->setModel($m,
@@ -105,11 +116,6 @@ class Page_Requirements extends Page {
             $cr->grid->addClass('zebra bordered');
     		$cr->add_button->setLabel('Add Comment');
     		$cr->grid->setFormatter('text','text');
-    	}
-    	if($_GET['delete']){
-    		$comment=$this->add('Model_Reqcomment')->load($_GET['delete']);
-    		$comment->delete();
-    		$cr->js()->reload()->execute();
     	}
     }
 

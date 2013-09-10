@@ -1,0 +1,1 @@
+ALTER TABLE `reqcomment` ADD COLUMN `is_deleted` TINYINT(4) NOT NULL DEFAULT '0';
