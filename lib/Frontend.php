@@ -160,7 +160,7 @@ class Frontend extends ApiFrontend {
             ));
         }else{
             $this->addAllowedPages(array(
-                'home','system','about'
+                'home','system','about','dashboard'
             ));
         }
         if( ($this->auth->isLoggedIn()) && ($this->currentUser()->canSeeLogs()) ) {
