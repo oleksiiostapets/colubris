@@ -81,7 +81,9 @@ class View_Switcher extends View {
 			if($_GET['status']!==null){
 				$this->api->memorize('status',$_GET['status']);
 			}else{
-				$this->api->memorize('status','all');
+                if (is_null($this->api->recall('status'))) {
+                    $this->api->memorize('status','all');
+                }
 			}
 			$fs=$f->addField('dropdown','status');
 			$fs->setValueList($s_arr);
