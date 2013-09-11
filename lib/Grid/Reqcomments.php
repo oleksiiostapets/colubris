@@ -43,4 +43,7 @@ class Grid_Reqcomments extends Grid {
     function format_toquote($field){
         $this->current_row_html[$field] = '<a href="'.$this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->current_row[$field])).'">to quote</a>';
     }
+    function format_text($field){
+        $this->current_row_html[$field]=nl2br($this->current_row[$field]);
+    }
 }

@@ -109,6 +109,7 @@ class page_tasks extends Page {
         if($cr->grid){
             $cr->grid->addClass('zebra bordered');
             $cr->add_button->setLabel('Add Comment');
+            $cr->grid->setFormatter('text','text');
             //$cr->grid->setFormatter('text','text');
             //$cr->grid->addFormatter('file','download');
         }
