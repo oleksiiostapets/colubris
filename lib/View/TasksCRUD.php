@@ -9,7 +9,7 @@ class View_TasksCRUD extends View {
         ));
 
         $m=$this->add('Model_Task');
-        $this->addConditions($m);
+        $m=$this->addConditions($m);
 
         $cr=$this->add('CRUD',array(
             'grid_class'=>'Grid_Tasks',
@@ -25,24 +25,19 @@ class View_TasksCRUD extends View {
         if($cr->grid){
             $cr->grid->addClass('zebra bordered');
             $cr->grid->addPaginator(10);
-        	$cr->grid->js('reload')->reload();
+        	//$cr->grid->js('reload')->reload();
         	
         	if(!$this->api->auth->model['is_client']){
-   	        	$cr->grid->addColumn('button','time');
+   	        	$cr->grid->addColumn('expander','time');
+                /*
 	            if ($_GET['time']) {
 	                $this->js()->univ()->frameURL($this->api->_('Time'),array(
 	                    $this->api->url('./time',array('task_id'=>$_GET['time'],'reload_view'=>$cr->grid->name))
 	                ))->execute();
+                    $this->js()->redirect()->execute();
 	            }
+                */
         	}
-            /*
-            $cr->grid->addColumn('button','attachments');
-            if ($_GET['attachments']) {
-                $this->js()->univ()->frameURL($this->api->_('Attachments'),array(
-                    $this->api->url('./attachments',array('task_id'=>$_GET['attachments'],'reload_view'=>$cr->grid->name))
-                ))->execute();
-            }
-            */
             $cr->grid->addColumn('expander','more');
         	$cr->grid->addFormatter('status','status');
             $cr->grid->addFormatter('name','wrap');
