@@ -2,9 +2,6 @@
 class Form_EditTask extends Form {
     function init() {
         parent::init();
-        //$m=$this->getModel();
-        //$m=$this->add('Model_Task');
-        //$this->setModel($m,array('name','descr_original','estimate','priority','type','status','requester_id','assigned_id'));
     }
 
     function setModel($model, $actual_fields = UNDEFINED){
@@ -13,14 +10,14 @@ class Form_EditTask extends Form {
                 if ($v[0]=='task.status'){
                     unset($model->_dsql()->args['where'][$k]);
                 }
+                if ($v[0]==$model->table.'.status' || $v[0]==$model->table.'.assigned_id'){ // assigned_id
+                    unset($model->_dsql()->args['where'][$k]);
+                }
             }
         }
-        echo"<pre>";
-        var_dump($model->_dsql()->stmt);
-        echo"</pre>";
-//        var_dump($model->_dsql()->args['where']);
-//        echo "<hr>";
- //       exit;
+        $model->getElement('status')->system(false)->editable(true);
+        $model->getElement('assigned_id')->system(false)->editable(true);
+
         parent::setModel($model,$actual_fields);
         return $this->model;
     }
