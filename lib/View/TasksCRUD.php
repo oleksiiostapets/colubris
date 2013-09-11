@@ -12,6 +12,7 @@ class View_TasksCRUD extends View {
         $m=$this->addConditions($m);
 
         $cr=$this->add('CRUD',array(
+            'form_class'=>'Form_EditTask',
             'grid_class'=>'Grid_Tasks',
             'allow_add'=>$this->allow_add,
             'allow_edit'=>$this->allow_edit,
