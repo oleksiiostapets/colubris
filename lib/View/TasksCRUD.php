@@ -24,7 +24,7 @@ class View_TasksCRUD extends View {
         
         if($cr->grid){
             $cr->grid->addClass('zebra bordered');
-            $cr->grid->addPaginator(3);
+            $cr->grid->addPaginator(10);
         	//$cr->grid->js('reload')->reload();
         	
         	if(!$this->api->auth->model['is_client']){
