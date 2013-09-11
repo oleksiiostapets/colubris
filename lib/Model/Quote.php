@@ -164,7 +164,7 @@ class Model_Quote extends Model_Quote_Base {
         } else if ($user->isCurrentUserManager()) {
             return true;
         } else if ($user->isCurrentUserDev()) {
-            if ($this['status'] != 'estimate_needed') {
+            if ($this['status'] == 'estimate_needed') {
                 return true;
             }
             return false;
