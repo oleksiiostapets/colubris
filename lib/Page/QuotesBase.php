@@ -16,21 +16,21 @@ class Page_QuotesBase extends Page {
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
 
-
-        $this->quote = $this->add('Model_Quote')->setOrder('updated_dts',true);//->debug();
-
-        if ($this->api->currentUser()->isCurrentUserClient()) {
-            // show only client's quotes
-            $pr = $this->quote->join('project','project_id','left','_pr');
-            $pr->addField('pr_client_id','client_id');
-            $this->quote->addCondition('pr_client_id',$this->api->auth->model['client_id']);
-        }
-
         if ($this->api->currentUser()->isCurrentUserDev()) {
+            $this->quote = $this->add('Model_Quote_Participant')->setOrder('updated_dts',true);
             // developer do not see not well prepared (quotation_requested status) and finished projects
             $this->quote->addCondition('status',array(
                 'estimate_needed','not_estimated','estimated','estimation_approved'
             ));
+        }else{
+            $this->quote = $this->add('Model_Quote')->setOrder('updated_dts',true);//->debug();
+
+            if ($this->api->currentUser()->isCurrentUserClient()) {
+                // show only client's quotes
+                $pr = $this->quote->join('project','project_id','left','_pr');
+                $pr->addField('pr_client_id','client_id');
+                $this->quote->addCondition('pr_client_id',$this->api->auth->model['client_id']);
+            }
         }
     }
     function page_index() {
