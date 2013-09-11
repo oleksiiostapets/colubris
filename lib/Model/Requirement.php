@@ -15,7 +15,15 @@ class Model_Requirement extends Model_Auditable {
 				'name'=>'file_id',
 				'use_model'=>'Model_Myfile'
 		));
-		
+
+        $this->addExpression('project_id')->set(function($m,$q){
+            return $q->dsql()
+                ->table('quote')
+                ->field('project_id')
+                ->where('quote.id',$q->getField('quote_id'))
+                ;
+        });
+
         $this->addExpression('spent_time')->set(function($m,$q){
             return $q->dsql()
                 ->table('task')
