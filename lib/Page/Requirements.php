@@ -117,6 +117,12 @@ class Page_Requirements extends Page {
     		$cr->add_button->setLabel('Add Comment');
     		$cr->grid->setFormatter('text','text');
     	}
+
+        $this->tasks=$this->add('Model_Task');
+        $this->tasks->addCondition('project_id',$req['project_id']);
+        $this->tasks->addCondition('requirement_id',$_GET['requirement_id']);
+        $this->addTasksCRUD($this);
+
     }
 
 
@@ -334,6 +340,22 @@ class Page_Requirements extends Page {
                 ))->reload()->execute();
             }
         }
+    }
+
+    function addTasksCRUD($view) {
+        $user = $this->api->currentUser();
+        $cr = $view->add('CRUD', array(
+//            'grid_class'      => 'Grid_Quotes',
+            'allow_add'       => true,
+            'allow_edit'      => true,
+            'allow_del'       => true,
+        ));
+
+        $cr->setModel(
+            $this->tasks,
+            $this->tasks->whatTaskFieldsUserCanEdit($user),
+            $this->tasks->whatTaskFieldsUserCanSee($user)
+        );
     }
 
 }

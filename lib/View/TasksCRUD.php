@@ -18,8 +18,8 @@ class View_TasksCRUD extends View {
             'allow_del'=>$this->allow_del)
         );
         $cr->setModel($m,
-        		$this->edit_fields,
-        		$this->show_fields
+            $m->whatTaskFieldsUserCanEdit($this->api->currentUser()),
+            $m->whatTaskFieldsUserCanSee($this->api->currentUser())
         );
         
         if($cr->grid){
