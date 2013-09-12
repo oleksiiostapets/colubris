@@ -2,7 +2,6 @@
 <?subject?>Task deleted<?/?>
 <?body?>
 
-The task "<?$task_name?>" has been deleted.<br />
 Review tasks <a href="<?$link?>">here</a>.<br />
 
 <?sign?>
