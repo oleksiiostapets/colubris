@@ -8,6 +8,11 @@ class Frontend extends ApiFrontend {
         parent::init();
         $this->checkCookies();
 
+        if(strtolower($this->api->page)=='logout'){
+            setcookie("fuser", "", time()-3600);
+            setcookie("fhash", "", time()-3600);
+        }
+
         /* ************************
          *   PATHFINDER
          */
