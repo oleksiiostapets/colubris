@@ -193,3 +193,5 @@ ul.role-menu-lister > li > div.current_role {
 table.logs td{
     padding:0 5px;
 }
+p.error{color:red;font-size:16px;font-weight:bold;margin-top:20px;}
+

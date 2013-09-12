@@ -62,6 +62,9 @@ class Page_Requirements extends Page {
         // requirements
         $left->add('H4')->set('Requirements:');
         $left->add('View_Info')->set('Requirements, which will be added in the future increase estimation.');
+        if($_GET['error_estimations_message']){
+            $left->add('P')->setClass('error')->set($_GET['error_estimations_message']);
+        }
 
 
         // | *** RIGHT *** |
@@ -71,7 +74,7 @@ class Page_Requirements extends Page {
                 ->addStyle('margin-bottom','20px')
         ;
         $this->addRequestForEstimateButton($right, $requirements, $quote);
-        $this->addEstimationButtons($right, $quote);
+        $this->addEstimationButtons($right, $quote, $requirements);
         $total_view = $this->addFloatingTotal($right,$quote);
 
 
@@ -164,7 +167,7 @@ class Page_Requirements extends Page {
         }
     }
 
-    function addEstimationButtons($view, $quote) {
+    function addEstimationButtons($view, $quote, $requirements) {
         if ($quote->canUserEstimateQuote($this->api->currentUser())) {
 
             $bs = $view->add('ButtonSet')->addClass('right');
@@ -183,9 +186,19 @@ class Page_Requirements extends Page {
 
             // actions
             if($_GET['action']=='estimated'){
-            	$quote->set('status','estimated');
-            	$quote->save();
-                $this->js(null,$this->js()->reload())->execute();
+                $estimations_filled=true;
+                foreach ($requirements as $requirement){
+                    if(  ($requirement['is_included']) && ( ($requirement['estimate']==null) || ($requirement['estimate']==0) )  ) {
+                        $estimations_filled=false;
+                    }
+                }
+                if ($estimations_filled){
+                    $quote->set('status','estimated');
+                    $quote->save();
+                    $this->js(null,$this->js()->reload())->execute();
+                }else{
+                    $this->api->redirect($this->api->url(null,array('error_estimations_message'=>'All requirements needs estimations!')));
+                }
             }
 
             if($_GET['action']=='not_estimated'){
