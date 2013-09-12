@@ -23,7 +23,7 @@ class page_tasks extends Page {
 
         $this->add('View_TasksCRUD',array(
             'newtask_link'=>'tasks/new',
-            'allow_add'=>false,'allow_edit'=>true,'allow_del'=>true,
+            'allow_add'=>false,'allow_edit'=>false,'allow_del'=>true,
         ));
 
     }

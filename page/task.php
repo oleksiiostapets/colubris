@@ -29,6 +29,8 @@ class page_task extends Page {
             throw $this->exception('Task not exist!','Exception_Task');
         }
 
+        $this->add('View_SwitcherEditTask',array('task'=>$this->task));
+
         $this->add('H3')->set('Task details:');
 
         $f=$this->add('Form');
