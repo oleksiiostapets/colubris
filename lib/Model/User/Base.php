@@ -136,6 +136,8 @@ class Model_User_Base extends Model_BaseTable {
             return array('name','descr','client_id','demo_url','prod_url');
         } else if ($this->isCurrentUserClient()) {
             return array('name','descr');
+        } else if ($this->isCurrentUserSystem()) {
+            return false;
         }
         throw $this->exception('Wrong role');
     }
@@ -148,6 +150,8 @@ class Model_User_Base extends Model_BaseTable {
             return array('name','descr','client','demo_url','prod_url','repository');
         } else if ($this->isCurrentUserClient()) {
             return array('name','descr','client','demo_url','prod_url');
+        } else if ($this->isCurrentUserSystem()) {
+            return false;
         }
         throw $this->exception('Wrong role');
     }
@@ -171,6 +175,8 @@ class Model_User_Base extends Model_BaseTable {
             return array('project_id','name','descr_original','priority','status','estimate','requester_id','assigned_id');
         } else if ($this->isCurrentUserClient()) {
             return array('name','descr_original','priority','status','requester_id','assigned_id');
+        } else if ($this->isCurrentUserSystem()) {
+            return false;
         }
         throw $this->exception('Wrong role');
     }
@@ -183,6 +189,30 @@ class Model_User_Base extends Model_BaseTable {
             return array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
         } else if ($this->isCurrentUserClient()) {
             return array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
+        } else if ($this->isCurrentUserSystem()) {
+            return false;
+        }
+        throw $this->exception('Wrong role');
+    }
+
+
+
+    /* **********************************
+     *
+     *    FLOATING TOTAL ACCESS RULES
+     *
+     */
+    function getFloatingTotalFields() {
+        if ($this->isCurrentUserAdmin()) {
+            return false;
+        } else if ($this->isCurrentUserManager()) {
+            return array('estimated','estimpay');
+        } else if ($this->isCurrentUserDev()) {
+            return array('estimated');
+        } else if ($this->isCurrentUserClient()) {
+            return array('estimpay');
+        } else if ($this->isCurrentUserSystem()) {
+            return false;
         }
         throw $this->exception('Wrong role');
     }
@@ -246,7 +276,6 @@ class Model_User_Base extends Model_BaseTable {
             return $rights[4];
         } else {
             throw $this->exception('Wrong role');
-            //return false;
         }
     }
 }

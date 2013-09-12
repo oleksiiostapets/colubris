@@ -190,6 +190,19 @@ class Model_Quote extends Model_Quote_Base {
         throw $this->exception('Wrong role');
     }
 
+    function whatRequirementFieldsUserCanSee($user) {
+        if ($user->isCurrentUserAdmin()) {
+            return false;
+        } else if ($user->isCurrentUserManager()) {
+            return array('is_included','name','estimate','cost','spent_time','file','user','count_comments');
+        } else if ($user->isCurrentUserDev()) {
+            return array('is_included','name','estimate','spent_time','file','user','count_comments');
+        } else if ($user->isCurrentUserClient()) {
+            return array('is_included','name','cost','spent_time','file','user','count_comments');
+        }
+        throw $this->exception('Wrong role');
+    }
+
     function whatQuoteFieldsUserCanSee($user) {
         if ($user->isCurrentUserAdmin()) {
             return array();
@@ -227,6 +240,23 @@ class Model_Quote extends Model_Quote_Base {
             return array('details','edit_details','approve',);
         }
         throw $this->exception('Wrong role');
+    }
+
+    function canStatusBeChangedToEstimated($requirements=null) {
+        if (!$this->canUserEstimateQuote($this->api->currentUser()))
+            throw $this->exception('User with this role cannot estimate quote.','Exception_Denied');
+
+        if (!$requirements) {
+            $requirements = $this->add('Model_Requirement');
+            $requirements->addCondition('quote_id',$this->id);
+        }
+
+        foreach ($requirements as $requirement){
+            if($requirement['is_included'] && (($requirement['estimate']==null) || ($requirement['estimate']==0))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

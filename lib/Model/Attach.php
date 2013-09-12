@@ -23,9 +23,9 @@ class Model_Attach extends Model_Auditable {
             $m->api->mailer->addReceiverByUserId($task->get('requester_id'),'mail_task_changes');
             $m->api->mailer->addReceiverByUserId($task->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_attachment_changed',array(
-                    'link'=>$m->api->siteURL().$m->api->url('/tasks'),
-                    'task_name'=>$task->get('name'),
-                    ));
+                'link'=>$m->api->siteURL().$m->api->url('/tasks'),
+                'task_name'=>$task->get('name'),
+            ));
        	});
         
        	$this->addHook('beforeDelete', function($m){
@@ -34,9 +34,9 @@ class Model_Attach extends Model_Auditable {
             $m->api->mailer->addReceiverByUserId($task->get('requester_id'),'mail_task_changes');
             $m->api->mailer->addReceiverByUserId($task->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_attachment_deleted',array(
-                    'link'=>$m->api->siteURL().$m->api->url('/tasks'),
-                    'task_name'=>$task->get('name'),
-                    ));
+                'link'=>$m->api->siteURL().$m->api->url('/tasks'),
+                'task_name'=>$task->get('name'),
+            ));
        	});
         
        	$this->setOrder('updated_dts',true);
