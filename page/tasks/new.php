@@ -18,7 +18,7 @@ class page_tasks_new extends Page {
             )
         ));
 
-        $s=$this->add('View_Switcher');
+        $this->add('View_Switcher',array('class'=>'left'));
     	
     	$this->add('View_TasksNew',array('redirect_to'=>'tasks','fields'=>array('name','descr_original','estimate','priority','type','status','requester_id','assigned_id')));
 

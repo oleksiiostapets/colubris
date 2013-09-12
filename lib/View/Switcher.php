@@ -3,12 +3,13 @@ class View_Switcher extends View {
     function init(){
         parent::init();
 
-        $v=$this->add('View')->setClass('right');
+        isset($this->class)?$class=$this->class:$class='right';
+        $v=$this->add('View')->setClass($class);
         
         $f=$v->add('Form');
         $f->addClass('horizontal');
         // Project
-        if( ($this->api->auth->model['is_developer']) && (!$this->api->auth->model['is_manager']) ){
+        if($this->api->currentUser()->isCurrentUserDev()){
         	$mp=$this->add('Model_Project_Participant');
         }else{
         	$mp=$this->add('Model_Project');
@@ -22,6 +23,15 @@ class View_Switcher extends View {
         	if(count($projects)>0){
         		$this->api->memorize('project_id',$projects[0]['id']);
         	}
+        }else{
+            $check=$this->add('Model_Project_Participant')->tryLoad($this->api->recall('project_id'));
+            if (!$check->loaded()){
+                if(count($projects)>0){
+                    $this->api->memorize('project_id',$projects[0]['id']);
+                }else{
+                    $this->api->forget('project_id');
+                }
+            }
         }
         $p_arr=array();
         foreach ($projects as $p){
