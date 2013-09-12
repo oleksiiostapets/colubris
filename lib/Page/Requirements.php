@@ -272,7 +272,7 @@ class Page_Requirements extends Page {
                         break;
                     case 'estimated';
                         $total_view->add('View')->addClass('estimated-time')
-                            ->set('Time: '.(($quote['estimated']>0)?$quote['estimated']:$quote['estimated']).' hours');
+                            ->set('Time: '.(($quote['estimated']>0)?$quote['estimated']:'0').' hours');
                         break;
                 }
             }
