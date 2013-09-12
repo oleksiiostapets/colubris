@@ -56,8 +56,8 @@ class Model_Task_Base extends Model_Auditable {
             $m->api->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
             $m->api->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_edit',array(
-                'link'=>$m->api->siteURL().$m->api->url('/tasks'),
-                'task_name'=>$m->get('name'),
+                'link'=>$m->api->siteURL().$m->api->url('/task',array('task_id'=>$m->get('id'))),
+                'subject'=>'Task "'.$m->get('name').'" has changes',
             ));
         });
 
@@ -66,7 +66,7 @@ class Model_Task_Base extends Model_Auditable {
             $m->api->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_delete',array(
                 'link'=>$m->api->siteURL().$m->api->url('/tasks'),
-                'task_name'=>$m->get('name'),
+                'subject'=>'Task "'.$m->get('name').'" deleted',
             ));
         });
 

@@ -1,9 +1,8 @@
 <?from?>hello@example.com<?/from?>
-<?subject?>Task comment change<?/?>
+<?subject?>Task has changes in comments<?/?>
 <?body?>
 
-The task "<?$task_name?>" has changes in comments.<br />
-Review tasks <a href="<?$link?>">here</a>.<br />
+Review task <a href="<?$link?>">here</a>.<br />
 
 <?sign?>
 <?/sign?><?/body?>
