@@ -62,9 +62,6 @@ class Page_Requirements extends Page {
         // requirements
         $left->add('H4')->set('Requirements:');
         $left->add('View_Info')->set('Requirements, which will be added in the future increase estimation.');
-        if($_GET['error_estimations_message']){
-            $left->add('P')->setClass('error')->set($_GET['error_estimations_message']);
-        }
 
 
         // | *** RIGHT *** |
@@ -186,18 +183,12 @@ class Page_Requirements extends Page {
 
             // actions
             if($_GET['action']=='estimated'){
-                $estimations_filled=true;
-                foreach ($requirements as $requirement){
-                    if(  ($requirement['is_included']) && ( ($requirement['estimate']==null) || ($requirement['estimate']==0) )  ) {
-                        $estimations_filled=false;
-                    }
-                }
-                if ($estimations_filled){
+                if ($quote->canStatusBeChangedToEstimated($requirements)){
                     $quote->set('status','estimated');
                     $quote->save();
                     $this->js(null,$this->js()->reload())->execute();
                 }else{
-                    $this->api->redirect($this->api->url(null,array('error_estimations_message'=>'All requirements needs estimations!')));
+                    $this->js()->univ()->errorMessage('All requirements need estimations!')->execute();
                 }
             }
 
@@ -268,18 +259,26 @@ class Page_Requirements extends Page {
     function addFloatingTotal($view, $quote) {
         $v = $view->add('View')->setClass('floating_total radius_10');
         $v->js(true)->colubris()->floating_total($v->name);
-        $quote['estimated']>0?$estimate=$quote['estimated'].' hours':$estimate='0 hours';
-        if ($this->api->currentUser()->isCurrentUserClient()){
-            if ($quote['estimpay'] != '') {
-                $estimate = $quote['estimpay'].' '.$quote['currency'];
-            } else {
-                $estimate = '-';
+
+        $total_view = $v->add('View')->setClass('estimate_total_time_to_reload');
+
+        if (count($fields = $this->api->currentUser()->getFloatingTotalFields())) {
+            $total_view->add('View')->set('Estimated: ');
+            foreach ($fields as $field) {
+                switch ($field) {
+                    case 'estimpay';
+                        $total_view->add('View')->addClass('estimated-cost')
+                            ->set('Cost: '.(($quote['estimpay']=='')?'-':$quote['estimpay'].' '.$quote['currency']));
+                        break;
+                    case 'estimated';
+                        $total_view->add('View')->addClass('estimated-time')
+                            ->set('Time: '.(($quote['estimated']>0)?$quote['estimated']:'0').' hours');
+                        break;
+                }
             }
+            $total_view->js('reload')->reload();
         }
-        $total_view = $v->add('View')
-                ->setClass('estimate_total_time_to_reload')
-                ->set('Estimated: '.$estimate);
-        $total_view->js('reload')->reload();
+
         return $total_view;
     }
 
@@ -316,13 +315,12 @@ class Page_Requirements extends Page {
                 }
             });
         }
-        if ($this->api->currentUser()->isCurrentUserClient()){
-            $requirements->getElement('estimate')->destroy();
-        }
         $cr->setModel($requirements,
                 $quote->whatRequirementFieldsUserCanEdit($this->api->currentUser()),
-        		array('is_included','name','estimate','cost','spent_time','file','user','count_comments')
+                $quote->whatRequirementFieldsUserCanSee($this->api->currentUser())
         );
+
+        $cr->js('reload',$total_view->js()->trigger('reload'));
 
         if($cr->grid){
             $cr->grid->addClass('zebra bordered');
