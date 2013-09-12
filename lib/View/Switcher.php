@@ -9,10 +9,11 @@ class View_Switcher extends View {
         $f=$v->add('Form');
         $f->addClass('horizontal');
         // Project
+        $mp=$this->add('Model_Project');
         if($this->api->currentUser()->isCurrentUserDev()){
-        	$mp=$this->add('Model_Project_Participant');
-        }else{
-        	$mp=$this->add('Model_Project');
+            $mp=$mp->forDeveloper();
+        }elseif($this->api->currentUser()->isCurrentUserClient()){
+            $mp=$mp->forClient();
         }
         $projects=$mp->getRows();
         if($_GET['project_id']){

@@ -8,10 +8,11 @@ class View_SwitcherEditTask extends View {
         $f=$v->add('Form');
         $f->addClass('horizontal');
         // Project
-        if( ($this->api->auth->model['is_developer']) && (!$this->api->auth->model['is_manager']) ){
-        	$mp=$this->add('Model_Project_Participant');
-        }else{
-        	$mp=$this->add('Model_Project');
+        $mp=$this->add('Model_Project');
+        if($this->api->currentUser()->isCurrentUserDev()){
+            $mp=$mp->forDeveloper();
+        }elseif($this->api->currentUser()->isCurrentUserClient()){
+            $mp=$mp->forClient();
         }
         $projects=$mp->getRows();
         if($_GET['project_id']){

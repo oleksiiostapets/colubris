@@ -7,6 +7,24 @@ class page_task extends Page {
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
 
+        $this->api->stickyGet('task_id');
+
+        $mp=$this->add('Model_Project');
+        if($this->api->currentUser()->isCurrentUserDev()){
+            $mp->forDeveloper();
+        }elseif($this->api->currentUser()->isCurrentUserClient()){
+            $mp->forClient();
+        }
+        $this->task=$this->add('Model_Task')->tryLoad($_GET['task_id']);
+        if(!$this->task->loaded()){
+            throw $this->exception('Task not exist!','Exception_Task');
+        }
+        $permission_granted=false;
+        foreach($mp->getRows() as $pr){
+            if ($pr['id']==$this->task->get('project_id')) $permission_granted=true;
+        }
+        if(!$permission_granted) throw $this->exception('You cannot see this page','Exception_Denied');
+
         $this->add('x_bread_crumb/View_BC',array(
             'routes' => array(
                 0 => array(
@@ -22,12 +40,6 @@ class page_task extends Page {
                 ),
             )
         ));
-
-        $this->api->stickyGet('task_id');
-        $this->task=$this->add('Model_Task')->tryLoad($_GET['task_id']);
-        if(!$this->task->loaded()){
-            throw $this->exception('Task not exist!','Exception_Task');
-        }
 
         $this->add('View_SwitcherEditTask',array('task'=>$this->task));
 
