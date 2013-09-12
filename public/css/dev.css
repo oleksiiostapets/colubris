@@ -116,7 +116,7 @@
     width: 50px;
 }
 .quote_name {
-    white-space:nowrap;
+    white-space:normal;
     font-weight: bold;
 }
 .quote_name > a {
