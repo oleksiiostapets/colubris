@@ -15,8 +15,8 @@ class View_SwitcherEditTask extends View {
             $mp=$mp->forClient();
         }
         $projects=$mp->getRows();
-        if($_GET['project_id']){
-            $this->task->set('project_id',$_GET['project_id']);
+        if($_GET['edit_project_id']){
+            $this->task->set('project_id',$_GET['edit_project_id']);
             $this->task->set('requirement_id',null);
             $this->task->save();
         }
@@ -32,10 +32,10 @@ class View_SwitcherEditTask extends View {
 		$mq=$this->add('Model_Quote');
 		$mq->addCondition('status','estimation_approved');
 		$mq->addCondition('project_id',$this->task->get('project_id'));
-		if($_GET['quote_id']!==null){
-			$check=$mq->tryLoad($_GET['quote_id']);
+		if($_GET['edit_quote_id']!==null){
+			$check=$mq->tryLoad($_GET['edit_quote_id']);
 			if(!$check->loaded()){
-				$_GET['quote_id']=0;
+				$_GET['edit_quote_id']=0;
 			}
 		}
 		$q_arr=$mq->getRows();
@@ -43,15 +43,15 @@ class View_SwitcherEditTask extends View {
 		foreach($q_arr as $q){
 			$qn_arr[$q['id']]=$q['name'];
 		}
-		if($_GET['quote_id']!==null){
-			$this->api->memorize('edit_quote_id',$_GET['quote_id']);
+		if($_GET['edit_quote_id']!==null){
+			$this->api->memorize('edit_quote_id',$_GET['edit_quote_id']);
             $this->task->set('requirement_id',0);
             $this->task->save();
 		}else{
             if($this->task->get('requirement_id')>0){
                 $cmr=$this->add('Model_Requirement')->tryLoad($this->task->get('requirement_id'));
                 if($cmr->loaded()){
-                    $this->api->memorize('edit_quote_id',$cmr->get('quote_id'));
+                    $this->api->memorize('edit_edit_id',$cmr->get('quote_id'));
                 }
             }
         }
@@ -62,8 +62,8 @@ class View_SwitcherEditTask extends View {
 		// Requirement
 		$mr=$this->add('Model_Requirement');
 		$mr->addCondition('quote_id',$this->api->recall('edit_quote_id'));
-    	if($_GET['requirement_id']!==null){
-            $this->task->set('requirement_id',$_GET['requirement_id']);
+    	if($_GET['edit_requirement_id']!==null){
+            $this->task->set('requirement_id',$_GET['edit_requirement_id']);
             $this->task->save();
 		}
 		$r_arr=$mr->getRows();
@@ -77,15 +77,15 @@ class View_SwitcherEditTask extends View {
 		
 		$fp->js('change')->univ()->location(array(
             $this->api->url(),
-            'project_id'=>$fp->js()->val(),
+            'edit_project_id'=>$fp->js()->val(),
         ));
 		$fq->js('change')->univ()->location(array(
             $this->api->url(),
-            'quote_id'=>$fq->js()->val(),
+            'edit_quote_id'=>$fq->js()->val(),
         ));
 		$fr->js('change')->univ()->location(array(
             $this->api->url(),
-            'requirement_id'=>$fr->js()->val(),
+            'edit_requirement_id'=>$fr->js()->val(),
         ));
 		
         $v=$this->add('View')->setClass('clear');
