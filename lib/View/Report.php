@@ -58,6 +58,7 @@ class View_Report extends View {
         }
 
         $cr->setModel($m,$this->grid_show_fields);
+        $cr->addFormatter('name','wrap');
 
         $cr->addTotals(array('spent'));
     }
