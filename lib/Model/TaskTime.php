@@ -8,7 +8,7 @@ class Model_TaskTime extends Model_Table {
         $this->addField('task_id')->refModel('Model_Task')->mandatory(true);
         $this->addField('user_id')->refModel('Model_User')->mandatory(true);
 
-        $this->addField('spent_time');
+        $this->addField('spent_time')->mandatory(true);
 
         $this->addField('comment')->dataType('text');
 
