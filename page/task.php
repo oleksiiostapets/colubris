@@ -115,6 +115,7 @@ class page_task extends Page {
             $cr->grid->addClass('zebra bordered');
             $cr->add_button->setLabel('Add Comment');
             $cr->grid->setFormatter('text','text');
+            $cr->grid->addFormatter('text','wrap');
         }
         if($_GET['delete']){
             $comment=$this->add('Model_Taskcomment')->load($_GET['delete']);

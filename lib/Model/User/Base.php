@@ -250,7 +250,7 @@ class Model_User_Base extends Model_BaseTable {
         return $this->checkRoleSimpleRights(array(false,true,false,false,false));
     }
     function canSeeReportList() {
-        return $this->checkRoleSimpleRights(array(false,true,true,true,false));
+        return $this->checkRoleSimpleRights(array(false,true,true,false,false));
     }
     function canSeeProjectList() {
         return $this->checkRoleSimpleRights(array(false,true,true,true,false));
