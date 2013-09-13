@@ -6,7 +6,9 @@ class Grid_Tasks extends Grid_Advanced {
     }
     function setModel($model, $actual_fields = UNDEFINED) {
         parent::setModel($model, $actual_fields);
-        $this->removeColumn('estimate');
+        if(!$this->api->currentUser()->isCurrentUserClient()){
+            $this->removeColumn('estimate');
+        }
     }
     function formatRow() {
         parent::formatRow();

@@ -188,7 +188,7 @@ class Model_User_Base extends Model_BaseTable {
         } else if ($this->isCurrentUserDev()) {
             return array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
         } else if ($this->isCurrentUserClient()) {
-            return array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
+            return array('project','name','priority','status','estimate','requester','assigned','updated_dts');
         } else if ($this->isCurrentUserSystem()) {
             return false;
         }

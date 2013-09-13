@@ -58,10 +58,10 @@ class page_dashboard extends Page {
 		$this->api->stickyGet('task_id');
 		$model=$this->add('Model_TaskTime')->addCondition('task_id',$_GET['task_id']);
 		$crud=$this->add('CRUD');
-        if ($this->api->auth->model['is_client']){
+        if ($this->api->currentUser()->isCurrentUserClient()){
             $crud->setModel($model,
                 array('spent_time','comment','date'),
-                array('user','spent_time','comment','date','remove_billing')
+                array('user','estimate','comment','date','remove_billing')
             );
         }else{
             $crud->setModel($model,

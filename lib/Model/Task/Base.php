@@ -37,6 +37,16 @@ class Model_Task_Base extends Model_Auditable {
             $this->addCondition('client_id',$this->api->auth->model['client_id']);
         }
 
+        if($this->api->currentUser()->isCurrentUserDev()){
+            $mp=$this->add('Model_Project');
+            $mp->forDeveloper();
+            $projects_ids="0";
+            foreach($mp->getRows() as $p){
+                $projects_ids=$projects_ids.','.$p['id'];
+            }
+            $this->addCondition('project_id','in',$projects_ids);
+        }
+
         $this->addField('created_dts');
         $this->addField('updated_dts')->caption('Updated')->sortable(true);
 

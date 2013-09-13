@@ -153,31 +153,33 @@ class Frontend extends ApiFrontend {
         ));
 
         // For Guests
-        if (!$this->auth->isLoggedIn())
-        if(!$this->auth->isPageAllowed($this->page)){
-            $this->api->redirect('index');
-        }
-
-        if (!$this->currentUser()->isSystem()) {
-            // Access for all non-system roles
-            $this->addAllowedPages(array(
-                'account', 'about', 'home', 'quotes','clients','projects','tasks','deleted','developers','users','dashboard','trace','task'
-            ));
-            // Grant access for non-client users
-            if(!$this->currentUser()->canSeeReportList()){
-                $this->addAllowedPages(array(
-                    'reports'
-                ));
+        if (!$this->auth->isLoggedIn()){
+            if(!$this->auth->isPageAllowed($this->page)){
+                $this->api->redirect('index');
             }
         }else{
-            $this->addAllowedPages(array(
-                'home','system','about','dashboard'
-            ));
-        }
-        if( ($this->auth->isLoggedIn()) && ($this->currentUser()->canSeeLogs()) ) {
-            $this->addAllowedPages(array(
-                'logs'
-            ));
+
+            if (!$this->currentUser()->isSystem()) {
+                // Access for all non-system roles
+                $this->addAllowedPages(array(
+                    'account', 'about', 'home', 'quotes','clients','projects','tasks','deleted','developers','users','dashboard','trace','task'
+                ));
+                // Grant access for non-client users
+                if(!$this->currentUser()->canSeeReportList()){
+                    $this->addAllowedPages(array(
+                        'reports'
+                    ));
+                }
+            }else{
+                $this->addAllowedPages(array(
+                    'home','system','about','dashboard'
+                ));
+            }
+            if( ($this->auth->isLoggedIn()) && ($this->currentUser()->canSeeLogs()) ) {
+                $this->addAllowedPages(array(
+                    'logs'
+                ));
+            }
         }
     }
     private $allowed_pages=array();
