@@ -77,6 +77,7 @@ class page_projects extends Page {
         );
         if($cr->grid){
             $cr->grid->addFormatter('status','status');
+            $cr->grid->addFormatter('name','wrap');
         }
     }
 //    function page_add(){

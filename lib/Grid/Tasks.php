@@ -25,6 +25,7 @@ class Grid_Tasks extends Grid_Advanced {
         $this->current_row_html['requester'] = '<div class="requester">'.$this->current_row['requester'].'</div>';
         $this->current_row_html['assigned'] = '<div class="assigned">'.$this->current_row['assigned'].'</div>';
         $this->current_row_html['updated_dts'] = '<div class="updated">'.$this->current_row['updated_dts'].'</div>';
+        //$this->tdparam[$this->getCurrentIndex()]['name']['style']='white-space: wrap';
     }
     function format_status($field){
     	switch($this->current_row[$field]){
