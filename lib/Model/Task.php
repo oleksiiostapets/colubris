@@ -27,7 +27,7 @@ class Model_Task extends Model_Task_Base {
         } else if ($user->isCurrentUserDev()) {
             return array('name','priority','type','status','estimate','spent_time','requester','assigned');
         } else if ($user->isCurrentUserClient()) {
-            return array('name','priority','type','status','estimate','spent_time','requester','assigned');
+            return array('name','priority','type','status','estimate','requester','assigned');
         }
         throw $this->exception('Wrong role');
     }
