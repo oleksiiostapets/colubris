@@ -6,40 +6,41 @@ class View_Dashboard extends View {
     function init(){
         parent::init();
 
-        if ($this->api->currentUser()->isCurrentUserClient()) {
-            $this->add('P');
-            $this->add('H2')->set('Comments to quotes');
-            $cr=$this->add('CRUD',array('grid_class'=>'Grid_Reqcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
-            $m=$this->add('Model_Reqcomment_Client')
-                ->setOrder('created_dts',true);
+        $this->add('P');
+        $this->add('H2')->set('Comments to quotes');
+        $cr=$this->add('CRUD',array('grid_class'=>'Grid_Reqcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
 
-            $jr = $m->join('requirement.id','requirement_id','left','_req');
-            $jr->addField('requirement_name','name');
-            $jr->addField('quote_id','quote_id');
+        if ($this->api->currentUser()->isCurrentUserClient()) $m=$this->add('Model_Reqcomment_Client');
+        elseif ($this->api->currentUser()->isCurrentUserDev()) $m=$this->add('Model_Reqcomment_Developer');
+        else $m=$this->add('Model_Reqcomment');
+        $m->setOrder('created_dts',true);
 
-            $jq = $jr->join('quote.id','quote_id','left','_quote');
-            $jq->addField('quote_name','name');
-            $jq->addField('quote_status','status');
+        $jr = $m->join('requirement.id','requirement_id','left','_req');
+        $jr->addField('requirement_name','name');
+        $jr->addField('quote_id','quote_id');
 
-            $jp = $jq->join('project.id','project_id','left','_pr');
-            $jp->addField('project_name','name');
+        $jq = $jr->join('quote.id','quote_id','left','_quote');
+        $jq->addField('quote_name','name');
+        $jq->addField('quote_status','status');
 
-            $m->addCondition('quote_status','IN',array('quotation_requested','estimate_needed','not_estimated','estimated'));
+        $jp = $jq->join('project.id','project_id','left','_pr');
+        $jp->addField('project_name','name');
 
-            $cr->setModel($m,
-                array('text','file_id'),
-                array('text','user','file','file_thumb','created_dts','project_name','quote_name','quote_status','requirement_name','quote_id')
-            );
+        $m->addCondition('quote_status','IN',array('quotation_requested','estimate_needed','not_estimated','estimated'));
 
-            if ($cr->grid){
-                $cr->grid->addPaginator(5);
-                $cr->grid->addFormatter('project_name','wrap');
-                $cr->grid->addFormatter('quote_name','wrap');
-                $cr->grid->addFormatter('requirement_name','wrap');
-                $cr->grid->addFormatter('quote_id','toquote');
+        $cr->setModel($m,
+            array('text','file_id'),
+            array('text','user','file','file_thumb','created_dts','project_name','quote_name','quote_status','requirement_name','quote_id')
+        );
+
+        if ($cr->grid){
+            $cr->grid->addPaginator(5);
+            $cr->grid->addFormatter('project_name','wrap');
+            $cr->grid->addFormatter('quote_name','wrap');
+            $cr->grid->addFormatter('requirement_name','wrap');
+            $cr->grid->addFormatter('quote_id','toquote');
 //                $b=$cr->grid->add('Button')->set('to_quote');
 //                $b->js('click')->univ()->redirect($this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->quote->get('id'))));
-            }
         }
 
         $this->add('H2')->set('My active tasks (requested by me or assigned to me)');

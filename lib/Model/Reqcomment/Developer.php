@@ -1,9 +1,9 @@
 <?
-class Model_Reqcomment_Client extends Model_Reqcomment {
+class Model_Reqcomment_Developer extends Model_Reqcomment {
 	function init(){
 		parent::init();
         //$this->debug();
-        $participated_in=$this->add('Model_Project')->forClient();
+        $participated_in=$this->add('Model_Project')->forDeveloper();
         $projects_ids=array(0);
         foreach($participated_in as $p){
             $projects_ids[]=$p['id'];
