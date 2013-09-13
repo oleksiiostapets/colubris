@@ -161,8 +161,14 @@ class Frontend extends ApiFrontend {
         if (!$this->currentUser()->isSystem()) {
             // Access for all non-system roles
             $this->addAllowedPages(array(
-                'account', 'about', 'home', 'quotes','clients','projects','tasks','reports','deleted','developers','users','dashboard','trace','task'
+                'account', 'about', 'home', 'quotes','clients','projects','tasks','deleted','developers','users','dashboard','trace','task'
             ));
+            // Grant access for non-client users
+            if(!$this->currentUser()->canSeeReportList()){
+                $this->addAllowedPages(array(
+                    'reports'
+                ));
+            }
         }else{
             $this->addAllowedPages(array(
                 'home','system','about','dashboard'
