@@ -3,6 +3,12 @@ class View_Switcher extends View {
     function init(){
         parent::init();
 
+        $this->api->stickyGet('project_id');
+        $this->api->stickyGet('quote_id');
+        $this->api->stickyGet('requirement_id');
+        $this->api->stickyGet('status');
+        $this->api->stickyGet('assigned_id');
+
         isset($this->class)?$class=$this->class:$class='right';
         $v=$this->add('View')->setClass($class);
         
