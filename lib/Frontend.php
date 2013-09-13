@@ -165,7 +165,7 @@ class Frontend extends ApiFrontend {
                     'account', 'about', 'home', 'quotes','clients','projects','tasks','deleted','developers','users','dashboard','trace','task'
                 ));
                 // Grant access for non-client users
-                if(!$this->currentUser()->canSeeReportList()){
+                if($this->currentUser()->canSeeReportList()){
                     $this->addAllowedPages(array(
                         'reports'
                     ));
