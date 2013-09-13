@@ -14,11 +14,12 @@ class Controller_Mailer extends AbstractController {
     /*
      * $id - id from table user
      * $mode - users have fields that are define if mail should be send. Set TRUE if must be send obligatory
+     * $exclude_myself - exclude my email from receivers
      */
-    function addReceiverByUserId($id,$mode){
+    function addReceiverByUserId($id,$mode,$exclude_myself=true){
         if ($id>0){
             $u=$this->add('Model_User')->load($id);
-            // Check if the user whants to get email
+            // Check if the user wants to get email
             if( ($mode===true) || ($u[$mode]) ) {
                 // Check if user is client and status of task not restricted to view by clients
                 if((!$u['is_client']) ||
@@ -27,7 +28,9 @@ class Controller_Mailer extends AbstractController {
                     )
                 ){
                     if(!in_array($u['email'],$this->receivers)){
-                        $this->receivers[]=$u['email'];
+                        if ( (!$exclude_myself) || ($u['id']!=$this->api->auth->model['id']) ){
+                            $this->receivers[]=$u['email'];
+                        }
                     }
                 }
             }
