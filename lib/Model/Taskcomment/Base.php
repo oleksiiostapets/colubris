@@ -1,5 +1,5 @@
 <?php
-class Model_Taskcomment extends Model_Auditable {
+class Model_Taskcomment_Base extends Model_Auditable {
     public $table='taskcomment';
     function init(){
         parent::init();
@@ -11,6 +11,12 @@ class Model_Taskcomment extends Model_Auditable {
         $attach->addThumb();
 
         $this->addField('created_dts')->Caption('Created At')->sortable(true);
+
+        $this->addField('is_deleted')->type('boolean')->defaultValue('0');
+        $this->addField('deleted_id')->refModel('Model_User');
+        $this->addHook('beforeDelete', function($m){
+            $m['deleted_id']=$m->api->currentUser()->get('id');
+        });
 
         $this->addHook('beforeInsert',function($m,$q){
             $q->set('user_id',$q->api->auth->model['id']);
