@@ -358,7 +358,7 @@ class Page_Requirements extends Page {
     function addTasksCRUD($view) {
         $user = $this->api->currentUser();
         $cr = $view->add('CRUD', array(
-//            'grid_class'      => 'Grid_Quotes',
+            'grid_class'      => 'Grid_Tasks',
             'allow_add'       => true,
             'allow_edit'      => true,
             'allow_del'       => true,
