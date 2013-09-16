@@ -31,7 +31,7 @@ class page_reports extends Page {
             return array('project','quote','name','status','type','estimate','spent','date','performer');
         }
         if ($this->api->currentUser()->isManager()) {
-            return array('project','quote','name','status','type','estimate','spent','date','performer','quote_id');
+            return array('project','quote','name','status','type','estimate','spent','date','performer');
         }
     }
 }
