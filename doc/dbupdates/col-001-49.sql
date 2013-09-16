@@ -1,0 +1,2 @@
+/*ALTER TABLE `attach` ADD COLUMN `is_deleted` TINYINT(4) NOT NULL DEFAULT '0';*/
+ALTER TABLE `attach` ADD COLUMN `deleted_by` INT(11) NOT NULL DEFAULT '0';

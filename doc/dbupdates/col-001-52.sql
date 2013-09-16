@@ -1,0 +1,9 @@
+ALTER TABLE `attach` CHANGE COLUMN `deleted_by` `deleted_id` INT(11) NOT NULL DEFAULT '0'  ;
+ALTER TABLE `client` CHANGE COLUMN `deleted_by` `deleted_id` INT(11) NOT NULL DEFAULT '0'  ;
+ALTER TABLE `organisation` CHANGE COLUMN `deleted_by` `deleted_id` INT(11) NOT NULL DEFAULT '0'  ;
+ALTER TABLE `quote` CHANGE COLUMN `deleted_by` `deleted_id` INT(11) NOT NULL DEFAULT '0'  ;
+ALTER TABLE `reqcomment` CHANGE COLUMN `deleted_by` `deleted_id` INT(11) NOT NULL DEFAULT '0'  ;
+ALTER TABLE `requirement` CHANGE COLUMN `deleted_by` `deleted_id` INT(11) NOT NULL DEFAULT '0'  ;
+ALTER TABLE `task` CHANGE COLUMN `deleted_by` `deleted_id` INT(11) NOT NULL DEFAULT '0'  ;
+ALTER TABLE `taskcomment` CHANGE COLUMN `deleted_by` `deleted_id` INT(11) NOT NULL DEFAULT '0'  ;
+ALTER TABLE `user` CHANGE COLUMN `deleted_by` `deleted_id` INT(11) NOT NULL DEFAULT '0'  ;
