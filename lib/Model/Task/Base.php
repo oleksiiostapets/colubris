@@ -68,6 +68,7 @@ class Model_Task_Base extends Model_Auditable {
             $m->api->mailer->sendMail('task_edit',array(
                 'link'=>$m->api->siteURL().$m->api->url('/task',array('task_id'=>$m->get('id'))),
                 'subject'=>'Task "'.$m->get('name').'" has changes',
+                'changer_part'=>$m->api->currentUser()->get('name').' has made changes in task "'.$m->get('name').'".',
             ));
         });
 
@@ -77,6 +78,7 @@ class Model_Task_Base extends Model_Auditable {
             $m->api->mailer->sendMail('task_delete',array(
                 'link'=>$m->api->siteURL().$m->api->url('/tasks'),
                 'subject'=>'Task "'.$m->get('name').'" deleted',
+                'changer_part'=>$m->api->currentUser()->get('name').' has deleted task "'.$m->get('name').'".',
             ));
         });
 

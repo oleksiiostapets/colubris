@@ -33,6 +33,7 @@ class Model_Taskcomment extends Model_Auditable {
             $m->api->mailer->sendMail('task_comment_changed',array(
                 'link'=>$m->api->siteURL().$m->api->url('/task',array('task_id'=>$m->get('task_id'),'colubris_task_view_view_2_crud_virtualpage_id'=>null,'colubris_task_view_view_2_crud_virtualpage'=>null)),
                 'subject'=>'Task "'.$task->get('name').'" has changes in comments',
+                'changer_part'=>$m->api->currentUser()->get('name').' has made changes in task "'.$task->get('name').'".',
                 ));
         });
         $this->addHook('beforeDelete',function($m){
