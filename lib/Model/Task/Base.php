@@ -28,8 +28,8 @@ class Model_Task_Base extends Model_Auditable {
 
         $this->addField('project_id')->refModel('Model_Project')->mandatory(true)->sortable(true);
         $this->addField('requirement_id')->refModel('Model_Requirement');
-        $this->addField('requester_id')->refModel('Model_User_Organisation');
-        $this->addField('assigned_id')->refModel('Model_User_Organisation');
+        $this->addField('requester_id')->refModel('Model_User_Task');
+        $this->addField('assigned_id')->refModel('Model_User_Task');
 
         if($this->api->currentUser()->isCurrentUserClient()){
             $j = $this->join('project.id','project_id','left','_p');
