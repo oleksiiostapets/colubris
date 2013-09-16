@@ -1,0 +1,9 @@
+ALTER TABLE `client` ADD COLUMN `deleted_by` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `organisation` ADD COLUMN `deleted_by` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `project` ADD COLUMN `deleted_by` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `quote` ADD COLUMN `deleted_by` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `reqcomment` ADD COLUMN `deleted_by` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `requirement` ADD COLUMN `deleted_by` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `task` ADD COLUMN `deleted_by` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `taskcomment` ADD COLUMN `deleted_by` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `user` ADD COLUMN `deleted_by` INT(11) NOT NULL DEFAULT '0';

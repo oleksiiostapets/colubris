@@ -24,7 +24,7 @@ class page_deleted extends Page {
                 'allow_del'=>false)
         );
         $cr->setModel($m,
-            array('name','descr','client','demo_url','prod_url')
+            array('name','descr','client','demo_url','prod_url','deleted')
         );
 
         if($cr->grid){
@@ -52,7 +52,7 @@ class page_deleted extends Page {
                 'allow_del'=>false)
         );
         $cr->setModel($m,
-            array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status')
+            array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status','deleted')
         );
 
         if($cr->grid){
@@ -80,7 +80,7 @@ class page_deleted extends Page {
                 'allow_del'=>false)
         );
         $cr->setModel($m,
-            array('name','priority','type','status','estimate','spent_time','requester','assigned')
+            array('project','name','priority','type','status','estimate','spent_time','requester','assigned','deleted')
         );
 
         if($cr->grid){
@@ -108,7 +108,7 @@ class page_deleted extends Page {
                 'allow_del'=>false)
         );
         $cr->setModel($m,
-            array('email','name','client','is_admin','is_manager','is_developer','is_client')
+            array('email','name','client','is_admin','is_manager','is_developer','is_client','deleted')
         );
 
         if($cr->grid){
