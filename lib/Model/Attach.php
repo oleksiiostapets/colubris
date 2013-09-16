@@ -1,5 +1,5 @@
 <?
-class Model_Attach extends Model_Auditable {
+class Model_Attach extends Model_Table {
 	public $table='attach';
 	function init(){
 		parent::init();
