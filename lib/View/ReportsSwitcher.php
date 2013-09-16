@@ -45,7 +45,7 @@ class View_ReportsSwitcher extends View {
 		$q_arr=$mq->getRows();
 		$qn_arr['0']='all';
         $qn_arr['-1']='tasks in quotes';
-        $qn_arr['-2']='tasks without quotes';
+        $qn_arr['-2']='tasks outside quotes';
 		foreach($q_arr as $q){
 			$qn_arr[$q['id']]=$q['name'];
 		}
