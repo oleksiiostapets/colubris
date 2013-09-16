@@ -25,6 +25,8 @@ class View_Dashboard extends View {
 
         $jp = $jq->join('project.id','project_id','left','_pr');
         $jp->addField('project_name','name');
+        $jp->addField('organisation_id','organisation_id');
+        $m->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
 
         $m->addCondition('quote_status','IN',array('quotation_requested','estimate_needed','not_estimated','estimated'));
 
