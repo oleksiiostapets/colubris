@@ -2,6 +2,7 @@
 <?subject?>Attachment was changed in task<?/?>
 <?body?>
 
+<?$changer_part?><br />
 Review task <a href="<?$link?>">here</a>.<br />
 
 <?sign?>

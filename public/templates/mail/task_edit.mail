@@ -2,6 +2,7 @@
 <?subject?>Task has changes<?/?>
 <?body?>
 
+<?$changer_part?><br />
 Review task <a href="<?$link?>">here</a>.<br />
 
 <?sign?>
