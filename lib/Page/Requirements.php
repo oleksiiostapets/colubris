@@ -305,7 +305,7 @@ class Page_Requirements extends Page {
             )
         );
 
-        if (!$this->api->currentUser()->isCurrentUserDev()){
+        if ( ($this->api->currentUser()->isCurrentUserClient()) || ($this->api->currentUser()->isFinancial()) ){
             $requirements->addExpression('cost')->set(function($m,$q)use($quote){
                 if($quote['rate']!=''){
                     return "concat(round(estimate * ".$quote['rate']."),' ".$quote['currency']."' )";

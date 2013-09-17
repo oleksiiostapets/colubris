@@ -30,8 +30,8 @@ class page_users extends Page {
         $model = $this->add('Model_User_Organisation')->setOrder('name');
 
         $crud->setModel($model,
-            array('email','name','password','is_admin','is_manager','is_developer','client_id'),
-            array('email','name','client','is_admin','is_manager','is_developer','is_client')
+            array('email','name','password','is_admin','is_manager','is_financial','is_developer','client_id'),
+            array('email','name','client','is_admin','is_manager','is_financial','is_developer','is_client')
         );
 
         if($crud->grid){

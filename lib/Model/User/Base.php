@@ -11,6 +11,7 @@ class Model_User_Base extends Model_BaseTable {
         $this->addField('password')->display(array('form'=>'password'))->mandatory('required');
         $this->addField('is_admin')->type('boolean');
         $this->addField('is_manager')->type('boolean');
+        $this->addField('is_financial')->type('boolean')->caption('Is Financial Manager');
         $this->addField('is_developer')->type('boolean')->caption('Is Team Member');
 //        $this->addField('is_timereport')->type('boolean')->caption('Is Time Reports');
         $this->addField('hash');
@@ -79,6 +80,9 @@ class Model_User_Base extends Model_BaseTable {
     }
     function isManager() {
         return ($this['is_manager']?true:false);
+    }
+    function isFinancial() {
+        return ($this['is_financial']?true:false);
     }
     function isSystem() {
         return ($this['is_system']?true:false);
@@ -210,8 +214,10 @@ class Model_User_Base extends Model_BaseTable {
     function getFloatingTotalFields() {
         if ($this->isCurrentUserAdmin()) {
             return false;
-        } else if ($this->isCurrentUserManager()) {
+        } else if ($this->isFinancial()) {
             return array('estimated','estimpay');
+        } else if ($this->isCurrentUserManager()) {
+            return array('estimated');
         } else if ($this->isCurrentUserDev()) {
             return array('estimated');
         } else if ($this->isCurrentUserClient()) {
