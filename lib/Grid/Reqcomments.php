@@ -28,7 +28,7 @@ class Grid_Reqcomments extends Grid {
         $this->current_row_html['text'] =
                 '<strong>'.$this->current_row['user'].':</strong><br>'.
                 '<div class="timestamp">'.$this->current_row['created_dts'].'</div>'.
-                '<div class="comment radius_10">'.$this->current_row['text'].'</div>'.
+                '<div class="comment radius_10">'.nl2br($this->current_row['text']).'</div>'.
                 $file
         ;
 
