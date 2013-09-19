@@ -31,13 +31,13 @@ class Model_Task_Base extends Model_Auditable {
         $this->addField('requester_id')->refModel('Model_User_Task');
         $this->addField('assigned_id')->refModel('Model_User_Task');
 
-        if($this->api->currentUser()->isCurrentUserClient()){
+        if($this->api->currentUser()->isClient()){
             $j = $this->join('project.id','project_id','left','_p');
             $j->addField('client_id','client_id');
             $this->addCondition('client_id',$this->api->auth->model['client_id']);
         }
 
-        if($this->api->currentUser()->isCurrentUserDev()){
+        if($this->api->currentUser()->isDeveloper()){
             $mp=$this->add('Model_Project');
             $mp->forDeveloper();
             $projects_ids="0";

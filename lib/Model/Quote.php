@@ -62,16 +62,16 @@ class Model_Quote extends Model_Quote_Base {
     function canUserChangeIsIncluded($user) {
         $cannot_toggle_statuses = array('estimation_approved','finished',);
 
-        if ($user->isCurrentUserAdmin()) {
+        if ($user->isAdmin()) {
             return false;
-        } else if ($user->isCurrentUserManager()) {
+        } else if ($user->isManager()) {
             if ( !in_array($this['status'],$cannot_toggle_statuses) ) {
                 return true;
             }
             return false;
-        } else if ($user->isCurrentUserDev()) {
+        } else if ($user->isDeveloper()) {
             return false;
-        } else if ($user->isCurrentUserClient()) {
+        } else if ($user->isClient()) {
             if ( !in_array($this['status'],$cannot_toggle_statuses) ) {
                 return true;
             }
@@ -105,16 +105,16 @@ class Model_Quote extends Model_Quote_Base {
 
     // ONLY developer have access to estimate quotes with status 'estimate_needed'
     function canUserEstimateQuote($user) {
-        if ($user->isCurrentUserAdmin()) {
+        if ($user->isAdmin()) {
             return false;
-        } else if ($user->isCurrentUserManager()) {
+        } else if ($user->isManager()) {
             return false;
-        } else if ($user->isCurrentUserDev()) {
+        } else if ($user->isDeveloper()) {
             if ($this['status']=='estimate_needed') {
                 return true;
             }
             return false;
-        } else if ($user->isCurrentUserClient()) {
+        } else if ($user->isClient()) {
             return false;
         }
         throw $this->exception('Wrong role');
@@ -126,32 +126,32 @@ class Model_Quote extends Model_Quote_Base {
 
     function canUserRequestForEstimate($user) {
         // manager can send request for estimate if status 'quotation_requested' or 'not_estimated'
-        if ($user->isCurrentUserAdmin()) {
+        if ($user->isAdmin()) {
             return false;
-        } else if ($user->isCurrentUserManager()) {
+        } else if ($user->isManager()) {
             if ( $this['status']=='quotation_requested' || $this['status']=='not_estimated' ) {
                 return true;
             }
             return false;
-        } else if ($user->isCurrentUserDev()) {
+        } else if ($user->isDeveloper()) {
             return false;
-        } else if ($user->isCurrentUserClient()) {
+        } else if ($user->isClient()) {
             return false;
         }
         throw $this->exception('Wrong role');
     }
 
     function canUserReadRequirements($user) {
-        if ($user->isCurrentUserAdmin()) {
+        if ($user->isAdmin()) {
             return true;
-        } else if ($user->isCurrentUserManager()) {
+        } else if ($user->isManager()) {
             return true;
-        } else if ($user->isCurrentUserDev()) {
+        } else if ($user->isDeveloper()) {
             if ($this['status'] != 'quotation_requested') {
                 return true;
             }
             return false;
-        } else if ($user->isCurrentUserClient()) {
+        } else if ($user->isClient()) {
             // TODO !!!!!  ~~>  client have access to quotes of its projects ONLY!
             return true;
         }
@@ -159,16 +159,16 @@ class Model_Quote extends Model_Quote_Base {
     }
 
     function canUserEditRequirements($user) {
-        if ($user->isCurrentUserAdmin()) {
+        if ($user->isAdmin()) {
             return false;
-        } else if ($user->isCurrentUserManager()) {
+        } else if ($user->isManager()) {
             return true;
-        } else if ($user->isCurrentUserDev()) {
+        } else if ($user->isDeveloper()) {
             if ($this['status'] == 'estimate_needed') {
                 return true;
             }
             return false;
-        } else if ($user->isCurrentUserClient()) {
+        } else if ($user->isClient()) {
             if ($this['status']=='quotation_requested' || $this['status']=='not_estimated') {
                 return true;
             }
@@ -178,65 +178,65 @@ class Model_Quote extends Model_Quote_Base {
     }
 
     function whatRequirementFieldsUserCanEdit($user) {
-        if ($user->isCurrentUserAdmin()) {
+        if ($user->isAdmin()) {
             return array();
-        } else if ($user->isCurrentUserManager()) {
+        } else if ($user->isManager()) {
             return array('name','descr','estimate','file_id');
-        } else if ($user->isCurrentUserDev()) {
+        } else if ($user->isDeveloper()) {
             return array('estimate');
-        } else if ($user->isCurrentUserClient()) {
+        } else if ($user->isClient()) {
             return array('name','descr','file_id');
         }
         throw $this->exception('Wrong role');
     }
 
     function whatRequirementFieldsUserCanSee($user) {
-        if ($user->isCurrentUserAdmin()) {
+        if ($user->isAdmin()) {
             return false;
-        } else if ($user->isCurrentUserManager()) {
+        } else if ($user->isManager()) {
             return array('is_included','name','estimate','cost','spent_time','file','user','count_comments');
-        } else if ($user->isCurrentUserDev()) {
+        } else if ($user->isDeveloper()) {
             return array('is_included','name','estimate','spent_time','file','user','count_comments');
-        } else if ($user->isCurrentUserClient()) {
+        } else if ($user->isClient()) {
             return array('is_included','name','cost','spent_time','file','user','count_comments');
         }
         throw $this->exception('Wrong role');
     }
 
     function whatQuoteFieldsUserCanSee($user) {
-        if ($user->isCurrentUserAdmin()) {
+        if ($user->isAdmin()) {
             return array();
-        } else if ($user->isCurrentUserManager()) {
+        } else if ($user->isManager()) {
             return array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status','updated_dts');
-        } else if ($user->isCurrentUserDev()) {
+        } else if ($user->isDeveloper()) {
             return array('project','user','name','estimated','spent_time','durdead','status','updated_dts');
-        } else if ($user->isCurrentUserClient()) {
+        } else if ($user->isClient()) {
             return array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status','updated_dts');
         }
         throw $this->exception('Wrong role');
     }
 
     function whatQuoteFieldsUserCanEdit($user) {
-        if ($user->isCurrentUserAdmin()) {
+        if ($user->isAdmin()) {
             return array();
-        } else if ($user->isCurrentUserManager()) {
+        } else if ($user->isManager()) {
             return array('name','project_id','general_description','rate','currency','duration','deadline','status');
-        } else if ($user->isCurrentUserDev()) {
+        } else if ($user->isDeveloper()) {
             return array();
-        } else if ($user->isCurrentUserClient()) {
+        } else if ($user->isClient()) {
             return array();
         }
         throw $this->exception('Wrong role');
     }
 
     function userAllowedActions($user) {
-        if ($user->isCurrentUserAdmin()) {
+        if ($user->isAdmin()) {
             return array();
-        } else if ($user->isCurrentUserManager()) {
+        } else if ($user->isManager()) {
             return array('requirements','estimation','send_to_client','approve',);
-        } else if ($user->isCurrentUserDev()) {
+        } else if ($user->isDeveloper()) {
             return array('details','estimate',);
-        } else if ($user->isCurrentUserClient()) {
+        } else if ($user->isClient()) {
             return array('details','edit_details','approve',);
         }
         throw $this->exception('Wrong role');

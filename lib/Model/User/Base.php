@@ -86,7 +86,7 @@ class Model_User_Base extends Model_BaseTable {
     }
 
 
-    function isFinancial() {
+    function canSeeFinance() { // canSeeFinance
         return ($this['is_financial']?true:false);
     }
 
@@ -97,19 +97,19 @@ class Model_User_Base extends Model_BaseTable {
      *          CURRENT USER ROLE
      *
      */
-    function isCurrentUserSystem() {
+    function isSystem() {
         return ($this->api->getCurrentUserRole() == 'system');
     }
-    function isCurrentUserAdmin() {
+    function isAdmin() {
         return ($this->api->getCurrentUserRole() == 'admin');
     }
-    function isCurrentUserManager() {
+    function isManager() {
         return ($this->api->getCurrentUserRole() == 'manager');
     }
-    function isCurrentUserDev() {
+    function isDeveloper() {
         return ($this->api->getCurrentUserRole() == 'developer');
     }
-    function isCurrentUserClient() {
+    function isClient() {
         return ($this->api->getCurrentUserRole() == 'client');
     }
 
@@ -138,29 +138,29 @@ class Model_User_Base extends Model_BaseTable {
         return $this->checkRoleSimpleRights(array(true,true,true,true,false));
     }
     function getProjectFormFields() {
-        if ($this->isCurrentUserAdmin()) {
+        if ($this->isAdmin()) {
             return false;
-        } else if ($this->isCurrentUserManager()) {
+        } else if ($this->isManager()) {
             return array('name','descr','client_id','demo_url','prod_url','repository');
-        } else if ($this->isCurrentUserDev()) {
+        } else if ($this->isDeveloper()) {
             return array('name','descr','client_id','demo_url','prod_url');
-        } else if ($this->isCurrentUserClient()) {
+        } else if ($this->isClient()) {
             return array('name','descr');
-        } else if ($this->isCurrentUserSystem()) {
+        } else if ($this->isSystem()) {
             return false;
         }
         throw $this->exception('Wrong role');
     }
     function getProjectGridFields() {
-        if ($this->isCurrentUserAdmin()) {
+        if ($this->isAdmin()) {
             return false;
-        } else if ($this->isCurrentUserManager()) {
+        } else if ($this->isManager()) {
             return array('name','descr','client','demo_url','prod_url','repository');
-        } else if ($this->isCurrentUserDev()) {
+        } else if ($this->isDeveloper()) {
             return array('name','descr','client','demo_url','prod_url','repository');
-        } else if ($this->isCurrentUserClient()) {
+        } else if ($this->isClient()) {
             return array('name','descr','client','demo_url','prod_url');
-        } else if ($this->isCurrentUserSystem()) {
+        } else if ($this->isSystem()) {
             return false;
         }
         throw $this->exception('Wrong role');
@@ -177,29 +177,29 @@ class Model_User_Base extends Model_BaseTable {
         return $this->checkRoleSimpleRights(array(true,true,true,true,true));
     }
     function getDashboardFormFields() {
-        if ($this->isCurrentUserAdmin()) {
+        if ($this->isAdmin()) {
             return false;
-        } else if ($this->isCurrentUserManager()) {
+        } else if ($this->isManager()) {
             return array('project_id','name','descr_original','priority','status','estimate','requester_id','assigned_id');
-        } else if ($this->isCurrentUserDev()) {
+        } else if ($this->isDeveloper()) {
             return array('project_id','name','descr_original','priority','status','estimate','requester_id','assigned_id');
-        } else if ($this->isCurrentUserClient()) {
+        } else if ($this->isClient()) {
             return array('name','descr_original','priority','status','requester_id','assigned_id');
-        } else if ($this->isCurrentUserSystem()) {
+        } else if ($this->isSystem()) {
             return false;
         }
         throw $this->exception('Wrong role');
     }
     function getDashboardGridFields() {
-        if ($this->isCurrentUserAdmin()) {
+        if ($this->isAdmin()) {
             return false;
-        } else if ($this->isCurrentUserManager()) {
+        } else if ($this->isManager()) {
             return array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
-        } else if ($this->isCurrentUserDev()) {
+        } else if ($this->isDeveloper()) {
             return array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
-        } else if ($this->isCurrentUserClient()) {
+        } else if ($this->isClient()) {
             return array('project','name','priority','status','estimate','requester','assigned','updated_dts');
-        } else if ($this->isCurrentUserSystem()) {
+        } else if ($this->isSystem()) {
             return false;
         }
         throw $this->exception('Wrong role');
@@ -213,17 +213,17 @@ class Model_User_Base extends Model_BaseTable {
      *
      */
     function getFloatingTotalFields() {
-        if ($this->isCurrentUserAdmin()) {
+        if ($this->isAdmin()) {
             return false;
-        } else if ($this->isFinancial()) {
+        } else if ($this->canSeeFinance()) {
             return array('estimated','estimpay');
-        } else if ($this->isCurrentUserManager()) {
+        } else if ($this->isManager()) {
             return array('estimated');
-        } else if ($this->isCurrentUserDev()) {
+        } else if ($this->isDeveloper()) {
             return array('estimated');
-        } else if ($this->isCurrentUserClient()) {
+        } else if ($this->isClient()) {
             return array('estimpay');
-        } else if ($this->isCurrentUserSystem()) {
+        } else if ($this->isSystem()) {
             return false;
         }
         throw $this->exception('Wrong role');
@@ -276,15 +276,15 @@ class Model_User_Base extends Model_BaseTable {
 
 
     function checkRoleSimpleRights($rights) {
-        if ($this->isCurrentUserAdmin()) {
+        if ($this->isAdmin()) {
             return $rights[0];
-        } else if ($this->isCurrentUserManager()) {
+        } else if ($this->isManager()) {
             return $rights[1];
-        } else if ($this->isCurrentUserDev()) {
+        } else if ($this->isDeveloper()) {
             return $rights[2];
-        } else if ($this->isCurrentUserClient()) {
+        } else if ($this->isClient()) {
             return $rights[3];
-        } else if ($this->isCurrentUserSystem()) {
+        } else if ($this->isSystem()) {
             return $rights[4];
         } else {
             throw $this->exception('Wrong role');

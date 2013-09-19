@@ -21,10 +21,10 @@ class page_dashboard extends Page {
         ));
 
         if (
-            !$this->api->currentUser()->isCurrentUserAdmin() &&
-            !$this->api->currentUser()->isCurrentUserSystem()
+            !$this->api->currentUser()->isAdmin() &&
+            !$this->api->currentUser()->isSystem()
         ) {
-            if ($this->api->currentUser()->isCurrentUserClient()) {
+            if ($this->api->currentUser()->isClient()) {
                 $this->add('H3')->setText('Actions:');
                 $b = $this->add('Button')->set('Request For Quotation');
                 $b->addStyle('margin-bottom','10px');
@@ -58,7 +58,7 @@ class page_dashboard extends Page {
 		$this->api->stickyGet('task_id');
 		$model=$this->add('Model_TaskTime')->addCondition('task_id',$_GET['task_id']);
 		$crud=$this->add('CRUD');
-        if ($this->api->currentUser()->isCurrentUserClient()){
+        if ($this->api->currentUser()->isClient()){
             $crud->setModel($model,
                 array('spent_time','comment','date'),
                 array('user','estimate','comment','date','remove_billing')

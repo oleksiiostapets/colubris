@@ -63,7 +63,7 @@ class Frontend extends ApiFrontend {
         $this->autoLogin();
 
         if($this->api->auth->model['id']>0){
-            if(!$this->currentUser()->isCurrentUserSystem()){
+            if(!$this->currentUser()->isSystem()){
                 $this->template->trySet('organisation','for '.$this->currentUser()->get('organisation'));
             }else{
                 $this->template->trySet('organisation','for System user');

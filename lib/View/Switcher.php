@@ -16,9 +16,9 @@ class View_Switcher extends View {
         $f->addClass('horizontal');
         // Project
         $mp=$this->add('Model_Project');
-        if($this->api->currentUser()->isCurrentUserDev()){
+        if($this->api->currentUser()->isDeveloper()){
             $mp=$mp->forDeveloper();
-        }elseif($this->api->currentUser()->isCurrentUserClient()){
+        }elseif($this->api->currentUser()->isClient()){
             $mp=$mp->forClient();
         }
         $projects=$mp->getRows();

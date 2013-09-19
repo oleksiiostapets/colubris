@@ -171,11 +171,11 @@ class Grid_Quotes extends Grid {
             $this->current_row['estimpay'] = '-';
         }
 
-        if ($this->api->currentUser()->isCurrentUserClient()){
+        if ($this->api->currentUser()->isClient()){
             $this->current_row_html['estimate_info'] =
                     '<div class="quote_estimpay"><span>Est.pay:</span>'.$this->current_row['estimpay'].'</div>'
             ;
-        }elseif($this->api->currentUser()->isFinancial()){
+        }elseif($this->api->currentUser()->canSeeFinance()){
             $this->current_row_html['estimate_info'] =
                 '<div class="quote_estimated"><span>Est.time:</span>'.$this->current_row['estimated'].'</div>'.
                     '<div class="quote_rate"><span>Rate:</span>'.$this->current_row['rate'].'</div>'.
