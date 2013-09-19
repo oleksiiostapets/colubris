@@ -114,10 +114,10 @@ class Frontend extends ApiFrontend {
     }
     
     function getUserType(){
-    	if ($this->currentUser()->isManager()) return 'manager';
-    	if ($this->currentUser()->isDeveloper()) return 'team';
-    	if ($this->currentUser()->isClient()) return 'client';
-    	if ($this->currentUser()->isAdmin()) return 'admin';
+    	if ($this->currentUser()->canBeManager()) return 'manager';
+    	if ($this->currentUser()->canBeDeveloper()) return 'team';
+    	if ($this->currentUser()->canBeClient()) return 'client';
+    	if ($this->currentUser()->canBeAdmin()) return 'admin';
     	//if ($this->auth->model['is_system']) return 'system';
     }
 
@@ -159,7 +159,7 @@ class Frontend extends ApiFrontend {
             }
         }else{
 
-            if (!$this->currentUser()->isSystem()) {
+            if (!$this->currentUser()->canBeSystem()) {
                 // Access for all non-system roles
                 $this->addAllowedPages(array(
                     'account', 'about', 'home', 'quotes','clients','projects','tasks','deleted','developers','users','dashboard','trace','task'
