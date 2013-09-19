@@ -240,6 +240,9 @@ class Model_User_Base extends Model_BaseTable {
      *
      */
 
+    function canSeeRequirements() {
+        return $this->checkRoleSimpleRights(array(false,true,true,true,false));
+    }
     function canSendRequestForQuotation() {
         return $this->checkRoleSimpleRights(array(false,true,false,true,false));
     }
