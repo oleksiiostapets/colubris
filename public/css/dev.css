@@ -200,3 +200,15 @@ table.logs td{
 }
 p.error{color:red;font-size:16px;font-weight:bold;margin-top:20px;}
 
+.denied {
+    width: 100%;
+}
+.denied > h2 {
+    text-align:center;
+    color: red;
+}
+.denied div {
+    width: 500px;
+    margin: auto;
+    text-align:left;
+}

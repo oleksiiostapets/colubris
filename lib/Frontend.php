@@ -108,7 +108,10 @@ class Frontend extends ApiFrontend {
             parent::initLayout();
         } catch (Exception_Denied $e) {
             // TODO show denied page
-            throw $e;
+            //throw $e;
+            $v = $this->add('View')->addClass('denied');
+            $v->add('View')->setElement('h2')->set('You cannot see this page');
+            $v->add('View_Error')->set('Try to change role if you have multiple roles for this account');
         }
 
     }
