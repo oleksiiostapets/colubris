@@ -51,6 +51,15 @@ class page_projects extends Page {
 			if ($this->api->currentUser()->canSeeProjectTasks()) {
                 $cr->grid->addColumn('expander','tasks');
             }
+            if ($cr->grid->hasColumn('demo_url')) {
+                $cr->grid->addFormatter('demo_url','blankurl');
+            }
+            if ($cr->grid->hasColumn('prod_url')) {
+                $cr->grid->addFormatter('prod_url','blankurl');
+            }
+            if ($cr->grid->hasColumn('repository')) {
+                $cr->grid->addFormatter('repository','blankurl');
+            }
         }
 
     }
@@ -78,6 +87,7 @@ class page_projects extends Page {
         if($cr->grid){
             $cr->grid->addFormatter('status','status');
             $cr->grid->addFormatter('name','wrap');
+            $cr->grid->addPaginator(5);
         }
     }
 //    function page_add(){
@@ -98,4 +108,29 @@ class page_projects extends Page {
 //            $this->api->redirect($this->api->url($_GET['return'],array('project'=>$form->model->get('name'),'project_id'=>$form->model->get('id'))));
 //        }
 //    }
+}
+
+/*
+ *   TODO
+ *
+ *    SETUP AUTOLOAD   !!!!
+ *    THIS IS JUST FOR TEMP FIX !!!
+ *
+ *
+ */
+
+
+
+class Grid extends Grid_Advanced {
+    function format_blankurl($field){
+        if ($this->current_row[$field] != '') {
+            $f = $this->current_row[$field];
+            if (!preg_match('/^(http:\/\/|https:\/\/)/',$f)) {
+                $f = 'http://'.$f;
+            }
+            $this->current_row_html[$field] = '<a target="_blank" href="'.$f.'">link</a>';
+        } else {
+            $this->current_row_html[$field] = '';
+        }
+    }
 }

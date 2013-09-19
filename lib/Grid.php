@@ -37,4 +37,8 @@ class Grid extends Grid_Advanced {
     	$this->current_row_html[$field] = '<span style="white-space:wrap;">'.$this->current_row[$field].'</span>';
     	$this->tdparam[$this->getCurrentIndex()][$field]['style']='white-space: wrap';
     }
+    function format_blankurl($field){
+    	$this->current_row_html[$field] = '<a href="'.$this->current_row[$field].'">link</a>';
+    	//$this->tdparam[$this->getCurrentIndex()][$field]['style']='white-space: wrap';
+    }
 }
