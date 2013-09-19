@@ -3,6 +3,7 @@ class RoleMenu extends CompleteLister {
     private $session_name = 'current_user_role';
     private $current_user_posible_roles = array();
     private $current_role = null;
+    public $get_args = array();
     function init() {
         parent::init();
         $this->addClass('role-menu-lister');
@@ -10,6 +11,7 @@ class RoleMenu extends CompleteLister {
         $this->checkPOST();
         $source = $this->addMenuItems();
         $this->setSource($source);
+        $this->getAllGETParams();
     }
     function formatRow() {
         parent::formatRow();
@@ -21,10 +23,10 @@ class RoleMenu extends CompleteLister {
                 .'</div>';
         $this->js(true)->colubris()->roleMenuClick(
             'role_menu_'.$this->current_row['id'],
-            $this->api->url('/'),
+            $this->api->url(),
             array(
                 'new_role' => $this->current_row['name'],
-                'redir'    => $this->api->url()
+                'redir'    => base64_encode($this->api->url(null,$this->get_args)),
             )
         );
     }
@@ -78,8 +80,15 @@ class RoleMenu extends CompleteLister {
                 throw $this->exception('There is no such a role for You');
             } else {
                 $this->setRole($_POST['new_role']);
-                $this->api->js(null,"$(location).attr('href', '".$this->api->url()."');")->execute();
-                //$this->api->js(null,"$(location).attr('href', '".$_POST['redir']."');")->execute();
+//                $this->api->js(null,"$(location).attr('href', '".$this->api->url()."');")->execute();
+                $this->api->js(null,"$(location).attr('href', '".base64_decode($_POST['redir'])."');")->execute();
+            }
+        }
+    }
+    private function getAllGETParams() {
+        foreach ($_GET as $k=>$v) {
+            if ($k != 'page') {
+                $this->get_args[$k] = $v;
             }
         }
     }
