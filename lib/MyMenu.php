@@ -20,7 +20,7 @@ class MyMenu extends Menu_Basic {
 
 
 
-        if ($this->api->currentUser()->isCurrentUserSystem()) {        
+        if ($this->api->currentUser()->isSystem()) {
             $this->addMenuItem('system/users','Users');
             $this->addMenuItem('system/system','System');
             $this->addMenuItem('system/organisation','Organisation');

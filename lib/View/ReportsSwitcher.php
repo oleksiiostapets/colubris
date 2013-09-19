@@ -8,11 +8,11 @@ class View_ReportsSwitcher extends View {
         $f=$v->add('Form');
         $f->addClass('horizontal switcher');
         // Project
-        if($this->api->currentUser()->isCurrentUserDev()){
+        if($this->api->currentUser()->isDeveloper()){
         	$mp=$this->add('Model_Project_Participant');
         }else{
         	$mp=$this->add('Model_Project');
-            if($this->api->currentUser()->isCurrentUserClient()){
+            if($this->api->currentUser()->isClient()){
                 $mp->forClient();
             }
         }

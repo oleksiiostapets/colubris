@@ -10,8 +10,8 @@ class View_Dashboard extends View {
         $this->add('H2')->set('Comments to quotes');
         $cr=$this->add('CRUD',array('grid_class'=>'Grid_Reqcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
 
-        if ($this->api->currentUser()->isCurrentUserClient()) $m=$this->add('Model_Reqcomment_Client');
-        elseif ($this->api->currentUser()->isCurrentUserDev()) $m=$this->add('Model_Reqcomment_Developer');
+        if ($this->api->currentUser()->isClient()) $m=$this->add('Model_Reqcomment_Client');
+        elseif ($this->api->currentUser()->isDeveloper()) $m=$this->add('Model_Reqcomment_Developer');
         else $m=$this->add('Model_Reqcomment');
         $m->setOrder('created_dts',true);
 

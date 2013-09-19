@@ -29,8 +29,8 @@ class page_projects extends Page {
         $this->add('H2')->set('Projects');
 
         $m = $this->add('Model_Project');
-        if ($this->api->currentUser()->isCurrentUserClient())    $m->forClient();
-        if ($this->api->currentUser()->isCurrentUserDev()) $m->forDeveloper();
+        if ($this->api->currentUser()->isClient())    $m->forClient();
+        if ($this->api->currentUser()->isDeveloper()) $m->forDeveloper();
 
         $cr=$this->add('CRUD', array(
             'allow_del'  =>  $this->api->currentUser()->canDeleteProject(),

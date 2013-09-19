@@ -6,7 +6,7 @@ class Grid_Tasks extends Grid_Advanced {
     }
     function setModel($model, $actual_fields = UNDEFINED) {
         parent::setModel($model, $actual_fields);
-        if(!$this->api->currentUser()->isCurrentUserClient()){
+        if(!$this->api->currentUser()->isClient()){
             $this->removeColumn('estimate');
         }
     }
