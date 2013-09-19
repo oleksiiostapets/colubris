@@ -24,13 +24,13 @@ class page_reports extends Page {
 
     }
     function getGridFields() {
-        if ($this->api->currentUser()->isClient()) {
+        if ($this->api->currentUser()->canBeClient()) {
             return array('project','quote','name','status','type','estimate','spent','date');
         }
-        if ($this->api->currentUser()->isDeveloper()) {
+        if ($this->api->currentUser()->canBeDeveloper()) {
             return array('project','quote','name','status','type','estimate','spent','date','performer');
         }
-        if ($this->api->currentUser()->isManager()) {
+        if ($this->api->currentUser()->canBeManager()) {
             return array('project','quote','name','status','type','estimate','spent','date','performer');
         }
     }

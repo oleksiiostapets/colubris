@@ -69,25 +69,26 @@ class Model_User_Base extends Model_BaseTable {
      *             GET ROLES
      *
      */
-    function isAdmin() {
+    function canBeAdmin() {
         return ($this['is_admin']?true:false);
     }
-    function isDeveloper() {
+    function canBeDeveloper() {
         return ($this['is_developer']?true:false);
     }
-    function isClient() {
+    function canBeClient() {
         return ($this['is_client']?true:false);
     }
-    function isManager() {
+    function canBeManager() {
         return ($this['is_manager']?true:false);
     }
-    function isFinancial() {
-        return ($this['is_financial']?true:false);
-    }
-    function isSystem() {
+    function canBeSystem() {
         return ($this['is_system']?true:false);
     }
 
+
+    function isFinancial() {
+        return ($this['is_financial']?true:false);
+    }
 
 
 

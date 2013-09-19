@@ -26,7 +26,7 @@ class MyMenu extends Menu_Basic {
             $this->addMenuItem('system/organisation','Organisation');
 	}
 
-        if($this->api->auth->isLoggedIn() && !$this->api->currentUser()->isSystem()) {
+        if($this->api->auth->isLoggedIn() && !$this->api->currentUser()->canBeSystem()) {
         	$this->addMenuItem('account','Settings');
         }
         $this->addMenuItem('about','About');
@@ -35,7 +35,7 @@ class MyMenu extends Menu_Basic {
         }else{
             $this->addMenuItem('/','Login');
         }
-        if(!$this->api->currentUser()->isAdmin()){
+        if(!$this->api->currentUser()->canBeAdmin()){
             if($_COOKIE['fuser']){
                 $u=$this->add('Model_User')->load($_COOKIE['fuser']);
                 $this->api->template->trySetHtml('link2first_user','<br /><a href="?id='.$_COOKIE['fuser'].'&hash='.$_COOKIE['fhash'].'">Back as '.$u['name'].'</a>');
