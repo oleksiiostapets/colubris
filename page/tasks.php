@@ -79,6 +79,7 @@ class page_tasks extends Page {
         $descr_view->add('H4')->set('Description');
         $descr_view->add('View')->setHtml( $this->api->colubris->makeUrls($task->get('descr_original')) );
 
+        /*
         // left view
         $left_view = $v->add('View')->setClass('span6 right');
         $left_view->add('H4')->set('Attachments');
@@ -92,15 +93,16 @@ class page_tasks extends Page {
             array('description','file','file_thumb','updated_dts')
 //    			array()
         );
+*/
 
-        // right view
-        $right_view = $v->add('View')->setClass('span6 left');
-        $right_view->add('H4')->set('Comments');
+        $comments_view = $v->add('View');
+        $comments_view->add('H4')->set('Comments');
 
-        $cr=$right_view->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
+        $cr=$comments_view->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
 
-        $m=$right_view->add('Model_Taskcomment')
+        $m=$comments_view->add('Model_Taskcomment')
             ->addCondition('task_id',$_GET['task_id']);
+
         $cr->setModel($m,
             array('text','file_id'),
             array('text','user','file','file_thumb','created_dts')
