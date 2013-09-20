@@ -17,21 +17,22 @@ class Page_QuotesBase extends Page {
         }
 
         if ($this->api->currentUser()->isDeveloper()) {
-            $this->quote = $this->add('Model_Quote_Participant')->setOrder('updated_dts',true);
+            $this->quote = $this->add('Model_Quote_Participant');
             // developer do not see not well prepared (quotation_requested status) and finished projects
             $this->quote->addCondition('status',array(
                 'estimate_needed','not_estimated','estimated','estimation_approved'
             ));
         }else{
-            $this->quote = $this->add('Model_Quote')->setOrder('updated_dts',true);//->debug();
-
-            if ($this->api->currentUser()->isClient()) {
-                // show only client's quotes
-                $pr = $this->quote->join('project','project_id','left','_pr');
-                $pr->addField('pr_client_id','client_id');
-                $this->quote->addCondition('pr_client_id',$this->api->auth->model['client_id']);
-            }
+            $this->quote = $this->add('Model_Quote');
         }
+        $pr = $this->quote->join('project','project_id','left','_pr');
+        if ($this->api->currentUser()->isClient()) {
+            // show only client's quotes
+            $pr->addField('pr_client_id','client_id');
+            $this->quote->addCondition('pr_client_id',$this->api->auth->model['client_id']);
+        }
+        $pr->addField('project_name','name');
+        $this->quote->setOrder(array('project_name','status'));//->debug();
     }
     function page_index() {
         $this->addBreadCrumb($this);
