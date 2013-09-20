@@ -10,6 +10,8 @@ class Grid_Reqcomments extends Grid {
         $this->removeColumn('file');
         $this->removeColumn('file_thumb');
         $this->removeColumn('created_dts');
+        $this->removeColumn('quote_id');
+        $this->removeColumn('task_id');
     }
     function formatRow() { // var_dump($this->current_row); echo '<hr>';
 
@@ -34,14 +36,14 @@ class Grid_Reqcomments extends Grid {
 
         parent::formatRow();
 
+        $this->current_row_html['quote_name'] = '<a href="'.$this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->current_row['quote_id'])).'">'.$this->current_row['quote_name'].'</a>';
+        $this->current_row_html['task_name'] = '<a href="'.$this->api->url('/task',array('task_id'=>$this->current_row['task_id'])).'">'.$this->current_row['task_name'].'</a>';
+
         // edit and delete buttons
     	if($this->current_row['user_id']!=$this->api->auth->model['id']){
     		$this->current_row_html['edit']="";
     		$this->current_row_html['delete']="";
     	}
-    }
-    function format_toquote($field){
-        $this->current_row_html[$field] = '<a href="'.$this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->current_row[$field])).'">to quote</a>';
     }
     function format_text($field){
         $this->current_row_html[$field]=nl2br($this->current_row[$field]);

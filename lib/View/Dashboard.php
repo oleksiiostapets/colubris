@@ -7,8 +7,10 @@ class View_Dashboard extends View {
         parent::init();
 
         $this->add('P');
-        $this->add('H2')->set('Comments to quotes');
-        $cr=$this->add('CRUD',array('grid_class'=>'Grid_Reqcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
+
+        $v=$this->add('View')->setClass('left span6');
+        $v->add('H2')->set('Comments to quotes');
+        $cr=$v->add('CRUD',array('grid_class'=>'Grid_Reqcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
 
         if ($this->api->currentUser()->isClient()) $m=$this->add('Model_Reqcomment_Client');
         elseif ($this->api->currentUser()->isDeveloper()) $m=$this->add('Model_Reqcomment_Developer');
@@ -40,10 +42,42 @@ class View_Dashboard extends View {
             $cr->grid->addFormatter('project_name','wrap');
             $cr->grid->addFormatter('quote_name','wrap');
             $cr->grid->addFormatter('requirement_name','wrap');
-            $cr->grid->addFormatter('quote_id','toquote');
-//                $b=$cr->grid->add('Button')->set('to_quote');
-//                $b->js('click')->univ()->redirect($this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->quote->get('id'))));
         }
+
+
+        $v=$this->add('View')->setClass('right span6');
+        $v->add('H2')->set('Comments to tasks');
+
+        $cr=$v->add('CRUD',array('grid_class'=>'Grid_Reqcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
+
+        if ($this->api->currentUser()->isClient()) $m=$this->add('Model_Taskcomment_Client');
+        elseif ($this->api->currentUser()->isDeveloper()) $m=$this->add('Model_Taskcomment_Developer');
+        else $m=$this->add('Model_Taskcomment');
+        $m->setOrder('created_dts',true);
+
+        $jt = $m->join('task.id','task_id','left','_t');
+        $jt->addField('task_name','name');
+
+        $jp = $jt->join('project.id','project_id','left','_pr');
+        $jp->addField('project_name','name');
+        $jp->addField('organisation_id','organisation_id');
+        $m->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+
+        $cr->setModel($m,
+            array('text','file_id'),
+            array('text','user','file','file_thumb','created_dts','project_name','task_name','task_id')
+        );
+
+        if ($cr->grid){
+            $cr->grid->addPaginator(5);
+            $cr->grid->addFormatter('project_name','wrap');
+            $cr->grid->addFormatter('task_name','wrap');
+        }
+
+        $v=$this->add('View')->setClass('clear');
+
+
+        $this->add('HR');
 
         $this->add('H2')->set('My active tasks (requested by me or assigned to me)');
         $cr=$this->add('CRUD',array('grid_class'=>'Grid_Tasks','allow_add'=>$this->allow_add,'allow_edit'=>$this->allow_edit,'allow_del'=>$this->allow_del));
