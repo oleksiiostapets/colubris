@@ -10,7 +10,7 @@ class View_Dashboard extends View {
 
         $v=$this->add('View')->setClass('left span6');
         $v->add('H2')->set('Comments to quotes');
-        $cr=$v->add('CRUD',array('grid_class'=>'Grid_Reqcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
+        $cr=$v->add('CRUD',array('grid_class'=>'Grid_Dashcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
 
         if ($this->api->currentUser()->isClient()) $m=$this->add('Model_Reqcomment_Client');
         elseif ($this->api->currentUser()->isDeveloper()) $m=$this->add('Model_Reqcomment_Developer');
@@ -40,8 +40,6 @@ class View_Dashboard extends View {
         if ($cr->grid){
             $cr->grid->addPaginator(5);
             $cr->grid->addFormatter('project_name','wrap');
-            $cr->grid->addFormatter('quote_name','wrap');
-            $cr->grid->addFormatter('requirement_name','wrap');
         }
 
 
