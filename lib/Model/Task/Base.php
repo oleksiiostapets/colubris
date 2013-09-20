@@ -32,9 +32,18 @@ class Model_Task_Base extends Model_Auditable {
         $this->addField('assigned_id')->refModel('Model_User_Task');
 
         if($this->api->currentUser()->isClient()){
-            $j = $this->join('project.id','project_id','left','_p');
-            $j->addField('client_id','client_id');
-            $this->addCondition('client_id',$this->api->auth->model['client_id']);
+            /* Doesn't work with deleting tasks in CRUD
+                        $j = $this->join('project.id','project_id','left','_p');
+                        $j->addField('client_id','client_id');
+                        $this->addCondition('client_id',$this->api->auth->model['client_id']);
+            */
+            $mp=$this->add('Model_Project');
+            $mp->forClient();
+            $projects_ids="0";
+            foreach($mp->getRows() as $p){
+                $projects_ids=$projects_ids.','.$p['id'];
+            }
+            $this->addCondition('project_id','in',$projects_ids);
         }
 
         if($this->api->currentUser()->isDeveloper()){
