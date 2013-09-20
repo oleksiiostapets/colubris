@@ -59,33 +59,35 @@ class page_task extends Page {
             $f->js()->univ()->successMessage('Successfully updated task details')->execute();
         }
 
-        $this->add('H3')->set('Time details:');
+        if (!$this->api->currentUser()->isClient()){
+            $this->add('H3')->set('Time details:');
 
-        $model=$this->add('Model_TaskTime')->addCondition('task_id',$_GET['task_id']);
-        $crud=$this->add('CRUD');
-        if ($this->api->auth->model['is_client']){
-            $crud->setModel($model,
-                array('spent_time','comment','date'),
-                array('user','spent_time','comment','date','remove_billing')
-            );
-        }else{
-            $crud->setModel($model,
-                array('spent_time','comment','date','remove_billing'),
-                array('user','spent_time','comment','date','remove_billing')
-            );
-        }
-        if ($crud->grid){
-            $crud->grid->addClass('zebra bordered');
-            $crud->add_button->setLabel('Add Time');
-        }
+            $model=$this->add('Model_TaskTime')->addCondition('task_id',$_GET['task_id']);
+            $crud=$this->add('CRUD');
+            if ($this->api->auth->model['is_client']){
+                $crud->setModel($model,
+                    array('spent_time','comment','date'),
+                    array('user','spent_time','comment','date','remove_billing')
+                );
+            }else{
+                $crud->setModel($model,
+                    array('spent_time','comment','date','remove_billing'),
+                    array('user','spent_time','comment','date','remove_billing')
+                );
+            }
+            if ($crud->grid){
+                $crud->grid->addClass('zebra bordered');
+                $crud->add_button->setLabel('Add Time');
+            }
 
-        if ($_GET['reload_view']) {
-            $this->js(true)->closest(".ui-dialog")->on("dialogbeforeclose",
-                $this->js(null,'function(event, ui){
-                            '.$this->js()->_selector('#'.$_GET['reload_view'])->trigger('reload').'
-                        }
-                ')
-            );
+            if ($_GET['reload_view']) {
+                $this->js(true)->closest(".ui-dialog")->on("dialogbeforeclose",
+                    $this->js(null,'function(event, ui){
+                                '.$this->js()->_selector('#'.$_GET['reload_view'])->trigger('reload').'
+                            }
+                    ')
+                );
+            }
         }
 
 
