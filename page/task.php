@@ -15,7 +15,8 @@ class page_task extends Page {
         }elseif($this->api->currentUser()->isClient()){
             $mp->forClient();
         }
-        $this->task=$this->add('Model_Task')->tryLoad($_GET['task_id']);
+        $this->task=$this->add('Model_Task_RestrictedUsers');
+        $this->task->tryLoad($_GET['task_id']);
         if(!$this->task->loaded()){
             throw $this->exception('Task not exist!','Exception_Task');
         }
