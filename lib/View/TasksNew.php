@@ -3,7 +3,7 @@ class View_TasksNew extends View {
     function init(){
         parent::init();
 
-    	$m=$this->add('Model_Task');
+    	$m=$this->add('Model_Task_RestrictedUsers');
     	$f=$this->add('Form');
     	$f->setModel($m,$this->fields);
     	
