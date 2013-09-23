@@ -27,7 +27,9 @@ class page_clients extends Page {
         $this->add('H2')->set('Clients');
 
         $crud=$this->add('CRUD');
-        $crud->setModel('Client');
+        $crud->setModel('Client',
+            array('name','email','is_archive')
+        );
 
         if($crud->grid){
             $crud->grid->addClass('zebra bordered');
