@@ -27,7 +27,7 @@ class Model_Attach_Base extends Model_Auditable {
             $m->api->mailer->addReceiverByUserId($task->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_attachment_changed',array(
                 'link'=>$m->api->siteURL().$m->api->url('/task',array('task_id'=>$m->get('task_id'),'colubris_task_view_view_crud_virtualpage_id'=>null,'colubris_task_view_view_crud_virtualpage'=>null)),
-                'subject'=>'Attachment was changed in task "'.$task->get('name').'"',
+                'subject'=>'Attachment was changed in task "'.substr($task->get('name'),0,25).'"',
                 'changer_part'=>$m->api->currentUser()->get('name').' has made changes in task "'.$task->get('name').'".',
             ));
         });
@@ -41,7 +41,7 @@ class Model_Attach_Base extends Model_Auditable {
             $m->api->mailer->addReceiverByUserId($task->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_attachment_deleted',array(
                 'link'=>$m->api->siteURL().$m->api->url('/task',array('task_id'=>$m->get('task_id'))),
-                'subject'=>'Attachment deleted in task "'.$task->get('name').'"',
+                'subject'=>'Attachment deleted in task "'.substr($task->get('name'),0,25).'"',
                 'changer_part'=>$m->api->currentUser()->get('name').' has deleted attachment in task "'.$task->get('name').'".',
             ));
         });
