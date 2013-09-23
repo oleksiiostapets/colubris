@@ -13,6 +13,7 @@ class Grid_Dashcomments extends Grid {
         $this->removeColumn('created_dts');
         $this->removeColumn('quote_id');
         $this->removeColumn('task_id');
+        $this->removeColumn('task_name');
         $this->removeColumn('quote_name');
         $this->removeColumn('quote_status');
         $this->removeColumn('requirement_name');
@@ -40,22 +41,37 @@ class Grid_Dashcomments extends Grid {
 
         parent::formatRow();
 
-        $this->current_row_html['project_name'] =
-            '<table>'.
-                '<tr>'.
-                    '<td style="font-weight:bold;">Project:&nbsp;</td>'.
-                    '<td>'.$this->current_row['project_name'].'</td>'.
-                '</tr>'.
-                '<tr>'.
-                    '<td style="font-weight:bold;">Quote:&nbsp;</td>'.
-                    '<td>'.'<a href="'.$this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->current_row['quote_id'])).'">'.$this->current_row['quote_name'].'</a>'.'</td>'.
-                '</tr>'.
-                '<tr>'.
-                    '<td style="font-weight:bold;">Requirement:&nbsp;</td>'.
-                    '<td>'.$this->current_row['requirement_name'].'</td>'.
-                '</tr>'.
-            '</table>'
-        ;
+        if ($this->current_row['quote_name']){
+            $this->current_row_html['project_name'] =
+                '<table>'.
+                    '<tr>'.
+                        '<td style="font-weight:bold;">Project:&nbsp;</td>'.
+                        '<td>'.$this->current_row['project_name'].'</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td style="font-weight:bold;">Quote:&nbsp;</td>'.
+                        '<td>'.'<a href="'.$this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->current_row['quote_id'])).'">'.$this->current_row['quote_name'].'</a>'.'</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td style="font-weight:bold;">Requirement:&nbsp;</td>'.
+                        '<td>'.$this->current_row['requirement_name'].'</td>'.
+                    '</tr>'.
+                '</table>'
+            ;
+        }else{
+            $this->current_row_html['project_name'] =
+                '<table>'.
+                    '<tr>'.
+                        '<td style="font-weight:bold;">Project:&nbsp;</td>'.
+                        '<td>'.$this->current_row['project_name'].'</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td style="font-weight:bold;">Task:&nbsp;</td>'.
+                        '<td>'.'<a href="'.$this->api->url('/task',array('task_id'=>$this->current_row['task_id'])).'">'.$this->current_row['task_name'].'</a>'.'</td>'.
+                    '</tr>'.
+                    '</table>'
+            ;
+        }
 
 
         // edit and delete buttons
