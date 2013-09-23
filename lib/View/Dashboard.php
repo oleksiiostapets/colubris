@@ -46,7 +46,7 @@ class View_Dashboard extends View {
         $v=$this->add('View')->setClass('right span6');
         $v->add('H2')->set('Comments to tasks');
 
-        $cr=$v->add('CRUD',array('grid_class'=>'Grid_Reqcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
+        $cr=$v->add('CRUD',array('grid_class'=>'Grid_Dashcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
 
         if ($this->api->currentUser()->isClient()) $m=$this->add('Model_Taskcomment_Client');
         elseif ($this->api->currentUser()->isDeveloper()) $m=$this->add('Model_Taskcomment_Developer');
@@ -69,7 +69,7 @@ class View_Dashboard extends View {
         if ($cr->grid){
             $cr->grid->addPaginator(5);
             $cr->grid->addFormatter('project_name','wrap');
-            $cr->grid->addFormatter('task_name','wrap');
+            //$cr->grid->addFormatter('task_name','wrap');
         }
 
         $v=$this->add('View')->setClass('clear');
