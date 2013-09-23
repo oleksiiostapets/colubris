@@ -34,4 +34,20 @@ class page_reports extends Page {
             return array('project','quote','name','status','type','estimate','spent','date','performer');
         }
     }
+    function page_more(){
+        if (!$_GET['task_id']) {
+            throw $this->exception('task_id must be provided!');
+        }
+        $this->api->stickyGET('task_id');
+        $task=$this->add('Model_Task')->load($_GET['task_id']);
+
+
+        $v = $this->add('View');
+
+        // Description
+        $descr_view = $v->add('View')->addClass('span12');
+        $descr_view->add('H4')->set('Description');
+        $descr_view->add('View')->setHtml( $this->api->colubris->makeUrls($task->get('descr_original')) );
+
+    }
 }
