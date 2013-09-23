@@ -25,21 +25,22 @@ class page_reports extends Page {
     }
     function getGridFields() {
         if ($this->api->currentUser()->canBeClient()) {
-            return array('project','quote','name','status','type','estimate','spent','date');
+            return array('project_name','quote','task_name','status','type','estimate','spent_time','date');
         }
         if ($this->api->currentUser()->canBeDeveloper()) {
-            return array('project','quote','name','status','type','estimate','spent','date','performer');
+            return array('project_name','quote','task_name','status','type','estimate','spent_time','date','user');
         }
         if ($this->api->currentUser()->canBeManager()) {
-            return array('project','quote','name','status','type','estimate','spent','date','performer');
+            return array('project_name','quote','task_name','status','type','estimate','spent_time','date','user');
         }
     }
     function page_more(){
-        if (!$_GET['task_id']) {
-            throw $this->exception('task_id must be provided!');
+        if (!$_GET['task_time_id']) {
+            throw $this->exception('task_time_id must be provided!');
         }
-        $this->api->stickyGET('task_id');
-        $task=$this->add('Model_Task')->load($_GET['task_id']);
+        $this->api->stickyGET('task_time_id');
+        $task_time=$this->add('Model_TaskTime')->load($_GET['task_time_id']);
+        $task=$this->add('Model_Task')->load($task_time['task_id']);
 
 
         $v = $this->add('View');
