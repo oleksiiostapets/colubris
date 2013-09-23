@@ -61,5 +61,7 @@ class View_Report extends View {
         $cr->addFormatter('name','wrap');
 
         $cr->addTotals(array('spent'));
+
+        $cr->addColumn('expander','more');
     }
 }
