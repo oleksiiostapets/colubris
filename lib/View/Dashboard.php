@@ -17,6 +17,11 @@ class View_Dashboard extends View {
         else $m=$this->add('Model_Reqcomment');
         $m->setOrder('created_dts',true);
 
+        $proxy_check=$this->add('Model_ReqcommentUser');
+        $proxy_check->addCondition('user_id',$this->api->auth->model['id']);
+        $proxy_check->_dsql()->field('reqcomment_id');
+        $m->addCondition('id','NOT IN',$proxy_check->_dsql());
+
         $jr = $m->join('requirement.id','requirement_id','left','_req');
         $jr->addField('requirement_name','name');
         $jr->addField('quote_id','quote_id');
@@ -40,6 +45,16 @@ class View_Dashboard extends View {
         if ($cr->grid){
             $cr->grid->addPaginator(5);
             $cr->grid->addFormatter('project_name','wrap');
+
+            $cr->grid->addColumn('button','check_reqcomment','√');
+            if($_GET['check_reqcomment']){
+                $comment_user=$this->add('Model_ReqcommentUser');
+                $comment_user->set('reqcomment_id',$_GET['check_reqcomment']);
+                $comment_user->set('user_id',$this->api->auth->model['id']);
+                $comment_user->save();
+
+                $cr->grid->js()->reload()->execute();
+            }
         }
 
 
@@ -52,6 +67,11 @@ class View_Dashboard extends View {
         elseif ($this->api->currentUser()->isDeveloper()) $m=$this->add('Model_Taskcomment_Developer');
         else $m=$this->add('Model_Taskcomment');
         $m->setOrder('created_dts',true);
+
+        $proxy_check=$this->add('Model_TaskcommentUser');
+        $proxy_check->addCondition('user_id',$this->api->auth->model['id']);
+        $proxy_check->_dsql()->field('taskcomment_id');
+        $m->addCondition('id','NOT IN',$proxy_check->_dsql());
 
         $jt = $m->join('task.id','task_id','left','_t');
         $jt->addField('task_name','name');
@@ -70,6 +90,16 @@ class View_Dashboard extends View {
             $cr->grid->addPaginator(5);
             $cr->grid->addFormatter('project_name','wrap');
             //$cr->grid->addFormatter('task_name','wrap');
+
+            $cr->grid->addColumn('button','check_taskcomment','√');
+            if($_GET['check_taskcomment']){
+                $comment_user=$this->add('Model_TaskcommentUser');
+                $comment_user->set('taskcomment_id',$_GET['check_taskcomment']);
+                $comment_user->set('user_id',$this->api->auth->model['id']);
+                $comment_user->save();
+
+                $cr->grid->js()->reload()->execute();
+            }
         }
 
         $v=$this->add('View')->setClass('clear');
