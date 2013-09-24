@@ -77,7 +77,7 @@ class page_tasks extends Page {
         // Description
         $descr_view = $v->add('View')->addClass('span12');
         $descr_view->add('H4')->set('Description');
-        $descr_view->add('View')->setHtml( $this->api->colubris->makeUrls($task->get('descr_original')) );
+        $descr_view->add('View')->setHtml( $this->api->colubris->makeUrls(nl2br($task->get('descr_original'))) );
 
         /*
         // left view
