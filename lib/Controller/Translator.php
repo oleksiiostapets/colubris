@@ -24,5 +24,6 @@ class Controller_Translator extends Controller {
         'Adding new User Notdeleted'=>'Adding new User',
         'Add User Organisation'     =>'Add User',
         'Adding new User Organisation'     =>'Adding new User',
+        'Add Task RestrictedUsers'  => 'Add Task',
     );
 }
