@@ -198,7 +198,7 @@ class Model_Quote extends Model_Quote_Base {
         } else if ($user->isDeveloper()) {
             return array('is_included','name','estimate','spent_time','file','user','count_comments');
         } else if ($user->isClient()) {
-            return array('is_included','name','cost','file','user','count_comments');
+            return array('is_included','name','file','user','count_comments');
         }
         throw $this->exception('Wrong role');
     }
