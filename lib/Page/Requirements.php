@@ -28,6 +28,9 @@ class Page_Requirements extends Page {
             // TODO just redirect to denied is not clear
         }
 
+        // Storing project id for assigned and requester
+        $this->api->memorize('project_id',$project->get('id'));
+
         $requirements=$this->add('Model_Requirement');
         $requirements->addCondition('quote_id',$_GET['quote_id']);
 
@@ -118,7 +121,7 @@ class Page_Requirements extends Page {
     		//$cr->grid->setFormatter('text','text');
     	}
 
-        $this->tasks=$this->add('Model_Task');
+        $this->tasks=$this->add('Model_Task_RestrictedUsers');
         $this->tasks->addCondition('project_id',$req['project_id']);
         $this->tasks->addCondition('requirement_id',$_GET['requirement_id']);
         $this->addTasksCRUD($this);
