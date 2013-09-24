@@ -35,7 +35,7 @@ class Model_Quote_Base extends Model_Auditable {
         )->mandatory('Cannot be empty')->sortable(true);
         //$this->addField('attachment_id')->setModel('Model_Filestore_File');
 
-        $this->addField('rate');
+        $this->addField('rate')->defaultValue('0.00');
         $this->addField('currency')->setValueList(
             array(
                 'EUR'=>'EUR',
