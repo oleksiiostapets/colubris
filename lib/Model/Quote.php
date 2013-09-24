@@ -198,7 +198,7 @@ class Model_Quote extends Model_Quote_Base {
         } else if ($user->isDeveloper()) {
             return array('is_included','name','estimate','spent_time','file','user','count_comments');
         } else if ($user->isClient()) {
-            return array('is_included','name','cost','spent_time','file','user','count_comments');
+            return array('is_included','name','cost','file','user','count_comments');
         }
         throw $this->exception('Wrong role');
     }
@@ -211,7 +211,7 @@ class Model_Quote extends Model_Quote_Base {
         } else if ($user->isDeveloper()) {
             return array('project','user','name','estimated','spent_time','durdead','status','updated_dts');
         } else if ($user->isClient()) {
-            return array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status','updated_dts');
+            return array('project','user','name','estimated','estimpay','rate','currency','durdead','status','updated_dts');
         }
         throw $this->exception('Wrong role');
     }
