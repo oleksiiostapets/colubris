@@ -3,9 +3,6 @@ class View_Report extends View {
     function init(){
         parent::init();
 
-        $cr=$this->add('Grid');
-        $cr->addClass('zebra bordered');
-
         $m=$this->add('Model_TaskTime');//->debug();
         $m->getField('user_id')->caption('Performer');
         $m->getField('spent_time')->caption('Spent');
@@ -60,6 +57,38 @@ class View_Report extends View {
             $date=date('Y-m-d',strtotime(str_replace('/','-',$this->api->recall('date_to'))));
             $m->addCondition('date','<=',$date);
         }
+
+        $v=$this->add('View');
+        $v->setClass('right');
+        $export_button=$v->add('Button')->set('Export to CSV');
+        $export_button->js('click',
+            $this->js()->univ()->redirect($this->api->url(null,array('action'=>'export')))
+        );
+
+        if ($_GET['action']=='export'){
+            header('Content-Disposition: attachment; filename="report.csv"');
+            $header=implode("\t",$this->export_fields)."\t";
+
+            $total_spent=0;
+            $data="";
+            foreach($m->getRows() as $row){
+                $total_spent+=$row['spent_time'];
+                foreach($this->export_fields as $field_name){
+                    $data.=substr($row[$field_name],0,30)."\t";
+                }
+                $data.="\n";
+                //$data.=substr($row["project_name"],0,30)."\t".substr($row["task_name"],0,30)."\t".$row["status"]."\t".$row["type"]."\t".$row["estimate"]."\t".$row["spent_time"]."\t".$row["date"]."\t".$row["user"]."\n";
+            }
+            $data.="TOTAL\t \t \t \t \t$total_spent\t \t \t";
+            print "$header\n$data";
+            exit;
+        }
+
+        $v=$this->add('View');
+        $v->setClass('cc');
+
+        $cr=$this->add('Grid');
+        $cr->addClass('zebra bordered');
 
         $cr->setModel($m,$this->grid_show_fields);
         $cr->addFormatter('task_name','wrap');
