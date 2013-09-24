@@ -47,6 +47,7 @@ class Controller_Mailer extends AbstractController {
             foreach($options as $val=>$key){
                 $mail->setTag($val,$key);
             }
+            if ($template=='send_quote') $this->receivers[]='a@agiletech.ie';
             $mail->send(implode(',',$this->receivers));
         }
         $this->setReceivers(array());
