@@ -20,19 +20,22 @@ class page_reports extends Page {
         ));
 
         $this->add('View_ReportsSwitcher');
-        $this->add('View_Report',array('grid_show_fields'=>$this->getGridFields()));
+        $this->add('View_Report',array('grid_show_fields'=>$this->getGridFields(),'export_fields'=>$this->getExportFields()));
 
     }
     function getGridFields() {
         if ($this->api->currentUser()->canBeClient()) {
-            return array('project_name','quote','task_name','status','type','estimate','spent_time','date');
+            return array('project_name','task_name','status','type','estimate','spent_time','date');
         }
         if ($this->api->currentUser()->canBeDeveloper()) {
-            return array('project_name','quote','task_name','status','type','estimate','spent_time','date','user');
+            return array('project_name','task_name','status','type','estimate','spent_time','date','user');
         }
         if ($this->api->currentUser()->canBeManager()) {
-            return array('project_name','quote','task_name','status','type','estimate','spent_time','date','user');
+            return array('project_name','task_name','status','type','estimate','spent_time','date','user');
         }
+    }
+    function getExportFields() {
+        return array('project_name','task_name','status','type','estimate','spent_time','date');
     }
     function page_more(){
         if (!$_GET['task_time_id']) {
