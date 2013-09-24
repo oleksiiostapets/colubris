@@ -1,0 +1,1 @@
+UPDATE quote SET rate='0.00' WHERE rate IS NULL;
