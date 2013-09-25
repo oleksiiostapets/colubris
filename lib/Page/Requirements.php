@@ -57,15 +57,10 @@ class Page_Requirements extends Page {
         ;
         $left->add('H1')->set('Requirements for Quotation');
 
-        // auote info grid
+        // quote info grid
         $left->add('H4')->set('Quote:');
         $fields_required = array('project','user','name',/*'estimated',*/'general_description',);
         $this->addQuoteInfoGrid($left, $fields_required,$quote);
-
-        // requirements
-        $left->add('H4')->set('Requirements:');
-        $left->add('View_Info')->set('Requirements, which will be added in the future increase estimation.');
-
 
         // | *** RIGHT *** |
         $right = $this->add('View')
@@ -77,6 +72,25 @@ class Page_Requirements extends Page {
         $this->addEstimationButtons($right, $quote, $requirements);
         $total_view = $this->addFloatingTotal($right,$quote);
 
+        $this->add('View')->setClass('clear');
+
+        // | *** LEFT *** |
+        $left = $this->add('View')
+            ->setClass('left span6')
+            ->addStyle('margin-top','20px')
+            ->addStyle('margin-bottom','20px');
+
+        // requirements
+        $left->add('H4')->set('Requirements:');
+        $left->add('View_Info')->set('Requirements, which will be added in the future increase estimation.');
+
+        // | *** RIGHT *** |
+        $right = $this->add('View')
+            ->setClass('right span6')
+            ->addStyle('margin-top','20px')
+            ->addStyle('margin-bottom','20px')
+        ;
+        $progress_view = $this->addProgressBars($right,$quote);
 
         $this->add('View')->setClass('clear');
 
@@ -283,6 +297,28 @@ class Page_Requirements extends Page {
         }
 
         return $total_view;
+    }
+    function addProgressBars($view, $quote) {
+        $v = $view->add('View')->setClass('floating_total radius_10 progress_bars');
+        $v->add('View')->set('Progress:');
+        $progress=floor((100*$quote->get('spent_time'))/$quote->get('estimated'));
+        $class='success';
+        if ($progress>100){
+            $progress = 100;
+            $class='error';
+        }
+        $progress_view = $v->add('View')->setHtml('
+<div class="ui-progress-bar '.$class.' ui-container" id="progress_bar">
+    <div class="ui-progress" style="width: '.$progress.'%;">
+              <span class="ui-label" style="display:none;">
+                Loading Resources
+                <b class="value">'.$progress.'%</b>
+              </span>
+    </div>
+</div>
+');
+
+        return $progress_view;
     }
 
     function addEditRequirementButton($view, $quote) {
