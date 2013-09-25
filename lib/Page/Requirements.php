@@ -301,7 +301,12 @@ class Page_Requirements extends Page {
     function addProgressBars($view, $quote) {
         $v = $view->add('View')->setClass('floating_total radius_10 progress_bars');
         $v->add('View')->set('Progress:');
-        $progress=floor((100*$quote->get('spent_time'))/$quote->get('estimated'));
+        if ($quote->get('estimated')>0){
+            $progress=floor((100*$quote->get('spent_time'))/$quote->get('estimated'));
+        }else{
+            $progress=1;
+        }
+        if($progress==0) $progress=1;
         $class='success';
         if ($progress>100){
             $progress = 100;
