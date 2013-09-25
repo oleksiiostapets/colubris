@@ -312,9 +312,12 @@ class Page_Requirements extends Page {
             $progress = 100;
             $class='error';
         }
+        if ($quote->get('spent_time')>0) $spent=$quote->get('spent_time').'hours'; else $spent='';
+        if ($this->api->currentUser()->isClient()) $spent='';
         $progress_view = $v->add('View')->setHtml('
 <div class="ui-progress-bar '.$class.' ui-container" id="progress_bar">
     <div class="ui-progress" style="width: '.$progress.'%;">
+        '.$spent.'
               <span class="ui-label" style="display:none;">
                 Loading Resources
                 <b class="value">'.$progress.'%</b>
