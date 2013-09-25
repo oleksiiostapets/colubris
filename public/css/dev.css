@@ -215,3 +215,4 @@ p.error{color:red;font-size:16px;font-weight:bold;margin-top:20px;}
 .atk-grid.zebra > table > tbody > tr:nth-child(2n) > td {
     background: rgba(245, 246, 248, 0.28);
 }
+.ui-progress {text-align:center;}

@@ -81,6 +81,8 @@ THE SOFTWARE.
 .ui-progress-bar.error .ui-progress {
   background-color: #C43C35 !important;
   border: 1px solid #9c302a;
+  color:#ccc;
+  font-size:16px;
 }
 .ui-progress-bar.warning .ui-progress {
   background-color: #D9B31A!important;
@@ -89,6 +91,7 @@ THE SOFTWARE.
 .ui-progress-bar.success .ui-progress {
   background-color: #57A957!important;
   border: 1px solid #458845;
+  font-size:16px;
 }
 .ui-progress-bar.transition .ui-progress {
   -moz-transition: background-color 0.5s ease-in, border-color 1.5s ease-out, box-shadow 1.5s ease-out;
