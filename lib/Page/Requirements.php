@@ -90,7 +90,8 @@ class Page_Requirements extends Page {
             ->addStyle('margin-top','20px')
             ->addStyle('margin-bottom','20px')
         ;
-        $progress_view = $this->addProgressBars($right,$quote);
+
+        if (!$this->api->currentUser()->isClient()) $this->addProgressBars($right,$quote);
 
         $this->add('View')->setClass('clear');
 
