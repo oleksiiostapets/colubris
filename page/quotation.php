@@ -74,7 +74,7 @@ class page_quotation extends Page {
                 $user->set('client_id',$client->get('id'));
                 $user->save();
 
-                $this->api->mailer->addReceiverByUserId($user->get('id'));
+                $this->api->mailer->addReceiverByUserId($user->get('id'),true);
                 $this->api->mailer->sendMail('user_created',array(
                     'password'=>$pass,
                 ));
