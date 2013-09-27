@@ -69,7 +69,7 @@ class page_quotation extends Page {
                 $user->set('organisation_id',$organisation->get('id'));
                 $user->set('name',$f->get('client_name'));
                 $user->set('email',$f->get('email'));
-                $pass=rand(1000000,999999);
+                $pass=rand(1000000,9999999);
                 $user->set('password',$pass);
                 $user->set('client_id',$client->get('id'));
                 $user->save();
