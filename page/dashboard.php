@@ -46,6 +46,11 @@ class page_dashboard extends Page {
                 'show_fields'=>$this->api->currentUser()->getDashboardGridFields(),
             ));
         }
+        /*
+        if ($this->api->currentUser()->isSystem()){
+            $this->add('View_DashboardSystem');
+        }
+        */
 
     }
 
