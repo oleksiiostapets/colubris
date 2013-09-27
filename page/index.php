@@ -5,6 +5,8 @@ class Page_index extends Page {
 
         if($this->api->auth->isLoggedIn())$this->api->redirect('dashboard');
 
+        $this->template->trySet('guest_quotation_link',$this->api->url('/quotation'));
+
         $form=$this->add('Frame')->setTitle('Client Log-in')->add('Form');
         $form->addField('line','email')->js(true)->focus();
         $form->addField('password','password');
