@@ -8,6 +8,7 @@ class Model_Client_Definitions extends Model_BaseTable {
         $this->newField('name');
 
         $this->addField('email');
+        $this->addField('phone');
         $this->addField('is_archive')->type('boolean');
 
         $this->addField('is_deleted')->type('boolean')->defaultValue('0');
