@@ -1,0 +1,10 @@
+<?from?>hello@example.com<?/from?>
+<?subject?>Registration completed<?/?>
+<?body?>
+
+Thank you for registering on Colubris.<br />
+Now you can login with your email and automatically generated password <?$password?>.<br />
+We strongly recommend you to change password as soon as possible.
+<br /><br />
+<?sign?>
+<?/sign?><?/body?>

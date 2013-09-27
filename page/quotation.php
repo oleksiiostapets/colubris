@@ -65,6 +65,20 @@ class page_quotation extends Page {
                 $client->set('organisation_id',$organisation->get('id'));
                 $client->save();
 
+                $user=$this->add('Model_User');
+                $user->set('organisation_id',$organisation->get('id'));
+                $user->set('name',$f->get('client_name'));
+                $user->set('email',$f->get('email'));
+                $pass=rand(1000000,999999);
+                $user->set('password',$pass);
+                $user->set('client_id',$client->get('id'));
+                $user->save();
+
+                $this->api->mailer->addReceiverByUserId($user->get('id'));
+                $this->api->mailer->sendMail('user_created',array(
+                    'password'=>$pass,
+                ));
+
                 $project=$this->add('Model_Project_Guest');
                 $project->set('client_id',$client->get('id'));
                 $project->set('name',$f->get('project_name'));
