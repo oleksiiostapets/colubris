@@ -59,7 +59,7 @@ class page_quotation2 extends Page {
             $this->api->mailer->addAllManagersReceivers($quote->get('organisation_id'));
             $this->api->mailer->sendMail('guest_sent_quote',array(
                 'quotename'=>$quote->get('name'),
-                'link'=>$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
+                'link'=>$this->api->siteURL().$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
             ));
 
             $this->api->memorize('quote_'.$quote['id'],'sent');
