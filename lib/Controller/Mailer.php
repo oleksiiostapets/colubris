@@ -37,6 +37,19 @@ class Controller_Mailer extends AbstractController {
         }
         return $this;
     }
+    /*
+     */
+    function addAllManagersReceivers($organisation_id){
+        $u=$this->add('Model_User_Base');
+        $u->addCondition('organisation_id',$organisation_id);
+        $u->addCondition('is_manager',true);
+        foreach ($u->getRows() as $user){
+            if(!in_array($user['email'],$this->receivers)){
+                $this->receivers[]=$user['email'];
+            }
+        }
+        return $this;
+    }
     function sendMail($template,$options) {
         if(count($this->receivers)>0){
             $from=$this->api->getConfig('tmail/from','test@test.com');

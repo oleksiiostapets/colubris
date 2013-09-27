@@ -1,0 +1,9 @@
+<?from?>hello@example.com<?/from?>
+<?subject?>Guest has sent quote<?/?>
+<?body?>
+
+A guest is trying Colubris and has sent a quote "<?$quotename?>".<br />
+Please review the quote <a href="<?$link?>">link</a>.
+<br /><br />
+<?sign?>
+<?/sign?><?/body?>

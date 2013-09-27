@@ -95,7 +95,7 @@ class Frontend extends ApiFrontend {
         // show current user name
         $this->add('View', null, 'name')
             ->setStyle('width', '700px')->setStyle('text-align', 'right')
-            ->add('Text')->set($this->api->auth->model['name'] . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer());
+            ->add('Text')->set($this->api->auth->model['name']?$this->api->auth->model['name']:'Guest' . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer());
 
         $this->template->trySet('year',date('Y',time()));
 
@@ -157,6 +157,9 @@ class Frontend extends ApiFrontend {
 
         // For Guests
         if (!$this->auth->isLoggedIn()){
+            $this->addAllowedPages(array(
+                'quotation','quotation2',
+            ));
             if(!$this->auth->isPageAllowed($this->page)){
                 $this->api->redirect('index');
             }

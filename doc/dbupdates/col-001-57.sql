@@ -1,0 +1,1 @@
+ALTER TABLE `client` ADD COLUMN `phone` VARCHAR(255) NULL  AFTER `email` ;
