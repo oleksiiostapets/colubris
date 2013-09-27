@@ -28,7 +28,7 @@ class page_clients extends Page {
 
         $crud=$this->add('CRUD');
         $crud->setModel('Client',
-            array('name','email','is_archive')
+            array('name','email','phone','is_archive')
         );
 
         if($crud->grid){
