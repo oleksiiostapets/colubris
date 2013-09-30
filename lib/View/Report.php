@@ -67,19 +67,19 @@ class View_Report extends View {
 
         if ($_GET['action']=='export'){
             header('Content-Disposition: attachment; filename="report.csv"');
-            $header=implode("\t",$this->export_fields)."\t";
+            $header=implode(",",$this->export_fields).",";
 
             $total_spent=0;
             $data="";
             foreach($m->getRows() as $row){
                 $total_spent+=$row['spent_time'];
                 foreach($this->export_fields as $field_name){
-                    $data.=substr($row[$field_name],0,30)."\t";
+                    $data.=substr($row[$field_name],0,30).",";
                 }
                 $data.="\n";
-                //$data.=substr($row["project_name"],0,30)."\t".substr($row["task_name"],0,30)."\t".$row["status"]."\t".$row["type"]."\t".$row["estimate"]."\t".$row["spent_time"]."\t".$row["date"]."\t".$row["user"]."\n";
+                //$data.=substr($row["project_name"],0,30).",".substr($row["task_name"],0,30).",".$row["status"].",".$row["type"].",".$row["estimate"].",".$row["spent_time"].",".$row["date"].",".$row["user"]."\n";
             }
-            $data.="TOTAL\t \t \t \t \t$total_spent\t \t \t";
+            $data.="TOTAL, , , , ,$total_spent, , ,";
             print "$header\n$data";
             exit;
         }
