@@ -67,19 +67,19 @@ class View_Report extends View {
 
         if ($_GET['action']=='export'){
             header('Content-Disposition: attachment; filename="report.csv"');
-            $header=implode(",",$this->export_fields).",";
+            $header=implode(";",$this->export_fields).";";
 
             $total_spent=0;
             $data="";
             foreach($m->getRows() as $row){
                 $total_spent+=$row['spent_time'];
                 foreach($this->export_fields as $field_name){
-                    $data.=substr($row[$field_name],0,30).",";
+                    $data.=substr($row[$field_name],0,30).";";
                 }
                 $data.="\n";
-                //$data.=substr($row["project_name"],0,30).",".substr($row["task_name"],0,30).",".$row["status"].",".$row["type"].",".$row["estimate"].",".$row["spent_time"].",".$row["date"].",".$row["user"]."\n";
+                //$data.=substr($row["project_name"],0,30).";".substr($row["task_name"],0,30).";".$row["status"].";".$row["type"].";".$row["estimate"].";".$row["spent_time"].";".$row["date"].";".$row["user"]."\n";
             }
-            $data.="TOTAL, , , , ,$total_spent, , ,";
+            $data.="TOTAL; ; ; ; ;$total_spent; ; ;";
             print "$header\n$data";
             exit;
         }
