@@ -1,11 +1,15 @@
 <?php
 class RoleMenu extends CompleteLister {
-    private $session_name = 'current_user_role';
+    private $session_name     = 'current_user_role';
+    private $set_cookie_name  = 'set_cookie_user_role';
+    private $cookie_name      = 'current_user_role';
+    private $current_role     = null;
     private $current_user_posible_roles = array();
-    private $current_role = null;
     public $get_args = array();
     function init() {
         parent::init();
+        $this->cookie_name = $this->api->name.'_'.$this->cookie_name;
+        $this->checkSession();
         $this->addClass('role-menu-lister');
         $this->defineCurrentRole();
         $this->checkPOST();
@@ -34,13 +38,13 @@ class RoleMenu extends CompleteLister {
         return ($this->current_row['name'] == $this->getCurrentUserRole());
     }
     function getCurrentUserRole() {
-        if ($this->api->recall($this->session_name)==null){
-            return $_COOKIE['current_role'];
-        }else{
-            return $this->api->recall($this->session_name);
+        if ($this->current_role) {
+            return $this->current_role;
         }
-//        return $_COOKIE['current_role'];
-//        return $this->api->recall($this->session_name);
+        if ($this->api->recall($this->session_name)==null) {
+            return $_COOKIE[$this->cookie_name];
+        }
+        return $this->api->recall($this->session_name);
     }
 
 
@@ -62,11 +66,13 @@ class RoleMenu extends CompleteLister {
                 $this->setRole($this->current_user_posible_roles[0]);
                 $this->api->redirect($this->api->url('/'));
             }
+        } else {
+            throw $this->exception('User must be logged in to use Role menu');
         }
     }
     private function setRole($role) {
         $this->current_role = $role;
-        setcookie('current_role',$role, 60*60*24*7*30*12,'/');
+        $this->api->memorize($this->set_cookie_name, $role);
         $this->api->memorize($this->session_name, $role);
     }
     private function addMenuItems() {
@@ -97,6 +103,18 @@ class RoleMenu extends CompleteLister {
             if ($k != 'page') {
                 $this->get_args[$k] = $v;
             }
+        }
+    }
+    private function checkSession() {
+        if ($this->api->recall($this->set_cookie_name)) {
+            setcookie(
+                $this->cookie_name,
+                $this->api->recall($this->set_cookie_name),
+                time()+60*60*24*7*30*12,
+                $this->api->url('/')->useAbsoluteUrl()
+            );
+            $this->setRole($this->api->recall($this->set_cookie_name));
+            $this->api->forget($this->set_cookie_name);
         }
     }
 }
