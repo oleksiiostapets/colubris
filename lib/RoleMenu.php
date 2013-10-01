@@ -34,7 +34,13 @@ class RoleMenu extends CompleteLister {
         return ($this->current_row['name'] == $this->getCurrentUserRole());
     }
     function getCurrentUserRole() {
-        return $this->api->recall($this->session_name);
+        if ($this->api->recall($this->session_name)==null){
+            return $_COOKIE['current_role'];
+        }else{
+            return $this->api->recall($this->session_name);
+        }
+//        return $_COOKIE['current_role'];
+//        return $this->api->recall($this->session_name);
     }
 
 
@@ -60,6 +66,7 @@ class RoleMenu extends CompleteLister {
     }
     private function setRole($role) {
         $this->current_role = $role;
+        setcookie('current_role',$role, 60*60*24*7*30*12,'/');
         $this->api->memorize($this->session_name, $role);
     }
     private function addMenuItems() {
