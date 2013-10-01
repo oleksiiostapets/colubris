@@ -221,3 +221,7 @@ p.error{color:red;font-size:16px;font-weight:bold;margin-top:20px;}
 .page_quotation fieldset + fieldset {border-top:0;}
 .page_quotation fieldset + fieldset + fieldset {margin-left:10px;padding-left:10px;border-left:1px dashed #e5e5e5;}
 .page_quotation .atk-buttons {clear:both;border-top:0;}
+
+.paginator_count ul {list-style-type:none;}
+.paginator_count ul > li {list-style-type: none;float:left;margin:0 10px 0 0;}
+.paginator_count ul > li.active a {font-weight:bold;}

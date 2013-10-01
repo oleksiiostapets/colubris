@@ -74,11 +74,21 @@ class Page_QuotesBase extends Page {
             'allow_del'       => $this->quote->canUserDeleteQuote($user),
             'allowed_actions' => $this->quote->userAllowedActions($user),
         ));
+        if($cr->grid){
+            $cr->grid->addClass('zebra bordered');
+            $cr->grid->add('View_ExtendedPaginator',
+                array(
+                    'values'=>array('10','50','100'),
+                    'grid'=>$cr->grid,
+                ),
+                'extended_paginator');
+        }
 
         $cr->setModel(
             $this->quote,
             $this->quote->whatQuoteFieldsUserCanEdit($user),
             $this->quote->whatQuoteFieldsUserCanSee($user)
         );
+
     }
 }
