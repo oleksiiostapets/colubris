@@ -3,14 +3,14 @@ class View_ExtendedPaginator extends View {
     function init(){
         parent::init();
 
-        if($_GET['paginator_count']){
-            $default_count=$_GET['paginator_count'];
-            setcookie('paginator_count',$default_count, 60*60*24*7*30*12,'/');
-        }elseif ( ($_COOKIE['paginator_count']) && ($_COOKIE['paginator_count']>0) ){
-            $default_count=$_COOKIE['paginator_count'];
+        if($_GET['paginatorcount']){
+            $default_count=$_GET['paginatorcount'];
+            setcookie('paginatorcount',$default_count,time()+60*60*24*30*6);
+        }elseif ( (isset($_COOKIE['paginatorcount'])) && ($_COOKIE['paginatorcount']>0) ){
+            $default_count=$_COOKIE['paginatorcount'];
         }else{
             $default_count=10;
-            setcookie('paginator_count',$default_count, 60*60*24*7*30*12,'/');
+            setcookie('paginatorcount',$default_count,time()+60*60*24*30*6);
         }
 
         $v=$this->add('View')->setClass('paginator_count');
@@ -21,7 +21,7 @@ class View_ExtendedPaginator extends View {
             }else{
                 $class="";
             }
-            $html.='<li class="'.$class.'"><a href="'.$this->api->url(null,array('paginator_count'=>$value)).'">'.$value.'</a></li>';
+            $html.='<li class="'.$class.'"><a href="'.$this->api->url(null,array('paginatorcount'=>$value)).'">'.$value.'</a></li>';
         }
         $html.='</ul>';
 

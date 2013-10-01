@@ -34,6 +34,8 @@ class View_TasksCRUD extends View {
 //            $cr->grid->addPaginator(10);
         	$cr->grid->js('reload')->reload();
 
+            $cr->grid->addQuickSearch(array('name'));
+
             if(!$this->api->currentUser()->isClient()){
                 $cr->grid->addColumn('button','time');
                 if ($_GET['time']) {

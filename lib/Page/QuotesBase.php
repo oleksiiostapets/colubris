@@ -26,6 +26,7 @@ class Page_QuotesBase extends Page {
             $this->quote = $this->add('Model_Quote');
         }
         $pr = $this->quote->join('project','project_id','left','_pr');
+        $pr->addField('pr_name','name');
         if ($this->api->currentUser()->isClient()) {
             // show only client's quotes
             $pr->addField('pr_client_id','client_id');
@@ -82,6 +83,7 @@ class Page_QuotesBase extends Page {
                     'grid'=>$cr->grid,
                 ),
                 'extended_paginator');
+            $cr->grid->addQuickSearch(array('quote.name','project'));
         }
 
         $cr->setModel(
