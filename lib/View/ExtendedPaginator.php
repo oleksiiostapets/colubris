@@ -15,7 +15,12 @@ class View_ExtendedPaginator extends View {
             $default_count=$_COOKIE['paginator_count'];
         }else{
             $default_count=10;
-            setcookie('paginator_count',$default_count, 60*60*24*7*30*12,'/');
+            setcookie(
+                'paginator_count',
+                $default_count,
+                time()+60*60*24*7*30*12,
+                $this->api->url('/')->useAbsoluteUrl()
+            );
         }
 
         $v=$this->add('View')->setClass('paginator_count');
