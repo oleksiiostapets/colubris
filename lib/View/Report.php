@@ -131,13 +131,6 @@ class View_Report extends View {
 
             $objPHPExcel->getActiveSheet()->getRowDimension($i+2)->setRowHeight(20);
 
-            /*
-            $objPHPExcel->setActiveSheetIndex(0)
-                ->setCellValue('A1', 'Hello')
-                ->setCellValue('B2', 'тест')
-                ->setCellValue('C1', 'ЁіїЇ')
-                ->setCellValue('D2', 'ы');
-*/
             header('Content-Type: application/vnd.ms-excel');
             header('Content-Disposition: attachment;filename="report-colubris-'.date('Y-m-i-H-i-s').'.xls"');
             header('Cache-Control: max-age=0');
