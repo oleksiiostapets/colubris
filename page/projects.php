@@ -90,24 +90,26 @@ class page_projects extends Page {
             $cr->grid->addPaginator(5);
         }
     }
-//    function page_add(){
-//        $this->api->stickyGet('return');
-//
-//        $this->add('H1')->set('Add new Project');
-//
-//        $form=$this->add('Form');
-//        $m=$this->setModel('Model_Project');
-//        $form->setModel($m);
-//
-//        $form->addSubmit('Save');
-//
-//        if($form->isSubmitted()){
-//            $form->model->set($form->get());
-//            $form->model->save();
-//
-//            $this->api->redirect($this->api->url($_GET['return'],array('project'=>$form->model->get('name'),'project_id'=>$form->model->get('id'))));
-//        }
-//    }
+    function page_add(){
+        $this->api->stickyGet('return');
+
+        $this->add('H1')->set('Add new Project');
+
+        $form=$this->add('Form');
+        $m=$this->setModel('Model_Project');
+        $form->setModel($m,
+            array('name','descr','client','demo_url','prod_url','repository')
+        );
+
+        $form->addSubmit('Save');
+
+        if($form->isSubmitted()){
+            $form->model->set($form->get());
+            $form->model->save();
+
+            $this->api->redirect($this->api->url($_GET['return'],array('project'=>$form->model->get('name'),'project_id'=>$form->model->get('id'))));
+        }
+    }
 }
 
 /*

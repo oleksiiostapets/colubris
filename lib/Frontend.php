@@ -164,7 +164,6 @@ class Frontend extends ApiFrontend {
                 $this->api->redirect('index');
             }
         }else{
-
             if (!$this->currentUser()->canBeSystem()) {
                 // Access for all non-system roles
                 $this->addAllowedPages(array(
