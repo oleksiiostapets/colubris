@@ -14,7 +14,7 @@ class Grid_Logs extends Grid {
                 if($kc==$k) $style='font-weight:bold;';
             }
 
-            $new_val.='<tr style="'.$style.'"><td>'.$k.'</td><td>'.$v.'</td></tr>';
+            $new_val.='<tr style="'.$style.'"><td>'.$k.'</td><td style="white-space:wrap;">'.$v.'</td></tr>';
         }
         $new_val.='</table>';
 

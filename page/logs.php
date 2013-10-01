@@ -18,6 +18,7 @@ class page_logs extends Page {
 
         $grid->addFormatter('new_data','data');
         $grid->addFormatter('changed_fields','changed_fields');
+        $grid->addFormatter('new_data','wrap');
         $grid->addClass('zebra bordered');
         $grid->addQuickSearch(array('new_data','class'));
         $grid->addPaginator(5);
