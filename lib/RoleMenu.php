@@ -66,8 +66,6 @@ class RoleMenu extends CompleteLister {
                 $this->setRole($this->current_user_posible_roles[0]);
                 $this->api->redirect($this->api->url('/'));
             }
-        } else {
-            throw $this->exception('User must be logged in to use Role menu');
         }
     }
     private function setRole($role) {
