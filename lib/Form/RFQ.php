@@ -19,7 +19,7 @@ class Form_RFQ extends Form {
         // TODO open frameURL instead of redirect
         $add_button = $this->add('Button')->set("New Project")->addClass('add_project');
         $add_button->js('click',
-                    $this->js()->univ()->redirect($this->api->url('project/add',array('return'=>'quotes/rfq')))
+                    $this->js()->univ()->redirect($this->api->url('projects/add',array('return'=>'quotes/rfq')))
                 );
 
 

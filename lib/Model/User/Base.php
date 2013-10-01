@@ -103,6 +103,9 @@ class Model_User_Base extends Model_BaseTable {
     function isAdmin() {
         return ($this->api->getCurrentUserRole() == 'admin');
     }
+    function isFinancial() {
+        return ($this->api->auth->model['is_financial']);
+    }
     function isManager() {
         return ($this->api->getCurrentUserRole() == 'manager');
     }

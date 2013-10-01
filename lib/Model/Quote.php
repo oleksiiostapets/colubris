@@ -219,8 +219,10 @@ class Model_Quote extends Model_Quote_Base {
     function whatQuoteFieldsUserCanEdit($user) {
         if ($user->isAdmin()) {
             return array();
-        } else if ($user->isManager()) {
+        } else if ($user->isFinancial()) {
             return array('name','project_id','general_description','rate','currency','duration','deadline','status');
+        } else if ($user->isManager()) {
+            return array('name','project_id','general_description','duration','deadline','status');
         } else if ($user->isDeveloper()) {
             return array();
         } else if ($user->isClient()) {
