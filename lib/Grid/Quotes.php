@@ -64,7 +64,16 @@ class Grid_Quotes extends Grid {
         // approve
         if( $_GET['approve'] ){
             if ( in_array('approve',$this->allowed_actions) ) {
-                $this->add('Model_Quote')->load($_GET['approve'])->approve();
+                $quote=$this->add('Model_Quote')->load($_GET['approve']);
+                $quote->approve();
+
+                $this->api->mailer->addClientReceiver($quote->get('project_id'));
+                $this->api->mailer->addAllManagersReceivers($this->api->auth->model['organisation_id']);
+                $this->api->mailer->sendMail('quote_approved',array(
+                    'quotename'=>$quote->get('name'),
+                    'link'=>$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
+                ));
+
                 $this->js()->reload()->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['approve']['name'].'" is not allowed')->execute();
