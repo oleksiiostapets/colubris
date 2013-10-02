@@ -69,6 +69,7 @@ class Page_Requirements extends Page {
                 ->addStyle('margin-bottom','20px')
         ;
         $this->addRequestForEstimateButton($right, $requirements, $quote);
+        $this->addApproveButton($right, $quote);
         $this->addEstimationButtons($right, $quote, $requirements);
         $total_view = $this->addFloatingTotal($right,$quote);
 
@@ -179,6 +180,30 @@ class Page_Requirements extends Page {
             $but->js('click', array(
    	            $this->js()->univ()->redirect($this->api->url(null,array('quote_id'=>$quote['id'],'action'=>'estimation')))
    	        ));
+        }
+    }
+
+    function addApproveButton($view, $quote) {
+        if ($quote->canUserApproveQuote($this->api->currentUser())) {
+
+            if($_GET['action']=='estimation_approved'){
+                $quote->set('status','estimation_approved');
+                $quote->save();
+
+                $this->api->mailer->addClientReceiver($quote->get('project_id'));
+                $this->api->mailer->addAllManagersReceivers($this->api->auth->model['organisation_id']);
+                $this->api->mailer->sendMail('quote_approved',array(
+                    'quotename'=>$quote->get('name'),
+                    'link'=>$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
+                ));
+
+                $this->api->redirect($this->api->url('/quotes'));
+            }
+
+            $but=$view->add('Button')->setClass('right')->set('Approve Quotation','estimation_approved');
+            $but->js('click', array(
+                $this->js()->univ()->redirect($this->api->url(null,array('quote_id'=>$quote['id'],'action'=>'estimation_approved')))
+            ));
         }
     }
 
