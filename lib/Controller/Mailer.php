@@ -50,6 +50,21 @@ class Controller_Mailer extends AbstractController {
         }
         return $this;
     }
+    /*
+     */
+    function addClientReceiver($project_id){
+        $p=$this->add('Model_Project');
+        $p->addCondition('id',$project_id);
+
+        $c=$p->join('client.id','client_id','left','_c');
+        $c->addField('email','email');
+        foreach ($p->getRows() as $project){
+            if(!in_array($project['email'],$this->receivers)){
+                $this->receivers[]=$project['email'];
+            }
+        }
+        return $this;
+    }
     function sendMail($template,$options) {
         if(count($this->receivers)>0){
             $from=$this->api->getConfig('tmail/from','test@test.com');

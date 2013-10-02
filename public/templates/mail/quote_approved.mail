@@ -1,0 +1,9 @@
+<?from?>hello@example.com<?/from?>
+<?subject?>Quote has been approved<?/?>
+<?body?>
+
+Quote has been approved: "<?$quotename?>".<br />
+A detailed breakdown is available for you if you follow this <a href="<?$link?>">link</a>.
+<br /><br />
+<?sign?>
+<?/sign?><?/body?>
