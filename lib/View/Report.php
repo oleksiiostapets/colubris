@@ -93,8 +93,4 @@ class View_Report extends View {
         $cr->addColumn('expander','more');
     }
 
-    function getColumnIndex($i){
-        $columns=array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
-        return $columns[$i];
-    }
 }
