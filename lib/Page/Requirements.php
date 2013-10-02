@@ -398,7 +398,7 @@ class Page_Requirements extends Page {
         if($cr->grid){
             $cr->grid->addClass('zebra bordered');
          	$cr->grid->addColumn('expander','more');
-         	//$cr->grid->addFormatter('file','download');
+         	$cr->grid->addFormatter('file','download');
          	//$cr->grid->addFormatter('estimate','estimate');
          	$cr->grid->setFormatter('name','wrap');
         }

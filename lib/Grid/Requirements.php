@@ -119,4 +119,7 @@ class Grid_Requirements extends Grid_CountLines {
         }
 
     }
+    function format_download($field){
+        $this->current_row_html[$field]='<a target="_blank" href="'.$this->current_row[$field].'"/>file</a>';
+    }
 }
