@@ -15,12 +15,15 @@ class View_Report extends View {
         $j_task->addField('type','type');
         $j_task->addField('estimate','estimate');
         $j_task->addField('project_id','project_id');
+        $j_task->addField('organisation_id','organisation_id');
 
         $j_project = $j_task->join('project.id','project_id','left','_p');
         $j_project->addField('project_name','name');
 
         $j_req = $j_task->join('requirement','requirement_id','left','_req');
         $j_req->addField('quote_id','quote_id');
+
+        $m->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
 
         if( ($this->api->currentUser()->isDeveloper()) || $this->api->currentUser()->isClient() ){
             $mp=$this->add('Model_Project');
