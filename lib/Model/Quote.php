@@ -120,6 +120,16 @@ class Model_Quote extends Model_Quote_Base {
         throw $this->exception('Wrong role');
     }
 
+    // ONLY client and manager have access to estimate quotes with status 'estimated'
+    function canUserApproveQuote($user) {
+        if ( ($user->isManager()) || ($user->isClient()) ) {
+            if ($this['status']=='estimated') {
+                return true;
+            }
+        }
+        return false;
+    }
+
     function canUserEditQuote($user) {
         return $user->checkRoleSimpleRights(array(false,true,false,false,false));
     }
