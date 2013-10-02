@@ -115,7 +115,7 @@ class Model_Task_Definitions extends Model_Auditable {
         } else if ($user->isDeveloper()) {
             return array('name','descr_original','priority','type','status','estimate','requester_id','assigned_id');
         } else if ($user->isClient()) {
-            return array('name','descr_original','priority','type','status','requester_id','assigned_id');
+            return array('name','descr_original','priority','type','status');
         }
         throw $this->exception('Wrong role');
     }
@@ -128,7 +128,7 @@ class Model_Task_Definitions extends Model_Auditable {
         } else if ($user->isDeveloper()) {
             return array('name','priority','type','status','estimate','spent_time','requester','assigned');
         } else if ($user->isClient()) {
-            return array('name','priority','type','status','estimate','requester','assigned');
+            return array('name','priority','type','status','estimate');
         }
         throw $this->exception('Wrong role');
     }
