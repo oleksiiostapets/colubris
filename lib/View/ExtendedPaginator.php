@@ -5,7 +5,6 @@ class View_ExtendedPaginator extends View {
 
         if($_GET['paginatorcount']){
             $default_count=$_GET['paginatorcount'];
-//            setcookie('paginatorcount',$default_count,time()+60*60*24*30*6);
             setcookie(
                 'paginatorcount',
                 $default_count,
@@ -16,8 +15,6 @@ class View_ExtendedPaginator extends View {
             $default_count=$_COOKIE['paginatorcount'];
         }else{
             $default_count=10;
-//            setcookie('paginatorcount',$default_count,time()+60*60*24*30*6);
-
             setcookie(
                 'paginatorcount',
                 $default_count,
