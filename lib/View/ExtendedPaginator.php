@@ -5,7 +5,13 @@ class View_ExtendedPaginator extends View {
 
         if($_GET['paginatorcount']){
             $default_count=$_GET['paginatorcount'];
-            setcookie('paginatorcount',$default_count,time()+60*60*24*30*6);
+//            setcookie('paginatorcount',$default_count,time()+60*60*24*30*6);
+            setcookie(
+                'paginatorcount',
+                $default_count,
+                time()+60*60*24*7*30*12,
+                $this->api->url('/')->useAbsoluteUrl()
+            );
         }elseif ( (isset($_COOKIE['paginatorcount'])) && ($_COOKIE['paginatorcount']>0) ){
             $default_count=$_COOKIE['paginatorcount'];
         }else{
