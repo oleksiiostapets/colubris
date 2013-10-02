@@ -60,7 +60,7 @@ class View_Report extends View {
 
         $v=$this->add('View');
         $v->setClass('right');
-        $export_button=$v->add('Button')->set('Export to CSV');
+        $export_button=$v->add('Button')->set('Export to XLS');
         $export_button->js('click',
             $this->js()->univ()->redirect($this->api->url(null,array('action'=>'export')))
         );
