@@ -3,7 +3,13 @@ class Model_Quote_Definitions extends Model_Auditable {
     public $table="quote";
     function init(){
         parent::init(); //$this->debug();
-        $this->hasOne('Project')->display(array('form'=>'Form_Field_AutoEmpty'))->mandatory('required');
+        if ($this->api->currentUser()->isClient()){
+            $this->hasOne('Project_Client')->display(array('form'=>'Form_Field_AutoEmpty'))->mandatory('required');
+        }elseif($this->api->currentUser()->isDeveloper()){
+            $this->hasOne('Project_Participant')->display(array('form'=>'Form_Field_AutoEmpty'))->mandatory('required');
+        }else{
+            $this->hasOne('Project')->display(array('form'=>'Form_Field_AutoEmpty'))->mandatory('required');
+        }
 
         //$this->addField('project_id')->refModel('Model_Project');
         //->display(array('form'=>'autocomplete/basic'));
