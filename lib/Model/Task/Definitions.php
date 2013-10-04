@@ -74,7 +74,8 @@ class Model_Task_Definitions extends Model_Auditable {
 
         $this->addHook('beforeSave', function($m){
             $m['updated_dts']=date('Y-m-d G:i:s', time());
-
+        });
+        $this->addHook('afterSave', function($m){
             $m->api->mailer->task_status=$m['status'];
             $m->api->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
             $m->api->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
@@ -84,7 +85,6 @@ class Model_Task_Definitions extends Model_Auditable {
                 'changer_part'=>$m->api->currentUser()->get('name').' has made changes in task "'.$m->get('name').'".',
             ));
         });
-
         $this->addHook('beforeDelete', function($m){
             $m->api->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
             $m->api->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
