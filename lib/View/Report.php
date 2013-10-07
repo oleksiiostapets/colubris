@@ -73,10 +73,14 @@ class View_Report extends View {
             'category'       => 'Colubris report'
         );
         $fields = array('project_name', 'task_name', 'status', 'type', 'estimate', 'spent_time','date');
+        $fields_width = array(15, 30, 10, 14, 12, 12, 15);
+        $count_totals = array('estimate', 'spent_time','project_name');
         $v->add('kk_xls\View_ButtonXLS',array(
-            'data'       => $m,
-            'properties' => $properties,
-            'fields'     => $fields
+            'data'         => $m,
+            'properties'   => $properties,
+            'fields'       => $fields,
+            'fields_width' => $fields_width,
+            'count_totals' => $count_totals
         ))->set('Export to XLS');
 
         $v=$this->add('View');
