@@ -74,7 +74,7 @@ class View_Report extends View {
         );
         $fields = array('project_name', 'task_name', 'status', 'type', 'estimate', 'spent_time','date');
         $fields_width = array(15, 30, 10, 14, 12, 12, 15);
-        $count_totals = array('estimate', 'spent_time','project_name');
+        $count_totals = array('spent_time');
         $v->add('kk_xls\View_ButtonXLS',array(
             'data'         => $m,
             'properties'   => $properties,
