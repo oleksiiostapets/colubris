@@ -18,6 +18,7 @@ class Page_Requirements extends Page {
          */
         if (!isset($_GET['quote_id'])) throw $this->exception('Provide $_GET[\'quote_id\']');
     	$this->api->stickyGet('quote_id');
+    	$this->api->stickyGet('project_id');
         $quote = $this->add('Model_Quote')->load($_GET['quote_id']); // TODO nice UI to show user if there is no quote
 
         // Does Project of this quotetion exist?
@@ -106,7 +107,11 @@ class Page_Requirements extends Page {
         if (!isset($_GET['requirement_id'])) {
             throw $this->exception('Provide $_GET[\'requirement_id\']');
         }
+        if (!isset($_GET['project_id'])) {
+            throw $this->exception('Provide $_GET[\'project_id\']');
+        }
     	$this->api->stickyGET('requirement_id');
+    	$this->api->stickyGET('project_id');
     	$req=$this->add('Model_Requirement')->load($_GET['requirement_id']);
 
     	$this->add('View')->setHtml('<strong>Description:</strong> '.$this->api->colubris->makeUrls($req->get('descr')));
