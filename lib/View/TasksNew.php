@@ -10,11 +10,11 @@ class View_TasksNew extends View {
     	$f->addSubmit('Save');
     	
         if($f->isSubmitted()){
-        	if ($this->api->recall('task_project_id')>0){
-        		$f->getModel()->set('project_id',$this->api->recall('task_project_id'));
+        	if ($this->api->recall('project_id')>0){
+        		$f->getModel()->set('project_id',$this->api->recall('project_id'));
         	}
-            if ($this->api->recall('task_equirement_id')>0){
-        		$f->getModel()->set('requirement_id',$this->api->recall('task_requirement_id'));
+            if ($this->api->recall('equirement_id')>0){
+        		$f->getModel()->set('requirement_id',$this->api->recall('requirement_id'));
         	}
         	$f->update();
 
