@@ -34,11 +34,11 @@ class page_task extends Page {
                 1 => array(
                     'name' => 'Tasks',
                     'url' => $this->api->url('tasks',array(
-                        'project_id'=>$this->api->recall('task_project_id'),
-                        'quote_id'=>$this->api->recall('task_quote_id'),
-                        'requirement_id'=>$this->api->recall('task_requirement_id'),
-                        'status'=>$this->api->recall('task_status'),
-                        'assigned_id'=>$this->api->recall('task_assigned_id'),
+                        'project_id'=>$this->api->recall('project_id'),
+                        'quote_id'=>$this->api->recall('quote_id'),
+                        'requirement_id'=>$this->api->recall('requirement_id'),
+                        'status'=>$this->api->recall('status'),
+                        'assigned_id'=>$this->api->recall('assigned_id'),
                     )),
                 ),
                 2 => array(

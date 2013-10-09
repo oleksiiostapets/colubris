@@ -2,10 +2,9 @@
 class MyMenu extends Menu_Basic {
     function init() {
         parent::init();
-
         if($this->api->auth->isLoggedIn()) {
             if ($this->api->currentUser()->canSeeDashboard()) $this->addMenuItem('dashboard','Dashboard');
-            if ($this->api->currentUser()->canSeeTaskList()) $this->addMenuItem('tasks&project_id='.$this->api->recall('task_project_id'),'Tasks');
+            if ($this->api->currentUser()->canSeeTaskList()) $this->addMenuItem('tasks','Tasks');
             if ($this->api->currentUser()->canSeeQuotesList()) $this->addMenuItem('quotes','Quotes');
             if ($this->api->currentUser()->canUserMenageClients()) $this->addMenuItem('clients','Clients');
             if ($this->api->currentUser()->canSeeProjectList()) $this->addMenuItem('projects','Projects');

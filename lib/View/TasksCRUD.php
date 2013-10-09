@@ -52,22 +52,22 @@ class View_TasksCRUD extends View {
 
     // add conditions according to filters
     function addConditions($m) {
-        if (!is_null($this->api->recall('task_project_id')) && ($this->api->recall('task_project_id')>0)){
-            $m->addCondition('project_id',$this->api->recall('task_project_id'));
+        if (!is_null($this->api->recall('project_id')) && ($this->api->recall('project_id')>0)){
+            $m->addCondition('project_id',$this->api->recall('project_id'));
         }
-        if (!is_null($this->api->recall('task_quote_id')) && ($this->api->recall('task_quote_id')>0)) {
+        if (!is_null($this->api->recall('quote_id')) && ($this->api->recall('quote_id')>0)) {
         	$mq = $this->add('Model_Quote')
-                ->load($this->api->recall('task_quote_id'));
+                ->load($this->api->recall('quote_id'));
         	$m->addCondition('requirement_id','IN', explode(',',$mq->getRequirements_id()));
         }
-        if (!is_null($this->api->recall('task_requirement_id')) && ($this->api->recall('task_requirement_id')>0)){
-            $m->addCondition('requirement_id',$this->api->recall('task_requirement_id'));
+        if (!is_null($this->api->recall('requirement_id')) && ($this->api->recall('requirement_id')>0)){
+            $m->addCondition('requirement_id',$this->api->recall('requirement_id'));
         }
-        if (!is_null($this->api->recall('task_status')) && ($this->api->recall('task_status')!='all')){
-            $m->addCondition('status',$this->api->recall('task_status'));
+        if (!is_null($this->api->recall('status')) && ($this->api->recall('status')!='all')){
+            $m->addCondition('status',$this->api->recall('status'));
         }
-        if (!is_null($this->api->recall('task_assigned_id')) && ($this->api->recall('task_assigned_id')>0)){
-            $m->addCondition('assigned_id',$this->api->recall('task_assigned_id'));
+        if (!is_null($this->api->recall('assigned_id')) && ($this->api->recall('assigned_id')>0)){
+            $m->addCondition('assigned_id',$this->api->recall('assigned_id'));
         }
         return $m;
     }
