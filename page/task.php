@@ -15,7 +15,7 @@ class page_task extends Page {
         }elseif($this->api->currentUser()->isClient()){
             $mp->forClient();
         }
-        $this->task=$this->add('Model_Task_RestrictedUsers');
+        $this->task=$this->add('Model_Task');
         $this->task->tryLoad($_GET['task_id']);
         if(!$this->task->loaded()){
             throw $this->exception('Task not exist!','Exception_Task');
@@ -47,6 +47,10 @@ class page_task extends Page {
                 ),
             )
         ));
+
+        $_GET['project_id']=$this->task->get('project_id');
+        $this->task=$this->add('Model_Task_RestrictedUsers');
+        $this->task->load($_GET['task_id']);
 
         $this->add('View_SwitcherEditTask',array('task'=>$this->task));
 
