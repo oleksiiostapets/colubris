@@ -103,17 +103,11 @@ class Page_Requirements extends Page {
 
     }
     function page_more(){
-        //$this->add('Model_Reqcomment')->delete(29);
-        $this->api->stickyGET('project_id');
-        if (!isset($_GET['requirement_id'])) {
-            throw $this->exception('Provide $_GET[\'requirement_id\']');
-        }
-        if (!isset($_GET['project_id'])) {
-            throw $this->exception('Provide $_GET[\'project_id\']');
-        }
         $this->api->stickyGET('requirement_id');
 
     	$req=$this->add('Model_Requirement')->load($_GET['requirement_id']);
+        $quote=$this->add('Model_Quote')->load($req->get('quote_id'));
+        $_GET['project_id']=$quote->get('project_id');
 
     	$this->add('View')->setHtml('<strong>Description:</strong> '.$this->api->colubris->makeUrls($req->get('descr')));
 
