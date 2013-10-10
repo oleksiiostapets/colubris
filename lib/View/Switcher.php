@@ -46,6 +46,7 @@ class View_Switcher extends View {
         }
         $fp=$f->addField('dropdown','project');
         $fp->setValueList($p_arr);
+        $_GET['project_id']=$this->api->recall('project_id');
         $fp->set($this->api->recall('project_id'));
 
         // Quote
