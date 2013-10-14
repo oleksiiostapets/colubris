@@ -58,6 +58,11 @@ class View_ReportsSwitcher extends View {
 		
         // Performer
         $ma=$this->add('Model_User_Organisation')->setOrder('name');
+        $q=$ma->_dsql();
+        $or = $q->orExpr();
+        $or->where('is_manager','=',true);
+        $or->where('is_developer','=',true);
+        $q->having($or);
         $a_arr=$ma->getRows();
         $u_arr['0']='all';
         foreach($a_arr as $a){
