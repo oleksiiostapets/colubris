@@ -108,7 +108,7 @@ class View_Switcher extends View {
 			$fs->set($this->api->recall('status'));
 			
 			// Assigned_to
-			$ma=$this->add('Model_User_Organisation')->setOrder('name');
+			$ma=$this->add('Model_User_Task')->setOrder('name');
 			$a_arr=$ma->getRows();
 			$u_arr['0']='all';
 			foreach($a_arr as $a){
