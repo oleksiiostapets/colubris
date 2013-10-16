@@ -38,6 +38,7 @@ class Model_Requirement_Base extends Model_Auditable {
                 ->table('reqcomment')
                 ->field('count(id)')
                 ->where('reqcomment.requirement_id',$q->getField('id'))
+                ->where('reqcomment.is_deleted',false)
                 ;
         });
         $this->addField('is_deleted')->defaultValue('0')->type('boolean')->mandatory('required');
