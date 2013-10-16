@@ -106,7 +106,7 @@ class View_Switcher extends View {
 			$fs=$f->addField('dropdown','status');
 			$fs->setValueList($s_arr);
 			$fs->set($this->api->recall('status'));
-			
+
 			// Assigned_to
 			$ma=$this->add('Model_User_Task')->setOrder('name');
 			$a_arr=$ma->getRows();
