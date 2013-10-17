@@ -280,7 +280,7 @@ class Page_Requirements extends Page {
                 $count++;
             }
         }
-        $gr = $v->add('Grid');
+        $gr = $v->add('Grid_Quote');
         $gr->addColumn('text','name','');
         $gr->addColumn('text','value','Info');
         $gr->addFormatter('value','wrap');
