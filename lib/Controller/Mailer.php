@@ -6,7 +6,7 @@ class Controller_Mailer extends AbstractController {
         $this->receivers=array();
         foreach($r as $receiver){
             if(!in_array($receiver,$this->receivers)){
-                $this->receivers[]=$receiver;
+                if($this->isEmail($receiver)) $this->receivers[]=$receiver;
             }
         }
         return $this;
@@ -29,7 +29,7 @@ class Controller_Mailer extends AbstractController {
                 ){
                     if(!in_array($u['email'],$this->receivers)){
                         if ( (!$exclude_myself) || ($u['id']!=$this->api->auth->model['id']) ){
-                            $this->receivers[]=$u['email'];
+                            if($this->isEmail($u['email'])) $this->receivers[]=$u['email'];
                         }
                     }
                 }
@@ -45,7 +45,7 @@ class Controller_Mailer extends AbstractController {
         $u->addCondition('is_manager',true);
         foreach ($u->getRows() as $user){
             if(!in_array($user['email'],$this->receivers)){
-                $this->receivers[]=$user['email'];
+                if($this->isEmail($user['email'])) $this->receivers[]=$user['email'];
             }
         }
         return $this;
@@ -60,10 +60,17 @@ class Controller_Mailer extends AbstractController {
         $c->addField('email','email');
         foreach ($p->getRows() as $project){
             if(!in_array($project['email'],$this->receivers)){
-                $this->receivers[]=$project['email'];
+                if($this->isEmail($project['email'])) $this->receivers[]=$project['email'];
             }
         }
         return $this;
+    }
+    function isEmail($email){
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            return false;
+        }else{
+            return true;
+        }
     }
     function sendMail($template,$options) {
         if(count($this->receivers)>0){
