@@ -13,7 +13,7 @@ class View_TasksNew extends View {
         	if ($this->api->recall('project_id')>0){
         		$f->getModel()->set('project_id',$this->api->recall('project_id'));
         	}
-            if ($this->api->recall('equirement_id')>0){
+            if ($this->api->recall('requirement_id')>0){
         		$f->getModel()->set('requirement_id',$this->api->recall('requirement_id'));
         	}
         	$f->update();
