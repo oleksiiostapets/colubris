@@ -51,7 +51,8 @@ class View_Switcher extends View {
 
         // Quote
 		$mq=$this->add('Model_Quote');
-		$mq->addCondition('status','estimation_approved');
+//		$mq->addCondition('status','estimation_approved');
+        $mq->addCondition('status','IN',array('estimation_approved','estimated'));
 		$mq->addCondition('project_id',$this->api->recall('project_id'));
 		if($_GET['quote_id']!==null){
 			$check=$mq->tryLoad($_GET['quote_id']);
