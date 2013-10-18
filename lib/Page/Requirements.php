@@ -184,7 +184,7 @@ class Page_Requirements extends Page {
                 $this->api->mailer->addAllManagersReceivers($this->api->auth->model['organisation_id']);
                 $this->api->mailer->sendMail('quote_approved',array(
                     'quotename'=>$quote->get('name'),
-                    'link'=>$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
+                    'link'=>$this->api->siteURL().$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
                 ));
 
                 $this->api->redirect($this->api->url('/quotes'));

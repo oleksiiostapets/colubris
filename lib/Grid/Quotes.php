@@ -71,7 +71,7 @@ class Grid_Quotes extends Grid {
                 $this->api->mailer->addAllManagersReceivers($this->api->auth->model['organisation_id']);
                 $this->api->mailer->sendMail('quote_approved',array(
                     'quotename'=>$quote->get('name'),
-                    'link'=>$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
+                    'link'=>$this->api->siteURL().$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
                 ));
 
                 $this->js()->reload()->execute();
