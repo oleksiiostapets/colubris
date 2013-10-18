@@ -4,7 +4,7 @@ class View_SwitcherEditTask extends View {
         parent::init();
 
         $v=$this->add('View')->setClass('left');
-        
+
         $f=$v->add('Form');
         $f->addClass('horizontal');
         // Project
