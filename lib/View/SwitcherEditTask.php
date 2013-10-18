@@ -30,7 +30,7 @@ class View_SwitcherEditTask extends View {
 
         // Quote
 		$mq=$this->add('Model_Quote');
-		$mq->addCondition('status','estimation_approved');
+		$mq->addCondition('status','IN',array('estimation_approved','estimated'));
 		$mq->addCondition('project_id',$this->task->get('project_id'));
 		if($_GET['edit_quote_id']!==null){
 			$check=$mq->tryLoad($_GET['edit_quote_id']);
