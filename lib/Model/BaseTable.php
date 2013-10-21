@@ -12,7 +12,7 @@ class Model_BaseTable extends Model_Table {
         $delete->owner->beginTransaction();
         $this->hook('beforeDelete',array($delete));
         $this->update(array('is_deleted'=>'1'));
-        $this->hook('afterDelete');
+        //$this->hook('afterDelete');
         $delete->owner->commit();
 
         $this->dsql=$tmp;
