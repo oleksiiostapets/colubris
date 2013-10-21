@@ -18,7 +18,8 @@ class View_Report extends View {
         $j_task->addField('organisation_id','organisation_id');
 
         $j_project = $j_task->join('project.id','project_id','left','_p');
-        $j_project->addField('project_name','name');
+        $f1=$j_project->addField('project_name','name');
+        $f1->sortable(true);
 
         $j_req = $j_task->join('requirement','requirement_id','left','_req');
         $j_req->addField('quote_id','quote_id');
