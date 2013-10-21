@@ -149,12 +149,14 @@ class Grid_Quotes extends Grid {
         $this->current_row_html['quotation'] =
                 '<div class="quote_name"><a href="'.$this->api->url('quotes/rfq/requirements',array(
                     'quote_id'=>$this->current_row['id']
-//                    ,'project_id' => $this->current_row['project_id']
                 )).'">'.$this->current_row['name'].'</a></div>'.
-                '<div class="quote_project"><span>Project:</span>'.$this->current_row['project'].'</div>'.
-                '<div class="quote_client"><span>User:</span>'.$this->current_row['user'].'</div>'
+                '<div class="quote_project"><span>Project:</span>'.$this->current_row['project'].'</div>'
         ;
-
+        if (!$this->api->currentUser()->isClient()){
+            $this->current_row_html['quotation'] .=
+                    '<div class="quote_client"><span>User:</span>'.$this->current_row['user'].'</div>'
+            ;
+        }
         // estimated time
         if ($this->current_row['estimated'] == '') {
             $this->current_row['estimated'] = '-';
