@@ -60,7 +60,11 @@ class Page_Requirements extends Page {
 
         // quote info grid
         $left->add('H4')->set('Quote:');
-        $fields_required = array('project','user','name',/*'estimated',*/'general_description',);
+        if ($this->api->currentUser()->isClient()){
+            $fields_required = array('project','name',/*'estimated',*/'general_description',);
+        }else{
+            $fields_required = array('project','user','name',/*'estimated',*/'general_description',);
+        }
         $this->addQuoteInfoGrid($left, $fields_required,$quote);
 
         // | *** RIGHT *** |
