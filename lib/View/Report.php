@@ -13,7 +13,7 @@ class View_Report extends View {
         $j_task->addField('task_name','name');
         $j_task->addField('status','status');
         $j_task->addField('type','type');
-        $j_task->addField('estimate','estimate');
+//        $j_task->addField('estimate','estimate');
         $j_task->addField('project_id','project_id');
         $j_task->addField('organisation_id','organisation_id');
 
@@ -72,8 +72,8 @@ class View_Report extends View {
             'keywords'       => 'Colubris report',
             'category'       => 'Colubris report'
         );
-        $fields = array('project_name', 'task_name', 'status', 'type', 'estimate', 'spent_time','date');
-        $fields_width = array(15, 30, 10, 14, 12, 12, 15);
+        $fields = array('project_name', 'task_name', 'status', 'type', 'spent_time','date');
+        $fields_width = array(15, 30, 10, 14, 12, 15);
         $count_totals = array('spent_time');
         $v->add('kk_xls\View_ButtonXLS',array(
             'data'         => $m,
