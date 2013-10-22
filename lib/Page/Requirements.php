@@ -113,7 +113,7 @@ class Page_Requirements extends Page {
         $quote=$this->add('Model_Quote')->load($req->get('quote_id'));
         $_GET['project_id']=$quote->get('project_id');
 
-    	$this->add('View')->setHtml('<strong>Description:</strong> '.$this->api->colubris->makeUrls($req->get('descr')));
+    	$this->add('View')->setHtml('<strong>Description:</strong> '.$this->api->colubris->makeUrls(nl2br($req->get('descr'))));
 
     	$this->add('View')->setHtml('<hr /><strong>Comments:</strong> ');
 
