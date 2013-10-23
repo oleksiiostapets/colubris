@@ -179,12 +179,19 @@ class Page_Requirements extends Page {
 
     function addApproveButton($view, $quote) {
         if ($quote->canUserApproveQuote($this->api->currentUser())) {
-
             if($_GET['action']=='estimation_approved'){
                 $quote->set('status','estimation_approved');
                 $quote->save();
 
+                // Sending email to client
                 $this->api->mailer->addClientReceiver($quote->get('project_id'));
+                $this->api->mailer->sendMail('quote_approved',array(
+                    'quotename'=>$quote->get('name'),
+                    'link'=>$this->api->siteURL().$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
+                ));
+
+                // Clearing email receivers and Sending email to managers
+                $this->api->mailer->receivers=array();
                 $this->api->mailer->addAllManagersReceivers($this->api->auth->model['organisation_id']);
                 $this->api->mailer->sendMail('quote_approved',array(
                     'quotename'=>$quote->get('name'),

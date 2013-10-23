@@ -1,6 +1,6 @@
 <?php
 class Controller_Mailer extends AbstractController {
-    private $receivers=array();
+    public $receivers=array();
     public $task_status='';
     function setReceivers($r){
         $this->receivers=array();
