@@ -67,7 +67,15 @@ class Grid_Quotes extends Grid {
                 $quote=$this->add('Model_Quote')->load($_GET['approve']);
                 $quote->approve();
 
+                // Sending email to client
                 $this->api->mailer->addClientReceiver($quote->get('project_id'));
+                $this->api->mailer->sendMail('quote_approved',array(
+                    'quotename'=>$quote->get('name'),
+                    'link'=>$this->api->siteURL().$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
+                ));
+
+                // Clearing email receivers and Sending email to managers
+                $this->api->mailer->receivers=array();
                 $this->api->mailer->addAllManagersReceivers($this->api->auth->model['organisation_id']);
                 $this->api->mailer->sendMail('quote_approved',array(
                     'quotename'=>$quote->get('name'),
