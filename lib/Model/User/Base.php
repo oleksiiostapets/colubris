@@ -45,9 +45,11 @@ class Model_User_Base extends Model_BaseTable {
         });
 
         $this->addHook('beforeModify',function($m){
+            /*
             if($m->dirty['email']) throw $m
                 ->exception('Do not change email for existing user','ValidityCheck')
                 ->setField('email');
+            */
         });
     }
     function me(){
