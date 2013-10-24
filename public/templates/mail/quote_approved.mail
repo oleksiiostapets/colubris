@@ -2,8 +2,13 @@
 <?subject?>Quote has been approved<?/?>
 <?body?>
 
-Quote has been approved: "<?$quotename?>".<br />
-A detailed breakdown is available for you if you follow this <a href="<?$link?>">link</a>.
+Hello,
+
+The quotation "<?$quotename?>" have been confirmed for development. The development team will start working on it shortly.<br />
+You will be able to see the development progress by following the below link:
+<a href="<?$link?>">link</a>
+
+If you have any questions, please do not hesitate to contact us.
 <br /><br />
 <?sign?>
 <?/sign?><?/body?>
