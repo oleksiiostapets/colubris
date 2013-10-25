@@ -60,6 +60,10 @@ class page_task extends Page {
         $f->setModel($this->task,array('name','descr_original','priority','type','status','estimate','requester_id','assigned_id'));
         $f->addSubmit('Save');
         if($f->isSubmitted()){
+            if($_GET['edit_quote_id']>0 && $_GET['edit_requirement_id']==0){
+                $f->js()->univ()->alert('You must select Requirement!')->execute();
+                return;
+            }
             $f->update();
             $f->js()->univ()->successMessage('Successfully updated task details')->execute();
         }

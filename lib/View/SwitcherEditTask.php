@@ -43,6 +43,7 @@ class View_SwitcherEditTask extends View {
 		foreach($q_arr as $q){
 			$qn_arr[$q['id']]=$q['name'];
 		}
+        $this->api->stickyGet('edit_quote_id');
 		if($_GET['edit_quote_id']!==null){
 			$this->api->memorize('edit_quote_id',$_GET['edit_quote_id']);
             $this->task->set('requirement_id',0);
@@ -62,8 +63,13 @@ class View_SwitcherEditTask extends View {
 		// Requirement
 		$mr=$this->add('Model_Requirement');
 		$mr->addCondition('quote_id',$this->api->recall('edit_quote_id'));
+        $this->api->stickyGet('edit_requirement_id');
     	if($_GET['edit_requirement_id']!==null){
-            $this->task->set('requirement_id',$_GET['edit_requirement_id']);
+            if ($_GET['edit_requirement_id']==0){
+                $this->task->set('requirement_id',null);
+            }else{
+                $this->task->set('requirement_id',$_GET['edit_requirement_id']);
+            }
             $this->task->save();
 		}
 		$r_arr=$mr->getRows();
