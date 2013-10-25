@@ -97,13 +97,16 @@ class Page_Requirements extends Page {
             ->addStyle('margin-bottom','20px')
         ;
 
+        $this->addExpiresBar($right,$quote);
         if (!$this->api->currentUser()->isClient()) $this->addProgressBars($right,$quote);
 
         $this->add('View')->setClass('clear');
 
         // grid with requirements
         $cr = $this->addRequirementsCRUD($this, $quote, $requirements, $total_view);
-        $this->addRequirementForm($this, $quote, $cr);
+        if (!$quote->isExpired()){
+            $this->addRequirementForm($this, $quote, $cr);
+        }
 
     }
     function page_more(){
@@ -134,7 +137,7 @@ class Page_Requirements extends Page {
         $this->tasks=$this->add('Model_Task_RestrictedUsers');
         $this->tasks->addCondition('project_id',$req['project_id']);
         $this->tasks->addCondition('requirement_id',$_GET['requirement_id']);
-        $this->addTasksCRUD($this);
+        $this->addTasksCRUD($this,$quote);
 
     }
 
@@ -325,6 +328,19 @@ class Page_Requirements extends Page {
 
         return $total_view;
     }
+
+    function addExpiresBar($view, $quote) {
+        // Expires box
+        if($quote->showExpiredBox()){
+            $v=$view->add('View')->setClass('floating_expires radius_10');
+            if (!$quote->isExpired()){
+                $v->add('View')->set('Expires on '.date('d F G:i',strtotime($quote->get('expires_dts'))));
+            }else{
+                $v->add('View')->set('Expired. Must re-quote.');
+            }
+        }
+    }
+
     function addProgressBars($view, $quote) {
         $v = $view->add('View')->setClass('floating_total radius_10 progress_bars');
         $v->add('View')->set('Progress:');
@@ -368,11 +384,18 @@ class Page_Requirements extends Page {
     public $allow_included = true;
     public $edit_fields = array('name','descr','estimate','file_id');
     function addRequirementsCRUD($view, $quote, $requirements, $total_view) {
+        if (strtotime($quote->get('expires_dts'))>time()){
+            $can_edit=$quote->canUserEditRequirements($this->api->currentUser());
+            $can_del=$quote->canUserDeleteRequirement($this->api->currentUser());
+        }else{
+            $can_edit=false;
+            $can_del=false;
+        }
         $cr = $view->add('CRUD',
             array(
                 'allow_add'    => false, // we cannot add from crud TODO make add from CRUD only
-                'allow_edit'   => $quote->canUserEditRequirements($this->api->currentUser()),
-                'allow_del'    => $quote->canUserDeleteRequirement($this->api->currentUser()),
+                'allow_edit'   => $can_edit,
+                'allow_del'    => $can_del,
                 'grid_class'   => 'Grid_Requirements',
                 'quote'        =>$quote,
                 'total_view'   =>$total_view,
@@ -429,13 +452,23 @@ class Page_Requirements extends Page {
         }
     }
 
-    function addTasksCRUD($view) {
+    function addTasksCRUD($view,$quote) {
+        $view->add('View')->setHtml('<strong>Tasks:</strong>');
         $user = $this->api->currentUser();
+        if (!$quote->isExpired()){
+            $allow_add=true;
+            $can_edit=true;
+            $can_del=true;
+        }else{
+            $allow_add=false;
+            $can_edit=false;
+            $can_del=false;
+        }
         $cr = $view->add('CRUD', array(
             'grid_class'      => 'Grid_Tasks',
-            'allow_add'       => true,
-            'allow_edit'      => true,
-            'allow_del'       => true,
+            'allow_add'       => $allow_add,
+            'allow_edit'      => $can_edit,
+            'allow_del'       => $can_del,
         ));
 
         $cr->setModel(
