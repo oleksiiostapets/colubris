@@ -6,13 +6,13 @@ class page_quotation extends Page {
         $f=$v->add('Form');
 
         // Client data
-        $f->add('H4')->set('Your datails:');
+        $f->add('H4')->set('Your details:');
         $f->addField('line','client_name')->setCaption('Name');
         $f->addField('line','email');
         $f->addField('line','phone');
 
         // Project data
-        $f->add('H4')->set('Project datails:');
+        $f->add('H4')->set('Project details:');
         $f->addField('line','project_name')->setCaption('Name');
         $f->addField('text','project_description')->setCaption('Description');
 
