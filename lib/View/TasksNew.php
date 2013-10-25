@@ -10,6 +10,10 @@ class View_TasksNew extends View {
     	$f->addSubmit('Save');
     	
         if($f->isSubmitted()){
+            if($this->api->recall('quote_id')>0 && $this->api->recall('requirement_id')==0){
+                $f->js()->univ()->alert('You must select Requirement!')->execute();
+                return;
+            }
         	if ($this->api->recall('project_id')>0){
         		$f->getModel()->set('project_id',$this->api->recall('project_id'));
         	}
