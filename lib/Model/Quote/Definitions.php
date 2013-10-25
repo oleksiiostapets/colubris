@@ -61,8 +61,11 @@ class Model_Quote_Definitions extends Model_Auditable {
         $this->addField('created_dts');
         $this->addField('updated_dts')->caption('Updated')->sortable(true);
 
+        $this->addField('expires_dts')->caption('Expires');
+
         $this->addHook('beforeInsert', function($m,$q){
             $q->set('created_dts', $q->expr('now()'));
+            $q->set('expires_dts', $q->expr('DATE_ADD(NOW(), INTERVAL 1 MONTH)'));
         });
 
         $this->addHook('beforeSave', function($m){

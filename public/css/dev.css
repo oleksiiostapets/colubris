@@ -179,6 +179,15 @@
     font-size: 18px;
 }
 
+.floating_expires {
+    border: rgba(166, 166, 166, 0.63) 1px solid;
+    background-color: rgba(227, 227, 227, 0.86);
+    padding: 10px 20px;
+    color: #0c7003;
+    font-weight: bold;
+    font-size: 18px;
+}
+
 ul.role-menu-lister {
     float: right;
     padding: 5px;

@@ -217,11 +217,11 @@ class Model_Quote extends Model_Quote_Base {
         if ($user->isAdmin()) {
             return array();
         } else if ($user->isManager()) {
-            return array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status','updated_dts');
+            return array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status','updated_dts','expires_dts');
         } else if ($user->isDeveloper()) {
-            return array('project','user','name','estimated','spent_time','durdead','status','updated_dts');
+            return array('project','user','name','estimated','spent_time','durdead','status','updated_dts','expires_dts');
         } else if ($user->isClient()) {
-            return array('project','name','estimated','estimpay','rate','currency','durdead','status','updated_dts');
+            return array('project','name','estimated','estimpay','rate','currency','durdead','status','updated_dts','expires_dts');
         }
         throw $this->exception('Wrong role');
     }
@@ -230,9 +230,9 @@ class Model_Quote extends Model_Quote_Base {
         if ($user->isAdmin()) {
             return array();
         } else if ($user->isFinancial()) {
-            return array('name','project_id','general_description','rate','currency','duration','deadline','status');
+            return array('name','project_id','general_description','rate','currency','duration','deadline','status','expires_dts');
         } else if ($user->isManager()) {
-            return array('name','project_id','general_description','duration','deadline','status');
+            return array('name','project_id','general_description','duration','deadline','status','expires_dts');
         } else if ($user->isDeveloper()) {
             return array();
         } else if ($user->isClient()) {
@@ -270,6 +270,19 @@ class Model_Quote extends Model_Quote_Base {
         }
         return true;
     }
-
+    function showExpiredBox(){
+        if($this->get('status')!='estimation_approved' && $this->get('status')!='finished'){
+            return true;
+        }
+        return false;
+    }
+    function isExpired(){
+        if($this->get('status')!='estimation_approved' && $this->get('status')!='finished'){
+            if (strtotime($this->get('expires_dts'))<time()){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

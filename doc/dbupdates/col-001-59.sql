@@ -1,0 +1,1 @@
+ALTER TABLE `quote` ADD COLUMN `expires_dts` TIMESTAMP NULL DEFAULT NULL  AFTER `deleted_id` ;
