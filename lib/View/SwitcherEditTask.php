@@ -52,7 +52,7 @@ class View_SwitcherEditTask extends View {
             if($this->task->get('requirement_id')>0){
                 $cmr=$this->add('Model_Requirement')->tryLoad($this->task->get('requirement_id'));
                 if($cmr->loaded()){
-                    $this->api->memorize('edit_edit_id',$cmr->get('quote_id'));
+                    $this->api->memorize('edit_quote_id',$cmr->get('quote_id'));
                 }
             }
         }
