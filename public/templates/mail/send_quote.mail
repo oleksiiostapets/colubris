@@ -6,6 +6,6 @@ Dear <?$username?>,<br />
 Our team have completed estimation of your Request for Quotation: "<?$quotename?>".<br />
 A detailed breakdown is available for you if you follow this <a href="<?$link?>">link</a>.
 <br /><br />
-Please do not hesitate to contact me about clarification.
+Please do not hesitate to contact us about clarification.
 <?sign?>
 <?/sign?><?/body?>
