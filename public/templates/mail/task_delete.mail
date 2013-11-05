@@ -3,7 +3,6 @@
 <?body?>
 
 <?$changer_part?><br />
-Review tasks <a href="<?$link?>">here</a>.<br />
 
 <?sign?>
 <?/sign?><?/body?>
