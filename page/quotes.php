@@ -100,7 +100,7 @@ class page_quotes extends Page {
             'allow_add'       => false,
             'allow_edit'      => $this->quote->canUserEditQuote($user),
             'allow_del'       => $this->quote->canUserDeleteQuote($user),
-            'allowed_actions' => $this->quote->userAllowedActions($user),
+            'allowed_actions' => $this->quote->userAllowedActions($user,$mode),
         ));
         $cr->setModel(
             $this->quote,
@@ -110,12 +110,6 @@ class page_quotes extends Page {
 
         if($cr->grid){
             if ($this->quote->userAllowedArchive($user)){
-                if($mode=='active'){
-                    $cr->grid->addColumn('button','in_archive');
-                }
-                if($mode=='archive'){
-                    $cr->grid->addColumn('button','activate');
-                }
                 if($_GET['in_archive']){
                     $mq=$this->add('Model_Quote')->load($_GET['in_archive']);
                     $mq->in_archive();
@@ -131,7 +125,7 @@ class page_quotes extends Page {
                     $cr->grid->js()->reload()->execute();
                 }
             }
-            
+
             $cr->grid->addClass('zebra bordered');
             $cr->grid->add('View_ExtendedPaginator',
                 array(

@@ -8,6 +8,8 @@ class Grid_Quotes extends Grid {
         'approve'        => array('status'=>array('Estimated'),          'name'=>'Approve Estimation',      'get_var'=>'approve'),
         'estimate'       => array('status'=>array('Estimate Needed'),    'name'=>'Estimate',                'get_var'=>'estimate'),
         'details'        => array('status'=>array('any'),                'name'=>'Details',                 'get_var'=>'details'),
+        'active'         => array('status'=>array('any'),                'name'=>'In Archive',              'get_var'=>'in_archive'),
+        'archive'        => array('status'=>array('any'),                'name'=>'Activate',                'get_var'=>'activate'),
         'edit_details'   => array('status'=>array('Not Estimated','Quotation Requested'),
                                                                          'name'=>'Edit Details',            'get_var'=>'edit_details'),
     );

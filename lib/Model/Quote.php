@@ -248,13 +248,13 @@ class Model_Quote extends Model_Quote_Base {
         throw $this->exception('Wrong role');
     }
 
-    function userAllowedActions($user) {
+    function userAllowedActions($user,$mode) {
         if ($user->isAdmin()) {
             return array();
         } else if ($user->isManager()) {
-            return array('requirements','estimation','send_to_client','approve',);
+            return array('requirements','estimation','send_to_client','approve',$mode,);
         } else if ($user->isDeveloper()) {
-            return array('details','estimate',);
+            return array('details','estimate',$mode,);
         } else if ($user->isClient()) {
             return array('details','edit_details','approve',);
         }
