@@ -4,6 +4,13 @@ class Model_Quote extends Model_Quote_Base {
         parent::init(); //$this->debug();
         $this->addCondition('is_deleted',false);
     }
+    function in_archive(){
+        $this->set('is_archived',true);
+    }
+    function activate(){
+        $this->set('is_archived',false);
+    }
+
     function approve() {
         $not_included_requirements = $this->add('Model_Requirement') //->debug()
                 ->addCondition('quote_id',$this->id)
@@ -284,5 +291,18 @@ class Model_Quote extends Model_Quote_Base {
         }
         return false;
     }
+    function userAllowedArchive($user) {
+        if ($user->isAdmin()) {
+            return true;
+        } else if ($user->isManager()) {
+            return true;
+        } else if ($user->isDeveloper()) {
+            return true;
+        } else if ($user->isClient()) {
+            return false;
+        }
+        throw $this->exception('Wrong role');
+    }
+
 
 }
