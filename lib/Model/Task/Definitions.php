@@ -89,7 +89,6 @@ class Model_Task_Definitions extends Model_Auditable {
             $m->api->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
             $m->api->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_delete',array(
-                'link'=>$m->api->siteURL().$m->api->url('/tasks'),
                 'subject'=>'Task "'.substr($m->get('name'),0,25).'" deleted',
                 'changer_part'=>$m->api->currentUser()->get('name').' has deleted task "'.$m->get('name').'".',
             ));
