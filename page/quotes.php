@@ -154,12 +154,12 @@ class page_quotes extends Page {
     function addQuotesCRUD($view,$quote,$mode) {
         $user = $this->api->currentUser();
         $cr = $view->add('CRUD', array(
+            'form_class'      => 'Form_EditQuote',
             'grid_class'      => 'Grid_Quotes',
             'allow_add'       => false,
             'allow_edit'      => $quote->canUserEditQuote($user),
             'allow_del'       => $quote->canUserDeleteQuote($user),
             'allowed_actions' => $quote->userAllowedActions($user,$mode),
-            'mode'            => $mode,
         ));
 
         $cr->setModel(
