@@ -80,7 +80,7 @@ class Model_Task_Definitions extends Model_Auditable {
             $m->api->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
             $m->api->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
             $m->api->mailer->sendMail('task_edit',array(
-                'link'=>$m->api->siteURL().$m->api->url('/task',array('task_id'=>$m->get('id'))),
+                'link'=>$m->api->siteURL().$m->api->url('/task',array('task_id'=>$m->get('id'),'colubris_task_view_view_crud_virtualpage'=>null)),
                 'subject'=>'Task "'.substr($m->get('name'),0,25).'" has changes',
                 'changer_part'=>$m->api->currentUser()->get('name').' has made changes in task "'.$m->get('name').'".',
             ));
