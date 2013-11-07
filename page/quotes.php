@@ -15,58 +15,84 @@ class page_quotes extends Page {
 
         $this->add('H1')->set('Quotes');
 
+        $this->addRequestForQuotationButton($this);
+
         $tabs = $this->add('Tabs');
 
-        $tabs->addTabUrl('./active','Active');
+        $tabs->addTabUrl('./requested','Requested');
+        $tabs->addTabUrl('./estimate_needed','Estimate Needed');
+        $tabs->addTabUrl('./not_estimated','Not Estimated');
+        $tabs->addTabUrl('./estimated','Estimated');
+        $tabs->addTabUrl('./estimation_approved','Estimation Approved');
+        $tabs->addTabUrl('./finished','Finished');
         $tabs->addTabUrl('./archived','Archived');
 
     }
-    function page_active() {
-        $this->addRequestForQuotationButton($this);
-
+    function getBaseModel(){
         if ($this->api->currentUser()->isDeveloper()) {
-            $this->quote = $this->add('Model_Quote_Participant');
-            // developer do not see not well prepared (quotation_requested status) and finished projects
-            $this->quote->addCondition('status',array(
-                'estimate_needed','not_estimated','estimated','estimation_approved'
-            ));
+            $quote = $this->add('Model_Quote_Participant');
         }else{
-            $this->quote = $this->add('Model_Quote');
+            $quote = $this->add('Model_Quote');
         }
-        $this->quote->addCondition('is_archived',false);
-        $pr = $this->quote->join('project','project_id','left','_pr');
+        $pr = $quote->join('project','project_id','left','_pr');
         $pr->addField('pr_name','name');
         if ($this->api->currentUser()->isClient()) {
             // show only client's quotes
             $pr->addField('pr_client_id','client_id');
-            $this->quote->addCondition('pr_client_id',$this->api->auth->model['client_id']);
+            $quote->addCondition('pr_client_id',$this->api->auth->model['client_id']);
         }
         $pr->addField('project_name','name');
-        $this->quote->setOrder(array('project_name','status'));//->debug();
+        $quote->setOrder(array('project_name','status'));//->debug();
 
-        $this->addQuotesCRUD($this,'active');
+        return $quote;
+    }
+    function page_requested() {
+        $quote=$this->getBaseModel();
+        $quote->addCondition('is_archived',false);
+        $quote->addCondition('status','quotation_requested');
+
+        $this->addQuotesCRUD($this,$quote,'active');
+    }
+    function page_estimate_needed() {
+        $quote=$this->getBaseModel();
+        $quote->addCondition('is_archived',false);
+        $quote->addCondition('status','estimate_needed');
+
+        $this->addQuotesCRUD($this,$quote,'active');
+    }
+    function page_not_estimated() {
+        $quote=$this->getBaseModel();
+        $quote->addCondition('is_archived',false);
+        $quote->addCondition('status','not_estimated');
+
+        $this->addQuotesCRUD($this,$quote,'active');
+    }
+    function page_estimated() {
+        $quote=$this->getBaseModel();
+        $quote->addCondition('is_archived',false);
+        $quote->addCondition('status','estimated');
+
+        $this->addQuotesCRUD($this,$quote,'active');
+    }
+    function page_estimation_approved() {
+        $quote=$this->getBaseModel();
+        $quote->addCondition('is_archived',false);
+        $quote->addCondition('status','estimation_approved');
+
+        $this->addQuotesCRUD($this,$quote,'active');
+    }
+    function page_finished() {
+        $quote=$this->getBaseModel();
+        $quote->addCondition('is_archived',false);
+        $quote->addCondition('status','finished');
+
+        $this->addQuotesCRUD($this,$quote,'active');
     }
     function page_archived() {
-        if ($this->api->currentUser()->isDeveloper()) {
-            $this->quote = $this->add('Model_Quote_Participant');
-            // developer do not see not well prepared (quotation_requested status) and finished projects
-            $this->quote->addCondition('status',array(
-                'estimate_needed','not_estimated','estimated','estimation_approved'
-            ));
-        }else{
-            $this->quote = $this->add('Model_Quote');
-        }
-        $this->quote->addCondition('is_archived',true);
-        $pr = $this->quote->join('project','project_id','left','_pr');
-        $pr->addField('pr_name','name');
-        if ($this->api->currentUser()->isClient()) {
-            // show only client's quotes
-            $pr->addField('pr_client_id','client_id');
-            $this->quote->addCondition('pr_client_id',$this->api->auth->model['client_id']);
-        }
-        $pr->addField('project_name','name');
-        $this->quote->setOrder(array('project_name','status'));//->debug();
-        $this->addQuotesCRUD($this,'archive');
+        $quote=$this->getBaseModel();
+        $quote->addCondition('is_archived',true);
+
+        $this->addQuotesCRUD($this,$quote,'archive');
     }
 
     function addBreadCrumb($view) {
@@ -93,23 +119,25 @@ class page_quotes extends Page {
         }
     }
 
-    function addQuotesCRUD($view,$mode) {
+    function addQuotesCRUD($view,$quote,$mode) {
         $user = $this->api->currentUser();
         $cr = $view->add('CRUD', array(
             'grid_class'      => 'Grid_Quotes',
             'allow_add'       => false,
-            'allow_edit'      => $this->quote->canUserEditQuote($user),
-            'allow_del'       => $this->quote->canUserDeleteQuote($user),
-            'allowed_actions' => $this->quote->userAllowedActions($user,$mode),
+            'allow_edit'      => $quote->canUserEditQuote($user),
+            'allow_del'       => $quote->canUserDeleteQuote($user),
+            'allowed_actions' => $quote->userAllowedActions($user,$mode),
+            'mode'            => $mode,
         ));
+
         $cr->setModel(
-            $this->quote,
-            $this->quote->whatQuoteFieldsUserCanEdit($user),
-            $this->quote->whatQuoteFieldsUserCanSee($user)
+            $quote,
+            $quote->whatQuoteFieldsUserCanEdit($user),
+            $quote->whatQuoteFieldsUserCanSee($user)
         );
 
         if($cr->grid){
-            if ($this->quote->userAllowedArchive($user)){
+            if ($quote->userAllowedArchive($user)){
                 if($_GET['in_archive']){
                     $mq=$this->add('Model_Quote')->load($_GET['in_archive']);
                     $mq->in_archive();

@@ -150,6 +150,9 @@ class Grid_Quotes extends Grid {
         $this->addFormatter('status','wrap');
         $this->addFormatter('status','status');
 
+        if($this->owner->mode=='active'){
+            $this->removeColumn('status');
+        }
         $this->addPaginator(25);
     }
     function formatRow() {
