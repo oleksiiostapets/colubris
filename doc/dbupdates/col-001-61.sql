@@ -1,4 +1,4 @@
-CREATE  TABLE `col`.`rate` (
+CREATE  TABLE `rate` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `from` INT(11) NULL ,
   `to` INT(11) NULL ,
