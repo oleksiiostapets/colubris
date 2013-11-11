@@ -404,8 +404,8 @@ class Page_Requirements extends Page {
 
         if ( ($this->api->currentUser()->isClient()) || ($this->api->currentUser()->canSeeFinance()) ){
             $requirements->addExpression('cost')->set(function($m,$q)use($quote){
-                if($quote['rate']!=''){
-                    return "concat(round(estimate * ".$quote['rate']."),' ".$quote['currency']."' )";
+                if($quote['calc_rate']!=''){
+                    return "concat(round(estimate * ".$quote['calc_rate']."),' ".$quote['currency']."' )";
                 }
                 else{
                     return 1;

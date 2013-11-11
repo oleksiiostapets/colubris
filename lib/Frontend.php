@@ -175,6 +175,12 @@ class Frontend extends ApiFrontend {
                         'reports'
                     ));
                 }
+                // Grant access for Financial Manager
+                if($this->currentUser()->canSeeFinance()){
+                    $this->addAllowedPages(array(
+                        'rates'
+                    ));
+                }
             }else{
                 $this->addAllowedPages(array(
                     'home','system','about','dashboard'
