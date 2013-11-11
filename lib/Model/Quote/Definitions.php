@@ -91,13 +91,106 @@ class Model_Quote_Definitions extends Model_Auditable {
                 ;
         });
 
+        $this->addExpression('calc_rate')->caption('Rate')->set(function($m,$q){
+            return 'IF( rate
+                    ,
+                        rate
+                    ,
+                        IF(
+                            (SELECT value FROM rate WHERE
+                                `from`<=(SELECT SUM(requirement.estimate)
+                                    FROM requirement
+                                    WHERE requirement.quote_id=quote.id
+                                        AND requirement.is_included=1
+                                )
+                                AND
+                                `to`>(SELECT SUM(requirement.estimate)
+                                    FROM requirement
+                                    WHERE requirement.quote_id=quote.id
+                                        AND requirement.is_included=1
+                                )
+                            )
+                        ,
+                            (SELECT value FROM rate WHERE
+                                `from`<=(SELECT SUM(requirement.estimate)
+                                    FROM requirement
+                                    WHERE requirement.quote_id=quote.id
+                                        AND requirement.is_included=1
+                                )
+                                AND
+                                `to`>(SELECT SUM(requirement.estimate)
+                                    FROM requirement
+                                    WHERE requirement.quote_id=quote.id
+                                        AND requirement.is_included=1
+                                )
+                            )
+                        ,
+                        ""
+                        )
+                    )
+                    ';
+        });
+
         $this->addExpression('estimpay')->caption('Est.pay')->set(function($m,$q){
+            return 'IF(
+                        (SELECT SUM(requirement.estimate)*quote.rate
+                        FROM requirement
+                        WHERE requirement.quote_id=quote.id
+                            AND requirement.is_included=1)
+                    ,
+                        (SELECT SUM(requirement.estimate)*quote.rate
+                        FROM requirement
+                        WHERE requirement.quote_id=quote.id
+                            AND requirement.is_included=1)
+                    ,   IF(
+                            (SELECT SUM(requirement.estimate)*
+                                (SELECT value FROM rate WHERE
+                                `from`<=(SELECT SUM(requirement.estimate)
+                                    FROM requirement
+                                    WHERE requirement.quote_id=quote.id
+                                        AND requirement.is_included=1
+                                )
+                                AND
+                                `to`>(SELECT SUM(requirement.estimate)
+                                    FROM requirement
+                                    WHERE requirement.quote_id=quote.id
+                                        AND requirement.is_included=1
+                                )
+                            )
+                                FROM requirement
+                                WHERE requirement.quote_id=quote.id
+                                    AND requirement.is_included=1)
+                        ,
+                            (SELECT SUM(requirement.estimate)*
+                                (SELECT value FROM rate WHERE
+                                `from`<=(SELECT SUM(requirement.estimate)
+                                    FROM requirement
+                                    WHERE requirement.quote_id=quote.id
+                                        AND requirement.is_included=1
+                                )
+                                AND
+                                `to`>(SELECT SUM(requirement.estimate)
+                                    FROM requirement
+                                    WHERE requirement.quote_id=quote.id
+                                        AND requirement.is_included=1
+                                )
+                            )
+                                FROM requirement
+                                WHERE requirement.quote_id=quote.id
+                                    AND requirement.is_included=1)
+                        ,
+                        ""
+                        )
+                    )
+                    ';
+            /*
             return $q->dsql()
                 ->table('requirement')
                 ->field('sum(estimate)*'.$q->getField('rate'))
                 ->where('requirement.quote_id',$q->getField('id'))
                 ->where('requirement.is_included','1')
                 ;
+            */
         });
 
         $this->addExpression('spent_time')->set(function($m,$q){

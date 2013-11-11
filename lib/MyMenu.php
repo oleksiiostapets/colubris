@@ -13,6 +13,7 @@ class MyMenu extends Menu_Basic {
             if ($this->api->currentUser()->canSeeDevList()) $this->addMenuItem('developers','Developers');
             if ($this->api->currentUser()->canSeeDeleted()) $this->addMenuItem('deleted','Deleted');
             if ($this->api->currentUser()->canSeeLogs()) $this->addMenuItem('logs','Logs');
+            if ($this->api->currentUser()->canSeeFinance()) $this->addMenuItem('rates','Rates');
         }
 
 
