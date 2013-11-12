@@ -205,6 +205,7 @@ class Model_Quote_Definitions extends Model_Auditable {
                 ->where('requirement.id=task.requirement_id')
                 ->where('task.id=task_time.task_id')
                 ->where('requirement.quote_id',$q->getField('id'))
+                ->where('remove_billing',0)
                 ;
         });
 
