@@ -21,7 +21,13 @@ class Page_index extends Page {
             if($auth->verifyCredentials($l,$p)){
                 $auth->login($l);
                 if($form->get('memorize') == true){
-                	setcookie("colubris_auth_useremail",$form->get('email'),time()+60*60*24*30*6);
+                    $hash = $this->api->hg_cookie->rememberLoginHash($form->get('email'),true);
+                    $u=$this->add('Model_User_All')->tryLoadBy('email',$form->get('email'));
+                    if($u->loaded()){
+                        $u->set('chash',$hash);
+                        $u->saveAndUnload();
+                    }
+                	//setcookie("colubris_auth_useremail",$form->get('email'),time()+60*60*24*30*6);
                 }
                 
                 $form->js()->univ()->redirect('dashboard')->execute();
