@@ -31,6 +31,7 @@ class Model_Requirement_Base extends Model_Auditable {
                 ->field('sum(task_time.spent_time)')
                 ->where('task.id=task_time.task_id')
                 ->where('task.requirement_id',$q->getField('id'))
+                ->where('task_time.remove_billing',0)
                 ;
         });
         $this->addExpression('count_comments')->set(function($m,$q){
