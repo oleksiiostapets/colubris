@@ -408,7 +408,7 @@ class Page_Requirements extends Page {
                     return "concat(round(estimate * ".$quote['calc_rate']."),' ".$quote['currency']."' )";
                 }
                 else{
-                    return 1;
+                    return "null";
                 }
             });
         }
