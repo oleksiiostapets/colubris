@@ -39,17 +39,17 @@ class Frontend extends ApiFrontend {
         $this->mailer    = $this->add('Controller_Mailer');
         $this->hg_cookie = $this->add('Controller_MyCookie');
 
+        if($this->page=='logout'){
+            $this->hg_cookie->forgetLoginHash();
+//        	setcookie("colubris_auth_useremail", "", time()-3600);
+        }
+
         // auth
         $this->add('Auth')
             ->usePasswordEncryption('md5')
             ->setModel('Model_User_All', 'email', 'password')
         ;
         $this->api->auth->add('auth/Controller_Cookie');
-
-        if($this->page=='logout'){
-            $this->hg_cookie->forgetLoginHash();
-//        	setcookie("colubris_auth_useremail", "", time()-3600);
-        }
 
         if(!$this->api->auth->model['id']){
             $hash=$this->hg_cookie->getLoginHash();
