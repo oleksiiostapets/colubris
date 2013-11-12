@@ -37,10 +37,7 @@ class Frontend extends ApiFrontend {
         $this->colubris  = $this->add('Controller_Colubris');
         $this->formatter = $this->add('Controller_Formatter');
         $this->mailer    = $this->add('Controller_Mailer');
-        
-        if($this->page=='logout'){
-        	setcookie("colubris_auth_useremail", "", time()-3600);
-        }
+        $this->hg_cookie = $this->add('Controller_MyCookie');
 
         // auth
         $this->add('Auth')
@@ -49,10 +46,22 @@ class Frontend extends ApiFrontend {
         ;
         $this->api->auth->add('auth/Controller_Cookie');
 
+        if($this->page=='logout'){
+            $this->hg_cookie->forgetLoginHash();
+//        	setcookie("colubris_auth_useremail", "", time()-3600);
+        }
+
         if(!$this->api->auth->model['id']){
-        	if($_COOKIE["colubris_auth_useremail"] != NULL){
-        		$this->api->auth->login($_COOKIE["colubris_auth_useremail"]);
-        	}
+            $hash=$this->hg_cookie->getLoginHash();
+            if($hash){
+                $u=$this->add('Model_User_All')->tryLoadBy('chash',$hash);
+                if($u->loaded()){
+                    $this->api->auth->login($u["email"]);
+                }
+            }
+//        	if($_COOKIE["colubris_auth_useremail"] != NULL){
+//        		$this->api->auth->login($_COOKIE["colubris_auth_useremail"]);
+//        	}
         }
 
         $this->role_menu = $this->add('RoleMenu', 'SubMenu', 'SubMenu');

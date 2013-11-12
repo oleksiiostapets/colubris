@@ -25,6 +25,8 @@ class Model_User_Base extends Model_BaseTable {
         $this->addField('is_system')->defaultValue('0')->type('boolean');
         $this->addField('client_id')->refModel('Model_Client');
 
+        $this->addField('chash');
+
         $this->hasOne('Organisation')->mandatory('required');
 
         // expressions
