@@ -188,6 +188,13 @@ class Grid_Quotes extends Grid {
             $this->current_row['rate'] = '-';
         }
 
+        // warranty_end
+        if ($this->current_row['warranty_end'] != '-') {
+            $this->current_row['warranty_end'] = date("Y-m-d",time($this->current_row['warranty_end']));
+        } else {
+            $this->current_row['warranty_end'] = '-';
+        }
+
         // estimpay
         if ($this->current_row['estimpay'] != '') {
             $this->current_row['estimpay'] = $this->current_row['estimpay'].' '.$this->current_row['currency'];

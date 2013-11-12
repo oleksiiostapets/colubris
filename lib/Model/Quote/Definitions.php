@@ -65,6 +65,8 @@ class Model_Quote_Definitions extends Model_Auditable {
 
         $this->addField('is_archived')->type('boolean')->defaultValue('0');
 
+        $this->addField('warranty_end')->type('date')->caption('Warranty end');
+
         $this->addHook('beforeInsert', function($m,$q){
             $q->set('created_dts', $q->expr('now()'));
             $q->set('expires_dts', $q->expr('DATE_ADD(NOW(), INTERVAL 1 MONTH)'));
@@ -72,6 +74,7 @@ class Model_Quote_Definitions extends Model_Auditable {
 
         $this->addHook('beforeSave', function($m){
             $m['updated_dts']=date('Y-m-d G:i:s', time());
+            if($m['status']=='finished') $m['warranty_end']=date('Y-m-d G:i:s', time()+60*60*24*30);
         });
 
         $this->addExpression('client_id')->set(function($m,$q){
