@@ -44,8 +44,8 @@ class Model_Quote_Definitions extends Model_Auditable {
         $this->addField('rate')->defaultValue('0.00');
         $this->addField('currency')->setValueList(
             array(
-                'EUR'=>'EUR',
                 'GBP'=>'GBP',
+                'EUR'=>'EUR',
                 'USD'=>'USD',
             )
         )->mandatory('Cannot be empty');
