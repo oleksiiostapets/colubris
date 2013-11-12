@@ -14,13 +14,13 @@ class Controller_MyCookie extends AbstractController {
             $salt = $hash;
             $hash = $this->generateLoginHash($salt);
         }
-        setcookie($this->api->auth->name.$this->login_hash,$hash,time()+60*60*24*30*6);
+        setcookie($this->api->name.$this->login_hash,$hash,time()+60*60*24*30*6);
         return $hash;
     }
     function getLoginHash() {
-        return $_COOKIE[$this->api->auth->name.$this->login_hash];
+        return $_COOKIE[$this->api->name.$this->login_hash];
     }
     function forgetLoginHash() {
-        setcookie($this->api->auth->name.$this->login_hash,null,time()+60*60*24*30*6);
+        setcookie($this->api->name.$this->login_hash,null,time()+60*60*24*30*6);
     }
 }
