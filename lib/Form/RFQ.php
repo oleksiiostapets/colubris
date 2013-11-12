@@ -32,6 +32,7 @@ class Form_RFQ extends Form {
         $js=array();
         $this->model->set('user_id',$this->api->auth->model['id']);
         $this->model->set('status','quotation_requested');
+        $this->model->set('currency','GBP');
         $this->update();
         $this->api->redirect($this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->model->get('id'))));
     }
