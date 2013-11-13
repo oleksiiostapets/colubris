@@ -25,6 +25,7 @@ class View_Dashboard extends View {
         $jr = $m->join('requirement.id','requirement_id','left','_req');
         $jr->addField('requirement_name','name');
         $jr->addField('quote_id','quote_id');
+        //$jr->addField('requirement_id','id');
 
         $jq = $jr->join('quote.id','quote_id','left','_quote');
         $jq->addField('quote_name','name');
@@ -39,7 +40,7 @@ class View_Dashboard extends View {
 
         $cr->setModel($m,
             array('text','file_id'),
-            array('text','user','file','file_thumb','created_dts','project_name','quote_name','quote_status','requirement_name','quote_id')
+            array('text','user','file','file_thumb','created_dts','project_name','quote_name','quote_status','requirement_name','quote_id','requirement_id')
         );
 
         if ($cr->grid){

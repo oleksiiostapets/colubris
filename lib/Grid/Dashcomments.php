@@ -12,6 +12,7 @@ class Grid_Dashcomments extends Grid {
         $this->removeColumn('file_thumb');
         $this->removeColumn('created_dts');
         $this->removeColumn('quote_id');
+        $this->removeColumn('requirement_id');
         $this->removeColumn('task_id');
         $this->removeColumn('task_name');
         $this->removeColumn('quote_name');
@@ -54,7 +55,7 @@ class Grid_Dashcomments extends Grid {
                     '</tr>'.
                     '<tr>'.
                         '<td style="font-weight:bold;">Requirement:&nbsp;</td>'.
-                        '<td>'.$this->current_row['requirement_name'].'</td>'.
+                        '<td>'.'<a href="'.$this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->current_row['quote_id'])).'#'.$this->api->name.'_quotes_rfq_requirements_crud_grid_requirements_more_'.$this->current_row['requirement_id'].'">'.$this->current_row['requirement_name'].'</a>'.'</td>'.
                     '</tr>'.
                 '</table>'
             ;
