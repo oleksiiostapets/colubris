@@ -7,7 +7,11 @@ class View_Report extends View {
         $m->getField('user_id')->caption('Performer');
         $m->getField('spent_time')->caption('Spent');
         $m->addCondition('spent_time','>','0');
-        $m->addCondition('remove_billing',false);
+        if($_GET['including']==1){
+            $m->addCondition('remove_billing',false);
+        }elseif($_GET['including']==2){
+            $m->addCondition('remove_billing',true);
+        }
 
         $j_task = $m->join('task.id','task_id','left','_t');
         $j_task->addField('task_name','name');
