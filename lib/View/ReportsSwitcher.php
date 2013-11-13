@@ -89,6 +89,17 @@ class View_ReportsSwitcher extends View {
         $fdate_to=$f->addField('DatePicker','date_to','To');
         $fdate_to->set($this->api->recall('date_to'));
 
+        // Removing from billig
+        $inc_arr['0']='all';
+        $inc_arr['1']='not removed from billing';
+        $inc_arr['2']='removed from billing';
+        if(!$_GET['including']){
+            $_GET['including']=0;
+        }
+        $f_inc=$f->addField('dropdown','including');
+        $f_inc->setValueList($inc_arr);
+        $f_inc->set($_GET['including']);
+
 
         $js_arr=array(
             $this->api->url(),
@@ -97,6 +108,7 @@ class View_ReportsSwitcher extends View {
             'performer_id'=>$fa->js()->val(),
             'date_from'=>$fdate_from->js()->val(),
             'date_to'=>$fdate_to->js()->val(),
+            'including'=>$f_inc->js()->val(),
         );
 
         $fq->js('change')->univ()->location($js_arr);
@@ -104,6 +116,7 @@ class View_ReportsSwitcher extends View {
         $fa->js('change')->univ()->location($js_arr);
         $fdate_from->js('change')->univ()->location($js_arr);
         $fdate_to->js('change')->univ()->location($js_arr);
+        $f_inc->js('change')->univ()->location($js_arr);
 
         $v=$this->add('View')->setClass('clear');
     }
