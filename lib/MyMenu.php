@@ -34,12 +34,12 @@ class MyMenu extends Menu_Basic {
         }else{
             $this->addMenuItem('/','Login');
         }
-        if(!$this->api->currentUser()->canBeAdmin()){
+        //if(!$this->api->currentUser()->canBeAdmin()){
             if($_COOKIE['fuser']){
                 $u=$this->add('Model_User')->load($_COOKIE['fuser']);
-                $this->api->template->trySetHtml('link2first_user','<br /><a href="?id='.$_COOKIE['fuser'].'&hash='.$_COOKIE['fhash'].'">Back as '.$u['name'].'</a>');
+                $this->api->template->trySetHtml('link2first_user','<br /><a href="?id='.$_COOKIE['fuser'].'&hash='.$_COOKIE['fhash'].'&clear=1">Back as '.$u['name'].'</a>');
             }
-        }
+        //}
     }
 	function isCurrent($href){
 		// returns true if item being added is current
