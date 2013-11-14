@@ -145,7 +145,7 @@ class Frontend extends ApiFrontend {
 
     function autoLogin() {
         // Autologin from admin/users
-        if( (isset($_REQUEST['id'])) && (isset($_REQUEST['hash'])) ){
+        if( (isset($_GET['id'])) && (isset($_GET['hash'])) ){
             $u=$this->add('Model_User')->load($_GET["id"]);
             if($u['hash']!=$_GET["hash"]){
                 echo json_encode("Wrong user hash");
@@ -155,6 +155,10 @@ class Frontend extends ApiFrontend {
             unset($u['password']);
             $this->api->auth->addInfo('user',$u);
             $this->api->auth->login($u['email']);
+            if($_GET['clear']==1){
+                setcookie("fuser", "", time()-3600);
+                setcookie("fhash", "", time()-3600);
+            }
         }
     }
 
