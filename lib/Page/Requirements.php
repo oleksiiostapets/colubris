@@ -116,7 +116,59 @@ class Page_Requirements extends Page {
         $quote=$this->add('Model_Quote')->load($req->get('quote_id'));
         $_GET['project_id']=$quote->get('project_id');
 
-    	$this->add('View')->setHtml('<strong>Description:</strong> '.$this->api->colubris->makeUrls(nl2br($req->get('descr'))));
+        if (!$_GET['cut_page']) {
+
+            $this->add('x_bread_crumb/View_BC',array(
+                'routes' => array(
+                    0 => array(
+                        'name' => 'Home',
+                    ),
+                    1 => array(
+                        'name' => 'Quotes',
+                        'url' => 'quotes',
+                    ),
+                    2 => array(
+                        'name' => 'Quote',
+                        'url' => $this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
+                    ),
+                    3 => array(
+                        'name' => 'Details of requirement',
+                        'url' => '',
+                    ),
+                )
+            ));
+
+            // | *** LEFT *** |
+            $left = $this->add('View')
+                ->setClass('left span6')
+                ->addStyle('margin-top','20px')
+                ->addStyle('margin-bottom','20px')
+            ;
+            $left->add('H1')->set($req->get('name'));
+
+            // details
+            $left->add('H4')->set('Details:');
+            $source = array(
+                0=>array(
+                    'name'=>'Project Name',
+                    'value'=>$quote->get('project'),
+                ),
+                1=>array(
+                    'name'=>'Quote Name',
+                    'value'=>$quote->get('name'),
+                ),
+            );
+            $gr = $left->add('Grid_Quote');
+            $gr->addColumn('text','name','');
+            $gr->addColumn('text','value','Info');
+            $gr->addFormatter('value','wrap');
+            $gr->setSource($source);
+
+            $this->add('View')->setClass('clear');
+
+        }
+
+        $this->add('View')->setHtml('<strong>Description:</strong> '.$this->api->colubris->makeUrls(nl2br($req->get('descr'))));
 
     	$this->add('View')->setHtml('<hr /><strong>Comments:</strong> ');
 
