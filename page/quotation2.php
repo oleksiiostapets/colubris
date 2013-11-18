@@ -11,7 +11,7 @@ class page_quotation2 extends Page {
         }else{
             $this->add('H4')->set('Thank you!');
             $this->add('View')->set('Please fill information about your requirements. You can add file to each requirement (image, document etc).');
-            $this->add('View')->set('When you finish to describe your requirements please click button "Submit for Quotation" and our manager contact with.');
+            $this->add('View')->set('When you finish to describe your requirements please click button "Submit for Quotation" (below the menu) and our manager contact with you.');
 
             $requirements=$this->add('Model_Requirement_Guest');
             $requirements->addCondition('quote_id',$this->api->recall('guest_quote_id'));
