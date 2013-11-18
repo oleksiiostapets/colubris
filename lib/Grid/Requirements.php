@@ -63,6 +63,7 @@ class Grid_Requirements extends Grid_CountLines {
     function formatRow() {
         parent::formatRow();
 
+        $this->current_row_html['name']='<a href="'.$this->api->url('quotes/rfq/requirement',array('requirement_id'=>$this->current_row['id'],'quote_id'=>null)).'">'.$this->current_row['name'].'</a>';
         // http://vazelin.org.ua/archives/1573/utf-8-simvoly/
         if ( $this->current_row['is_included'] && $this->current_row['is_included'] !== 'N' ) {
             $this->current_row_html['is_included'] =
