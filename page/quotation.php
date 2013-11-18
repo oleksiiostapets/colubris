@@ -2,6 +2,11 @@
 class page_quotation extends Page {
     function page_index(){
 
+        $this->add('H4')->set('Welcome to Colubris');
+        $this->add('View')->set('Colubris allows to manage quotes, requirements and tasks. It is being developed and supported by Agile55.');
+        $this->add('View')->set('If you want to be registered to work with Agile55 please fill the form below.');
+        $this->add('View')->setHtml('We need your details (contact information on left side of the form) and short information about your project (right side).');
+
         $v=$this->add('View');
         $f=$v->add('Form');
 
