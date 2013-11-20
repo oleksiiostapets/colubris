@@ -3,10 +3,12 @@ class page_quotation extends Page {
     function page_index(){
 
         $this->add('H4')->set('Welcome to Colubris');
-        $this->add('View')->set('Colubris allows to manage quotes, requirements and tasks. It is being developed and supported by Agile55.');
+        $this->add('View')->setHtml('Colubris is an online web project management tool that allows clients (you) to submit requests for quotation, and developers (us) to estimate and manage quotes, <br />divide them in to requirements and tasks, track actual performance, and prepare reports back to clients (you). <br />Colubris is envisioned, developed and constantly upgraded by Agile55. We in Agile 55 use Colubris for communication with our clients and for management of all our development projects. <br />If you want Agile 55 to develop a website or an app for you please fill the Colubris registration form below. <br />We need your contact information and short description about a project you would like us to develop. <br />Within 2 working days we will prepare a price estimate and a list of specifying questions to you. You will get a notification about that on your indicated email address.<br /><br />Thank you!<br /><br /><strong>If you want Agile 55 to develop a website or an app for you please fill the Colubris registration form below.</strong>');
+
+/*        $this->add('View')->set('Colubris allows to manage quotes, requirements and tasks. It is being developed and supported by Agile55.');
         $this->add('View')->set('If you want to be registered to work with Agile55 please fill the form below.');
         $this->add('View')->setHtml('We need your details (contact information on left side of the form) and short information about your project (right side).');
-
+*/
         $v=$this->add('View');
         $f=$v->add('Form');
 
