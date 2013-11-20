@@ -55,7 +55,7 @@ class Grid_Dashcomments extends Grid {
                     '</tr>'.
                     '<tr>'.
                         '<td style="font-weight:bold;">Requirement:&nbsp;</td>'.
-                        '<td>'.'<a href="'.$this->api->url('quotes/rfq/requirements/more',array('expander'=>'more','expanded'=>'colubris_quotes_rfq_requirements_crud_grid_requirements','requirement_id'=>$this->current_row['requirement_id'])).'">'.$this->current_row['requirement_name'].'</a>'.'</td>'.
+                        '<td>'.'<a href="'.$this->api->url('quotes/rfq/requirements/more',array('show_header'=>'true','expanded'=>'colubris_quotes_rfq_requirements_crud_grid_requirements','requirement_id'=>$this->current_row['requirement_id'])).'">'.$this->current_row['requirement_name'].'</a>'.'</td>'.
 //                        '<td>'.'<a href="'.$this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->current_row['quote_id'])).'#'.$this->api->name.'_quotes_rfq_requirements_crud_grid_requirements_more_'.$this->current_row['requirement_id'].'">'.$this->current_row['requirement_name'].'</a>'.'</td>'.
                     '</tr>'.
                 '</table>'
