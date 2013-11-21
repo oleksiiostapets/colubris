@@ -41,19 +41,34 @@ class View_Requirement extends AbstractView {
         // details
         $left->add('H4')->set('Details:');
         $source = array(
-            0=>array(
+            array(
                 'name'=>'Project Name',
                 'value'=>$this->quote->get('project'),
             ),
-            1=>array(
+            array(
                 'name'=>'Quote Name',
                 'value'=>$this->quote->get('name'),
             ),
         );
+        $show_fields=$this->quote->whatRequirementFieldsUserCanSee($this->api->currentUser());
+        foreach($show_fields as $field){
+            if($field!='name' && $field!='count_comments'){
+                if($field=='is_included'){
+                    $this->req->get($field)==1?$value='Y':$value='N';
+                }else{
+                    $value=$this->req->get($field);
+                }
+                $source[]=array(
+                    'name'=>$field,
+                    'value'=>$value
+                );
+            }
+        }
         $gr = $left->add('Grid_Quote');
         $gr->addColumn('text','name','');
         $gr->addColumn('text','value','Info');
         $gr->addFormatter('value','wrap');
+        $gr->addFormatter('value','download');
         $gr->setSource($source);
 
         $this->add('View')->setClass('clear');
