@@ -84,8 +84,8 @@ class page_task extends Page {
                     array('user','spent_time','comment','date','remove_billing')
                 );
             }
-            //$crud->grid->addTotals(array('spent_time'));
             if ($crud->grid){
+                $crud->grid->addTotals(array('spent_time'));
                 $crud->grid->addClass('zebra bordered');
                 $crud->add_button->setLabel('Add Time');
             }
