@@ -142,7 +142,9 @@ class Grid_Quotes extends Grid {
         $this->removeColumn('currency');
         $this->removeColumn('spent_time');
         $this->removeColumn('estimated');
-
+        if ($this->api->currentUser()->isClient()){
+            $this->removeColumn('show_time_to_client');
+        }
         // add columns after model columns
         $this->addColumn('actions');
 
@@ -202,21 +204,21 @@ class Grid_Quotes extends Grid {
             $this->current_row['estimpay'] = '-';
         }
 
-        if ($this->api->currentUser()->isClient()){
+        if ($this->api->currentUser()->isClient() && !$this->current_row['show_time_to_client']){
             $this->current_row_html['estimate_info'] =
                     '<div class="quote_estimpay"><span>Est.pay:</span>'.$this->current_row['estimpay'].'</div>'
             ;
         }elseif($this->api->currentUser()->canSeeFinance()){
             $this->current_row_html['estimate_info'] =
                 '<div class="quote_estimated"><span>Est.time:</span>'.$this->current_row['estimated'].'</div>'.
-                    '<div class="quote_rate"><span>Rate:</span>'.$this->current_row['rate'].'</div>'.
-                    '<div class="quote_estimpay"><span>Est.pay:</span>'.$this->current_row['estimpay'].'</div>'.
-                    '<div class="quote_spent_time"><span>Spent:</span>'.$this->current_row['spent_time'].'</div>'
+                '<div class="quote_rate"><span>Rate:</span>'.$this->current_row['rate'].'</div>'.
+                '<div class="quote_estimpay"><span>Est.pay:</span>'.$this->current_row['estimpay'].'</div>'.
+                '<div class="quote_spent_time"><span>Spent:</span>'.$this->current_row['spent_time'].'</div>'
             ;
         }else{
             $this->current_row_html['estimate_info'] =
                 '<div class="quote_estimated"><span>Est.time:</span>'.$this->current_row['estimated'].'</div>'.
-                    '<div class="quote_spent_time"><span>Spent:</span>'.$this->current_row['spent_time'].'</div>'
+                '<div class="quote_spent_time"><span>Spent:</span>'.$this->current_row['spent_time'].'</div>'
             ;
         }
 

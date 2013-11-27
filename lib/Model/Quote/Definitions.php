@@ -67,6 +67,8 @@ class Model_Quote_Definitions extends Model_Auditable {
 
         $this->addField('warranty_end')->type('date')->caption('Warranty end');
 
+        $this->addField('show_time_to_client')->type('boolean')->defaultValue('0');
+
         $this->addHook('beforeInsert', function($m,$q){
             $q->set('created_dts', $q->expr('now()'));
             $q->set('expires_dts', $q->expr('DATE_ADD(NOW(), INTERVAL 1 MONTH)'));
