@@ -46,7 +46,12 @@ class View_Report extends View {
             $m->addCondition('project_id',$this->api->recall('project_id'));
         }
         if($this->api->recall('quote_id')>0){
-            $m->addCondition('quote_id',$this->api->recall('quote_id'));
+            $check_quote=$this->add('Model_Quote')->tryLoad($this->api->recall('quote_id'));
+            if($check_quote->loaded()){
+                if($check_quote->get('project_id')==$this->api->recall('project_id')){
+                    $m->addCondition('quote_id',$this->api->recall('quote_id'));
+                }
+            }
         }
         if($this->api->recall('quote_id')==-1){
             $m->addCondition('quote_id','>',0);
