@@ -77,7 +77,7 @@ class View_Report extends View {
             'keywords'       => 'Colubris report',
             'category'       => 'Colubris report'
         );
-        $fields = array('project_name', 'task_name', 'status', 'type', 'spent_time','date');
+        $fields = array('project_name', 'task_name', 'status', 'type', 'spent_time','date','user');
         $fields_width = array(15, 30, 10, 14, 12, 15);
         $count_totals = array('spent_time');
         $v->add('kk_xls\View_ButtonXLS',array(
