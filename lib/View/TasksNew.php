@@ -22,7 +22,7 @@ class View_TasksNew extends View {
         	}
         	$f->update();
 
-        	$this->js()->univ()->redirect($this->redirect_to)->execute();
+        	$this->js()->univ()->redirect($this->api->url('task',array('task_id'=>$f->getModel()->get('id'))))->execute();
         }
     }
 }
