@@ -119,7 +119,7 @@ class Model_Task_Definitions extends Model_Auditable {
         throw $this->exception('Wrong role');
     }
 
-    function whatFieldsUserCanSee($user) {
+    function whatFieldsUserCanSee($user,$quote=null) {
         if ($user->isAdmin()) {
             return array();
         } else if ($user->isManager()) {
@@ -127,7 +127,7 @@ class Model_Task_Definitions extends Model_Auditable {
         } else if ($user->isDeveloper()) {
             return array('name','priority','type','status','estimate','spent_time','requester','assigned');
         } else if ($user->isClient()) {
-            if ($user['show_time_to_client']) {
+            if (is_object($quote) && $quote['show_time_to_client']) {
                 return array('name','priority','type','status','estimate','spent_time');
             } else {
                 return array('name','priority','type','status','estimate');

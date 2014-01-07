@@ -1,5 +1,6 @@
 <?php
 class Grid_Tasks extends Grid_Advanced {
+    public $quote;
     function init() {
         parent::init();
         $this->addClass('zebra bordered');
@@ -58,8 +59,8 @@ class Grid_Tasks extends Grid_Advanced {
     }
     private function removeEstimateColumnIfNeeded() {
         if (
-            in_array('estimate',$this->model->whatFieldsUserCanSee($this->api->currentUser())) &&
-            in_array('spent_time',$this->model->whatFieldsUserCanSee($this->api->currentUser()))
+            in_array('estimate',$this->model->whatFieldsUserCanSee($this->api->currentUser(),$this->quote)) &&
+            in_array('spent_time',$this->model->whatFieldsUserCanSee($this->api->currentUser(),$this->quote))
         ) {
             $this->removeColumn('estimate');
         }
