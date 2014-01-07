@@ -119,10 +119,14 @@ class View_Requirement extends AbstractView {
             'allow_del'       => $can_del,
         ));
 
+        if ($cr->grid) {
+            $cr->grid->quote = $this->quote;
+        }
+
         $cr->setModel(
             $this->tasks,
             $this->tasks->whatFieldsUserCanEdit($user),
-            $this->tasks->whatFieldsUserCanSee($user)
+            $this->tasks->whatFieldsUserCanSee($user,$this->quote)
         );
     }
 
