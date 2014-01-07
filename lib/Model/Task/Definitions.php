@@ -106,7 +106,7 @@ class Model_Task_Definitions extends Model_Auditable {
         });
     }
 
-    function whatTaskFieldsUserCanEdit($user) {
+    function whatFieldsUserCanEdit($user) {
         if ($user->isAdmin()) {
             return array();
         } else if ($user->isManager()) {
@@ -119,7 +119,7 @@ class Model_Task_Definitions extends Model_Auditable {
         throw $this->exception('Wrong role');
     }
 
-    function whatTaskFieldsUserCanSee($user) {
+    function whatFieldsUserCanSee($user) {
         if ($user->isAdmin()) {
             return array();
         } else if ($user->isManager()) {
@@ -127,7 +127,11 @@ class Model_Task_Definitions extends Model_Auditable {
         } else if ($user->isDeveloper()) {
             return array('name','priority','type','status','estimate','spent_time','requester','assigned');
         } else if ($user->isClient()) {
-            return array('name','priority','type','status','estimate');
+            if ($user['show_time_to_client']) {
+                return array('name','priority','type','status','estimate','spent_time');
+            } else {
+                return array('name','priority','type','status','estimate');
+            }
         }
         throw $this->exception('Wrong role');
     }
