@@ -8,6 +8,7 @@ class Grid_Tasks extends Grid_Advanced {
     function setModel($model, $actual_fields = UNDEFINED) {
         parent::setModel($model, $actual_fields);
         $this->removeEstimateColumnIfNeeded();
+        $this->addFormatter('name','wrap');
     }
     function formatRow() {
         parent::formatRow();
