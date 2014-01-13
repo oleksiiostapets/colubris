@@ -93,6 +93,8 @@ class page_quotation extends Page {
                 $quote->set('general_description',$f->get('project_description'));
                 $quote->set('quotation_requested');
                 $quote->set('organisation_id',$organisation->get('id'));
+                $quote->set('user_id',$user->get('id'));
+                $quote->set('currency','GBP');
                 $quote->save();
 
                 $this->api->memorize('guest_quote_id',$quote->get('id'));
