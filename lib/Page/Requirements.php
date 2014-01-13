@@ -294,7 +294,6 @@ class Page_Requirements extends Page {
     function addClientInfoGrid($v,$fields_required,$client_data) {
         $count = 0;
         $source = array();
-        var_dump($client_data->get());
         foreach ($client_data->get() as $key=>$value) {
             if (in_array($key,$fields_required)) {
                 $source[$count]['name'] = ucwords($key);
