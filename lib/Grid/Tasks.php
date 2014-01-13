@@ -1,14 +1,14 @@
 <?php
 class Grid_Tasks extends Grid_Advanced {
+    public $quote;
     function init() {
         parent::init();
         $this->addClass('zebra bordered');
     }
     function setModel($model, $actual_fields = UNDEFINED) {
         parent::setModel($model, $actual_fields);
-        if(!$this->api->currentUser()->isClient()){
-            $this->removeColumn('estimate');
-        }
+        $this->removeEstimateColumnIfNeeded();
+        $this->addFormatter('name','wrap');
     }
     function formatRow() {
         parent::formatRow();
@@ -57,5 +57,13 @@ class Grid_Tasks extends Grid_Advanced {
     function precacheTemplate() {
     	$this->row_t->trySetHTML('painted', '<?$painted?>');
     	parent::precacheTemplate();
+    }
+    private function removeEstimateColumnIfNeeded() {
+        if (
+            in_array('estimate',$this->model->whatFieldsUserCanSee($this->api->currentUser(),$this->quote)) &&
+            in_array('spent_time',$this->model->whatFieldsUserCanSee($this->api->currentUser(),$this->quote))
+        ) {
+            $this->removeColumn('estimate');
+        }
     }
 }
