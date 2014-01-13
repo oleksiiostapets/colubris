@@ -67,6 +67,13 @@ class Page_Requirements extends Page {
         }
         $this->addQuoteInfoGrid($left, $fields_required,$quote);
 
+        // client info grid
+        $left->add('H4')->set('Client:');
+        $fields_required = array('name','email','phone');
+        $project=$this->add('Model_Project')->load($quote->get('project_id'));
+        $client = $this->add('Model_Client')->load($project->get('client_id'));
+        $this->addClientInfoGrid($left,$fields_required,$client);
+
         // | *** RIGHT *** |
         $right = $this->add('View')
                 ->setClass('right span6')
@@ -270,6 +277,25 @@ class Page_Requirements extends Page {
         $count = 0;
         $source = array();
         foreach ($quote->get() as $key=>$value) {
+            if (in_array($key,$fields_required)) {
+                $source[$count]['name'] = ucwords($key);
+                $source[$count]['value'] = $value;
+                $count++;
+            }
+        }
+        $gr = $v->add('Grid_Quote');
+        $gr->addColumn('text','name','');
+        $gr->addColumn('text','value','Info');
+        $gr->addFormatter('value','wrap');
+        $gr->setSource($source);
+
+    }
+
+    function addClientInfoGrid($v,$fields_required,$client_data) {
+        $count = 0;
+        $source = array();
+        var_dump($client_data->get());
+        foreach ($client_data->get() as $key=>$value) {
             if (in_array($key,$fields_required)) {
                 $source[$count]['name'] = ucwords($key);
                 $source[$count]['value'] = $value;
