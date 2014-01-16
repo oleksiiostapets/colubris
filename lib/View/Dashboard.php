@@ -15,6 +15,7 @@ class View_Dashboard extends View {
         if ($this->api->currentUser()->isClient()) $m=$this->add('Model_Reqcomment_Client');
         elseif ($this->api->currentUser()->isDeveloper()) $m=$this->add('Model_Reqcomment_Developer');
         else $m=$this->add('Model_Reqcomment');
+        $m->addCondition('user_id','<>',$this->api->auth->model['id']);
         $m->setOrder('created_dts',true);
 
         $proxy_check=$this->add('Model_ReqcommentUser');
@@ -67,6 +68,7 @@ class View_Dashboard extends View {
         if ($this->api->currentUser()->isClient()) $m=$this->add('Model_Taskcomment_Client');
         elseif ($this->api->currentUser()->isDeveloper()) $m=$this->add('Model_Taskcomment_Developer');
         else $m=$this->add('Model_Taskcomment');
+        $m->addCondition('user_id','<>',$this->api->auth->model['id']);
         $m->setOrder('created_dts',true);
 
         $proxy_check=$this->add('Model_TaskcommentUser');
