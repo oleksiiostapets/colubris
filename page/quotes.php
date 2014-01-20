@@ -13,6 +13,8 @@ class page_quotes extends Page {
     function page_index() {
         $this->addBreadCrumb($this);
 
+        $this->add('View_SwitcherQuotes');
+
         $this->add('H1')->set('Quotes');
 
         $this->addRequestForQuotationButton($this);
@@ -37,6 +39,19 @@ class page_quotes extends Page {
             $quote = $this->add('Model_Quote_Participant');
         }else{
             $quote = $this->add('Model_Quote');
+        }
+        if($this->api->recall('q_project_id')>0){
+            $quote->addCondition('project_id',$this->api->recall('q_project_id'));
+        }
+        if($this->api->recall('q_client_id')>0){
+            $pm=$this->add('Model_Project');
+            $pm->addCondition('client_id',$this->api->recall('q_client_id'));
+            $ids="";
+            foreach ($pm as $p){
+                if($ids=="") $ids=$p['id'];
+                else $ids=$ids.','.$p['id'];
+            }
+            $quote->addCondition('project_id','in',$ids);
         }
         $pr = $quote->join('project','project_id','left','_pr');
         $pr->addField('pr_name','name');
