@@ -22,4 +22,15 @@ class Model_Client extends Model_Client_Base {
         }
         return $this;
     }
+    function forDeveloper() {
+        $mp=$this->add('Model_Project');
+        $mp=$mp->forDeveloper();
+        $ids="";
+        foreach ($mp as $p){
+            if($ids=="") $ids=$p['client_id'];
+            else $ids=$ids.','.$p['client_id'];
+        }
+        $this->addCondition('id','in',$ids);
+        return $this;
+    }
 }
