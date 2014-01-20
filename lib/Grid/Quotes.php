@@ -128,6 +128,7 @@ class Grid_Quotes extends Grid {
 
     }
     function setModel($model, $actual_fields = UNDEFINED) {
+        $this->addColumn('id');
         $this->addColumn('quotation');
         $this->addColumn('estimate_info');
 

@@ -228,11 +228,11 @@ class Model_Quote extends Model_Quote_Base {
         if ($user->isAdmin()) {
             return array();
         } else if ($user->isManager()) {
-            return array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status','warranty_end','show_time_to_client','updated_dts','expires_dts');
+            return array('id','project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status','warranty_end','show_time_to_client','updated_dts','expires_dts');
         } else if ($user->isDeveloper()) {
-            return array('project','user','name','estimated','spent_time','durdead','status','warranty_end','updated_dts','expires_dts');
+            return array('id','project','user','name','estimated','spent_time','durdead','status','warranty_end','updated_dts','expires_dts');
         } else if ($user->isClient()) {
-            return array('project','name','estimated','spent_time','estimpay','rate','currency','durdead','status','warranty_end','updated_dts','expires_dts','show_time_to_client');
+            return array('id','project','name','estimated','spent_time','estimpay','rate','currency','durdead','status','warranty_end','updated_dts','expires_dts','show_time_to_client');
         }
         throw $this->exception('Wrong role');
     }
