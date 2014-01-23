@@ -60,6 +60,14 @@ class View_SwitcherQuotes extends View {
             $fc->setValueList($c_arr);
             $_GET['client_id']=$this->api->recall('q_client_id');
             $fc->set($this->api->recall('q_client_id'));
+
+            $fc->js('change')->univ()->location(
+                array(
+                    $this->api->url(),
+                    'project_id'=>0,
+                    'client_id'=>$fc->js()->val(),
+                )
+            );
         }
 
 		$fp->js('change')->univ()->location(
@@ -67,13 +75,6 @@ class View_SwitcherQuotes extends View {
                 $this->api->url(),
                 'project_id'=>$fp->js()->val(),
                 'client_id'=>0,
-            )
-        );
-		$fc->js('change')->univ()->location(
-            array(
-                $this->api->url(),
-                'project_id'=>0,
-                'client_id'=>$fc->js()->val(),
             )
         );
 
