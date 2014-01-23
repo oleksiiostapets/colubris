@@ -54,6 +54,7 @@ class RoleMenu extends CompleteLister {
             if ($this->api->currentUser()->canBeSystem())    $this->current_user_posible_roles[] = 'system';
             if ($this->api->currentUser()->canBeAdmin())     $this->current_user_posible_roles[] = 'admin';
             if ($this->api->currentUser()->canBeManager())   $this->current_user_posible_roles[] = 'manager';
+            if ($this->api->currentUser()->canBeSales())     $this->current_user_posible_roles[] = 'sales';
             if ($this->api->currentUser()->canBeDeveloper()) $this->current_user_posible_roles[] = 'developer';
             if ($this->api->currentUser()->canBeClient())    $this->current_user_posible_roles[] = 'client';
 

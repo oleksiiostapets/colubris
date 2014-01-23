@@ -127,6 +127,7 @@ class Frontend extends ApiFrontend {
     
     function getUserType(){
     	if ($this->currentUser()->canBeManager()) return 'manager';
+        if ($this->currentUser()->canBeSales()) return 'sales';
     	if ($this->currentUser()->canBeDeveloper()) return 'team';
     	if ($this->currentUser()->canBeClient()) return 'client';
     	if ($this->currentUser()->canBeAdmin()) return 'admin';
