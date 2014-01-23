@@ -13,6 +13,7 @@ class Model_User_Base extends Model_BaseTable {
         $this->addField('is_manager')->type('boolean');
         $this->addField('is_financial')->type('boolean')->caption('Is Financial Manager');
         $this->addField('is_developer')->type('boolean')->caption('Is Team Member');
+        $this->addField('is_sales')->type('boolean')->caption('Is Sales Manager');
 //        $this->addField('is_timereport')->type('boolean')->caption('Is Time Reports');
         $this->addField('hash');
         $this->addField('mail_task_changes')->type('boolean')->caption('Send when task changed');
@@ -83,6 +84,9 @@ class Model_User_Base extends Model_BaseTable {
     function canBeManager() {
         return ($this['is_manager']?true:false);
     }
+    function canBeSales() {
+        return ($this['is_sales']?true:false);
+    }
     function canBeSystem() {
         return ($this['is_system']?true:false);
     }
@@ -110,6 +114,9 @@ class Model_User_Base extends Model_BaseTable {
     }
     function isManager() {
         return ($this->api->getCurrentUserRole() == 'manager');
+    }
+    function isSales() {
+        return ($this->api->getCurrentUserRole() == 'sales');
     }
     function isDeveloper() {
         return ($this->api->getCurrentUserRole() == 'developer');
@@ -179,7 +186,7 @@ class Model_User_Base extends Model_BaseTable {
      *
      */
     function canSeeDashboard() {
-        return $this->checkRoleSimpleRights(array(true,true,true,true,true));
+        return $this->checkRoleSimpleRights(array(true,true,true,true,true,true));
     }
     function getDashboardFormFields() {
         if ($this->isAdmin()) {
@@ -192,6 +199,8 @@ class Model_User_Base extends Model_BaseTable {
             return array('name','descr_original','priority','status','requester_id','assigned_id');
         } else if ($this->isSystem()) {
             return false;
+        } else if ($this->isSales()) {
+            return array('project_id','name','descr_original','priority','status','estimate','requester_id','assigned_id');
         }
         throw $this->exception('Wrong role');
     }
@@ -206,6 +215,8 @@ class Model_User_Base extends Model_BaseTable {
             return array('project','name','priority','status','estimate','requester','assigned','updated_dts');
         } else if ($this->isSystem()) {
             return false;
+        } else if ($this->isSales()) {
+            return array('project','name','priority','status','estimate','spent_time','requester','assigned','updated_dts');
         }
         throw $this->exception('Wrong role');
     }
@@ -230,6 +241,8 @@ class Model_User_Base extends Model_BaseTable {
             return array('estimpay');
         } else if ($this->isSystem()) {
             return false;
+        } else if ($this->isSales()) {
+            return array('estimpay');
         }
         throw $this->exception('Wrong role');
     }
@@ -246,7 +259,7 @@ class Model_User_Base extends Model_BaseTable {
      */
 
     function canSeeRequirements() {
-        return $this->checkRoleSimpleRights(array(false,true,true,true,false));
+        return $this->checkRoleSimpleRights(array(false,true,true,true,false,true));
     }
     function canSendRequestForQuotation() {
         return $this->checkRoleSimpleRights(array(false,true,false,true,false));
@@ -258,7 +271,7 @@ class Model_User_Base extends Model_BaseTable {
 
 
     function canSeeQuotesList() {
-        return $this->checkRoleSimpleRights(array(false,true,true,true,false));
+        return $this->checkRoleSimpleRights(array(false,true,true,true,false,true));
     }
     function canSeeUserList() {
         return $this->checkRoleSimpleRights(array(true,false,false,false,false));
@@ -294,6 +307,8 @@ class Model_User_Base extends Model_BaseTable {
             return $rights[3];
         } else if ($this->isSystem()) {
             return $rights[4];
+        } else if ($this->isSales()) {
+            return $rights[5];
         } else {
             throw $this->exception('Wrong role');
         }

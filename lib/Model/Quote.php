@@ -83,6 +83,11 @@ class Model_Quote extends Model_Quote_Base {
                 return true;
             }
             return false;
+        } else if ($user->isSales()) {
+            if ( !in_array($this['status'],$cannot_toggle_statuses) ) {
+                return true;
+            }
+            return false;
         }
         throw $this->exception('Wrong role');
     }
@@ -123,6 +128,8 @@ class Model_Quote extends Model_Quote_Base {
             return false;
         } else if ($user->isClient()) {
             return false;
+        } else if ($user->isSales()) {
+            return false;
         }
         throw $this->exception('Wrong role');
     }
@@ -154,6 +161,8 @@ class Model_Quote extends Model_Quote_Base {
             return false;
         } else if ($user->isClient()) {
             return false;
+        } else if ($user->isSales()) {
+            return true;
         }
         throw $this->exception('Wrong role');
     }
@@ -170,6 +179,8 @@ class Model_Quote extends Model_Quote_Base {
             return false;
         } else if ($user->isClient()) {
             // TODO !!!!!  ~~>  client have access to quotes of its projects ONLY!
+            return true;
+        } else if ($user->isSales()) {
             return true;
         }
         throw $this->exception('Wrong role');
@@ -203,6 +214,8 @@ class Model_Quote extends Model_Quote_Base {
             return array('estimate');
         } else if ($user->isClient()) {
             return array('name','descr','file_id');
+        } else if ($user->isSales()) {
+            return array('name','descr','file_id');
         }
         throw $this->exception('Wrong role');
     }
@@ -220,6 +233,8 @@ class Model_Quote extends Model_Quote_Base {
             }else{
                 return array('is_included','name','cost','file','count_comments');
             }
+        } else if ($user->isSales()) {
+            return array('is_included','name','cost','estimate','spent_time','file','count_comments');
         }
         throw $this->exception('Wrong role');
     }
@@ -233,6 +248,8 @@ class Model_Quote extends Model_Quote_Base {
             return array('id','project','user','name','estimated','spent_time','durdead','status','warranty_end','updated_dts','expires_dts');
         } else if ($user->isClient()) {
             return array('id','project','name','estimated','spent_time','estimpay','rate','currency','durdead','status','warranty_end','updated_dts','expires_dts','show_time_to_client');
+        } else if ($user->isSales()) {
+            return array('id','project','name','estimated','spent_time','estimpay','rate','currency','durdead','status','warranty_end','updated_dts','expires_dts');
         }
         throw $this->exception('Wrong role');
     }
@@ -248,6 +265,8 @@ class Model_Quote extends Model_Quote_Base {
             return array();
         } else if ($user->isClient()) {
             return array();
+        } else if ($user->isSales()) {
+            return array();
         }
         throw $this->exception('Wrong role');
     }
@@ -261,6 +280,8 @@ class Model_Quote extends Model_Quote_Base {
             return array('details','estimate',$mode,);
         } else if ($user->isClient()) {
             return array('details','edit_details','approve',);
+        } else if ($user->isSales()) {
+            return array('details','edit_details',);
         }
         throw $this->exception('Wrong role');
     }
@@ -304,6 +325,8 @@ class Model_Quote extends Model_Quote_Base {
             return true;
         } else if ($user->isClient()) {
             return false;
+        } else if ($user->isSales()) {
+            return true;
         }
         throw $this->exception('Wrong role');
     }

@@ -25,9 +25,11 @@ class page_quotes extends Page {
         $tabs->addTabUrl('./estimate_needed','Estimate Needed ('.$this->getModelEstimateNeeded()->count().')');
         $tabs->addTabUrl('./not_estimated','Not Estimated ('.$this->getModelNotEstimated()->count().')');
         $tabs->addTabUrl('./estimated','Estimated ('.$this->getModelEstimated()->count().')');
-        $tabs->addTabUrl('./estimation_approved','Estimation Approved ('.$this->getModelEstimationApproved()->count().')');
-        $tabs->addTabUrl('./finished','Finished ('.$this->getModelFinished()->count().')');
-        $tabs->addTabUrl('./archived','Archived ('.$this->getModelArchived()->count().')');
+        if(!$this->api->currentUser()->isSales()){
+            $tabs->addTabUrl('./estimation_approved','Estimation Approved ('.$this->getModelEstimationApproved()->count().')');
+            $tabs->addTabUrl('./finished','Finished ('.$this->getModelFinished()->count().')');
+            $tabs->addTabUrl('./archived','Archived ('.$this->getModelArchived()->count().')');
+        }
 
         if ($_GET['active_tab']>0){
             $this->api->memorize('active_tab',$_GET['active_tab']);
