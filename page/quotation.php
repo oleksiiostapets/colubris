@@ -3,7 +3,7 @@ class page_quotation extends Page {
     function page_index(){
 
         $this->add('H4')->set('Welcome to Colubris');
-        $this->add('View')->setHtml('Colubris is an online web project management tool that allows clients (you) to submit requests for quotation, and developers (us) to estimate and manage quotes, <br />divide them in to requirements and tasks, track actual performance, and prepare reports back to clients (you). <br />Colubris is envisioned, developed and constantly upgraded by Agile55. We in Agile 55 use Colubris for communication with our clients and for management of all our development projects. <br />If you want Agile 55 to develop a website or an app for you please fill the Colubris registration form below. <br />We need your contact information and short description about a project you would like us to develop. <br />Within 2 working days we will prepare a price estimate and a list of specifying questions to you. You will get a notification about that on your indicated email address.<br /><br />Thank you!<br /><br /><strong>If you want Agile 55 to develop a website or an app for you please fill the Colubris registration form below.</strong>');
+        $this->add('View')->setHtml('Colubris is an online web project management tool that allows clients (you) to submit requests for quotation, and developers (us) to estimate and manage quotes, <br />divide them in to requirements and tasks, track actual performance, and prepare reports back to clients (you). <br />Colubris is envisioned, developed and constantly upgraded by Agile55. We in Agile 55 use Colubris for communication with our clients and for management of all our development projects. <br />If you want Agile 55 to develop a website or an app for you please fill the Colubris registration form below. <br />We need your contact information and short description about a project you would like us to develop. <br />Within 2 working days we will prepare a price estimate and a list of specifying questions to you. You will get a notification about that on your indicated email address.<br /><br />Thank you!<br /><br /><strong>If you want <a href="http://agile55.com/">Agile 55</a> to develop a website or an app for you please fill the Colubris registration form below.</strong>');
 
 /*        $this->add('View')->set('Colubris allows to manage quotes, requirements and tasks. It is being developed and supported by Agile55.');
         $this->add('View')->set('If you want to be registered to work with Agile55 please fill the form below.');
@@ -17,6 +17,7 @@ class page_quotation extends Page {
         $f->addField('line','client_name')->setCaption('Name');
         $f->addField('line','email');
         $f->addField('line','phone');
+        $f->addField('Line','captcha')->add('x_captcha/Controller_Captcha');
 
         // Project data
         $f->add('H4')->set('Project details:');
@@ -26,12 +27,15 @@ class page_quotation extends Page {
         //$f->addClass('atk-row');
         $f->add('Order')
             ->move($f->addSeparator  ('span6'),'first')
-            ->move($f->addSeparator('span6'),'after','phone')
+            ->move($f->addSeparator('span6'),'after','captcha')
             ->now();
 
         $f->addSubmit('Next Step');
 
         if($f->isSubmitted()){
+            if (!$f->getElement('captcha')->captcha->isSame($f->get('captcha'))) {
+                $f->js()->atk4_form('fieldError','captcha','Wrong captcha!')->execute();
+            }
             if(trim($f->get('client_name'))==''){
                 $f->getElement('client_name')->displayFieldError('Cannot be empty!')->execute();
             }
