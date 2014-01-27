@@ -88,6 +88,7 @@ class page_task extends Page {
                 $crud->grid->addTotals(array('spent_time'));
                 $crud->grid->addClass('zebra bordered');
                 $crud->add_button->setLabel('Add Time');
+                $crud->grid->addPaginator(20);
             }
 
             if ($_GET['reload_view']) {
@@ -136,6 +137,7 @@ class page_task extends Page {
             $cr->add_button->setLabel('Add Comment');
             //$cr->grid->setFormatter('text','text');
             $cr->grid->addFormatter('text','wrap');
+            $cr->grid->addPaginator(10);
         }
         if($_GET['delete']){
             $comment=$this->add('Model_Taskcomment')->load($_GET['delete']);
