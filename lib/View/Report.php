@@ -105,6 +105,8 @@ class View_Report extends View {
         $cr->addTotals(array('spent_time'));
 
         $cr->addColumn('expander','more');
+
+        $cr->addPaginator(50);
     }
 
 }
