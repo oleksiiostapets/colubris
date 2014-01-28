@@ -1,10 +1,16 @@
 {
-		"name": "atk4/atk4-secure",
-		"description": "Initial bootstrap of Agile Toolkit",
-		"license": "GPL-3.0",
-		
-		"require": {
-            "atk4/atk4": "dev-master",
-            "suin/php-rss-writer": "dev-master"
-		}
+    "autoload": {
+        "psr-0": {"": "lib/"}
+    },
+
+    "repositories": [
+        {
+        "type": "vcs",
+        "url": "git@github.com:atk4/agiletoolkit-css.git"
+        }
+    ],
+    "require": {
+        "atk4/atk4": "4.3.*@dev",
+        "atk4/agiletoolkit-css": "dev-master"
+    }
 }
