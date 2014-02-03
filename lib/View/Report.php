@@ -106,7 +106,7 @@ class View_Report extends View {
 
         $cr->addColumn('expander','more');
 
-        $cr->addPaginator(10);
+        $cr->addPaginator(50);
 
         $total=0;
         foreach($m->getRows() as $r){
