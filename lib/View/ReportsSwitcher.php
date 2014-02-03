@@ -33,7 +33,7 @@ class View_ReportsSwitcher extends View {
 
         // Quote
 		$mq=$this->add('Model_Quote');
-		$mq->addCondition('status','estimation_approved');
+		//$mq->addCondition('status','estimation_approved');
 		$mq->addCondition('project_id',$this->api->recall('project_id'));
         /*
 		if($_GET['quote_id']!==null){
