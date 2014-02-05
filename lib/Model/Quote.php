@@ -201,6 +201,11 @@ class Model_Quote extends Model_Quote_Base {
                 return true;
             }
             return false;
+        } else if ($user->isSales()) {
+            if ($this['status']=='quotation_requested' || $this['status']=='not_estimated') {
+                return true;
+            }
+            return false;
         }
         throw $this->exception('Wrong role');
     }
