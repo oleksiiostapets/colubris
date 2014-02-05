@@ -115,6 +115,8 @@ class Model_Task_Definitions extends Model_Auditable {
             return array('name','descr_original','priority','type','status','estimate','requester_id','assigned_id');
         } else if ($user->isClient()) {
             return array('name','descr_original','priority','type','status');
+        } else if ($user->isSales()) {
+            return array('name','descr_original','priority','type','status','estimate');
         }
         throw $this->exception('Wrong role');
     }
