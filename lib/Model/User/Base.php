@@ -18,13 +18,15 @@ class Model_User_Base extends Model_BaseTable {
         $this->addField('hash');
         $this->addField('mail_task_changes')->type('boolean')->caption('Send when task changed');
         $this->addField('is_deleted')->type('boolean')->defaultValue('0');
-        $this->addField('deleted_id')->refModel('Model_User');
+        //$this->addField('deleted_id')->refModel('Model_User');
+        $this->hasOne('User','deleted_id');
         $this->addHook('beforeDelete', function($m){
             $m['deleted_id']=$m->api->currentUser()->get('id');
         });
 
         $this->addField('is_system')->defaultValue('0')->type('boolean');
-        $this->addField('client_id')->refModel('Model_Client');
+        $this->hasOne('Client');
+        //$this->addField('client_id')->refModel('Model_Client');
 
         $this->addField('chash');
 

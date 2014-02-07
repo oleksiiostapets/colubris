@@ -1,69 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-		<title><?page_title?>Agile Toolkit<?/?></title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="shortcut icon" href="<?template?>images/favicon.ico<?/?>" type="image/x-icon" />
-		<link rel="stylesheet" type="text/css" href="<?template?>css/jquery-ui.css<?/?>" />
-		<link rel="stylesheet" type="text/css" href="<?template?>css/atk-main.css<?/?>" />
-		<link rel="stylesheet" type="text/css" href="<?template?>css/atk-custom.css<?/?>" />
-		<link rel="stylesheet" type="text/css" href="<?template?>css/dev.css<?/?>" />
-        <link rel="stylesheet" type="text/css" href="<?template?>css/progress/ui-progress-bar.css<?/?>" media="screen" />
-        <script type="text/javascript"> src="<?template?>js/progress/application.js<?/?>"</script>
-		<?$js_include?>
-		<!--[if IE 8]>
-			<link rel="stylesheet" type="text/css" href="<?template?>css/ie8.css<?/?>"/>
-			<script type="text/javascript" src="<?template?>css/ie8.js<?/?>"></script>
-		<![endif]-->
-		<script type="text/javascript">
-			$(function(){
-				<?$document_ready?>
-			});
-		</script>
-	</head>
-	<body>
-		<div id="atk-layout" class="atk-wrapper">
-			<div id="header">
-                <div id="header-left">
-                    <?logo?>
-                        <div id="atk-logo" class="ui-widget-header">
-                            <a href="<?page?>index<?/?>"><img src="<?template?>images/logo.png<?/?>" /></a>
-                        </div>
-                    <?/logo?>
-                    <div class="organization"><?$organisation?></div>
-                    <div>
-                        <a href="http://agile55.com/" target="_blank"><img src="<?template?>images/logo_agile55.png<?/?>" height="50" /></a>
-                    </div>
-                </div>
-
-				<div id="header-right">
-					<?Menu?>
-                            <div class="atk-menu atk-menu-horizontal ui-widget">
-                                <ul>
-								    <li class="ui-state-default"><a href="javascript:void(0)">Menu is not defined</a></li>
-                                </ul>
-							</div>
-					<?/?>
-                    <div class="right">
-                        <?$SubMenu?>
-                    </div>
-                    <div class="right">
-                        <?$link2first_user?>
-                    </div>
-                    <div class="cc"></div>
-					<div id="atk-version"><b><?name?>Agile Toolkit™<?/?></b></div>
-				</div>
-			</div>
-			<?$Content?>
-			<div id="atk-footer-guard"></div>
-		</div>
-		<?Footer?>
-		<div id="footer" class="atk-wrapper">
-			<?footer_text?>
-			This system is implemented using <a href="http://agiletoolkit.org/">Agile Toolkit</a>. &copy; 1999–<?$year?>. <a href="http://agiletoolkit.org/about/license">See License</a>
-			<?/?>
-		</div>
-		<?/?>
-		<div id="atk-growl-holder" class="atk-growl"></div>
-	</body>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7">
+<![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8">
+<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9">
+<![endif]-->
+<!--[if gt IE 8]><html class="no-js">
+<![endif]-->
+<html lang="{lang}en{/}">
+  <head>
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <![endif]-->
+    <title>{page_title}Untitled Project - Agile Toolkit{/}</title>
+    <meta name="desciption" content="{$page_description}">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory-->
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,300,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{css}style.css{/}">{$js_block}
+    {$js_include}
+    <script type="text/javascript">
+      $(function(){
+          {$document_ready}
+      });
+      
+    </script>
+  </head>
+  <body class="{$pagename}">
+    <!--[if lt IE 7]><p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->{Layout}
+    <div class="atk-layout">
+      <div class="atk-layout-row">
+        <div class="atk-layout-cell atk-swatch-ink">
+          <div class="atk-cell atk-valign-middle"><img src="{public}images/logo.png{/}" style="background: black"></div>
+          <div class="atk-cell atk-jackscrew">{$Menu}</div>
+        </div>
+      </div>
+      <div id="atk-main" class="atk-layout-row fluid">
+        <div id="atk-main-inner" class="atk-layout">
+          <div id="atk-content" class="atk-layout-column fluid">{$Content}</div>
+        </div>
+      </div>
+      <div class="atk-layout-row">
+        <footer id="atk-footer">&copy; Agile Toolkit 2013</footer>
+      </div>
+    </div>{/}
+  </body>
 </html>

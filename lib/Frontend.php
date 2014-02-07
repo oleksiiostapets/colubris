@@ -16,23 +16,23 @@ class Frontend extends ApiFrontend {
         /* ************************
          *   PATHFINDER
          */
-        $this->pathfinder->addLocation('./',array(
-            'addons'=>array('../atk4-addons','../addons'),
-            'php'=>array('../shared'),
+        $this->pathfinder->addLocation(array(
+            'addons'=>array('atk4-addons','addons'),
+            'php'=>array('shared'),
             'css'=>array(
-                '../addons/cms/templates/default/css',
+                'addons/cms/templates/default/css',
             ),
 //            'js'=>array(
 //                '../addons/cms/templates/js',
 //            ),
             //'template'=>'atk4-addons/misc/templates',
-        ));
+        ))->setBasePath('.');
         
         $this->dbConnect();
         $this->add('jUI');
 
         $this->js(true)->_load('colubris');
-
+/*
         // controllers
         $this->colubris  = $this->add('Controller_Colubris');
         $this->formatter = $this->add('Controller_Formatter');
@@ -43,14 +43,14 @@ class Frontend extends ApiFrontend {
             $this->hg_cookie->forgetLoginHash();
 //        	setcookie("colubris_auth_useremail", "", time()-3600);
         }
-
+*/
         // auth
         $this->add('Auth')
             ->usePasswordEncryption('md5')
             ->setModel('Model_User_All', 'email', 'password')
         ;
         $this->api->auth->add('auth/Controller_Cookie');
-
+/*
         if(!$this->api->auth->model['id']){
             $hash=$this->hg_cookie->getLoginHash();
             if($hash){
@@ -94,10 +94,11 @@ class Frontend extends ApiFrontend {
             'support'=>'support',
             'drop'=>'drop',
         );
+*/
     }
 
-    function initLayout(){
-
+    //function initLayout(){
+/*
         $this->add('MyMenu', 'Menu', 'Menu');
         //$this->add('MySubMenu', 'SubMenu', 'SubMenu');
 
@@ -122,7 +123,38 @@ class Frontend extends ApiFrontend {
             $v->add('View')->setElement('h2')->set('You cannot see this page');
             $v->add('View_Error')->set('Try to change role if you have multiple roles for this account');
         }
+*/
+    //}
 
+    function initLayout(){
+
+        $l = $this->add('Layout_Fluid');
+/*
+        $m = $l->addMenu('MainMenu');
+        $m->addClass('atk-wrapper');
+        $m->addMenuItem('index','Home');
+        $m->addMenuItem('services','Services');
+        $m->addMenuItem('team','Team');
+        $m->addMenuItem('portfolio','Portfolio');
+        $m->addMenuItem('contact','Contact');
+
+        $l->addFooter()->addClass('atk-swatch-seaweed atk-section-small')->setHTML('
+            <div class="row atk-wrapper">
+                <div class="col span_4">
+                    © 1998 - 2013 Agile55 Limited
+                </div>
+                <div class="col span_4 atk-align-center">
+                    <img src="'.$this->pm->base_path.'images/powered_by_agile.png" alt="powered_by_agile">
+                </div>
+                <div class="col span_4 atk-align-right">
+                    <a href="http://colubris.agiletech.ie/">
+                        <span class="icon-key-1"></span> Client Login
+                    </a>
+                </div>
+            </div>
+        ');
+*/
+        parent::initLayout();
     }
     
     function getUserType(){

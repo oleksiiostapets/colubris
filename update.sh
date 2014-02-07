@@ -15,7 +15,7 @@ function say {
 
 say "Updating main repository"
 
-git pull
+git pull origin 4.3
 
 say "Calling Composer PHP to update dependencies"
 
