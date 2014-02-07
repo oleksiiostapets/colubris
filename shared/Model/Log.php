@@ -10,7 +10,8 @@ class Model_Log extends Model_Table {
 		$this->addField('rec_id');
 		$this->addField('created_at');
 		$this->hasOne('User','user_id','email');
-        $this->addField('organisation_id')->refModel('Model_Organisation');
+//        $this->addField('organisation_id')->refModel('Model_Organisation');
+        $this->hasOne('Organisation','organisation_id');
         $this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
 
         $this->addHook('beforeInsert',function($m,$q){

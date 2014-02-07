@@ -63,18 +63,18 @@ class Frontend extends ApiFrontend {
 //        		$this->api->auth->login($_COOKIE["colubris_auth_useremail"]);
 //        	}
         }
-
+        $this->layout = $this->add('Layout_Colubris');
         $this->template->set('page_title','Colubris');
         
         $this->autoLogin();
 
-        if($this->api->auth->model['id']>0){
-            if(!$this->currentUser()->isSystem()){
-                $this->template->trySet('organisation','for ');//.$this->currentUser()->get('organisation'));
-            }else{
-                $this->template->trySet('organisation','for System user');
-            }
-        }
+//        if($this->api->auth->model['id']>0){
+//            if(!$this->currentUser()->isSystem()){
+//                $this->template->trySet('organisation','for ');//.$this->currentUser()->get('organisation'));
+//            }else{
+//                $this->template->trySet('organisation','for System user');
+//            }
+//        }
 
         $this->task_statuses = array(
                 'unstarted'=>'unstarted',
@@ -91,9 +91,10 @@ class Frontend extends ApiFrontend {
             'support'=>'support',
             'drop'=>'drop',
         );
+
     }
 
-    function initLayout(){
+/*    function initLayout(){
 
         $l = $this->add('Layout_Fluid');
 
@@ -130,7 +131,7 @@ class Frontend extends ApiFrontend {
             ->setHTML('
             <div class="row atk-wrapper">
                 <div class="col span_8">
-                    © 1998 - 2013 Agile55 Limited
+                    This system is implemented using Agile Toolkit. © 1999–2014. See <a href="http://agiletoolkit.org/about/license" target="_blank">License</a>
                 </div>
                 <div class="col span_4 atk-align-center">
                     <img src="'.$this->pm->base_path.'images/powered_by_agile.png" alt="powered_by_agile">
@@ -138,7 +139,7 @@ class Frontend extends ApiFrontend {
             </div>
         ');
         parent::initLayout();
-    }
+    }*/
     
     function getUserType(){
     	if ($this->currentUser()->canBeManager()) return 'manager';
@@ -150,7 +151,7 @@ class Frontend extends ApiFrontend {
     }
 
     function getCurrentUserRole(){
-        return $this->role_menu->getCurrentUserRole();
+        return $this->layout->rm->getCurrentUserRole();
     }
 
     function siteURL(){
@@ -178,7 +179,7 @@ class Frontend extends ApiFrontend {
         }
     }
 
-    private function defineAllowedPages() {
+    function defineAllowedPages() {
         // Allowed pages for guest
         $this->addAllowedPages(array(
             'index', 'intro', 'denied',
@@ -252,7 +253,9 @@ class Frontend extends ApiFrontend {
     	if(!is_array($string)){
     		if (trim($string) == '') return $string;
     	}
-
+        if(is_array($string)){
+            return $string;
+        }
     	// check if passed twise throw translation, can be comented on production
     	if(strpos($string,"\xe2\x80\x8b")!==false){
     		throw new BaseException('String '.$string.' passed through _() twice');

@@ -26,8 +26,12 @@ class Model_Task_Definitions extends Model_Auditable {
 
         //$this->addField('deviation')->dataType('text');
 
-        $this->addField('project_id')->refModel('Model_Project')->mandatory(true)->sortable(true);
-        $this->addField('requirement_id')->refModel('Model_Requirement');
+//        $this->addField('project_id')->refModel('Model_Project')->mandatory(true)->sortable(true);
+        $this->hasOne('Project','project_id');
+        $this->getField('project_id')->mandatory(true)->sortable(true);
+
+//        $this->addField('requirement_id')->refModel('Model_Requirement');
+        $this->hasOne('Requirement','requirement_id');
         //$this->addField('requester_id')->refModel('Model_User_Organisation');
         //$this->addField('assigned_id')->refModel('Model_User_Organisation');
 
@@ -60,12 +64,14 @@ class Model_Task_Definitions extends Model_Auditable {
         $this->addField('updated_dts')->caption('Updated')->sortable(true);
 
         $this->addField('is_deleted')->type('boolean')->defaultValue('0');
-        $this->addField('deleted_id')->refModel('Model_User');
+//        $this->addField('deleted_id')->refModel('Model_User');
+        $this->hasOne('User','deleted_id');
         $this->addHook('beforeDelete', function($m){
             $m['deleted_id']=$m->api->currentUser()->get('id');
         });
 
-        $this->addField('organisation_id')->refModel('Model_Organisation');
+//        $this->addField('organisation_id')->refModel('Model_Organisation');
+        $this->hasOne('Organisation','organisation_id');
         $this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
 
         $this->addHook('beforeInsert', function($m,$q){

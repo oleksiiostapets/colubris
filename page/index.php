@@ -8,16 +8,16 @@ class Page_index extends Page {
         $this->template->trySet('guest_quotation_link',$this->api->url('/quotation'));
 
         $form=$this->add('Frame')->setTitle('Client Log-in')->add('Form');
+        $form->setFormClass('stacked');
         $form->addField('line','email')->js(true)->focus();
         $form->addField('password','password');
         $form->addField('Checkbox','memorize','Remember me');
         $form->addSubmit('Login');
-        $form->setFormClass('vertical');
+//        $form->setFormClass('vertical');
         $auth=$this->api->auth;
         if($form->isSubmitted()){
             $l=$form->get('email');
             $p=$form->get('password');
-
             if($auth->verifyCredentials($l,$p)){
                 $auth->login($l);
                 if($form->get('memorize') == true){

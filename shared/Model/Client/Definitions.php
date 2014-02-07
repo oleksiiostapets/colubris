@@ -12,9 +12,11 @@ class Model_Client_Definitions extends Model_BaseTable {
         $this->addField('is_archive')->type('boolean');
 
         $this->addField('is_deleted')->type('boolean')->defaultValue('0');
-        $this->addField('deleted_id')->refModel('Model_User');
+//        $this->addField('deleted_id')->refModel('Model_User');
+        $this->hasOne('User','deleted_id');
 
-        $this->addField('organisation_id')->refModel('Model_Organisation');
+//        $this->addField('organisation_id')->refModel('Model_Organisation');
+        $this->hasOne('Organisation','organisation_id');
 
         $this->addHook('beforeDelete', function($m){
             $m['deleted_id']=$m->api->currentUser()->get('id');
