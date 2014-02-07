@@ -71,6 +71,14 @@ class View_Report extends View {
             $m->addCondition('date','<=',$date);
         }
 
+        $total=0;
+        foreach($m->getRows() as $r){
+            $total+=$r['spent_time'];
+        }
+        $v=$this->add('View');
+        $v->setClass('left');
+        $v->setHtml('<p style="font-weight:bold;font-size:18px;">TOTAL SPENT TIME: '.$total.'</p>');
+
         $v=$this->add('View');
         $v->setClass('right');
         $properties = array(
@@ -107,6 +115,8 @@ class View_Report extends View {
         $cr->addColumn('expander','more');
 
         $cr->addPaginator(50);
+
+        $this->add('View')->setHtml('<p style="font-weight:bold;font-size:18px;">TOTAL SPENT TIME: '.$total.'</p>');
     }
 
 }
