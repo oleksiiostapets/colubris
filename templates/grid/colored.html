@@ -1,62 +1,62 @@
-<?$Misc?>
-<div id="<?$_name?>" class="atk-grid <?$class?>" style="<?$style?>">
+{$Misc}
+<div id="{$_name}" class="atk-grid {$class}" style="{$style}">
   
-  <?$top_1?>
-  <div class="atk-grid-panel"><?$quick_search?><?$grid_buttons?></div>
-  <?$top_2?>
+  {$top_1}
+  <div class="atk-grid-panel">{$quick_search}{$grid_buttons}</div>
+  {$top_2}
   
-  <table width="<?table_width?>100%<?/?>">
+  <table width="{table_width}100%{/}">
 
-    <?header?>
+    {header}
     <thead class="ui-widget-header"><tr>
-      <?cols?>
-        <?col?>
-        <th id="<?$sortid?>" class="ui-widget-header" <?$thparam?>><?sort?><span class="ui-icon <?$sorticon?>"></span><?/?><?descr?>Customer<?/?></th>
-        <?/col?>
-      <?/cols?>
+      {cols}
+        {col}
+        <th id="{$sortid}" class="ui-widget-header" {$thparam}>{sort}<span class="ui-icon {$sorticon}"></span>{/}{descr}Customer{/}</th>
+        {/col}
+      {/cols}
     </tr></thead>
-    <?/header?>
-    <?$subheader?>
+    {/header}
+    {$subheader}
 
     <tbody class="grid_body">
-      <?rows?>
+      {rows}
       
-      <?row?>
-      <tr class="<?$painted?> <?$odd_even?>" data-id="<?$row_id?>" rel="<?$row_id?>">
-      <?cols?>
-        <?col?>
-        <td <?$tdparam?>><?$content?></td>
-        <?/col?>
-      <?/cols?>
+      {row}
+      <tr class="{$painted} {$odd_even}" data-id="{$row_id}" rel="{$row_id}">
+      {cols}
+        {col}
+        <td {$tdparam}>{$content}</td>
+        {/col}
+      {/cols}
       </tr>
-      <?/row?>
+      {/row}
 
-      <?totals?>
+      {totals}
       <tr class="atk-grid-totals">
-      <?cols?>
-        <?col?>
-        <td <?$tdparam?>><?$content?></td>
-        <?/col?>
-      <?/cols?>
+      {cols}
+        {col}
+        <td {$tdparam}>{$content}</td>
+        {/col}
+      {/cols}
       </tr>
-      <?/totals?>
+      {/totals}
       
-      <?/rows?>
+      {/rows}
     </tbody>
 
-    <?$footer?>
+    {$footer}
 
   </table>
-  <?not_found?>
-    <div class="atk-grid-notfound ui-state-highlight ui-corner-all"><i class="ui-icon ui-icon-alert float-left"></i><?not_found_message?>No Records Found<?/?></div>
-  <?/not_found?>
+  {not_found}
+    <div class="atk-grid-notfound ui-state-highlight ui-corner-all"><i class="ui-icon ui-icon-alert float-left"></i>{not_found_message}No Records Found{/}</div>
+  {/not_found}
 
-  <?$bottom_1?>
+  {$bottom_1}
   <table>
   <tr>
-      <td style="text-align:center;"><?$paginator?></td>
-      <td width="10%"><?$extended_paginator?></td>
+      <td style="text-align:center;">{$paginator}</td>
+      <td width="10%">{$extended_paginator}</td>
   </tr>
   </table>
-  <?$bottom_2?>
+  {$bottom_2}
 </div>
