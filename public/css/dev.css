@@ -144,11 +144,11 @@
 
 .a_look {
     display: block;
-    padding: 2px 0 2px 0;
-    margin: 0;
+    /*padding: 2px 0 2px 0;*/
+    /*margin: 0;*/
     color: #3216ba;
-    font-weight: normal;
-    font-size: 12px;
+    /*font-weight: normal;*/
+    /*font-size: 12px;*/
     text-decoration: underline;
     cursor: pointer;
 }
@@ -189,13 +189,14 @@
 }
 
 ul.role-menu-lister {
-    float: right;
-    padding: 5px;
-    margin: 10px;
+    /*float: left;*/
+    padding: 0;
+    /*margin: 10px;*/
+    /*overflow: hidden;*/
 }
 ul.role-menu-lister > li {
     float: left;
-    padding: 5px 5px;
+    padding: 0 5px;
     margin: 0;
     list-style-type: none;
 }

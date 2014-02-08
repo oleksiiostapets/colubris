@@ -8,9 +8,9 @@ class View_Dashboard extends View {
 
         $this->add('P');
 
-        $v=$this->add('View')->setClass('left span6');
-        $v->add('H2')->set('Comments to quotes');
-        $cr=$v->add('CRUD',array('grid_class'=>'Grid_Dashcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
+//        $v=$this->add('View')->setClass('left span6');
+//        $v->add('H2')->set('Comments to quotes');
+        $cr=$this->add('CRUD',array('grid_class'=>'Grid_Dashcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false),'crud_com_quote');
 
         if ($this->api->currentUser()->isClient()) $m=$this->add('Model_Reqcomment_Client');
         elseif ($this->api->currentUser()->isDeveloper()) $m=$this->add('Model_Reqcomment_Developer');
@@ -60,10 +60,10 @@ class View_Dashboard extends View {
         }
 
 
-        $v=$this->add('View')->setClass('right span6');
-        $v->add('H2')->set('Comments to tasks');
+//        $v=$this->add('View')->setClass('right span6');
+//        $v->add('H2')->set('Comments to tasks');
 
-        $cr=$v->add('CRUD',array('grid_class'=>'Grid_Dashcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false));
+        $cr=$this->add('CRUD',array('grid_class'=>'Grid_Dashcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false),'crud_comm_tasks');
 
         if ($this->api->currentUser()->isClient()) $m=$this->add('Model_Taskcomment_Client');
         elseif ($this->api->currentUser()->isDeveloper()) $m=$this->add('Model_Taskcomment_Developer');
@@ -105,13 +105,13 @@ class View_Dashboard extends View {
             }
         }
 
-        $v=$this->add('View')->setClass('clear');
+//        $v=$this->add('View')->setClass('clear');
 
 
-        $this->add('HR');
+//        $this->add('HR');
 
-        $this->add('H2')->set('My active tasks (requested by me or assigned to me)');
-        $cr=$this->add('CRUD',array('grid_class'=>'Grid_Tasks','allow_add'=>$this->allow_add,'allow_edit'=>$this->allow_edit,'allow_del'=>$this->allow_del));
+//        $this->add('H2')->set('My active tasks (requested by me or assigned to me)');
+        $cr=$this->add('CRUD',array('grid_class'=>'Grid_Tasks','allow_add'=>$this->allow_add,'allow_edit'=>$this->allow_edit,'allow_del'=>$this->allow_del),'crud_active_tasks');
         $m=$this->add('Model_Task');
         if (!$_GET['submit']) {
             $m->addCondition('status','<>','accepted');
@@ -153,5 +153,8 @@ class View_Dashboard extends View {
             $cr->grid->addPaginator(10);
 
         }
+    }
+    function defaultTemplate() {
+        return array('view/dashboard');
     }
 }

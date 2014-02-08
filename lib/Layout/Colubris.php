@@ -9,15 +9,11 @@ class Layout_Colubris extends Layout_Basic{
         parent::init();
 
         $this->rm = $this->add('RoleMenu', 'SubMenu', 'SubMenu');
-        $this->add('MyMenu');
+        $this->add('MyMenu',null,'Main_Menu');
         //$this->add('MySubMenu', 'SubMenu', 'SubMenu');
 
         // show current user name
-        $this->add('View', null, 'name')
-//            ->setStyle('width', '700px')
-//            ->setStyle('text-align', 'right')
-            ->add('Text')
-            ->set($this->api->auth->model['name']?$this->api->auth->model['name']:'Guest' . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer())
+        $this->template->set('name',$this->api->auth->model['name']?$this->api->auth->model['name']:'Guest' . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer())
         ;
 
         $this->template->trySet('year',date('Y',time()));
