@@ -54,4 +54,7 @@ class page_reports extends Page {
         $descr_view->add('View')->setHtml( $this->api->colubris->makeUrls(nl2br($task->get('descr_original'))) );
 
     }
+    function defaultTemplate() {
+        return array('page/reports');
+    }
 }
