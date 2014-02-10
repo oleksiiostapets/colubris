@@ -6,7 +6,9 @@ class Model_Task_RestrictedUsers extends Model_Task_Definitions {
 
         $this->addCondition('is_deleted',false);
 
-        $this->addField('requester_id')->refModel('Model_User_Task');
-        $this->addField('assigned_id')->refModel('Model_User_Task');
+//        $this->addField('requester_id')->refModel('Model_User_Task');
+        $this->hasOne('User_Task','requester_id');
+//        $this->addField('assigned_id')->refModel('Model_User_Task');
+        $this->hasOne('User_Task','assigned_id');
     }
 }

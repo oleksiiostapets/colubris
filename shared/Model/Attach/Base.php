@@ -12,7 +12,8 @@ class Model_Attach_Base extends Model_Auditable {
         $this->addField('updated_dts');
 
         $this->addField('is_deleted')->type('boolean')->defaultValue('0');
-        $this->addField('deleted_id')->refModel('Model_User');
+//        $this->addField('deleted_id')->refModel('Model_User');
+        $this->hasOne('User','deleted_id');
 
         $this->addHook('beforeInsert', function($m,$q){
             $q->set('created_dts', $q->expr('now()'));

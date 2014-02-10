@@ -93,7 +93,7 @@ class View_Report extends View {
         $fields = array('project_name', 'task_name', 'status', 'type', 'spent_time','date','user');
         $fields_width = array(15, 30, 10, 14, 12, 15);
         $count_totals = array('spent_time');
-        $v->add('kk_xls\View_ButtonXLS',array(
+        $v->add('KonstantinKolodnitsky/kk_xls/View_ButtonXLS',array(
             'data'         => $m,
             'properties'   => $properties,
             'fields'       => $fields,
@@ -108,7 +108,7 @@ class View_Report extends View {
         $cr->addClass('zebra bordered');
 
         $cr->setModel($m,$this->grid_show_fields);
-        $cr->addFormatter('task_name','wrap');
+        $cr->setFormatter('task_name','wrap');
 
         $cr->addTotals(array('spent_time'));
 

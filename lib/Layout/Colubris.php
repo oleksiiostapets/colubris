@@ -13,7 +13,7 @@ class Layout_Colubris extends Layout_Basic{
         //$this->add('MySubMenu', 'SubMenu', 'SubMenu');
 
         // show current user name
-        $this->template->set('name',$this->api->auth->model['name']?$this->api->auth->model['name']:'Guest' . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer())
+        $this->template->set('name',$this->api->auth->model['name']?$this->api->auth->model['name']:'Guest' . ' @ ' .'Colubris Team Manager, ver.'.$this->api->getVer())
         ;
 
         $this->template->trySet('year',date('Y',time()));

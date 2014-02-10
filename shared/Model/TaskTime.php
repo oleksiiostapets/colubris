@@ -5,8 +5,13 @@ class Model_TaskTime extends Model_Table {
     function init(){
         parent::init();
 
-        $this->addField('task_id')->refModel('Model_Task')->mandatory(true);
-        $this->addField('user_id')->refModel('Model_User')->mandatory(true);
+//        $this->addField('task_id')->refModel('Model_Task')->mandatory(true);
+        $this->hasOne('Task','task_id');
+        $this->getField('task_id')->mandatory(true);
+
+//        $this->addField('user_id')->refModel('Model_User')->mandatory(true);
+        $this->hasOne('User','user_id');
+        $this->getField('user_id')->mandatory(true);
 
         $this->addField('spent_time')->mandatory(true);
 

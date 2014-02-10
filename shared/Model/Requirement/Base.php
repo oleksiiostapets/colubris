@@ -43,7 +43,8 @@ class Model_Requirement_Base extends Model_Auditable {
                 ;
         });
         $this->addField('is_deleted')->defaultValue('0')->type('boolean')->mandatory('required');
-        $this->addField('deleted_id')->refModel('Model_User');
+//        $this->addField('deleted_id')->refModel('Model_User');
+        $this->hasOne('User','deleted_id');
         $this->addHook('beforeDelete', function($m){
             $m['deleted_id']=$m->api->currentUser()->get('id');
         });

@@ -1,34 +1,59 @@
 #!/bin/bash
 
-# This script updates dependencies of your projects and performs necessary migration.
-# You should call this script after you perform git pull
 
-RED=$(printf "\x1b[31m")
-NORMAL=$(printf "\x1b[0m")
+git pull
 
-function say {
-    echo -n " =>" $RED
-    echo -n $*
-    echo $NORMAL
-}
-
-
-say "Updating main repository"
-
-git pull origin 4.3
-
-say "Calling Composer PHP to update dependencies"
-
-# Update dependencies
+# First, get composer there
 if [ -f composer.json ]; then
-   [ -f composer.phar ] || curl -sS https://getcomposer.org/installer | php
-   php composer.phar update
+    if [ -f composer.phar ]; then
+        echo "== STEP1 == Updating composer dependencies"
+        php composer.phar update
+    else
+        echo "== STEP1 == Installing composer dependencies"
+        curl -sS https://getcomposer.org/installer | php
+        php composer.phar install
+
+        # If there are some folders around, link them
+
+        CSS=""
+        [ -x ~/Sites/agiletoolkit-css ] && CSS="$HOME/Sites/agiletoolkit-css"
+        [ -x /var/www/agiletoolkit-css ] && CSS="/var/www/agiletoolkit-css"
+        [ -x ~/www/agiletoolkit-css ] && CSS="$HOME/www/agiletoolkit-css"
+
+        if [ "$CSS" ]; then
+            echo "HEY, I found CSS library in $CSS, so I'm going to use it"
+            ln -fs $CSS .
+        fi
+
+        ATK=""
+        [ -x ~/Sites/atk4 ] && ATK="$HOME/Sites/atk4"
+        [ -x ~/Sites/atk43 ] && ATK="$HOME/Sites/atk43"
+        if [ "$ATK" ]; then
+            echo "HEY, I found ATK library in $ATK, so I'm going to link it into vendor/atk4/atk4"
+            rm -rf vendor/atk4/atk4
+            ln -fs $ATK vendor/atk4/atk4
+
+            # Need to make sure composer is not getting upset about it
+        fi
+
+        # composer fucks up few things, so fix them
+        ( cd vendor/atk4/atk4; git remote rm composer )
+        ( cd vendor/atk4/atk4; git checkout 4.3 )
+        ( cd vendor/atk4/atk4; git remote add composer git://github.com/atk4/atk4.git )
+
+        touch config-auto.php
+        chmod 777 config-auto.php
+    fi
 fi
 
-say "Updating Agile Toolkit"
-( cd atk4; git pull origin 4.3 )
 
-say "Updating Agile Toolkit Old Addons"
-( cd atk4-addons; git pull origin master )
-
-say "You are up-to-date!!!";
+cat dependencies | while read dir path; do
+  if [ -x $dir ]; then
+    echo " => Updating $dir"
+    ( cd $dir; git pull )
+  else
+    echo " => Installing $dir from $path"
+    mkdir -p $dir
+    ( cd $dir; git clone $path . )
+  fi
+done

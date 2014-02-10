@@ -5,14 +5,17 @@ class Model_Participant extends Model_Table {
     function init(){
         parent::init();
 
-		$this->addField('user_id')
-            ->mandatory(true)
-            ->refModel('Model_User_Organisation');
-        $this->hasOne('Organisation','organisation_id');
+//		$this->addField('user_id')
+//            ->mandatory(true)
+//            ->refModel('Model_User_Organisation');
+        $this->hasOne('User_Organisation','user_id');
+        $this->getField('user_id')->mandatory(true);
 
-        $this->addField('project_id')
-            ->mandatory(true)
-            ->refModel('Model_Project');
+//        $this->addField('project_id')
+//            ->mandatory(true)
+//            ->refModel('Model_Project');
+        $this->hasOne('Project','project_id');
+        $this->getField('project_id')->mandatory(true);
 
         $this->addfield('role')
             ->type('list')->listData(array(

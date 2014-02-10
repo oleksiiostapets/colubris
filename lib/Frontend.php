@@ -17,7 +17,7 @@ class Frontend extends ApiFrontend {
          *   PATHFINDER
          */
         $this->pathfinder->addLocation(array(
-            'addons'=>array('atk4-addons','addons'),
+            'addons'=>array('atk4-addons','addons','vendor'),
             'php'=>array('shared'),
             'css'=>array(
                 'addons/cms/templates/default/css',

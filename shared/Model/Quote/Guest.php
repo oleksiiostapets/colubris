@@ -42,12 +42,14 @@ class Model_Quote_Guest extends Model_Table {
         )->mandatory('Cannot be empty');
 
         $this->addField('is_deleted')->type('boolean')->defaultValue('0');
-        $this->addField('deleted_id')->refModel('Model_User');
+//        $this->addField('deleted_id')->refModel('Model_User');
+        $this->hasOne('User','deleted_id');
         $this->addHook('beforeDelete', function($m){
             $m['deleted_id']=$m->api->currentUser()->get('id');
         });
 
-        $this->addField('organisation_id')->refModel('Model_Organisation');
+//        $this->addField('organisation_id')->refModel('Model_Organisation');
+        $this->hasOne('Organisation','organisation_id');
 
         $this->addField('created_dts');
         $this->addField('updated_dts')->caption('Updated')->sortable(true);
