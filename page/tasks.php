@@ -21,6 +21,14 @@ class page_tasks extends Page {
 
         $this->add('View_Switcher');
 
+        $conf_projects_ids=$this->api->getConfig("pivotal/projects");
+        foreach($conf_projects_ids as $pivo_project_id => $col_project_id){
+            if($this->api->recall('project_id')==$col_project_id){
+                $cPivotal=$this->add('ol_pivotal/Controller_pivotal');
+                $cPivotal->importStories($pivo_project_id);
+            }
+        }
+
         $this->add('View_TasksCRUD',array(
             'newtask_link'=>'tasks/new',
             'allow_add'=>false,'allow_edit'=>false,'allow_del'=>true,
