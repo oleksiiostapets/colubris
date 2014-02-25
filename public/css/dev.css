@@ -28,10 +28,13 @@
 .red-button > span {
     background-color: rgba(207, 11, 23, 0.10);
 }
-
+.horizontal .atk-form-fieldset{
+    overflow: hidden;
+}
 .horizontal .atk-form-row {
 	float:left;
 	margin:0 0 0 20px !important;
+    width: auto!important;
 }
 .horizontal .atk-form-row > label {
     width:auto !important;
@@ -40,18 +43,18 @@
     margin-left:auto !important;
 }
 
-.quotation_requested{font-weight:bold;background-color: rgba(51, 204, 255, 0.20);}
-.estimate_needed{font-weight:bold;background-color: rgba(251, 182, 170, 0.17);}
-.not_estimated{font-weight:bold;background-color: rgba(247, 98, 77, 0.23);}
-.estimated{font-weight:bold;background-color: rgba(102, 255, 153, 0.15);}
-.estimation_approved{font-weight:bold;background-color: rgba(102, 204, 0, 0.18);}
-.finished{font-weight:bold;background-color: rgba(51, 204, 255, 0.17);}
-.tested{font-weight:bold;background-color: rgba(81, 164, 235, 0.19);}
+.quotation_requested td{font-weight:bold;background-color: rgba(51, 204, 255, 0.20)!important;}
+.estimate_needed td{font-weight:bold;background-color: rgba(251, 182, 170, 0.17)!important;}
+.not_estimated td{font-weight:bold;background-color: rgba(247, 98, 77, 0.23)!important;}
+.estimated td{font-weight:bold;background-color: rgba(102, 255, 153, 0.15)!important;}
+.estimation_approved td{font-weight:bold;background-color: rgba(102, 204, 0, 0.18)!important;}
+.finished td{font-weight:bold;background-color: rgba(51, 204, 255, 0.17)!important;}
+.tested td{font-weight:bold;background-color: rgba(81, 164, 235, 0.19)!important;}
 
-.unstarted{font-weight:bold;background-color: rgba(255, 255, 255, 0.15);}
-.started{font-weight:bold;background-color: rgba(102, 255, 153, 0.19);}
-.rejected{font-weight:bold;background-color: rgba(247, 98, 77, 0.15);}
-.accepted{font-weight:bold;background-color: rgba(102, 204, 0, 0.15);}
+.unstarted td{font-weight:bold;background-color: rgba(255, 255, 255, 0.15)!important;}
+.started td{font-weight:bold;background-color: rgba(102, 255, 153, 0.19)!important;}
+.rejected td{font-weight:bold;background-color: rgba(247, 98, 77, 0.15)!important;}
+.accepted td{font-weight:bold;background-color: rgba(102, 204, 0, 0.15)!important;}
 
 .red_color{color:red;font-weight:bold;}
 
