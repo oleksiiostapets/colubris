@@ -1,0 +1,25 @@
+<div id="<?$_name?>" class="page_<?$_page?>">
+    <script>
+        $(function() {
+            $( "#colubris_reports_view_reportsswitcher_view_form_date_from" ).datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dateFormat:'dd/mm/yy',
+                duration:0,
+                showOn:'none',
+                changeMonth:true,
+                changeYear:true
+            });
+            $( "#colubris_reports_view_reportsswitcher_view_form_date_to" ).datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dateFormat:'dd/mm/yy',
+                duration:0,
+                showOn:'none',
+                changeMonth:true,
+                changeYear:true
+            });
+        });
+    </script>
+    <?$Content?>
+</div>
