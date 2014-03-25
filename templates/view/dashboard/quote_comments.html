@@ -1,0 +1,30 @@
+
+<ul id="{$_name}" class="{$class} atk-lister discussion">{rows}{row}
+  <li class="{$odd_even} atk-lister-row atk-box-small">
+      <div class="atk-size-milli atk-move-right">{$timestamp}</div>
+      <div class="">
+          <span class="atk-label atk-effect-success atk-box">Project:</span>
+          <span class="">{$project}</span>
+      </div>
+      <div class="">
+          <span class="atk-label atk-effect-success atk-box">Quote:</span>
+          <span class="">{$quote}</span>
+      </div>
+      <div class="">
+          <span class="atk-label atk-effect-success atk-box">Requirement:</span>
+          <span class="">{$requirement}</span>
+      </div>
+      <div class="">
+          <span class=""><strong>{$user}:</strong></span>
+          <div class="atk-size-milli">{$text}</div>
+      </div>
+      <div class="">
+          {$file}
+      </div>
+      <div class=" atk-move-right">
+          {$mark_as_read_button}
+      </div>
+  </li>{/}{/}
+  {$totals}
+  {$paginator}
+</ul>

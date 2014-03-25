@@ -20,32 +20,13 @@ class page_dashboard extends Page {
             )
         ));
 
-        if (
-            !$this->api->currentUser()->isAdmin() &&
-            !$this->api->currentUser()->isSystem()
-        ) {
-            if ($this->api->currentUser()->isClient()) {
-                $this->add('H3')->setText('Actions:');
-                $b = $this->add('Button')->set('Request For Quotation');
-                $b->addStyle('margin-bottom','10px');
-                $b->js('click', array(
-                    $this->js()->univ()->redirect($this->api->url('quotes/rfq'))
-                ));
+        //$this->add('View_Switcher');
+        $this->add('View_Dashboard',array(
+            'allow_add'=>false,'allow_edit'=>false,'allow_del'=>true,
+            'edit_fields'=>$this->api->currentUser()->getDashboardFormFields(),
+            'show_fields'=>$this->api->currentUser()->getDashboardGridFields(),
+        ));
 
-                $b = $this->add('Button')->set('Create Task');
-                $b->addStyle('margin-bottom','10px');
-                $b->js('click', array(
-                    $this->js()->univ()->redirect($this->api->url('tasks/new'))
-                ));
-            }
-
-            //$this->add('View_Switcher');
-            $this->add('View_Dashboard',array(
-                'allow_add'=>false,'allow_edit'=>false,'allow_del'=>true,
-                'edit_fields'=>$this->api->currentUser()->getDashboardFormFields(),
-                'show_fields'=>$this->api->currentUser()->getDashboardGridFields(),
-            ));
-        }
         /*
         if ($this->api->currentUser()->isSystem()){
             $this->add('View_DashboardSystem');

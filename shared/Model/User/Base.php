@@ -69,6 +69,48 @@ class Model_User_Base extends Model_BaseTable {
 
 
 
+    /* **********************************
+     *
+     *      GET RELATED MODELS
+     *
+     */
+    function getDashboardCommentsToReqModel() {
+        if ($this->isClient()) {
+            $m = $this->add('Model_Reqcomment_Client');
+        } elseif ($this->api->currentUser()->isDeveloper()) {
+            $m = $this->add('Model_Reqcomment_Developer');
+        } else {
+            $m = $this->add('Model_Reqcomment');
+        }
+        //$m->debug();
+        $m->addCondition('user_id','<>',$this->api->auth->model['id']);
+        $m->setOrder('created_dts',true);
+
+        $proxy_check = $this->add('Model_ReqcommentUser');
+        $proxy_check->addCondition('user_id',$this->api->auth->model['id']);
+        $proxy_check->_dsql()->field('reqcomment_id');
+        $m->addCondition('id','NOT IN',$proxy_check->_dsql());
+
+        $jr = $m->join('requirement.id','requirement_id','left','_req');
+        $jr->addField('requirement_name','name');
+        $jr->addField('quote_id','quote_id');
+        //$jr->addField('requirement_id','id');
+
+        $jq = $jr->join('quote.id','quote_id','left','_quote');
+        $jq->addField('quote_name','name');
+        $jq->addField('quote_status','status');
+
+        $jp = $jq->join('project.id','project_id','left','_pr');
+        $jp->addField('project_name','name');
+        $jp->addField('organisation_id','organisation_id');
+        $m->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+
+        $m->addCondition('quote_status','IN',array('quotation_requested','estimate_needed','not_estimated','estimated'));
+        return $m;
+    }
+
+
+
     /* *********************************
      *
      *             GET ROLES

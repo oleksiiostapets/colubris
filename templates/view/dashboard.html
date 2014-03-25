@@ -1,18 +1,20 @@
 <div class="{$class}" id="{$_name}">
-    <div class="row">
-        <div class="col span_6 atk-box">
-            <h4>Comments to quotes</h4>
+    {delete_dash}
+    {$ClientActions}
+    <div class="atk-box ui-helper-clearfix">
+        <div class="col span_6">
+            <h4 class="atk-swatch-yellow">Quote discussion</h4>
             {$crud_com_quote}
         </div>
-        <div class="col span_6 atk-box">
+        <div class="col span_6">
             <h4>Comments to tasks</h4>
             {$crud_comm_tasks}
         </div>
     </div>
-    <div class="atk-box">
+    <div class="atk-box ui-helper-clearfix">
         <h4>My active tasks (requested by me or assigned to me)</h4>
         {$crud_active_tasks}
     </div>
-    <div class=""></div>
+    {/delete_dash}
     {$Content}
 </div>
