@@ -50,26 +50,49 @@ class View_Dashboard extends View {
     protected function addQuoteComments() {
         $this->add('View_Dashboard_QuoteComments',null,'crud_com_quote');
     }
-//    protected function addQuoteComments() {
-//        $cr=$this->add('CRUD',
-//            array('grid_class'=>'Grid_Dashcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false),
-//            'crud_com_quote');
+
+    /* ****************************
+     *  Block with comments on requirements tasks which user have access to
+     */
+    protected function addTaskComments() {
+        $this->add('View_Dashboard_TaskComments',null,'crud_comm_tasks');
+    }
+//    protected function addTaskComments() {
+//        $cr=$this->add('CRUD',array('grid_class'=>'Grid_Dashcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false),'crud_comm_tasks');
 //
-//        $m = $this->app->currentUser()->getDashboardCommentsToReqModel();
+//        if ($this->app->currentUser()->isClient()) $m=$this->add('Model_Taskcomment_Client');
+//        elseif ($this->app->currentUser()->isDeveloper()) $m=$this->add('Model_Taskcomment_Developer');
+//        else $m=$this->add('Model_Taskcomment');
+//        $m->addCondition('user_id','<>',$this->app->auth->model['id']);
+//        $m->setOrder('created_dts',true);
+//
+//        $proxy_check=$this->add('Model_TaskcommentUser');
+//        $proxy_check->addCondition('user_id',$this->app->auth->model['id']);
+//        $proxy_check->_dsql()->field('taskcomment_id');
+//        $m->addCondition('id','NOT IN',$proxy_check->_dsql());
+//
+//        $jt = $m->join('task.id','task_id','left','_t');
+//        $jt->addField('task_name','name');
+//
+//        $jp = $jt->join('project.id','project_id','left','_pr');
+//        $jp->addField('project_name','name');
+//        $jp->addField('organisation_id','organisation_id');
+//        $m->addCondition('organisation_id',$this->app->auth->model['organisation_id']);
 //
 //        $cr->setModel($m,
 //            array('text','file_id'),
-//            array('text','user','file','file_thumb','created_dts','project_name','quote_name','quote_status','requirement_name','quote_id','requirement_id')
+//            array('text','user','file','file_thumb','created_dts','project_name','task_name','task_id')
 //        );
 //
 //        if ($cr->grid){
 //            $cr->grid->addPaginator(5);
 //            $cr->grid->addFormatter('project_name','wrap');
+//            //$cr->grid->addFormatter('task_name','wrap');
 //
-//            $cr->grid->addColumn('button','check_reqcomment','√');
-//            if($_GET['check_reqcomment']){
-//                $comment_user=$this->add('Model_ReqcommentUser');
-//                $comment_user->set('reqcomment_id',$_GET['check_reqcomment']);
+//            $cr->grid->addColumn('button','check_taskcomment','√');
+//            if($_GET['check_taskcomment']){
+//                $comment_user=$this->add('Model_TaskcommentUser');
+//                $comment_user->set('taskcomment_id',$_GET['check_taskcomment']);
 //                $comment_user->set('user_id',$this->app->auth->model['id']);
 //                $comment_user->save();
 //
@@ -77,53 +100,6 @@ class View_Dashboard extends View {
 //            }
 //        }
 //    }
-
-    /* ****************************
-     *  Block with comments on requirements tasks which user have access to
-     */
-    protected function addTaskComments() {
-        $cr=$this->add('CRUD',array('grid_class'=>'Grid_Dashcomments','allow_add'=>false,'allow_edit'=>false,'allow_del'=>false),'crud_comm_tasks');
-
-        if ($this->app->currentUser()->isClient()) $m=$this->add('Model_Taskcomment_Client');
-        elseif ($this->app->currentUser()->isDeveloper()) $m=$this->add('Model_Taskcomment_Developer');
-        else $m=$this->add('Model_Taskcomment');
-        $m->addCondition('user_id','<>',$this->app->auth->model['id']);
-        $m->setOrder('created_dts',true);
-
-        $proxy_check=$this->add('Model_TaskcommentUser');
-        $proxy_check->addCondition('user_id',$this->app->auth->model['id']);
-        $proxy_check->_dsql()->field('taskcomment_id');
-        $m->addCondition('id','NOT IN',$proxy_check->_dsql());
-
-        $jt = $m->join('task.id','task_id','left','_t');
-        $jt->addField('task_name','name');
-
-        $jp = $jt->join('project.id','project_id','left','_pr');
-        $jp->addField('project_name','name');
-        $jp->addField('organisation_id','organisation_id');
-        $m->addCondition('organisation_id',$this->app->auth->model['organisation_id']);
-
-        $cr->setModel($m,
-            array('text','file_id'),
-            array('text','user','file','file_thumb','created_dts','project_name','task_name','task_id')
-        );
-
-        if ($cr->grid){
-            $cr->grid->addPaginator(5);
-            $cr->grid->addFormatter('project_name','wrap');
-            //$cr->grid->addFormatter('task_name','wrap');
-
-            $cr->grid->addColumn('button','check_taskcomment','√');
-            if($_GET['check_taskcomment']){
-                $comment_user=$this->add('Model_TaskcommentUser');
-                $comment_user->set('taskcomment_id',$_GET['check_taskcomment']);
-                $comment_user->set('user_id',$this->app->auth->model['id']);
-                $comment_user->save();
-
-                $cr->grid->js()->reload()->execute();
-            }
-        }
-    }
 
     /* ****************************
      *  Block with tasks which user have access to
