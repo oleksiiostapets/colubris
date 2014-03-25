@@ -7,7 +7,7 @@
 	Default Layout
 -------------------------------------------------------------------- */
 #header:after {content:".";display:block;height:0;clear:both;visibility:hidden;font-size:0;}
-#header {padding:2em 0;margin-bottom:1em;.zoom:1;.display:block;}
+#header {padding:2em 0;margin-bottom:1em;zoom:1;display:block;}
 #header-right {float:right;}
 #header-right .atk-menu ul{float:right;}
 #header-right #atk-version {clear: both;float:right;margin-top:1em;}
