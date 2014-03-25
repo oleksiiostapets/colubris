@@ -81,17 +81,17 @@ class Frontend extends ApiFrontend {
 
         $this->api->defineAllowedPages();
 
-        try {
-            if(!$this->api->auth->isPageAllowed($this->api->page)){
-                throw $this->exception('This user cannot see this page','Exception_Denied');
-            }
-        } catch (Exception_Denied $e) {
-            // TODO show denied page
-            //throw $e;
-            $v = $this->add('View')->addClass('denied');
-            $v->add('View')->setElement('h2')->set('You cannot see this page');
-            $v->add('View_Error')->set('Try to change role if you have multiple roles for this account');
-        }
+//        try {
+//            if(!$this->api->auth->isPageAllowed($this->api->page)){
+//                throw $this->exception('This user cannot see this page','Exception_Denied');
+//            }
+//        } catch (Exception_Denied $e) {
+//            // TODO show denied page
+//            //throw $e;
+//            $v = $this->add('View')->addClass('denied');
+//            $v->add('View')->setElement('h2')->set('You cannot see this page');
+//            $v->add('View_Error')->set('Try to change role if you have multiple roles for this account');
+//        }
 
         $this->layout->addFooter()//->addClass('atk-swatch-ink')
             ->setHTML('
@@ -106,14 +106,6 @@ class Frontend extends ApiFrontend {
         ');
         
         $this->autoLogin();
-
-//        if($this->api->auth->model['id']>0){
-//            if(!$this->currentUser()->isSystem()){
-//                $this->template->trySet('organisation','for ');//.$this->currentUser()->get('organisation'));
-//            }else{
-//                $this->template->trySet('organisation','for System user');
-//            }
-//        }
 
         $this->task_statuses = array(
                 'unstarted'=>'unstarted',
@@ -228,6 +220,23 @@ class Frontend extends ApiFrontend {
 
     function currentUser() {
         return $this->auth->model;
+    }
+
+    function initLayout(){
+
+        try {
+            if(!$this->api->auth->isPageAllowed($this->page)){
+                throw $this->exception('This user cannot see this page','Exception_Denied');
+            }
+            parent::initLayout();
+        } catch (Exception_Denied $e) {
+            // TODO show denied page
+            //throw $e;
+            $v = $this->layout->add('View')->addClass('denied');
+            $v->add('View')->setElement('h2')->set('You cannot see this page');
+            $v->add('View_Error')->set('Try to change role if you have multiple roles for this account');
+        }
+
     }
 
 
