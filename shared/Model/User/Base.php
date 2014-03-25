@@ -74,38 +74,54 @@ class Model_User_Base extends Model_BaseTable {
      *      GET RELATED MODELS
      *
      */
-    function getDashboardCommentsToReqModel() {
+    function getDashboardCommentsModel($type) {
+        $type_low = strtolower($type);
         if ($this->isClient()) {
-            $m = $this->add('Model_Reqcomment_Client');
+            $m = $this->add('Model_'.$type.'comment_Client');
         } elseif ($this->api->currentUser()->isDeveloper()) {
-            $m = $this->add('Model_Reqcomment_Developer');
+            $m = $this->add('Model_'.$type.'comment_Developer');
         } else {
-            $m = $this->add('Model_Reqcomment');
+            $m = $this->add('Model_'.$type.'comment');
         }
         //$m->debug();
-        $m->addCondition('user_id','<>',$this->api->auth->model['id']);
+        $m->addCondition('user_id','<>',$this['id']);
         $m->setOrder('created_dts',true);
 
-        $proxy_check = $this->add('Model_ReqcommentUser');
-        $proxy_check->addCondition('user_id',$this->api->auth->model['id']);
-        $proxy_check->_dsql()->field('reqcomment_id');
+        $proxy_check = $this->add('Model_'.$type.'commentUser');
+        $proxy_check->addCondition('user_id',$this['id']);
+        $proxy_check->_dsql()->field($type_low.'comment_id');
         $m->addCondition('id','NOT IN',$proxy_check->_dsql());
 
-        $jr = $m->join('requirement.id','requirement_id','left','_req');
-        $jr->addField('requirement_name','name');
-        $jr->addField('quote_id','quote_id');
-        //$jr->addField('requirement_id','id');
+        switch ($type) {
+            case 'Req':
+                $jr = $m->join('requirement.id','requirement_id','left','_req');
+                $jr->addField('requirement_name','name');
+                $jr->addField('quote_id','quote_id');
+                //$jr->addField('requirement_id','id');
 
-        $jq = $jr->join('quote.id','quote_id','left','_quote');
-        $jq->addField('quote_name','name');
-        $jq->addField('quote_status','status');
+                $jq = $jr->join('quote.id','quote_id','left','_quote');
+                $jq->addField('quote_name','name');
+                $jq->addField('quote_status','status');
 
-        $jp = $jq->join('project.id','project_id','left','_pr');
-        $jp->addField('project_name','name');
-        $jp->addField('organisation_id','organisation_id');
-        $m->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+                $jp = $jq->join('project.id','project_id','left','_pr');
+                $jp->addField('project_name','name');
+                $jp->addField('organisation_id','organisation_id');
+                $m->addCondition('organisation_id',$this['organisation_id']);
 
-        $m->addCondition('quote_status','IN',array('quotation_requested','estimate_needed','not_estimated','estimated'));
+                $m->addCondition('quote_status','IN',array('quotation_requested','estimate_needed','not_estimated','estimated'));
+                break;
+            case 'Task':
+                $jt = $m->join('task.id','task_id','left','_t');
+                $jt->addField('task_name','name');
+
+                $jp = $jt->join('project.id','project_id','left','_pr');
+                $jp->addField('project_name','name');
+                $jp->addField('organisation_id','organisation_id');
+                $m->addCondition('organisation_id',$this['organisation_id']);
+                break;
+            default:
+                throw $this->exception('There is no such a type: '.$type);
+        }
         return $m;
     }
 
