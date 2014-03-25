@@ -5,17 +5,17 @@
  */
 abstract class View_Dashboard_Comments extends CompleteLister {
     protected $type;
-    /**
-     * Paginator object
-     *
-     * @see addPaginator()
-     */
     protected $paginator = null;
 
     function init() {
         parent::init();
         $this->setModel($this->app->currentUser()->getDashboardCommentsModel($this->type));
+        $this->deleteIfRequired();
+        $this->addPaginator(5);
+    }
 
+    // delete record and reload lister
+    function deleteIfRequired() {
         $type_low = strtolower($this->type);
         if($comment_id = $_GET['mark_'.$type_low.'_as_read']) {
             $comment_user = $this->add('Model_'.$this->type.'commentUser');
@@ -25,8 +25,6 @@ abstract class View_Dashboard_Comments extends CompleteLister {
 
             $this->js()->reload()->execute();
         }
-
-        $this->addPaginator(5);
     }
     function addPaginator($ipp = 25, $options = null) {
         // adding ajax paginator
