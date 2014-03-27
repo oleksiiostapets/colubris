@@ -1,15 +1,17 @@
 <?php
 class View_Dashboard extends View {
+
     public $allow_add  = false;
     public $allow_edit = false;
     public $allow_del  = false;
+    public $edit_fields;
+    public $show_fields;
+
     function init(){
         parent::init();
 
-        if (
-            $this->app->currentUser()->isAdmin() ||
-            $this->app->currentUser()->isSystem()
-        ) {
+        // admin and sys have no dash
+        if ( $this->app->currentUser()->isAdmin() || $this->app->currentUser()->isSystem() ) {
             $this->template->del('delete_dash');
             return;
         }
@@ -62,7 +64,12 @@ class View_Dashboard extends View {
      *  Block with tasks which user have access to
      */
     protected function addTasks() {
-        $cr=$this->add('CRUD',array('grid_class'=>'Grid_Tasks','allow_add'=>$this->allow_add,'allow_edit'=>$this->allow_edit,'allow_del'=>$this->allow_del),'crud_active_tasks');
+        $cr=$this->add('CRUD',array(
+            'grid_class'=>'Grid_Tasks',
+            'allow_add'=>$this->allow_add,
+            'allow_edit'=>$this->allow_edit,
+            'allow_del'=>$this->allow_del
+        ),'crud_active_tasks');
         $m=$this->add('Model_Task');
         if (!$_GET['submit']) {
             $m->addCondition('status','<>','accepted');
@@ -100,7 +107,7 @@ class View_Dashboard extends View {
 */
             $cr->grid->addColumn('expander','more');
 
-        	$cr->grid->addFormatter('status','status');
+        	//$cr->grid->addFormatter('status','status');
             $cr->grid->addPaginator(10);
 
         }
