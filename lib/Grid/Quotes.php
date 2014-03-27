@@ -240,32 +240,32 @@ class Grid_Quotes extends Grid {
     	switch($this->current_row[$field]){
     		case 'Quotation Requested':
     			$this->current_row_html[$field] = 'Quotation requested';
-    			$this->row_t->set('painted','quotation_requested');
+    			// $this->row_t->set('painted','quotation_requested');
     			break;
     		case 'Estimate Needed':
     			$this->current_row_html[$field] = 'Estimate needed';
-    			$this->row_t->set('painted','estimate_needed');
+    			// $this->row_t->set('painted','estimate_needed');
     			break;
    			case 'Not Estimated':
    				$this->current_row_html[$field] = 'Not estimated';
-    			$this->row_t->set('painted','not_estimated');
+    			// $this->row_t->set('painted','not_estimated');
    				break;
 			case 'Estimated':
 				$this->current_row_html[$field] = 'Estimated';
-    			$this->row_t->set('painted','estimated');
+    			// $this->row_t->set('painted','estimated');
 				break;
 			case 'Estimation Approved':
 				$this->current_row_html[$field] = 'Estimation approved';
-    			$this->row_t->set('painted','estimation_approved');
+    			// $this->row_t->set('painted','estimation_approved');
 				break;
 			case 'Finished':
 				$this->current_row_html[$field] = 'Finished';
-    			$this->row_t->set('painted','finished');
+    			// $this->row_t->set('painted','finished');
 				break;
     						
     		default:
     			$this->current_row_html[$field] = $this->current_row[$field];
-    			$this->row_t->set('painted','');
+    			// $this->row_t->set('painted','');
     			break;
     	}
     }
@@ -273,9 +273,9 @@ class Grid_Quotes extends Grid {
     	echo $this->current_row['duration'];
     }
 
-    function defaultTemplate() {
-    	return array('grid/colored');
-    }
+//    function defaultTemplate() {
+//    	return array('grid/colored');
+//    }
    
     function precacheTemplate() {
     	$this->row_t->trySetHTML('painted', '{$painted}');
