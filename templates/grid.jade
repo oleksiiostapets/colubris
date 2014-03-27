@@ -23,6 +23,12 @@
                 </td>
                 {/}{/}
             {/}{/}
+            {not_found}
+            tr
+                td.atk-padding-large.atk-align-center
+                    span.atk-label.atk-effect-warning
+                        span.icon-attention {$not_found_message}
+            {/}
 
             {totals}
             tr(class="totals")
@@ -32,5 +38,4 @@
                 </td>
                 {/}{/}
             {/}
-    {not_found}{$not_found_message}{/}
     {$paginator}

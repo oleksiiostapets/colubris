@@ -2,6 +2,8 @@
 class page_tasks extends Page {
     function page_index(){
 
+        $this->app->add('Controller_Filter');
+
         // Checking client's read permission to this quote and redirect to denied if required
         if( !$this->api->currentUser()->canSeeTaskList() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
@@ -19,6 +21,7 @@ class page_tasks extends Page {
             )
         ));
 
+        $this->add('Form_Filter_Base');
         $this->add('View_Switcher');
 
         $this->add('View_TasksCRUD',array(
