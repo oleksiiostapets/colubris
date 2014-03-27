@@ -30,29 +30,29 @@ class Grid_Tasks extends Grid_Advanced {
     function format_status($field){
     	switch($this->current_row[$field]){
     		case 'started':
-    			$this->row_t->set('painted','started');
+    			// $this->row_t->set('painted','started');
     			break;
     		case 'finished':
-    			$this->row_t->set('painted','finished');
+    			// $this->row_t->set('painted','finished');
     			break;
             case 'tested':
-                $this->row_t->set('painted','tested');
+                // $this->row_t->set('painted','tested');
                 break;
    			case 'rejected':
-    			$this->row_t->set('painted','rejected');
+    			// $this->row_t->set('painted','rejected');
    				break;
 			case 'accepted':
-    			$this->row_t->set('painted','accepted');
+    			// $this->row_t->set('painted','accepted');
 				break;
     						
     		default:
-    			$this->row_t->set('painted','');
+    			// $this->row_t->set('painted','');
     			break;
     	}
     }
-    function defaultTemplate() {
-    	return array('grid/colored');
-    }
+//    function defaultTemplate() {
+//    	return array('grid/colored');
+//    }
     
     function precacheTemplate() {
     	$this->row_t->trySetHTML('painted', '{$painted}');
