@@ -4461,7 +4461,7 @@ table {
 .ui-widget {
   color: #5b5852;
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", "sans-serif";
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 .ui-widget-header {
   background: none;
@@ -4491,7 +4491,7 @@ table {
   background: rgba(0, 0, 0, 0.2);
 }
 .ui-helper-reset {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   line-height: 1.3;
 }
 .ui-selectmenu-button {
@@ -4530,7 +4530,7 @@ table {
   position: relative;
 }
 .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
-  font-size: 0.8522275199664412rem;
+  font-size: 0.9739743085330757rem;
   font-weight: 300;
   line-height: 1;
   margin: 0;
@@ -4664,7 +4664,7 @@ table {
   border-top: none  !important;
 }
 .ui-accordion .ui-accordion-header {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   border-width: 1px;
   margin: 0;
   padding-top: 0.45rem;
@@ -4699,7 +4699,7 @@ table {
   padding: 0.9rem 0.9rem 0 0.9rem;
 }
 .ui-dialog .ui-widget-header.ui-dialog-titlebar .ui-dialog-title {
-  font-size: 0.8522275199664412rem;
+  font-size: 0.9739743085330757rem;
   font-weight: 400;
   line-height: 1.2;
 }
@@ -4744,7 +4744,7 @@ table {
   padding: 0.45rem 0.9rem 0.9rem 0.9rem;
 }
 .ui-tooltip {
-  font-size: 0.6555596307434162rem;
+  font-size: 0.7492110065639044rem;
   -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.5);
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.5);
@@ -5029,7 +5029,7 @@ html {
 }
 body {
   color: #5b5852;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 *,
 body,
@@ -5074,38 +5074,38 @@ h5 {
   font-weight: bold;
 }
 .atk-size-exa {
-  font-size: 1.2631955373165975rem;
+  font-size: 1.44365204264754rem;
 }
 .atk-size-peta {
-  font-size: 1.183rem;
+  font-size: 1.3520000000000003rem;
 }
 h1,
 .atk-size-tera {
-  font-size: 1.0375596368402156rem;
+  font-size: 1.1857824421031036rem;
 }
 h2,
 .atk-size-giga {
-  font-size: 0.9716888748589211rem;
+  font-size: 1.1105015712673385rem;
 }
 h3,
 .atk-size-mega {
-  font-size: 0.9099999999999999rem;
+  font-size: 1.04rem;
 }
 h4,
 .atk-size-kilo {
-  font-size: 0.8522275199664412rem;
+  font-size: 0.9739743085330757rem;
 }
 h5,
 .atk-size-reset {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 h6,
 small,
 .atk-size-milli {
-  font-size: 0.6555596307434162rem;
+  font-size: 0.7492110065639044rem;
 }
 .atk-size-micro {
-  font-size: 0.6139406135149204rem;
+  font-size: 0.7016464154456235rem;
 }
 figure img {
   display: block;
@@ -5154,7 +5154,7 @@ p {
   margin: 0 0 0.9rem 0;
 }
 blockquote {
-  font-size: 0.8522275199664412rem;
+  font-size: 0.9739743085330757rem;
   font-style: italic;
   font-weight: 300;
   margin: 0 0.9rem 0.9rem;
@@ -5162,7 +5162,7 @@ blockquote {
 mark {
   background: blue;
   color: red;
-  line-height: 0.7rem;
+  line-height: 0.8rem;
 }
 del {
   color: red;
@@ -5181,7 +5181,7 @@ samp {
 }
 pre {
   font-family: monospace, serif;
-  font-size: 0.6555596307434162rem;
+  font-size: 0.7492110065639044rem;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
@@ -5584,7 +5584,7 @@ a:focus {
   line-height: 0;
 }
 .atk-pagination > a {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 .atk-pagination > a *[class*=icon] {
   position: relative;
