@@ -3,7 +3,7 @@ class Model_User_Base extends Model_BaseTable {
     public $table='user';
     function init(){
         parent::init(); //$this->debug();
-        if (@$this->api->auth) $this->api->auth->addEncryptionHook($this);
+        if (@$this->app->auth) $this->app->auth->addEncryptionHook($this);
 
         // fields
         $this->addField('email')->mandatory('required');
@@ -21,7 +21,7 @@ class Model_User_Base extends Model_BaseTable {
         //$this->addField('deleted_id')->refModel('Model_User');
         $this->hasOne('User','deleted_id');
         $this->addHook('beforeDelete', function($m){
-            $m['deleted_id']=$m->api->currentUser()->get('id');
+            $m['deleted_id']=$m->app->currentUser()->get('id');
         });
 
         $this->addField('is_system')->defaultValue('0')->type('boolean');
@@ -56,7 +56,7 @@ class Model_User_Base extends Model_BaseTable {
         });
     }
     function me(){
-        $this->addCondition('id',$this->api->auth->get('id'));
+        $this->addCondition('id',$this->app->auth->get('id'));
         return $this;
     }
     function beforeInsert(&$d){
@@ -78,7 +78,7 @@ class Model_User_Base extends Model_BaseTable {
         $type_low = strtolower($type);
         if ($this->isClient()) {
             $m = $this->add('Model_'.$type.'comment_Client');
-        } elseif ($this->api->currentUser()->isDeveloper()) {
+        } elseif ($this->app->currentUser()->isDeveloper()) {
             $m = $this->add('Model_'.$type.'comment_Developer');
         } else {
             $m = $this->add('Model_'.$type.'comment');
@@ -164,25 +164,25 @@ class Model_User_Base extends Model_BaseTable {
      *
      */
     function isSystem() {
-        return ($this->api->getCurrentUserRole() == 'system');
+        return ($this->app->getCurrentUserRole() == 'system');
     }
     function isAdmin() {
-        return ($this->api->getCurrentUserRole() == 'admin');
+        return ($this->app->getCurrentUserRole() == 'admin');
     }
     function isFinancial() {
-        return ($this->api->auth->model['is_financial']);
+        return ($this->app->auth->model['is_financial']);
     }
     function isManager() {
-        return ($this->api->getCurrentUserRole() == 'manager');
+        return ($this->app->getCurrentUserRole() == 'manager');
     }
     function isSales() {
-        return ($this->api->getCurrentUserRole() == 'sales');
+        return ($this->app->getCurrentUserRole() == 'sales');
     }
     function isDeveloper() {
-        return ($this->api->getCurrentUserRole() == 'developer');
+        return ($this->app->getCurrentUserRole() == 'developer');
     }
     function isClient() {
-        return ($this->api->getCurrentUserRole() == 'client');
+        return ($this->app->getCurrentUserRole() == 'client');
     }
 
 

@@ -3,6 +3,7 @@ class Grid_Tasks extends Grid_Advanced {
     public $quote;
     function init() {
         parent::init();
+        $this->js('reload')->reload();
         $this->addClass('zebra bordered');
     }
     function setModel($model, $actual_fields = UNDEFINED) {
@@ -76,14 +77,6 @@ class Grid_Tasks extends Grid_Advanced {
                 return '';
        	}
     }
-//    function defaultTemplate() {
-//    	return array('grid/colored');
-//    }
-    
-//    function precacheTemplate() {
-//    	$this->row_t->trySetHTML('painted', '{$painted}');
-//    	parent::precacheTemplate();
-//    }
     private function removeEstimateColumnIfNeeded() {
         if (
             in_array('estimate',$this->model->whatFieldsUserCanSee($this->api->currentUser(),$this->quote)) &&
