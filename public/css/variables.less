@@ -1,0 +1,49 @@
+// ==========================================================
+// General
+// ==========================================================
+
+@bodyBackground:       @atk-swatch-beige;
+@cornerRadius:         3px;
+@windowMinWidth:       1000px; // Should be equal or greater than @siteMinWidth
+@siteMinWidth:         1000px; // Side paddings are dropped if value is in percentages
+@siteMaxWidth:         100%; // Put the same value as in @siteMinWidth if fixed layout is required
+
+//@dialogBlur:           7px; // Blur effect for modal dialog's overlay
+
+// ==========================================================
+// Typography
+// ==========================================================
+
+@bodyFamily:           "Open Sans", "Helvetica Neue", "Helvetica", @jui-ffDefault;
+@bodyColor:            #5b5852;
+@bodySize:             0.875rem; // 14px
+@bodyBaseline:         1.5; // Golden Section
+
+@headingColor:         #191716;
+@headingFamily:        "Dosis", "Helvetica", @jui-ffDefault;
+
+
+// ==========================================================
+// Colors
+// ==========================================================
+
+@linkColor:            darken(@atk-swatch-red,10%);
+@linkColorHover:       darken(@linkColor,10%);
+
+@textSelect:           @atk-swatch-red; // Text selection's color
+@textDimmed:           40%;
+
+@borderStatic:         shade(@atk-swatch-beigeDarken,5%);
+@borderClickable:      shade(@borderStatic, 10%);
+@borderOverlay:        shade(@borderStatic, 25%);
+
+@formMandatory:        #ff0000;
+
+@colorFocus:           @atk-swatch-red; // (!)
+
+@atk-swatch-white:	  			#ffffff;		.createSwatch(atk-swatch-white);
+@atk-swatch-black:	  			#000000;		.createSwatch(atk-swatch-black);
+@atk-swatch-beige:	   			#f7f4f0;		.createSwatch(atk-swatch-beige);
+@atk-swatch-beigeDarken:	    #eeeae4;		.createSwatch(atk-swatch-beigeDarken);
+@atk-swatch-red:       			#de232b;		.createSwatch(atk-swatch-red);
+@swatchText:           			65%; // Text color sensitivity based on swatch
