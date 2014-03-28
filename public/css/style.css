@@ -6893,3 +6893,6 @@ ul.atk-lister.discussion li .timestamp {
   padding: 0;
   margin: 0;
 }
+.atk-table.atk-table-zebra tbody tr:nth-child(odd) td:not([class*='atk-swatch']) {
+  background: #fcfbf9;
+}
