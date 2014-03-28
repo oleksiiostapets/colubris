@@ -7,6 +7,7 @@ class Grid_Reqcomments extends Grid {
     function setModel($model, $actual_fields = UNDEFINED) {
         parent::setModel($model, $actual_fields);
         $this->removeColumn('user');
+        $this->removeColumn('user_id');
         $this->removeColumn('file');
         $this->removeColumn('file_thumb');
         $this->removeColumn('created_dts');
