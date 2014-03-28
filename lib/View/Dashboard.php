@@ -168,7 +168,7 @@ class View_Dashboard extends View {
                     ->addCondition('task_id',$cr->id);
             $crud->setModel($m,
                 array('text','file_id'),
-                array('text','user','file','file_thumb','created_dts')
+                array('text','user','user_id','file','file_thumb','created_dts')
             );
             if($crud->grid){
                 $crud->grid->addClass('zebra bordered');
