@@ -21,11 +21,7 @@ class page_dashboard extends Page {
         ));
 
         //$this->add('View_Switcher');
-        $this->add('View_Dashboard',array(
-            'allow_add'=>false,'allow_edit'=>false,'allow_del'=>true,
-            'edit_fields'=>$this->api->currentUser()->getDashboardFormFields(),
-            'show_fields'=>$this->api->currentUser()->getDashboardGridFields(),
-        ));
+        $this->add('View_Dashboard');
 
         /*
         if ($this->api->currentUser()->isSystem()){

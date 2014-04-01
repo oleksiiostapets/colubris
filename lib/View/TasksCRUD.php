@@ -1,11 +1,16 @@
 <?php
 class View_TasksCRUD extends View {
+
+    public $allow_add  = false;
+    public $allow_edit = false;
+    public $allow_del  = false;
+
     function init(){
         parent::init();
 
         $b=$this->add('Button')->set('New Task');
         $b->js('click', array(
-        		$this->js()->univ()->redirect($this->api->url($this->newtask_link))
+            $this->js()->univ()->redirect($this->api->url('tasks/new'))
         ));
 
         $m=$this->add('Model_Task');
@@ -44,9 +49,6 @@ class View_TasksCRUD extends View {
                     ))->execute();
                 }
             }
-            $cr->grid->addColumn('expander','more');
-        	$cr->grid->addFormatter('status','status');
-            $cr->grid->addFormatter('name','wrap');
         }
     }
 
