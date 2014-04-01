@@ -6,11 +6,24 @@ class page_tasks extends Page {
         if( !$this->app->user_access->canSeeTaskList() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
+        $this->addBC();
 
 
-        $this->app->add('Controller_Filter');
+        $filter = $this->app->add('Controller_Filter');
         $filter_form = $this->add('Form_Filter_Base');
+        $filter->setForm($filter_form);
 
+        $this->add('View_Switcher');
+
+        $v = $this->add('View_TasksCRUD',array(
+
+        ));
+
+        $filter->addViewToReload($filter_form);
+        $filter->addViewToReload($v);
+        $filter->commit();
+    }
+    private function addBC() {
         $this->add('x_bread_crumb/View_BC',array(
             'routes' => array(
                 0 => array(
@@ -22,14 +35,6 @@ class page_tasks extends Page {
                 ),
             )
         ));
-
-        $this->add('Form_Filter_Base');
-        $this->add('View_Switcher');
-
-        $this->add('View_TasksCRUD',array(
-
-        ));
-
     }
 
 //    function page_time(){

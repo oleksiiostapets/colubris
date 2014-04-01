@@ -4,11 +4,34 @@ class Model_Project extends Model_Project_Base {
         parent::init();
         $this->addCondition('is_deleted',false);
     }
+
+    function forRole($role) {
+        switch ($role) {
+            case 'system':
+                break;
+            case 'admin':
+                break;
+            case 'admin':
+                break;
+            case 'manager':
+                return $this->forManager();
+                break;
+            case 'sales':
+                break;
+            case 'developer':
+                return $this->forDeveloper();
+                break;
+            case 'client':
+                return $this->forClient();
+                break;
+            default:
+                throw $this->exception('Wrong role');
+        }
+    }
     function forClient() {
         $this->addCondition('client_id',$this->api->auth->model['client_id']);
         return $this;
     }
-
     // TODO refactor this. Maybe join?
     function participateIn() {
         $participated_in=$this->add('Model_Participant')->addCondition('user_id',$this->api->auth->model['id']);
