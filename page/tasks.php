@@ -2,12 +2,14 @@
 class page_tasks extends Page {
     function page_index(){
 
-        $this->app->add('Controller_Filter');
-
         // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->api->currentUser()->canSeeTaskList() ){
+        if( !$this->app->user_access->canSeeTaskList() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
+
+
+        $this->app->add('Controller_Filter');
+        $filter_form = $this->add('Form_Filter_Base');
 
         $this->add('x_bread_crumb/View_BC',array(
             'routes' => array(
@@ -25,7 +27,7 @@ class page_tasks extends Page {
         $this->add('View_Switcher');
 
         $this->add('View_TasksCRUD',array(
-            'allow_add'=>false,'allow_edit'=>false,'allow_del'=>true,
+
         ));
 
     }

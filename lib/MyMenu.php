@@ -3,16 +3,16 @@ class MyMenu extends Menu_Basic {
     function init() {
         parent::init();
         if($this->api->auth->isLoggedIn()) {
-            if ($this->api->currentUser()->canSeeDashboard()) $this->addMenuItem('dashboard','Dashboard');
-            if ($this->api->currentUser()->canSeeTaskList()) $this->addMenuItem('tasks','Tasks');
-            if ($this->api->currentUser()->canSeeQuotesList()) $this->addMenuItem('quotes','Quotes');
-            if ($this->api->currentUser()->canUserMenageClients()) $this->addMenuItem('clients','Clients');
-            if ($this->api->currentUser()->canSeeProjectList()) $this->addMenuItem('projects','Projects');
-            if ($this->api->currentUser()->canSeeReportList()) $this->addMenuItem('reports','Reports');
-            if ($this->api->currentUser()->canSeeUserList()) $this->addMenuItem('users','Users');
-            if ($this->api->currentUser()->canSeeDevList()) $this->addMenuItem('developers','Developers');
-            if ($this->api->currentUser()->canSeeDeleted()) $this->addMenuItem('deleted','Deleted');
-            if ($this->api->currentUser()->canSeeLogs()) $this->addMenuItem('logs','Logs');
+            if ($this->app->user_access->canSeeDashboard()) $this->addMenuItem('dashboard','Dashboard');
+            if ($this->app->user_access->canSeeTaskList()) $this->addMenuItem('tasks','Tasks');
+            if ($this->app->user_access->canSeeQuotesList()) $this->addMenuItem('quotes','Quotes');
+            if ($this->app->user_access->canUserMenageClients()) $this->addMenuItem('clients','Clients');
+            if ($this->app->user_access->canSeeProjectList()) $this->addMenuItem('projects','Projects');
+            if ($this->app->user_access->canSeeReportList()) $this->addMenuItem('reports','Reports');
+            if ($this->app->user_access->canSeeUserList()) $this->addMenuItem('users','Users');
+            if ($this->app->user_access->canSeeDevList()) $this->addMenuItem('developers','Developers');
+            if ($this->app->user_access->canSeeDeleted()) $this->addMenuItem('deleted','Deleted');
+            if ($this->app->user_access->canSeeLogs()) $this->addMenuItem('logs','Logs');
             if ($this->api->currentUser()->canSeeFinance()) $this->addMenuItem('rates','Rates');
         }
 

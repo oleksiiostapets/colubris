@@ -12,11 +12,6 @@ class CRUD_Task extends CRUD {
     function init() {
         parent::init();
     }
-//    function setModel($model, $fields = null, $grid_fields = null) {
-//        $model = parent::setModel($model, $fields, $grid_fields );
-//        return $model;
-//    }
-
     function configure() {
         $this->addTimeFrame();
         $this->addMoreFrame();
@@ -45,6 +40,14 @@ class CRUD_Task extends CRUD {
 //                        $this->api->url('./time',array('task_id'=>$_GET['time'],'reload_view'=>$cr->grid->name))
 //                    ))->execute();
 //                }
+//            }
+
+
+//            $cr->grid->addColumn('button','attachments');
+//            if ($_GET['attachments']) {
+//                $this->js()->univ()->frameURL($this->app->_('Attachments'),array(
+//                    $this->app->url('./attachments',array('task_id'=>$_GET['attachments'],'reload_view'=>$cr->grid->name))
+//                ))->execute();
 //            }
         }
     }

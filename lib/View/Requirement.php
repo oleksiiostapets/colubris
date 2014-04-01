@@ -125,8 +125,8 @@ class View_Requirement extends AbstractView {
 
         $cr->setModel(
             $this->tasks,
-            $this->tasks->whatFieldsUserCanEdit($user),
-            $this->tasks->whatFieldsUserCanSee($user,$this->quote)
+            $this->app->user_access->whatTaskFieldsUserCanEdit(),
+            $this->app->user_access->whatTaskFieldsUserCanSee($this->quote)
         );
     }
 

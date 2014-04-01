@@ -111,38 +111,4 @@ class Model_Task_Definitions extends Model_Auditable {
                 ;
         });
     }
-
-    function whatFieldsUserCanEdit($user) {
-        if ($user->isAdmin()) {
-            return array();
-        } else if ($user->isManager()) {
-            return array('name','descr_original','priority','type','status','estimate','requester_id','assigned_id');
-        } else if ($user->isDeveloper()) {
-            return array('name','descr_original','priority','type','status','estimate','requester_id','assigned_id');
-        } else if ($user->isClient()) {
-            return array('name','descr_original','priority','type','status');
-        } else if ($user->isSales()) {
-            return array('name','descr_original','priority','type','status','estimate');
-        }
-        throw $this->exception('Wrong role');
-    }
-
-    function whatFieldsUserCanSee($user,$quote=null) {
-        if ($user->isAdmin()) {
-            return array();
-        } else if ($user->isManager()) {
-            return array('name','priority','type','status','estimate','spent_time','requester','assigned');
-        } else if ($user->isDeveloper()) {
-            return array('name','priority','type','status','estimate','spent_time','requester','assigned');
-        } else if ($user->isClient()) {
-            if (is_object($quote) && $quote['show_time_to_client']) {
-                return array('name','priority','type','status','estimate','spent_time');
-            } else {
-                return array('name','priority','type','status','estimate');
-            }
-        } else if ($user->isSales()) {
-            return array('name','priority','type','status','estimate','spent_time','requester','assigned');
-        }
-        throw $this->exception('Wrong role');
-    }
 }

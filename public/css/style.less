@@ -3,7 +3,6 @@
 @import "variables.less";
 @import "dev.css";
 
-
 @bodySize:             0.8rem;
 @bodyBaseline:         1.3;
 @baselineDestroyer:    0.7rem;
@@ -29,4 +28,15 @@ ul.atk-lister.discussion {
 
 .atk-table.atk-table-zebra tbody tr:nth-child(odd) td:not([class*='atk-swatch']) {
   background: #fcfbf9;
+}
+
+
+table {
+  .name, .project {
+    //width: 200px;
+    a {
+      white-space:normal;
+      word-wrap: break-all;
+    }
+  }
 }
