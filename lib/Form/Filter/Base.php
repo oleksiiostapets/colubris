@@ -9,10 +9,6 @@ class Form_Filter_Base extends Form {
     protected $quote       = false;
     protected $requirement = false;
 
-    protected $project_model     = false;
-    protected $quote_model       = false;
-    protected $requirement_model = false;
-
     function init() {
         parent::init();
         $this->addClass('atk-form-stacked horizontal');
@@ -23,10 +19,10 @@ class Form_Filter_Base extends Form {
         $this->addAssigned();
     }
     function addProject(){
-        $this->project_model = $this->add('Model_Project');
-        $this->project_model->forRole($this->app->getCurrentUserRole());
+        $project_model = $this->add('Model_Project');
+        $project_model->forRole($this->app->getCurrentUserRole());
 
-        $projects = $this->project_model->getRows();
+        $projects = $project_model->getRows();
         $p_arr['0'] = 'all';
         foreach ($projects as $p){
             $p_arr[$p['id']]=$p['name'];
@@ -50,9 +46,9 @@ class Form_Filter_Base extends Form {
     }
     function addQuote(){
         if ($g = $_GET['project']) {
-            $this->quote_model = $this->add('Model_Quote');
-            $this->quote_model->addCondition('project_id',$g);
-            $q_arr = $this->quote_model->getRows();
+            $quote_model = $this->add('Model_Quote');
+            $quote_model->addCondition('project_id',$g);
+            $q_arr = $quote_model->getRows();
             $qn_arr['0'] = 'all';
             foreach ($q_arr as $q) {
                 $qn_arr[$q['id']] = $q['name'];
@@ -77,12 +73,12 @@ class Form_Filter_Base extends Form {
     }
     function addRequirement(){
         if ($_GET['project'] && $g = $_GET['quote']) {
-            $mr=$this->add('Model_Requirement');
-            $mr->addCondition('quote_id',$g);
-            $r_arr=$mr->getRows();
-            $rn_arr['0']='all';
+            $requirement_model = $this->add('Model_Requirement');
+            $requirement_model->addCondition('quote_id',$g);
+            $r_arr = $requirement_model->getRows();
+            $rn_arr['0'] = 'all';
             foreach($r_arr as $r){
-                $rn_arr[$r['id']]=$r['name'];
+                $rn_arr[$r['id']] = $r['name'];
             }
             $this->requirement = $this->addField('DropDown','requirement');
             $this->requirement->setValueList($rn_arr);
@@ -104,7 +100,7 @@ class Form_Filter_Base extends Form {
         }
     }
     function addStatus() {
-        $s_arr=array_merge(array(''=>'all'),$this->app->task_statuses);
+        $s_arr = array_merge(array(''=>'all'),$this->app->task_statuses);
         $this->status = $this->addField('DropDown','status');
         $this->status->setValueList($s_arr);
 
@@ -123,9 +119,9 @@ class Form_Filter_Base extends Form {
         );
     }
     function addAssigned() {
-        $ma=$this->add('Model_User_Task')->setOrder('name');
-        $a_arr=$ma->getRows();
-        $u_arr['0']='all';
+        $assigned_model = $this->add('Model_User_Task')->debug()->setOrder('name');
+        $a_arr = $assigned_model->getRows();
+        $u_arr['0'] = 'all';
         foreach($a_arr as $a){
             $u_arr[$a['id']]=$a['name'];
         }

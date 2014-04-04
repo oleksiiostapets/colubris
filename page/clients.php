@@ -5,7 +5,7 @@ class page_clients extends Page {
         parent::init();
 
         // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->api->currentUser()->canUserMenageClients() ){
+        if( !$this->api->user_access->canUserMenageClients() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
     }
