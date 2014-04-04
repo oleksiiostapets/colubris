@@ -119,7 +119,7 @@ class Form_Filter_Base extends Form {
         );
     }
     function addAssigned() {
-        $assigned_model = $this->add('Model_User_Task')->debug()->setOrder('name');
+        $assigned_model = $this->add('Model_User_Task')->setOrder('name');
         $a_arr = $assigned_model->getRows();
         $u_arr['0'] = 'all';
         foreach($a_arr as $a){
