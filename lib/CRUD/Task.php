@@ -15,7 +15,6 @@ class CRUD_Task extends CRUD {
     function configure() {
         $this->addTimeFrame();
         $this->addMoreFrame();
-        //$this->forGrid();
     }
 
     protected function configureGrid($fields) {

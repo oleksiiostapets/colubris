@@ -80,7 +80,36 @@ $.each({
             ;
         }
 
-	}
+	},
+    reloadForm: function (form_id,field) {
+        var queue = ['project','quote','requirement'];
+        var form = $("#" + form_id).find("form");
+        var action = form.attr("action");
+
+        var remove = false;
+        $.each(queue,function(count,word) {
+            if (!remove) {
+                form.find('select').each(function(c,el) {
+                    if ($(el).attr('data-shortname') == word) {
+                        action = action + '&' + $(el).attr('data-shortname') + '=' + $(el).val();
+                    }
+                });
+                if (word == field) {
+                    remove = true;
+                }
+            } else {
+                $rr = form.find('select[data-shortname="'+ word +'"]').closest('.atk-form-row');
+                $rr.remove();
+                //console.log($rr);
+            }
+
+        });
+        form.attr("action",action);
+        console.log("============ action ============");
+        console.log(action);
+        form.submit();
+
+    }
 	
 },$.colubris._import);
 	

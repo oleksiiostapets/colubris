@@ -6941,3 +6941,10 @@ table .project a {
   white-space: normal;
   word-wrap: break-all;
 }
+table .project,
+table .quote,
+table .requirement {
+  margin: 0 0 0 5px;
+  font-size: 11px;
+  color: #5b5b5b;
+}
