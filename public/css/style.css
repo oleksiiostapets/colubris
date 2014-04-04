@@ -6936,6 +6936,13 @@ ul.atk-lister.discussion li .timestamp {
 .atk-table.atk-table-zebra tbody tr:nth-child(odd) td:not([class*='atk-swatch']) {
   background: #fcfbf9;
 }
+table .name span,
+table .project span {
+  background-color: #777777;
+  color: #FFFFFF;
+  padding: 1px;
+  font-size: 10px;
+}
 table .name a,
 table .project a {
   white-space: normal;

@@ -31,7 +31,7 @@ class Grid_Tasks extends Grid_Advanced {
         // name
         $this->current_row_html['name'] =
             '
-            <div class="name">
+            <div class="name"><span>#'.$this->current_row['id'].'</span>
                 <a href="'.$this->api->url('task',array(
                                 'task_id'=>$this->current_row['id'],'requirement_id'=>null
             )).'">'.$this->current_row['name'].'</a></div>
