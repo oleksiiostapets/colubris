@@ -204,17 +204,17 @@ class Controller_UserAccess extends AbstractController {
         if ($this->user->isAdmin()) {
             return array();
         } else if ($this->user->isManager()) {
-            return array('name','priority','type','status','estimate','spent_time','requester','assigned');
+            return array('project','quote','name','priority','type','status','estimate','spent_time','requester','assigned');
         } else if ($this->user->isDeveloper()) {
-            return array('name','priority','type','status','estimate','spent_time','requester','assigned');
+            return array('project','quote','name','priority','type','status','estimate','spent_time','requester','assigned');
         } else if ($this->user->isClient()) {
             if (is_object($quote) && $quote['show_time_to_client']) {
-                return array('name','priority','type','status','estimate','spent_time');
+                return array('project','quote','name','priority','type','status','estimate','spent_time');
             } else {
-                return array('name','priority','type','status','estimate');
+                return array('project','quote','name','priority','type','status','estimate');
             }
         } else if ($this->user->isSales()) {
-            return array('name','priority','type','status','estimate','spent_time','requester','assigned');
+            return array('project','quote','name','priority','type','status','estimate','spent_time','requester','assigned');
         }
         throw $this->exception('Wrong role');
     }

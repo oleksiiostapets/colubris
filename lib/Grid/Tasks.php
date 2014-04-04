@@ -8,17 +8,41 @@ class Grid_Tasks extends Grid_Advanced {
     }
     function setModel($model, $actual_fields = UNDEFINED) {
         parent::setModel($model, $actual_fields);
-        $this->removeEstimateColumnIfNeeded();
+        $this->removeColumnsIfNeeded();
+    }
+    function addPaginator($ipp = 25, $options = null) {
+        $this->app->stickyGet('project');
+        $this->app->stickyGet('quote');
+        $this->app->stickyGet('requirement');
+        $this->app->stickyGet('status');
+        $this->app->stickyGet('assigned');
+        parent::addPaginator($ipp, $options);
+
+        return $this;
     }
     function formatRow() {
+        $this->app->stickyForget('project');
+        $this->app->stickyForget('quote');
+        $this->app->stickyForget('requirement');
+        $this->app->stickyForget('status');
+        $this->app->stickyForget('assigned');
         parent::formatRow();
 
         // name
         $this->current_row_html['name'] =
-            '<div class="name">
+            '
+            <div class="name">
                 <a href="'.$this->api->url('task',array(
                                 'task_id'=>$this->current_row['id'],'requirement_id'=>null
-            )).'">'.$this->current_row['name'].'</a></div>'
+            )).'">'.$this->current_row['name'].'</a></div>
+            <div class="project">Project: '.$this->current_row['project'].'</div>
+            <div class="quote">Quote: '.
+                    ($this->current_row['quote']?$this->current_row['quote']:'---')
+            .'</div>
+            <div class="requirement">Requirement: '.
+                    ($this->current_row['requirement']?$this->current_row['requirement']:'---')
+            .'</div>
+            '
         ;
 
         // spent_time
@@ -97,12 +121,14 @@ class Grid_Tasks extends Grid_Advanced {
                 return '';
        	}
     }
-    private function removeEstimateColumnIfNeeded() {
+    private function removeColumnsIfNeeded() {
         if (
             in_array('estimate',$this->app->user_access->whatTaskFieldsUserCanSee($this->quote)) &&
             in_array('spent_time',$this->app->user_access->whatTaskFieldsUserCanSee($this->quote))
         ) {
             $this->removeColumn('estimate');
         }
+        $this->removeColumn('project');
+        $this->removeColumn('quote');
     }
 }

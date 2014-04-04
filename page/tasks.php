@@ -8,14 +8,14 @@ class page_tasks extends Page {
         }
         $this->addBC();
 
-        $this->app->stickyGet('project');
-        $this->app->stickyGet('quote');
+//        $this->app->stickyGet('project');
+//        $this->app->stickyGet('quote');
 
         $filter = $this->app->add('Controller_Filter');
         $filter_form = $this->add('Form_Filter_Base');
         $filter->setForm($filter_form);
 
-        $this->add('View_Switcher');
+        //$this->add('View_Switcher');
 
         $v = $this->add('View_TasksCRUD',array(
 
