@@ -34,7 +34,7 @@ class Model_Task extends Model_Task_Base {
             $this->addCondition('status',$_GET['status']);
         }
         if ($_GET['assigned']) {
-            $this->addCondition('assigned',$_GET['assigned']);
+            $this->addCondition('assigned_id',$_GET['assigned']);
         }
         return $this;
     }

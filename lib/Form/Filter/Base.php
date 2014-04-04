@@ -8,6 +8,8 @@ class Form_Filter_Base extends Form {
     protected $project     = false;
     protected $quote       = false;
     protected $requirement = false;
+    protected $assigned    = false;
+    protected $status      = false;
 
     function init() {
         parent::init();
@@ -127,5 +129,19 @@ class Form_Filter_Base extends Form {
         }
         $this->assigned = $this->addField('DropDown','assigned');
         $this->assigned->setValueList($u_arr);
+
+        // set value
+        if ($g = $_GET['assigned']) {
+            $this->assigned->set($g);
+        }
+
+        // reload on change
+        $this->assigned->selectnemu_options = array(
+            'change' => $this->js(null,'
+                function() {'.
+                    $this->js()->colubris()->reloadForm($this->name,'assigned')
+                .'}'
+            )
+        );
     }
 }
