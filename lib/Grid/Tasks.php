@@ -9,8 +9,6 @@ class Grid_Tasks extends Grid_Advanced {
     function setModel($model, $actual_fields = UNDEFINED) {
         parent::setModel($model, $actual_fields);
         $this->removeEstimateColumnIfNeeded();
-        $this->addFormatter('project','wrap');
-        $this->addFormatter('name','wrap');
     }
     function formatRow() {
         parent::formatRow();
@@ -48,6 +46,10 @@ class Grid_Tasks extends Grid_Advanced {
         // priority
         $this->current_row_html['priority'] =
                 '<div class="atk-label '.$this->getPriorityClass($this->current_row['priority']).'">'.$this->current_row['priority'].'</div>';
+
+        // type
+        $this->current_row_html['type'] =
+                '<div class="atk-label '.$this->getTypeClass($this->current_row['type']).'">'.$this->current_row['type'].'</div>';
     }
     function getStatusClass($status) {
         switch($status){
@@ -58,9 +60,27 @@ class Grid_Tasks extends Grid_Advanced {
             case 'tested':
                 return ' atk-effect-success';
             case 'rejected':
-                return '.atk-effect-danger';
+                return ' atk-effect-danger';
    			case 'accepted':
-                return '.atk-effect-success';
+                return ' atk-effect-success';
+   			case 'unstarted':
+                return ' ';
+       		default:
+                return '';
+       	}
+    }
+    function getTypeClass($status) {
+        switch($status){
+       		case 'project':
+                return ' atk-effect-info';
+       		case 'change request':
+                return ' atk-effect-success';
+            case 'bug':
+                return ' atk-effect-danger';
+            case 'support':
+                return ' atk-effect-info';
+   			case 'drop':
+                return ' atk-effect-warning';
        		default:
                 return '';
        	}
@@ -79,8 +99,8 @@ class Grid_Tasks extends Grid_Advanced {
     }
     private function removeEstimateColumnIfNeeded() {
         if (
-            in_array('estimate',$this->model->whatFieldsUserCanSee($this->api->currentUser(),$this->quote)) &&
-            in_array('spent_time',$this->model->whatFieldsUserCanSee($this->api->currentUser(),$this->quote))
+            in_array('estimate',$this->app->user_access->whatTaskFieldsUserCanSee($this->quote)) &&
+            in_array('spent_time',$this->app->user_access->whatTaskFieldsUserCanSee($this->quote))
         ) {
             $this->removeColumn('estimate');
         }

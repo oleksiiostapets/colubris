@@ -35,35 +35,16 @@ class Frontend extends ApiFrontend {
         $this->js(true)->_load('colubris');
 
         // controllers
-        $this->colubris  = $this->add('Controller_Colubris');
-        $this->formatter = $this->add('Controller_Formatter');
-        $this->mailer    = $this->add('Controller_Mailer');
-        $this->hg_cookie = $this->add('Controller_MyCookie');
+        $this->addControllers();
 
-        if($this->page=='logout'){
+        if ($this->page=='logout') {
             $this->hg_cookie->forgetLoginHash();
 //        	setcookie("colubris_auth_useremail", "", time()-3600);
         }
 
         // auth
-        $this->add('Auth')
-            ->usePasswordEncryption('md5')
-            ->setModel('Model_User_All', 'email', 'password')
-        ;
-        $this->api->auth->add('auth/Controller_Cookie');
+        $this->addAuth();
 
-        if(!$this->api->auth->model['id']){
-            $hash=$this->hg_cookie->getLoginHash();
-            if($hash){
-                $u=$this->add('Model_User_All')->tryLoadBy('chash',$hash);
-                if($u->loaded()){
-                    $this->api->auth->login($u["email"]);
-                }
-            }
-//        	if($_COOKIE["colubris_auth_useremail"] != NULL){
-//        		$this->api->auth->login($_COOKIE["colubris_auth_useremail"]);
-//        	}
-        }
 //        $this->layout = $this->add('Layout_Colubris');
         $this->layout = $this->add('Layout_Fluid')->addClass('atk-swatch-ink');
         $this->template->set('page_title','Colubris');
@@ -125,6 +106,34 @@ class Frontend extends ApiFrontend {
         );
 
     }
+    protected function addControllers() {
+        $this->colubris    = $this->add('Controller_Colubris');
+        $this->formatter   = $this->add('Controller_Formatter');
+        $this->mailer      = $this->add('Controller_Mailer');
+        $this->hg_cookie   = $this->add('Controller_MyCookie');
+        $this->user_access = $this->add('Controller_UserAccess');
+    }
+    protected function addAuth() {
+        $this->add('Auth')
+            ->usePasswordEncryption('md5')
+            ->setModel('Model_User_All', 'email', 'password')
+        ;
+        $this->api->auth->add('auth/Controller_Cookie');
+
+        if(!$this->api->auth->model['id']){
+            $hash = $this->hg_cookie->getLoginHash();
+            if($hash){
+                $u = $this->add('Model_User_All')->tryLoadBy('chash',$hash);
+                if($u->loaded()){
+                    $this->api->auth->login($u["email"]);
+                }
+            }
+//        	if($_COOKIE["colubris_auth_useremail"] != NULL){
+//        		$this->api->auth->login($_COOKIE["colubris_auth_useremail"]);
+//        	}
+        }
+        $this->user_access->setUser($this->currentUser());
+    }
     function getUserType(){
     	if ($this->currentUser()->canBeManager()) return 'manager';
         if ($this->currentUser()->canBeSales()) return 'sales';
@@ -177,14 +186,14 @@ class Frontend extends ApiFrontend {
             if(!$this->auth->isPageAllowed($this->page)){
                 $this->api->redirect('index');
             }
-        }else{
+        } else {
             if (!$this->currentUser()->canBeSystem()) {
                 // Access for all non-system roles
                 $this->addAllowedPages(array(
                     'quotation','quotation2','account', 'about', 'home', 'quotes','clients','projects','tasks','deleted','developers','users','dashboard','trace','task'
                 ));
                 // Grant access for non-client users
-                if($this->currentUser()->canSeeReportList()){
+                if($this->user_access->canSeeReportList()){
                     $this->addAllowedPages(array(
                         'reports'
                     ));
@@ -195,12 +204,12 @@ class Frontend extends ApiFrontend {
                         'rates'
                     ));
                 }
-            }else{
+            } else {
                 $this->addAllowedPages(array(
                     'home','system','about','dashboard'
                 ));
             }
-            if( ($this->auth->isLoggedIn()) && ($this->currentUser()->canSeeLogs()) ) {
+            if( ($this->auth->isLoggedIn()) && ($this->user_access->canSeeLogs()) ) {
                 $this->addAllowedPages(array(
                     'logs'
                 ));
@@ -224,7 +233,6 @@ class Frontend extends ApiFrontend {
     }
 
     function initLayout(){
-
         try {
             if(!$this->api->auth->isPageAllowed($this->page)){
                 throw $this->exception('This user cannot see this page','Exception_Denied');
@@ -237,7 +245,6 @@ class Frontend extends ApiFrontend {
             $v->add('View')->setElement('h2')->set('You cannot see this page');
             $v->add('View_Error')->set('Try to change role if you have multiple roles for this account');
         }
-
     }
 
 
