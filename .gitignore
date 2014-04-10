@@ -5,6 +5,7 @@ doc/dbupdates/*.fail
 *.bak
 .DS_Store
 config.php
+deploy-config.php
 composer.phar
 composer.lock
 /vendor/*
