@@ -2,13 +2,13 @@
 class page_tasks extends Page_Functional {
     function page_index(){
 
-        $this->addFilter();
-        $this->stickeGetFilterVars();
-
         // Checking client's read permission to this quote and redirect to denied if required
         if( !$this->app->user_access->canSeeTaskList() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
+
+        $this->addFilter();
+        $this->stickeGetFilterVars();
         $this->addBC();
         $crud = $this->addTaskCRUD();
 
