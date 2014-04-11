@@ -190,7 +190,7 @@ class Controller_UserAccess extends AbstractController {
         if ($this->user->isAdmin()) {
             return array();
         } else if ($this->user->isManager()) {
-            return array('name','descr_original','priority','type','status','estimate','requester_id','assigned_id');
+            return array('project_id','quote_id','name','descr_original','priority','type','status','estimate','requester_id','assigned_id');
         } else if ($this->user->isDeveloper()) {
             return array('name','descr_original','priority','type','status','estimate','requester_id','assigned_id');
         } else if ($this->user->isClient()) {

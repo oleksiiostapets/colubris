@@ -30,6 +30,9 @@ class page_tasks extends Page_Functional {
    }
     private function addTaskCRUD() {
         $m = $this->add('Model_Task');
+        $m->addQuoteName();
+        $m->addGetConditions();
+
         $cr = $this->add('CRUD_Task',array(
             'form_class' => 'Form_EditTask',
             'grid_class' => 'Grid_Tasks',

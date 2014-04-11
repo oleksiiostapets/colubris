@@ -89,8 +89,8 @@ class page_deleted extends Page {
 
             $cr->grid->addColumn('button','restore');
             if ($_GET['restore']) {
-                $m=$this->add('Model_Task_Base');
-                $o=$m->load($_GET['restore']);
+                $m = $this->add('Model_Task')->Base();
+                $o = $m->load($_GET['restore']);
                 $o->set('is_deleted',false);
                 $o->save();
                 $cr->grid->js('reload')->reload()->execute();

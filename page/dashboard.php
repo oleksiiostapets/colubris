@@ -8,6 +8,12 @@ class page_dashboard extends Page {
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
 
+        $this->addBC();
+        $this->add('View_Dashboard');
+        $this->addSystemDash();
+
+    }
+    private function addBC() {
         $this->add('x_bread_crumb/View_BC',array(
             'routes' => array(
                 0 => array(
@@ -19,15 +25,12 @@ class page_dashboard extends Page {
                 ),
             )
         ));
-
-        //$this->add('View_Switcher');
-        $this->add('View_Dashboard');
-
+    }
+    private function addSystemDash() {
         /*
         if ($this->api->currentUser()->isSystem()){
             $this->add('View_DashboardSystem');
         }
         */
-
     }
 }
