@@ -49,9 +49,26 @@ class Controller_Filter extends AbstractController {
                 }
                 $this->app->stickyGet($k);
             }
+            $this->resetPaginators();
             $js = $this->getReloadJs();
             $js[] = 'if (typeof(history.pushState) != "undefined") {window.history.pushState("filtered.html", "Filter reloaded page", "'.$this->app->url().'");};';
             $this->app->js(null,$js)->execute();
+        }
+    }
+
+    protected function resetPaginators($arr=null,$path='') {
+        if (!$arr) $arr = $_SESSION;
+        foreach ($arr as $k=>$v) {
+            if (is_array($v) && count($v)) {
+                $cur_path =  $path.'["'.$k.'"]';
+                $this->resetPaginators($v,$cur_path);
+            } else {
+                if ($k == 'skip') {
+                    $cur_path =  $path.'["'.$k.'"]';
+                    $com = 'unset($_SESSION' .$cur_path.');';
+                    eval($com);
+                }
+            }
         }
     }
 
