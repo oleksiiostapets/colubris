@@ -71,7 +71,7 @@ class page_deleted extends Page {
     }
 
     function page_tasks(){
-        $m=$this->add('Model_Task_Deleted');
+        $m = $this->add('Model_Task')->deleted();
 
         $cr=$this->add('CRUD',array(
                 'grid_class'=>'Grid',

@@ -1,6 +1,21 @@
 <?php
 class Model_Task extends Model_Auditable {
     public $table='task';
+    public static $task_statuses = array(
+        'unstarted'=>'unstarted',
+        'started'=>'started',
+        'finished'=>'finished',
+        'tested'=>'tested',
+        'rejected'=>'rejected',
+        'accepted'=>'accepted',
+    );
+    public static $task_types = array(
+        'project'=>'project',
+        'change request'=>'change request',
+        'bug'=>'bug',
+        'support'=>'support',
+        'drop'=>'drop',
+    );
     function init(){
         parent::init(); //$this->debug();
 
@@ -13,64 +28,54 @@ class Model_Task extends Model_Auditable {
             )
         )->defaultValue('normal');
 
-        $this->addField('status')->setValueList($this->api->task_statuses)->defaultValue('unstarted')->sortable(true);
-        $this->addField('type')->setValueList($this->api->task_types)->defaultValue('change request')->sortable(true);
+        $this->addField('status')->setValueList(Model_Task::$task_statuses)->defaultValue('unstarted')->sortable(true);
+        $this->addField('type')->setValueList(Model_Task::$task_types)->defaultValue('change request')->sortable(true);
 
         $this->addField('descr_original')->dataType('text');
 
         $this->addField('estimate')->dataType('money');
-        //$this->addField('spent_time')->dataType('int');
-
-        //$this->addField('deviation')->dataType('text');
-
-//        $this->addField('project_id')->refModel('Model_Project')->mandatory(true)->sortable(true);
         $this->hasOne('Project','project_id');
         $this->getField('project_id')->mandatory(true)->sortable(true);
 
-//        $this->addField('requirement_id')->refModel('Model_Requirement');
         $this->hasOne('Requirement','requirement_id');
-        //$this->addField('requester_id')->refModel('Model_User_Organisation');
-        //$this->addField('assigned_id')->refModel('Model_User_Organisation');
-
-        if($this->api->currentUser()->isClient()){
-            /* Doesn't work with deleting tasks in CRUD
-                        $j = $this->join('project.id','project_id','left','_p');
-                        $j->addField('client_id','client_id');
-                        $this->addCondition('client_id',$this->api->auth->model['client_id']);
-            */
-            $mp=$this->add('Model_Project');
-            $mp->forClient();
-            $projects_ids="0";
-            foreach($mp->getRows() as $p){
-                $projects_ids=$projects_ids.','.$p['id'];
-            }
-            $this->addCondition('project_id','in',$projects_ids);
-        }
-
-        if($this->api->currentUser()->isDeveloper()){
-            $mp=$this->add('Model_Project');
-            $mp->forDeveloper();
-            $projects_ids="0";
-            foreach($mp->getRows() as $p){
-                $projects_ids=$projects_ids.','.$p['id'];
-            }
-            $this->addCondition('project_id','in',$projects_ids);
-        }
 
         $this->addField('created_dts');
         $this->addField('updated_dts')->caption('Updated')->sortable(true);
 
         $this->addField('is_deleted')->type('boolean')->defaultValue('0');
-//        $this->addField('deleted_id')->refModel('Model_User');
         $this->hasOne('User','deleted_id');
-        $this->addHook('beforeDelete', function($m){
-            $m['deleted_id']=$m->api->currentUser()->get('id');
-        });
 
-//        $this->addField('organisation_id')->refModel('Model_Organisation');
         $this->hasOne('Organisation','organisation_id');
-        $this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+        $this->addCondition('organisation_id',$this->app->auth->model['organisation_id']);
 
+        $this->setOrder('updated_dts',true);
+
+        $this->addSpentTime();
+
+
+        $this->addHooks();
+
+        //$this->addField('spent_time')->dataType('int');
+        //$this->addField('deviation')->dataType('text');
+        //$this->addField('project_id')->refModel('Model_Project')->mandatory(true)->sortable(true);
+        //$this->addField('requirement_id')->refModel('Model_Requirement');
+        //$this->addField('requester_id')->refModel('Model_User_Organisation');
+        //$this->addField('assigned_id')->refModel('Model_User_Organisation');
+        //$this->addField('deleted_id')->refModel('Model_User');
+        //$this->addField('organisation_id')->refModel('Model_Organisation');
+
+    }
+
+
+
+
+    // ------------------------------------------------------------------------------
+    //
+    //            HOOKS :: BEGIN
+    //
+    // ------------------------------------------------------------------------------
+
+    function addHooks() {
         $this->addHook('beforeInsert', function($m,$q){
             $q->set('created_dts', $q->expr('now()'));
         });
@@ -79,36 +84,46 @@ class Model_Task extends Model_Auditable {
             $m['updated_dts']=date('Y-m-d G:i:s', time());
         });
         $this->addHook('afterSave', function($m){
-            $m->api->mailer->task_status=$m['status'];
-            $m->api->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
-            $m->api->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
-            $m->api->mailer->sendMail('task_edit',array(
-                'link'=>$m->api->siteURL().$m->api->url('/task',array('task_id'=>$m->get('id'),'colubris_task_view_view_crud_virtualpage'=>null)),
+            $m->app->mailer->task_status=$m['status'];
+            $m->app->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
+            $m->app->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
+            $m->app->mailer->sendMail('task_edit',array(
+                'link'=>$m->app->siteURL().$m->app->url('/task',array('task_id'=>$m->get('id'),'colubris_task_view_view_crud_virtualpage'=>null)),
                 'subject'=>'Task "'.substr($m->get('name'),0,25).'" has changes',
-                'changer_part'=>$m->api->currentUser()->get('name').' has made changes in task "'.$m->get('name').'".',
+                'changer_part'=>$m->app->currentUser()->get('name').' has made changes in task "'.$m->get('name').'".',
             ));
         });
         $this->addHook('beforeDelete', function($m){
-            $m->api->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
-            $m->api->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
-            $m->api->mailer->sendMail('task_delete',array(
+            $m->app->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
+            $m->app->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
+            $m->app->mailer->sendMail('task_delete',array(
                 'subject'=>'Task "'.substr($m->get('name'),0,25).'" deleted',
-                'changer_part'=>$m->api->currentUser()->get('name').' has deleted task "'.$m->get('name').'".',
+                'changer_part'=>$m->app->currentUser()->get('name').' has deleted task "'.$m->get('name').'".',
             ));
         });
-
-        $this->setOrder('updated_dts',true);
-
-        $this->addExpression('spent_time')->set(function($m,$q){
-            return $q->dsql()
-                ->table('task_time')
-                ->field('sum(task_time.spent_time)')
-                ->where('task_time.task_id',$q->getField('id'))
-                ->where('task_time.remove_billing',false)
-                ;
+        $this->addHook('beforeDelete', function($m){
+            $m['deleted_id']=$m->app->currentUser()->get('id');
         });
+    }
 
-        $this->addCondition('is_deleted',false);
+    // HOOKS :: END -----------------------------------------------------------
+
+
+
+
+    // ------------------------------------------------------------------------------
+    //
+    //            PREPARED CONDITIONS SETS :: BEGIN
+    //
+    // ------------------------------------------------------------------------------
+
+    public function forTaskCRUD() {
+        $this->Base();
+        $this->addQuoteName();
+        $this->addRoleCondition();
+        $this->addGetConditions();
+        $this->notDeleted();
+        return $this;
     }
     function addDashCondition() {
         if (!$_GET['submit']) {
@@ -119,18 +134,66 @@ class Model_Task extends Model_Auditable {
                 ->where('requester_id',$this->app->auth->model['id'])
                 ->where('assigned_id',$this->app->auth->model['id'])
         );
+        $this->notDeleted();
+        $this->addRoleCondition();
         return $this;
     }
 
+    // PREPARED CONDITIONS SETS :: END -----------------------------------------------------------
+
+
+
+
+
+
+    // ------------------------------------------------------------------------------
+    //
+    //            CONDITIONS :: BEGIN
+    //
+    // ------------------------------------------------------------------------------
+
+    function deleted() {
+        $this->addCondition('is_deleted',true);
+        return $this;
+    }
+    function notDeleted() {
+        $this->addCondition('is_deleted',false);
+        return $this;
+    }
+    function addRoleCondition() {
+        if($this->app->currentUser()->isClient()){
+            /* Doesn't work with deleting tasks in CRUD
+                        $j = $this->join('project.id','project_id','left','_p');
+                        $j->addField('client_id','client_id');
+                        $this->addCondition('client_id',$this->app->auth->model['client_id']);
+            */
+            $mp = $this->add('Model_Project');
+            $mp->forClient();
+            $projects_ids = "0";
+            foreach($mp->getRows() as $p){
+                $projects_ids = $projects_ids.','.$p['id'];
+            }
+            $this->addCondition('project_id','in',$projects_ids);
+        }
+        if($this->app->currentUser()->isDeveloper()){
+            $mp = $this->add('Model_Project');
+            $mp->forDeveloper();
+            $projects_ids = "0";
+            foreach($mp->getRows() as $p){
+                $projects_ids = $projects_ids.','.$p['id'];
+            }
+            $this->addCondition('project_id','in',$projects_ids);
+        }
+
+    }
     // Model_Task_Base
     function Base() {
-//        $this->addField('requester_id')->refModel('Model_User_Organisation');
+        //$this->addField('requester_id')->refModel('Model_User_Organisation');
         $this->hasOne('User_Organisation','requester_id');
-//        $this->addField('assigned_id')->refModel('Model_User_Organisation');
+        //$this->addField('assigned_id')->refModel('Model_User_Organisation');
         $this->hasOne('User_Organisation','assigned_id');
         return $this;
     }
-
     function addGetConditions() {
         if ($_GET['project']) {
             $this->addCondition('project_id',$_GET['project']);
@@ -150,6 +213,20 @@ class Model_Task extends Model_Auditable {
         }
         return $this;
     }
+
+    // CONDITIONS :: END -----------------------------------------------------------
+
+
+
+
+
+
+    // ------------------------------------------------------------------------------
+    //
+    //               EXPRESSIONS :: BEGIN
+    //
+    // ------------------------------------------------------------------------------
+
     function addQuoteId() {
         $this->addExpression('quote_id',function($m,$q){
             $req = $m->add('Model_Requirement')->addCondition('id',$m->getElement('requirement_id'));
@@ -164,4 +241,17 @@ class Model_Task extends Model_Auditable {
             return $quote->fieldQuery('name');
         });
     }
+    function addSpentTime() {
+        $this->addExpression('spent_time')->set(function($m,$q){
+            return $q->dsql()
+                ->table('task_time')
+                ->field('sum(task_time.spent_time)')
+                ->where('task_time.task_id',$q->getField('id'))
+                ->where('task_time.remove_billing',false)
+            ;
+        });
+    }
+
+    // EXPRESSIONS :: END -----------------------------------------------------------
+
 }

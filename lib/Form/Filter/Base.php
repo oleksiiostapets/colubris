@@ -102,7 +102,7 @@ class Form_Filter_Base extends Form {
         }
     }
     function addStatus() {
-        $s_arr = array_merge(array(''=>'all'),$this->app->task_statuses);
+        $s_arr = array_merge(array(''=>'all'),Model_Task::$task_statuses);
         $this->status = $this->addField('DropDown','status');
         $this->status->setValueList($s_arr);
 

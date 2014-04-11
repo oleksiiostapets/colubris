@@ -89,21 +89,21 @@ class Frontend extends ApiFrontend {
         
         $this->autoLogin();
 
-        $this->task_statuses = array(
-                'unstarted'=>'unstarted',
-                'started'=>'started',
-            	'finished'=>'finished',
-                'tested'=>'tested',
-            	'rejected'=>'rejected',
-            	'accepted'=>'accepted',
-            );
-        $this->task_types = array(
-            'project'=>'project',
-            'change request'=>'change request',
-            'bug'=>'bug',
-            'support'=>'support',
-            'drop'=>'drop',
-        );
+//        $this->task_statuses = array(
+//                'unstarted'=>'unstarted',
+//                'started'=>'started',
+//            	'finished'=>'finished',
+//                'tested'=>'tested',
+//            	'rejected'=>'rejected',
+//            	'accepted'=>'accepted',
+//            );
+//        $this->task_types = array(
+//            'project'=>'project',
+//            'change request'=>'change request',
+//            'bug'=>'bug',
+//            'support'=>'support',
+//            'drop'=>'drop',
+//        );
 
     }
     protected function addControllers() {
