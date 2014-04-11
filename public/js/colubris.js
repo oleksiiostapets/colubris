@@ -105,8 +105,8 @@ $.each({
 
         });
         form.attr("action",action);
-        console.log("============ action ============");
-        console.log(action);
+        //console.log("============ action ============");
+        //console.log(action);
         form.submit();
 
     }
