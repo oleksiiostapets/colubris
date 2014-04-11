@@ -74,6 +74,7 @@ class Grid_Tasks extends Grid_Advanced {
         // type
         $this->current_row_html['type'] =
                 '<div class="atk-label '.$this->getTypeClass($this->current_row['type']).'">'.$this->current_row['type'].'</div>';
+
     }
     function getStatusClass($status) {
         switch($status){
