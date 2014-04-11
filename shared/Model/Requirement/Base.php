@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_Requirement_Base extends Model_Auditable {
     public $table='requirement';
     function init(){

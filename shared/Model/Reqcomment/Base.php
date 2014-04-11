@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_Reqcomment_Base extends Model_Auditable {
     public $table='reqcomment';
     function init(){

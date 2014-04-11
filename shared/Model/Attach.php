@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_Attach extends Model_Attach_Base {
     function init(){
         parent::init();
