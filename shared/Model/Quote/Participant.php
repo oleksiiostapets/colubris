@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_Quote_Participant extends Model_Quote {
 
     function init(){

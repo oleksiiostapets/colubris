@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_Task extends Model_Auditable {
     public $table='task';
     function init(){

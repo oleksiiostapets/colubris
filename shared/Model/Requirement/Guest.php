@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_Requirement_Guest extends Model_Table {
     public $table='requirement';
     function init(){

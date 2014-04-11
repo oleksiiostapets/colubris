@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_ReqcommentUser extends Model_Table {
     public $table='reqcomment_user';
     function init(){
