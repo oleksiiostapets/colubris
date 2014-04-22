@@ -54,7 +54,7 @@ class Grid_Quotes extends Grid {
         // estimation
         if( $_GET['estimation'] ){
             if ( in_array('estimation',$this->allowed_actions) ) {
-                $quote=$this->add('Model_Quote')->load($_GET['estimation']);
+                $quote=$this->add('Model_Quote')->notDeleted()->getThisOrganisation()->load($_GET['estimation']);
                	$quote->set('status','estimate_needed');
                	$quote->save();
                 $this->js()->reload()->execute();
@@ -66,7 +66,7 @@ class Grid_Quotes extends Grid {
         // approve
         if( $_GET['approve'] ){
             if ( in_array('approve',$this->allowed_actions) ) {
-                $quote=$this->add('Model_Quote')->load($_GET['approve']);
+                $quote=$this->add('Model_Quote')->notDeleted()->getThisOrganisation()->load($_GET['approve']);
                 $quote->approve();
 
                 // Sending email to client
@@ -94,7 +94,7 @@ class Grid_Quotes extends Grid {
         if( $_GET['send_to_client'] ){
             if ( in_array('send_to_client',$this->allowed_actions) ) {
                 try {
-                    $client = $this->add('Model_Quote')->load($_GET['send_to_client'])->sendEmailToClient();
+                    $client = $this->add('Model_Quote')->notDeleted()->getThisOrganisation()->load($_GET['send_to_client'])->sendEmailToClient();
                 } catch (Exception_QuoteHasNoClient $e) {
                     $this->js()->univ()->errorMessage('The project of this quote has no client!')->execute();
                 } catch (Exception_ClientHasNoEmail $e) {

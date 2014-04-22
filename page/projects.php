@@ -10,7 +10,7 @@ class page_projects extends Page {
     function page_index(){
 
         // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->api->currentUser()->canSeeProjectList() ){
+        if( !$this->app->user_access->canSeeProjectList() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
 
@@ -28,27 +28,27 @@ class page_projects extends Page {
 
         $this->add('H2')->set('Projects');
 
-        $m = $this->add('Model_Project');
+        $m = $this->add('Model_Project')->notDeleted();
         if ($this->api->currentUser()->isClient())    $m->forClient();
         if ($this->api->currentUser()->isDeveloper()) $m->forDeveloper();
 
         $cr=$this->add('CRUD', array(
-            'allow_del'  =>  $this->api->currentUser()->canDeleteProject(),
-            'allow_edit' =>  $this->api->currentUser()->canEditProject(),
-            'allow_add'  =>  $this->api->currentUser()->canCreateProject()
+            'allow_del'  =>  $this->app->user_access->canDeleteProject(),
+            'allow_edit' =>  $this->app->user_access->canEditProject(),
+            'allow_add'  =>  $this->app->user_access->canCreateProject()
         ));
 
         $cr->setModel($m,
-            $this->api->currentUser()->getProjectFormFields(),
-            $this->api->currentUser()->getProjectGridFields()
+			$this->app->user_access->getProjectFormFields(),
+			$this->app->user_access->getProjectGridFields()
         );
         if($cr->grid){
             $cr->grid->addClass('zebra bordered');
             $cr->grid->addPaginator(25);
-			if ($this->api->currentUser()->canSeeProjectParticipantes()) {
+			if ($this->app->user_access->canSeeProjectParticipantes()) {
                 $cr->grid->addColumn('expander','participants');
             }
-			if ($this->api->currentUser()->canSeeProjectTasks()) {
+			if ($this->app->user_access->canSeeProjectTasks()) {
                 $cr->grid->addColumn('expander','tasks');
             }
             if ($cr->grid->hasColumn('demo_url')) {
@@ -64,7 +64,7 @@ class page_projects extends Page {
 
     }
     function page_participants(){
-        if (!$this->api->currentUser()->canSeeProjectParticipantes()) {
+        if (!$this->app->user_access->canSeeProjectParticipantes()) {
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
         $this->api->stickyGET('project_id');
@@ -73,7 +73,7 @@ class page_projects extends Page {
         $this->add('CRUD')->setModel($m);
     }
     function page_tasks(){
-        if (!$this->api->currentUser()->canSeeProjectTasks()) {
+        if (!$this->app->user_access->canSeeProjectTasks()) {
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
         $this->api->stickyGET('project_id');
@@ -96,7 +96,7 @@ class page_projects extends Page {
         $this->add('H1')->set('Add new Project');
 
         $form=$this->add('Form');
-        $m=$this->setModel('Model_Project');
+        $m=$this->setModel('Model_Project')->notDeleted();
         $form->setModel($m,
             array('name','descr','client','demo_url','prod_url','repository')
         );

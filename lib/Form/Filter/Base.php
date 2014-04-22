@@ -21,7 +21,7 @@ class Form_Filter_Base extends Form {
         $this->addAssigned();
     }
     function addProject(){
-        $project_model = $this->add('Model_Project');
+        $project_model = $this->add('Model_Project')->notDeleted();
         $project_model->forRole($this->app->getCurrentUserRole());
 
         $projects = $project_model->getRows();
@@ -48,7 +48,7 @@ class Form_Filter_Base extends Form {
     }
     function addQuote(){
         if ($g = $_GET['project']) {
-            $quote_model = $this->add('Model_Quote');
+            $quote_model = $this->add('Model_Quote')->notDeleted()->getThisOrganisation();
             $quote_model->addCondition('project_id',$g);
             $q_arr = $quote_model->getRows();
             $qn_arr['0'] = 'all';

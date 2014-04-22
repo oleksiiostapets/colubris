@@ -54,7 +54,7 @@ class Controller_Mailer extends AbstractController {
     /*
      */
     function addClientReceiver($project_id){
-        $p=$this->add('Model_Project');
+        $p=$this->add('Model_Project')->notDeleted();
         $p->addCondition('id',$project_id);
 
         $c=$p->join('client.id','client_id','left','_c');

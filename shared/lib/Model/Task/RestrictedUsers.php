@@ -1,5 +1,5 @@
 <?php
-class Model_Task_RestrictedUsers extends Model_Task_Definitions {
+class Model_Task_RestrictedUsers extends Model_Task {
 
     function init(){
         parent::init();

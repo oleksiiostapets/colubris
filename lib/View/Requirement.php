@@ -5,7 +5,7 @@ class View_Requirement extends AbstractView {
 
     function prepareData($requirement_id){
         $this->req=$this->add('Model_Requirement')->load($requirement_id);
-        $this->quote=$this->add('Model_Quote')->load($this->req->get('quote_id'));
+        $this->quote=$this->add('Model_Quote')->notDeleted()->getThisOrganisation()->load($this->req->get('quote_id'));
         $_GET['project_id']=$this->quote->get('project_id');
     }
 

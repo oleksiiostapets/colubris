@@ -29,7 +29,7 @@ class _Manager_Quotes extends View {
                 'approve',
             )
         ));
-        $m=$this->add('Model_Quote');
+        $m=$this->add('Model_Quote')->notDeleted()->getThisOrganisation();
         $cr->setModel($m,
         		array('project_id','name','general_description','rate','currency','duration','deadline','status'),
         		array('project','user','name','estimated','estimpay','spent_time','rate','currency','durdead','status')

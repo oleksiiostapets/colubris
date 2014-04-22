@@ -59,11 +59,11 @@ class page_quotation extends Page {
                 $f->getElement('project_description')->displayFieldError('Cannot be empty!')->execute();
             }
 
-            $organisation=$this->add('Model_Organisation');
+            $organisation=$this->add('Model_Organisation')->notDeleted();
             $organisation->tryLoadBy('name','AgileTech');
 
             if ($organisation->loaded()){
-                $client=$this->add('Model_Client_Guest');
+                $client=$this->add('Model_Client')->notDeleted();
                 $client->set('name',$f->get('client_name'));
                 $client->set('email',$f->get('email'));
                 $client->set('phone',$f->get('phone'));

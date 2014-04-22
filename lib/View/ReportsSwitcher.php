@@ -9,9 +9,9 @@ class View_ReportsSwitcher extends View {
         $f->addClass('horizontal switcher');
         // Project
         if($this->api->currentUser()->isDeveloper()){
-        	$mp=$this->add('Model_Project_Participant');
+        	$mp=$this->add('Model_Project')->participateIn();
         }else{
-        	$mp=$this->add('Model_Project');
+        	$mp=$this->add('Model_Project')->notDeleted();
             if($this->api->currentUser()->isClient()){
                 $mp->forClient();
             }
@@ -32,7 +32,7 @@ class View_ReportsSwitcher extends View {
         $fp->set($this->api->recall('project_id'));
 
         // Quote
-		$mq=$this->add('Model_Quote');
+		$mq=$this->add('Model_Quote')->notDeleted()->getThisOrganisation();
 		//$mq->addCondition('status','estimation_approved');
 		$mq->addCondition('project_id',$this->api->recall('project_id'));
         /*

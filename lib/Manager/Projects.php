@@ -21,7 +21,7 @@ class Manager_Projects extends View {
                 ->execute();
         }
         if($_GET['estimation']){
-        	$quote=$this->add('Model_Quote')->load($_GET['estimation']);
+        	$quote=$this->add('Model_Quote')->notDeleted()->getThisOrganisation()->load($_GET['estimation']);
         	$quote->set('status','estimate_needed');
         	$quote->save();
         	$this->api->redirect($this->api->url('/manager'));
@@ -52,10 +52,10 @@ class Manager_Projects extends View {
         }
         $grid->addColumn('button','send_to_client','Send Quote to the client');
         if($_GET['send_to_client']){
-        	$quote=$this->add('Model_Quote')->load($_GET['send_to_client']);
+        	$quote=$this->add('Model_Quote')->notDeleted()->getThisOrganisation()->load($_GET['send_to_client']);
         	
         	if ($quote['client_id']>0){
-        		$client=$this->add('Model_Client')->load($quote['client_id']);
+        		$client=$this->add('Model_Client')->notDeleted()->load($quote['client_id']);
                 $m->api->mailer->setReceivers(array($client['email']));
 
                 if ($client['email']!=''){

@@ -8,7 +8,7 @@ class View_SwitcherEditTask extends View {
         $f=$v->add('Form');
         $f->addClass('horizontal');
         // Project
-        $mp=$this->add('Model_Project');
+        $mp=$this->add('Model_Project')->notDeleted();
         if($this->api->currentUser()->isDeveloper()){
             $mp=$mp->forDeveloper();
         }elseif($this->api->currentUser()->isClient()){
@@ -29,7 +29,7 @@ class View_SwitcherEditTask extends View {
         $fp->set($this->task->get('project_id'));
 
         // Quote
-		$mq=$this->add('Model_Quote');
+		$mq=$this->add('Model_Quote')->notDeleted()->getThisOrganisation();
 		//$mq->addCondition('status','IN',array('estimation_approved','estimated'));
 		$mq->addCondition('project_id',$this->task->get('project_id'));
 		if($_GET['edit_quote_id']!==null){

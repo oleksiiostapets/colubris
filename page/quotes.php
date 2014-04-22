@@ -38,15 +38,15 @@ class page_quotes extends Page {
     }
     function getBaseModel(){
         if ($this->api->currentUser()->isDeveloper()) {
-            $quote = $this->add('Model_Quote_Participant');
+            $quote = $this->add('Model_Quote')->notDeleted()->getThisOrganisation()->participated();
         }else{
-            $quote = $this->add('Model_Quote');
+            $quote = $this->add('Model_Quote')->notDeleted()->getThisOrganisation();
         }
         if($this->api->recall('q_project_id')>0){
             $quote->addCondition('project_id',$this->api->recall('q_project_id'));
         }
         if($this->api->recall('q_client_id')>0){
-            $pm=$this->add('Model_Project');
+            $pm=$this->add('Model_Project')->notDeleted();
             $pm->addCondition('client_id',$this->api->recall('q_client_id'));
             $ids="";
             foreach ($pm as $p){
@@ -188,7 +188,7 @@ class page_quotes extends Page {
         if($cr->grid){
             if ($quote->userAllowedArchive($user)){
                 if($_GET['in_archive']){
-                    $mq=$this->add('Model_Quote')->load($_GET['in_archive']);
+                    $mq=$this->add('Model_Quote')->notDeleted()->getThisOrganisation()->load($_GET['in_archive']);
                     $mq->in_archive();
                     $mq->save();
 
@@ -196,7 +196,7 @@ class page_quotes extends Page {
                     //$cr->grid->js()->reload()->execute();
                 }
                 if($_GET['activate']){
-                    $mq=$this->add('Model_Quote')->load($_GET['activate']);
+                    $mq=$this->add('Model_Quote')->notDeleted()->getThisOrganisation()->load($_GET['activate']);
                     $mq->activate();
                     $mq->save();
 

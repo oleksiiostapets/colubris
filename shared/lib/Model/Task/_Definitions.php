@@ -41,7 +41,7 @@ class Model_Task_Definitions extends Model_Auditable {
                         $j->addField('client_id','client_id');
                         $this->addCondition('client_id',$this->api->auth->model['client_id']);
             */
-            $mp=$this->add('Model_Project');
+            $mp=$this->add('Model_Project')->notDeleted();
             $mp->forClient();
             $projects_ids="0";
             foreach($mp->getRows() as $p){
@@ -51,7 +51,7 @@ class Model_Task_Definitions extends Model_Auditable {
         }
 
         if($this->api->currentUser()->isDeveloper()){
-            $mp=$this->add('Model_Project');
+            $mp=$this->add('Model_Project')->notDeleted();
             $mp->forDeveloper();
             $projects_ids="0";
             foreach($mp->getRows() as $p){

@@ -15,7 +15,7 @@ class page_deleted extends Page {
     }
 
     function page_projects(){
-        $m=$this->add('Model_Project_Deleted');
+        $m=$this->add('Model_Project')->deleted();
 
         $cr=$this->add('CRUD',array(
                 'grid_class'=>'Grid',
@@ -33,7 +33,7 @@ class page_deleted extends Page {
 
             $cr->grid->addColumn('button','restore');
             if ($_GET['restore']) {
-                $m=$this->add('Model_Project_Base');
+                $m=$this->add('Model_Project')->getThisOrganisation();
                 $o=$m->load($_GET['restore']);
                 $o->set('is_deleted',false);
                 $o->save();
@@ -43,7 +43,7 @@ class page_deleted extends Page {
     }
 
     function page_quotes(){
-        $m=$this->add('Model_Quote_Deleted');
+        $m=$this->add('Model_Quote')->deleted()->getThisOrganisation();
 
         $cr=$this->add('CRUD',array(
                 'grid_class'=>'Grid',
@@ -61,7 +61,7 @@ class page_deleted extends Page {
 
             $cr->grid->addColumn('button','restore');
             if ($_GET['restore']) {
-                $m=$this->add('Model_Quote_Base');
+                $m=$this->add('Model_Quote')->getThisOrganisation();
                 $o=$m->load($_GET['restore']);
                 $o->set('is_deleted',false);
                 $o->save();
@@ -127,7 +127,7 @@ class page_deleted extends Page {
     }
 
     function page_clients(){
-        $m=$this->add('Model_Client_Deleted');
+        $m=$this->add('Model_Client')->deleted();
 
         $cr=$this->add('CRUD',array(
                 'grid_class'=>'Grid',
@@ -144,7 +144,7 @@ class page_deleted extends Page {
 
             $cr->grid->addColumn('button','restore');
             if ($_GET['restore']) {
-                $m=$this->add('Model_Client_Base');
+                $m=$this->add('Model_Client')->deleted();
                 $o=$m->load($_GET['restore']);
                 $o->set('is_deleted',false);
                 $o->save();

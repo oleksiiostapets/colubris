@@ -142,7 +142,7 @@ class View_Switcher extends View {
     }
     function addQuote(){
         // Quote
-        $mq=$this->add('Model_Quote');
+        $mq=$this->add('Model_Quote')->notDeleted()->getThisOrganisation();
 //		$mq->addCondition('status','estimation_approved');
         //$mq->addCondition('status','IN',array('estimation_approved','estimated'));
         $mq->addCondition('project_id',$this->api->recall('project_id'));

@@ -22,7 +22,7 @@ class page_system_organisation extends Page {
 
         $crud=$this->add('CRUD');
         
-        $model = $this->add('Model_Organisation')->setOrder('name');
+        $model = $this->add('Model_Organisation')->notDeleted()->setOrder('name');
 
         $crud->setModel($model,
             array('name','desc'),

@@ -3,7 +3,7 @@ class Model_Taskcomment_Developer extends Model_Taskcomment {
 	function init(){
 		parent::init();
         //$this->debug();
-        $participated_in=$this->add('Model_Project')->forDeveloper();
+        $participated_in=$this->add('Model_Project')->notDeleted()->forDeveloper();
         $projects_ids=array(0);
         foreach($participated_in as $p){
             $projects_ids[]=$p['id'];

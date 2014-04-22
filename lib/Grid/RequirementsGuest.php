@@ -45,7 +45,7 @@ class Grid_RequirementsGuest extends Grid_CountLines {
                 throw $this->exception('Provide $_GET[\'quote_id\']');
             }
 
-            $quote = $this->add('Model_Quote')->tryLoad($_GET['quote_id']);
+            $quote = $this->add('Model_Quote')->notDeleted()->getThisOrganisation()->tryLoad($_GET['quote_id']);
             if (!$quote->loaded()) {
                 $this->js()->univ()->errorMessage('There is no such a quote. id: '.$_GET['quote_id']);
             }

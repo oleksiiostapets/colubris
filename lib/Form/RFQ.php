@@ -9,7 +9,8 @@
 class Form_RFQ extends Form {
     function init() {
         parent::init();
-        $this->setModel('Model_Quote',array('project_id','name','general_description'));
+		$m = $this->add('Model_Quote')->notDeleted()->getThisOrganisation();
+        $this->setModel($m,array('project_id','name','general_description'));
 
         $this->getElement('project')->set($_GET['project']);
         $this->getElement('project_id')->set($_GET['project_id']);

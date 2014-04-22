@@ -19,10 +19,10 @@ class Page_Requirements extends Page {
         if (!isset($_GET['quote_id'])) throw $this->exception('Provide $_GET[\'quote_id\']');
     	$this->api->stickyGet('quote_id');
     	$this->api->stickyGet('project_id');
-        $quote = $this->add('Model_Quote')->load($_GET['quote_id']); // TODO nice UI to show user if there is no quote
+        $quote = $this->add('Model_Quote')->notDeleted()->getThisOrganisation()->load($_GET['quote_id']); // TODO nice UI to show user if there is no quote
 
         // Does Project of this quotetion exist?
-        $project=$this->add('Model_Project')->tryLoad($quote->get('project_id'));
+        $project=$this->add('Model_Project')->notDeleted()->tryLoad($quote->get('project_id'));
         if( !$project->loaded() ){
             throw $this->exception('There is no such a project','Exception_Denied');
         	// TODO nice UI to explain user that there is no such a project
@@ -70,8 +70,8 @@ class Page_Requirements extends Page {
         // client info grid
         $left->add('H4')->set('Client:');
         $fields_required = array('name','email','phone');
-        $project=$this->add('Model_Project')->load($quote->get('project_id'));
-        $client = $this->add('Model_Client')->load($project->get('client_id'));
+        $project=$this->add('Model_Project')->notDeleted()->load($quote->get('project_id'));
+        $client = $this->add('Model_Client')->notDeleted()->load($project->get('client_id'));
         $this->addClientInfoGrid($left,$fields_required,$client);
 
         // | *** RIGHT *** |

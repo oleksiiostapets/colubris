@@ -27,7 +27,7 @@ class View_SwitcherQuotes extends View {
         $f=$v->add('Form');
         $f->addClass('horizontal');
         // Project
-        $mp=$this->add('Model_Project');
+        $mp=$this->add('Model_Project')->notDeleted();
         if($this->api->currentUser()->isDeveloper()){
             $mp=$mp->forDeveloper();
         }elseif($this->api->currentUser()->isClient()){
@@ -46,7 +46,7 @@ class View_SwitcherQuotes extends View {
 
         // Client
         if(!$this->api->currentUser()->isClient()){
-            $mc=$this->add('Model_Client');
+            $mc=$this->add('Model_Client')->notDeleted();
             if($this->api->currentUser()->isDeveloper()){
                 $mc=$mc->forDeveloper();
             }

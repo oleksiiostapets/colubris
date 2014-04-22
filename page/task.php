@@ -3,13 +3,13 @@ class page_task extends Page {
     function page_index(){
 
         // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->api->currentUser()->canSeeTaskList() ){
+        if( !$this->app->user_access->canSeeTaskList() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
 
         $this->api->stickyGet('task_id');
 
-        $mp=$this->add('Model_Project');
+        $mp=$this->add('Model_Project')->notDeleted();
         if($this->api->currentUser()->isDeveloper()){
             $mp->forDeveloper();
         }elseif($this->api->currentUser()->isClient()){

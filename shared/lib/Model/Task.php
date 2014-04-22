@@ -167,7 +167,7 @@ class Model_Task extends Model_Auditable {
                         $j->addField('client_id','client_id');
                         $this->addCondition('client_id',$this->app->auth->model['client_id']);
             */
-            $mp = $this->add('Model_Project');
+            $mp = $this->add('Model_Project')->notDeleted();
             $mp->forClient();
             $projects_ids = "0";
             foreach($mp->getRows() as $p){
@@ -176,7 +176,7 @@ class Model_Task extends Model_Auditable {
             $this->addCondition('project_id','in',$projects_ids);
         }
         if($this->app->currentUser()->isDeveloper()){
-            $mp = $this->add('Model_Project');
+            $mp = $this->add('Model_Project')->notDeleted();
             $mp->forDeveloper();
             $projects_ids = "0";
             foreach($mp->getRows() as $p){
@@ -231,14 +231,14 @@ class Model_Task extends Model_Auditable {
     function addQuoteId() {
         $this->addExpression('quote_id',function($m,$q){
             $req = $m->add('Model_Requirement')->addCondition('id',$m->getElement('requirement_id'));
-            $quote = $m->add('Model_Quote')->addCondition('id',$req->fieldQuery('quote_id'));
+            $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()->addCondition('id',$req->fieldQuery('quote_id'));
             return $quote->fieldQuery('id');
         });
     }
     function addQuoteName() {
         $this->addExpression('quote',function($m,$q){
             $req = $m->add('Model_Requirement')->addCondition('id',$m->getElement('requirement_id'));
-            $quote = $m->add('Model_Quote')->addCondition('id',$req->fieldQuery('quote_id'));
+            $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()->addCondition('id',$req->fieldQuery('quote_id'));
             return $quote->fieldQuery('name');
         });
     }
