@@ -22,7 +22,7 @@ class page_system_system extends Page {
 
         $crud=$this->add('CRUD');
         
-        $model = $this->add('Model_User_Sys')->setOrder('name');
+        $model = $this->add('Model_User')->getSystemUsers()->setOrder('name');
 
         $crud->setModel($model,
             array('name','email','password'),

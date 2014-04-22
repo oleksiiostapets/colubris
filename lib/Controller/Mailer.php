@@ -18,7 +18,8 @@ class Controller_Mailer extends AbstractController {
      */
     function addReceiverByUserId($id,$mode,$exclude_myself=true){
         if ($id>0){
-            $u=$this->add('Model_User')->load($id);
+            $u=$this->add('Model_User')->getActive();
+			$u->load($id);
             // Check if the user wants to get email
             if( ($mode===true) || ($u[$mode]) ) {
                 // Check if user is client and status of task not restricted to view by clients
@@ -40,7 +41,7 @@ class Controller_Mailer extends AbstractController {
     /*
      */
     function addAllManagersReceivers($organisation_id){
-        $u=$this->add('Model_User_Base');
+        $u=$this->add('Model_User');
         $u->addCondition('organisation_id',$organisation_id);
         $u->addCondition('is_manager',true);
         foreach ($u->getRows() as $user){

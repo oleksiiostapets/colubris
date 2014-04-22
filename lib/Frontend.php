@@ -114,16 +114,17 @@ class Frontend extends ApiFrontend {
         $this->user_access = $this->add('Controller_UserAccess');
     }
     protected function addAuth() {
+		$mu=$this->add('Model_User')->notDeleted();
         $this->add('Auth')
             ->usePasswordEncryption('md5')
-            ->setModel('Model_User_All', 'email', 'password')
+            ->setModel($mu, 'email', 'password')
         ;
         $this->api->auth->add('auth/Controller_Cookie');
 
         if(!$this->api->auth->model['id']){
             $hash = $this->hg_cookie->getLoginHash();
             if($hash){
-                $u = $this->add('Model_User_All')->tryLoadBy('chash',$hash);
+                $u = $this->add('Model_User')->getAdmins()->tryLoadBy('chash',$hash);
                 if($u->loaded()){
                     $this->api->auth->login($u["email"]);
                 }
@@ -156,7 +157,8 @@ class Frontend extends ApiFrontend {
     function autoLogin() {
         // Autologin from admin/users
         if( (isset($_GET['id'])) && (isset($_GET['hash'])) ){
-            $u=$this->add('Model_User')->load($_GET["id"]);
+            $u=$this->add('Model_User')->getActive();
+			$u->load($_GET["id"]);
             if($u['hash']!=$_GET["hash"]){
                 echo json_encode("Wrong user hash");
                 $this->logVar('wrong user hash: '.$u['hash']);

@@ -8,7 +8,8 @@ class Model_Participant extends Model_Table {
 //		$this->addField('user_id')
 //            ->mandatory(true)
 //            ->refModel('Model_User_Organisation');
-        $this->hasOne('User_Organisation','user_id');
+		$mu = $this->add('Model_User')->getUsersOfOrganisation();
+        $this->hasOne($mu,'user_id');
         $this->getField('user_id')->mandatory(true);
 
 //        $this->addField('project_id')

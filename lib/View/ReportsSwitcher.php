@@ -57,7 +57,7 @@ class View_ReportsSwitcher extends View {
 		$fq->set($this->api->recall('quote_id'));
 		
         // Performer
-        $ma=$this->add('Model_User_Organisation')->setOrder('name');
+        $ma=$this->add('Model_User')->getUsersOfOrganisation()->setOrder('name');
         $q=$ma->_dsql();
         $or = $q->orExpr();
         $or->where('is_manager','=',true);

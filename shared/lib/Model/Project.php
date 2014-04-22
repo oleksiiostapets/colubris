@@ -55,7 +55,7 @@ class Model_Project extends Model_Project_Base {
         }
 
         // Get all managers from our organisation
-        $managers=$this->add('Model_User');
+        $managers=$this->add('Model_User')->getActive();
         $managers->addCondition('is_manager',true);
         $par_ids=array();
         foreach($managers->getRows() as $u){
@@ -71,7 +71,7 @@ class Model_Project extends Model_Project_Base {
             }
 
             // Get all clients by project
-            $mu=$this->add('Model_User');
+            $mu=$this->add('Model_User')->getActive();
             $mu->addCondition('client_id',$this->get('client_id'));
             foreach($mu->getRows() as $u){
                 if(!in_array($u['id'],$par_ids)) $par_ids[]=$u['id'];

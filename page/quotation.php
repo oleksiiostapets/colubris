@@ -46,7 +46,7 @@ class page_quotation extends Page {
             if(!filter_var($f->get('email'),FILTER_VALIDATE_EMAIL)){
                 $f->getElement('email')->displayFieldError('Wrong email format!')->execute();
             }
-            $user_check=$this->add('Model_User_Base')->tryLoadBy('email',$f->get('email'));
+            $user_check=$this->add('Model_User')->tryLoadBy('email',$f->get('email'));
             if ($user_check->loaded()) $f->getElement('email')->displayFieldError('This email already registered!')->execute();
 
             if(trim($f->get('project_name'))==''){
@@ -70,7 +70,7 @@ class page_quotation extends Page {
                 $client->set('organisation_id',$organisation->get('id'));
                 $client->save();
 
-                $user=$this->add('Model_User');
+                $user=$this->add('Model_User')->getActive();
                 $user->set('organisation_id',$organisation->get('id'));
                 $user->set('name',$f->get('client_name'));
                 $user->set('email',$f->get('email'));

@@ -22,7 +22,7 @@ class page_system_users extends Page {
 
         $crud=$this->add('CRUD');
         
-        $model = $this->add('Model_User')->setOrder('name');
+        $model = $this->add('Model_User')->getActive()->setOrder('name');
 
         $crud->setModel($model,
             array('email','name','organisation_id','is_admin','is_manager','is_developer','client_id','password'),
@@ -35,7 +35,7 @@ class page_system_users extends Page {
             
             $crud->grid->addColumn('button','login');
             if($_GET['login']){
-                $u=$this->add("Model_User")->load($_GET['login']);
+                $u=$this->add("Model_User")->getActive()->load($_GET['login']);
                 $u->set('hash',md5(time()));
                 $u->save();
                 $this->js(true)->univ()->location($this->api->url("index",array('id'=>$_GET['login'],'hash'=>$u->get('hash'))))->execute();

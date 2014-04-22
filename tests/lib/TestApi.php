@@ -42,6 +42,6 @@ class TestApi extends ApiFrontend {
 	private function addAuth() {
 		$this->auth = $this->add('Auth');
 		$this->auth->usePasswordEncryption('md5');
-		$this->auth->setModel('Model_User_Base', 'email', 'password');
+		$this->auth->setModel('Model_User', 'email', 'password');
 	}
 }

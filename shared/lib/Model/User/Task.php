@@ -1,7 +1,9 @@
 <?php
-class Model_User_Task extends Model_User_Organisation {
+class Model_User_Task extends Model_User {
     function init(){
         parent::init();
+
+		$this->getUsersOfOrganisation();
 
         /*if ($this->api->recall('project_id')){
             $p=$this->add('Model_Project');

@@ -22,7 +22,7 @@ class Page_index extends Page {
                 $auth->login($l);
                 if($form->get('memorize') == true){
                     $hash = $this->api->hg_cookie->rememberLoginHash($form->get('email'),true);
-                    $u=$this->add('Model_User_All')->tryLoadBy('email',$form->get('email'));
+                    $u=$this->add('Model_User')->getAdmins()->tryLoadBy('email',$form->get('email'));
                     if($u->loaded()){
                         $u->set('chash',$hash);
                         $u->saveAndUnload();

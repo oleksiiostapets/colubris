@@ -99,7 +99,7 @@ class page_deleted extends Page {
     }
 
     function page_users(){
-        $m=$this->add('Model_User_Deleted');
+        $m=$this->add('Model_User')->deleted();
 
         $cr=$this->add('CRUD',array(
                 'grid_class'=>'Grid',
@@ -117,7 +117,7 @@ class page_deleted extends Page {
 
             $cr->grid->addColumn('button','restore');
             if ($_GET['restore']) {
-                $m=$this->add('Model_User_Base');
+                $m=$this->add('Model_User');
                 $o=$m->load($_GET['restore']);
                 $o->set('is_deleted',false);
                 $o->save();

@@ -189,9 +189,10 @@ class Model_Task extends Model_Auditable {
     // Model_Task_Base
     function Base() {
         //$this->addField('requester_id')->refModel('Model_User_Organisation');
-        $this->hasOne('User_Organisation','requester_id');
+		$mu = $this->add('Model_User')->getUsersOfOrganisation();
+        $this->hasOne($mu,'requester_id');
         //$this->addField('assigned_id')->refModel('Model_User_Organisation');
-        $this->hasOne('User_Organisation','assigned_id');
+        $this->hasOne($mu,'assigned_id');
         return $this;
     }
     function addGetConditions() {

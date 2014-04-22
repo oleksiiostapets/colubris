@@ -27,7 +27,7 @@ class page_users extends Page {
 
         $crud=$this->add('CRUD');
         
-        $model = $this->add('Model_User_Organisation')->setOrder('name');
+        $model = $this->add('Model_User')->getUsersOfOrganisation()->setOrder('name');
 
         $crud->setModel($model,
             array('email','name','password','is_admin','is_manager','is_sales','is_financial','is_developer','client_id'),
@@ -47,7 +47,7 @@ class page_users extends Page {
                 setcookie("fuser",$u['id'],time()+60*60*24);
                 setcookie("fhash",$u['hash'],time()+60*60*24);
 
-                $u=$this->add("Model_User_Organisation")->load($_GET['login']);
+                $u=$this->add("Model_User")->getUsersOfOrganisation()->load($_GET['login']);
                 $u->set('hash',md5(time()));
                 $u->save();
                 $this->js(true)->univ()->location($this->api->url("index",array('id'=>$_GET['login'],'hash'=>$u->get('hash'))))->execute();

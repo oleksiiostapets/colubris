@@ -1,10 +1,12 @@
 <?php
-class Model_Developer extends Model_User_Organisation {
+class Model_Developer extends Model_User {
     function init(){
         parent::init();
 
         $this->addCondition('is_developer',true);
         $this->addCondition('is_deleted',false);
+
+		$this->getUsersOfOrganisation();
 
         //$this->addField('timesheets_tw')->calculated(true);
         //$this->addField('reports_tw')->calculated(true);
