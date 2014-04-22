@@ -5,7 +5,7 @@ class page_quotes extends Page {
         parent::init();
 
         // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->api->currentUser()->canSeeQuotesList() ){
+        if( !$this->app->user_access->canSeeQuotesList() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
     }
@@ -13,7 +13,7 @@ class page_quotes extends Page {
     function page_index() {
         $this->addBreadCrumb($this);
 
-        $this->add('View_SwitcherQuotes');
+        //$this->add('View_SwitcherQuotes');
 
         $this->add('H1')->set('Quotes');
 
@@ -159,11 +159,11 @@ class page_quotes extends Page {
     }
 
     function addRequestForQuotationButton($view) {
-        if ($this->api->currentUser()->canSendRequestForQuotation()) {
+        if ($this->app->user_access->canSendRequestForQuotation()) {
             $b = $view->add('Button')->set('Request For Quotation');
             $b->addStyle('margin-bottom','10px');
             $b->js('click', array(
-                $this->js()->univ()->redirect($this->api->url('quotes/rfq'))
+                $b->js()->univ()->redirect($this->app->url('quotes/rfq'))
             ));
         }
     }

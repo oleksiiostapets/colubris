@@ -93,8 +93,8 @@ class Model_Quote extends Model_Quote_Base {
     }
 
     // ONLY manager and client have access to quote price
-    function canUserSeePrice($user) {
-        return $user->checkRoleSimpleRights(array(false,true,false,true,false));
+    function canUserSeePrice() {
+        return $this->app->user_access->checkRoleSimpleRights(array(false,true,false,true,false));
     }
 
     function canUserSeeRequirements($user) {
