@@ -5,7 +5,7 @@ class page_quotes_rfq_requirements extends Page_Requirements {
         parent::init();
 
         // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->api->currentUser()->canSeeRequirements() ){
+        if(!$this->app->user_access->canSeeRequirements()){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
 

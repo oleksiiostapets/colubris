@@ -286,7 +286,7 @@ class Page_Requirements extends Page {
         $gr = $v->add('Grid_Quote');
         $gr->addColumn('text','name','');
         $gr->addColumn('text','value','Info');
-        $gr->addFormatter('value','wrap');
+//        $gr->addFormatter('value','wrap');
         $gr->setSource($source);
 
     }
@@ -304,7 +304,7 @@ class Page_Requirements extends Page {
         $gr = $v->add('Grid_Quote');
         $gr->addColumn('text','name','');
         $gr->addColumn('text','value','Info');
-        $gr->addFormatter('value','wrap');
+//        $gr->addFormatter('value','wrap');
         $gr->setSource($source);
 
     }
@@ -316,7 +316,7 @@ class Page_Requirements extends Page {
 
         $total_view = $v->add('View')->setClass('estimate_total_time_to_reload');
 
-        if (count($fields = $this->api->currentUser()->getFloatingTotalFields())) {
+        if (count($fields = $this->app->user_access->getFloatingTotalFields())) {
             $total_view->add('View')->set('Estimated: ');
             foreach ($fields as $field) {
                 switch ($field) {
