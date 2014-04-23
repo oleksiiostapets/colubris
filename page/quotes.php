@@ -18,6 +18,7 @@ class page_quotes extends Page {
         $this->add('H1')->set('Quotes');
 
         $this->addRequestForQuotationButton($this);
+        $this->addArchiveButton($this);
 
         $tabs = $this->add('Tabs');
 
@@ -28,7 +29,6 @@ class page_quotes extends Page {
         if(!$this->api->currentUser()->isSales()){
             $tabs->addTabUrl('./estimation_approved','Estimation Approved ('.$this->getModelEstimationApproved()->count().')');
             $tabs->addTabUrl('./finished','Finished ('.$this->getModelFinished()->count().')');
-            $tabs->addTabUrl('./archived','Archived ('.$this->getModelArchived()->count().')');
         }
 
         if ($_GET['active_tab']>0){
@@ -133,16 +133,6 @@ class page_quotes extends Page {
         $quote=$this->getModelFinished();
         $this->addQuotesCRUD($this,$quote,'active');
     }
-    function getModelArchived(){
-        $quote=$this->getBaseModel();
-        $quote->addCondition('is_archived',true);
-        return $quote;
-    }
-    function page_archived() {
-        $this->active_tab=7;
-        $quote=$this->getModelArchived();
-        $this->addQuotesCRUD($this,$quote,'archive');
-    }
 
     function addBreadCrumb($view) {
         $view->add('x_bread_crumb/View_BC',array(
@@ -167,6 +157,14 @@ class page_quotes extends Page {
             ));
         }
     }
+	function addArchiveButton($view){
+		if(!$this->api->currentUser()->isSales()){
+			$b = $view->add('Button')->set('See Archive');
+			$b->js('click', array(
+				$b->js()->univ()->redirect($this->app->url('quotes/archive'))
+			));
+		}
+	}
 
     function addQuotesCRUD($view,$quote,$mode) {
         $user = $this->api->currentUser();
@@ -206,12 +204,12 @@ class page_quotes extends Page {
             }
 
             $cr->grid->addClass('zebra bordered');
-            $cr->grid->add('View_ExtendedPaginator',
-                array(
-                    'values'=>array('10','50','100'),
-                    'grid'=>$cr->grid,
-                ),
-                'extended_paginator');
+//            $cr->grid->add('View_ExtendedPaginator',
+//                array(
+//                    'values'=>array('10','50','100'),
+//                    'grid'=>$cr->grid,
+//                ),
+//                'extended_paginator');
             $cr->grid->addQuickSearch(array('quote.name','project'));
         }
 
