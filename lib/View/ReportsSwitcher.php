@@ -3,7 +3,8 @@ class View_ReportsSwitcher extends View {
     function init(){
         parent::init();
 
-        $v=$this->add('View')->setClass('right');
+	    $this->addstyle('overflow','hidden');
+        $v=$this->add('View')->setClass('atk-move-right');
         
         $f=$v->add('Form');
         $f->addClass('horizontal switcher');
