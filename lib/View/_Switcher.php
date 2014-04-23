@@ -120,7 +120,7 @@ class View_Switcher extends View {
     }
     function addRequirement(){
         // Requirement
-        $mr=$this->add('Model_Requirement');
+        $mr=$this->add('Model_Requirement')->notDeleted();
         $mr->addCondition('quote_id',$this->api->recall('quote_id'));
         if($_GET['requirement_id']!==null){
             $check=$mr->tryLoad($_GET['requirement_id']);

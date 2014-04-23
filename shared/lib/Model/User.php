@@ -119,14 +119,15 @@ class Model_User extends Model_BaseTable {
 	function getDashboardCommentsModel($type) {
 		$type_low = strtolower($type);
 		if ($this->isClient()) {
-			$m = $this->add('Model_'.$type.'comment_Client');
+			$m = $this->add('Model_'.$type.'comment')->notDeleted()->getClients();
 		} elseif ($this->app->currentUser()->isDeveloper()) {
-			$m = $this->add('Model_'.$type.'comment_Developer');
+			$m = $this->add('Model_'.$type.'comment')->notDeleted()->getDevelopers();
 		} else {
-			$m = $this->add('Model_'.$type.'comment');
+			$m = $this->add('Model_'.$type.'comment')->notDeleted();
 		}
 		//$m->debug();
 		$m->addCondition('user_id','<>',$this['id']);
+
 		$m->setOrder('created_dts',true);
 
 		$proxy_check = $this->add('Model_'.$type.'commentUser');

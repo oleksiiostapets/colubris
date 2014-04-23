@@ -50,7 +50,7 @@ class View_SwitcherEditTask extends View {
             $this->task->save();
 		}else{
             if($this->task->get('requirement_id')>0){
-                $cmr=$this->add('Model_Requirement')->tryLoad($this->task->get('requirement_id'));
+                $cmr=$this->add('Model_Requirement')->notDeleted()->tryLoad($this->task->get('requirement_id'));
                 if($cmr->loaded()){
                     $this->api->memorize('edit_quote_id',$cmr->get('quote_id'));
                 }
@@ -61,7 +61,7 @@ class View_SwitcherEditTask extends View {
 		$fq->set($this->api->recall('edit_quote_id'));
 		
 		// Requirement
-		$mr=$this->add('Model_Requirement');
+		$mr=$this->add('Model_Requirement')->notDeleted();
 		$mr->addCondition('quote_id',$this->api->recall('edit_quote_id'));
         $this->api->stickyGet('edit_requirement_id');
     	if($_GET['edit_requirement_id']!==null){

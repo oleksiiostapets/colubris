@@ -32,7 +32,7 @@ class Page_Requirements extends Page {
         // Storing project id for assigned and requester
         $this->api->memorize('project_id',$project->get('id'));
 
-        $requirements=$this->add('Model_Requirement');
+        $requirements=$this->add('Model_Requirement')->notDeleted();
         $requirements->addCondition('quote_id',$_GET['quote_id']);
 
         // Checking client's read permission to this quote and redirect to denied if required
@@ -443,7 +443,7 @@ class Page_Requirements extends Page {
             $view->add('H4')->set('New Requirement:');
 
             $form=$view->add('Form');
-            $m=$this->setModel('Model_Requirement');
+            $m=$this->setModel('Model_Requirement')->notDeleted();
             $form->setModel($m,array('name','descr','file_id'));
             $form->addSubmit('Save');
 

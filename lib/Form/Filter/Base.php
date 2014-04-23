@@ -75,7 +75,7 @@ class Form_Filter_Base extends Form {
     }
     function addRequirement(){
         if ($_GET['project'] && $g = $_GET['quote']) {
-            $requirement_model = $this->add('Model_Requirement');
+            $requirement_model = $this->add('Model_Requirement')->notDeleted();
             $requirement_model->addCondition('quote_id',$g);
             $r_arr = $requirement_model->getRows();
             $rn_arr['0'] = 'all';

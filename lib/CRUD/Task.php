@@ -123,7 +123,7 @@ class CRUD_Task extends CRUD {
 
             $crud = $comments_view->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
 
-            $m = $comments_view->add('Model_Taskcomment')
+            $m = $comments_view->add('Model_Taskcomment')->notDeleted()
                     ->addCondition('task_id',$this->id);
             $crud->setModel($m,
                 array('text','file_id'),
@@ -136,7 +136,7 @@ class CRUD_Task extends CRUD {
                 $crud->add_button->setLabel('Add Comment');
             }
             if($_GET['delete']){
-                $comment=$this->add('Model_Taskcomment')->load($_GET['delete']);
+                $comment=$this->add('Model_Taskcomment')->notDeleted()->load($_GET['delete']);
                 $comment->delete();
                 $crud->js()->reload()->execute();
             }

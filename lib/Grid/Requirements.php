@@ -101,7 +101,7 @@ class Grid_Requirements extends Grid_CountLines {
                     ->addMoreInfo('status',$quote['status']);
             }
 
-            $requirements=$this->add('Model_Requirement');
+            $requirements=$this->add('Model_Requirement')->notDeleted();
             $requirements->addCondition('quote_id',$_GET['quote_id']);
             $requirements->tryLoad($_POST['req_id']);
             if (!$requirements->loaded()) {

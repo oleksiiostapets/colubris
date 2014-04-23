@@ -263,7 +263,7 @@ class Model_Quote extends Model_Auditable {
 
 
 	function getRequirements(){
-		$rm=$this->add('Model_Requirement')->addCondition('quote_id',$this->get('id'));
+		$rm=$this->add('Model_Requirement')->notDeleted()->addCondition('quote_id',$this->get('id'));
 		return($rm->getRows());
 	}
 	function getRequirements_id(){
@@ -310,7 +310,7 @@ class Model_Quote extends Model_Auditable {
         ;
     }
     function moveRequirmsToOtherQuote($reqs_arr,$other_quote) {
-        $req = $this->add('Model_Requirement'); //->debug();
+        $req = $this->add('Model_Requirement')->notDeleted(); //->debug();
         foreach ($reqs_arr as $req_arr) {
             $req->tryLoad($req_arr['id']);
             if ($req->loaded()) {
@@ -567,7 +567,7 @@ class Model_Quote extends Model_Auditable {
             throw $this->exception('User with this role cannot estimate quote.','Exception_Denied');
 
         if (!$requirements) {
-            $requirements = $this->add('Model_Requirement');
+            $requirements = $this->add('Model_Requirement')->notDeleted();
             $requirements->addCondition('quote_id',$this->id);
         }
 

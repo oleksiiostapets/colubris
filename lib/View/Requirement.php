@@ -4,7 +4,7 @@ class View_Requirement extends AbstractView {
     private $quote;
 
     function prepareData($requirement_id){
-        $this->req=$this->add('Model_Requirement')->load($requirement_id);
+        $this->req=$this->add('Model_Requirement')->notDeleted()->load($requirement_id);
         $this->quote=$this->add('Model_Quote')->notDeleted()->getThisOrganisation()->load($this->req->get('quote_id'));
         $_GET['project_id']=$this->quote->get('project_id');
     }
@@ -81,7 +81,7 @@ class View_Requirement extends AbstractView {
 
         $cr=$this->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
 
-        $m=$this->add('Model_Reqcomment')
+        $m=$this->add('Model_Reqcomment')->notDeleted()
             ->addCondition('requirement_id',$this->req['id']);
         $cr->setModel($m,
             array('text','file_id'),

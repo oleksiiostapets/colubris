@@ -7,7 +7,7 @@ class View_RFQRequirement extends View {
         $this->add('H4')->set('New Requirement:');
         
         $form=$this->add('Form');
-        $m=$this->setModel('Model_Requirement');
+        $m=$this->setModel('Model_Requirement')->notDeleted();
         $form->setModel($m,array('name','descr','file_id'));
         $form->addSubmit('Save');
 

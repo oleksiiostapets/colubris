@@ -125,7 +125,7 @@ class page_task extends Page {
 
         $cr=$comments_view->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
 
-        $m=$comments_view->add('Model_Taskcomment')
+        $m=$comments_view->add('Model_Taskcomment')->notDeleted()
             ->addCondition('task_id',$_GET['task_id']);
 
         $cr->setModel($m,
@@ -140,7 +140,7 @@ class page_task extends Page {
             $cr->grid->addPaginator(10);
         }
         if($_GET['delete']){
-            $comment=$this->add('Model_Taskcomment')->load($_GET['delete']);
+            $comment=$this->add('Model_Taskcomment')->notDeleted()->load($_GET['delete']);
             $comment->delete();
             $cr->js()->reload()->execute();
         }
