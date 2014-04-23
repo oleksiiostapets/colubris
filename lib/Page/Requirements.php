@@ -116,7 +116,7 @@ class Page_Requirements extends Page {
         }
 
     }
-    function page_more(){
+    /*function page_more(){
         $this->api->stickyGET('requirement_id');
 
         $req_view=$this->add('View_Requirement');
@@ -128,11 +128,7 @@ class Page_Requirements extends Page {
         }
 
         $req_view->showGrids();
-    }
-
-
-
-
+    }*/
 
     function addBreacrumb($view){
         $view->add('x_bread_crumb/View_BC',array(
@@ -398,7 +394,7 @@ class Page_Requirements extends Page {
             $can_edit=false;
             $can_del=false;
         }
-        $cr = $view->add('CRUD',
+        $cr = $view->add('CRUD_Requirement',
             array(
                 'allow_add'    => false, // we cannot add from crud TODO make add from CRUD only
                 'allow_edit'   => $can_edit,
@@ -423,16 +419,10 @@ class Page_Requirements extends Page {
                 $quote->whatRequirementFieldsUserCanEdit($this->api->currentUser()),
                 $quote->whatRequirementFieldsUserCanSee($this->api->currentUser())
         );
+	    $cr->configure();
 
         $cr->js('reload',$total_view->js()->trigger('reload'));
 
-        if($cr->grid){
-            $cr->grid->addClass('zebra bordered');
-         	$cr->grid->addColumn('expander','more');
-         	$cr->grid->addFormatter('file','download');
-         	//$cr->grid->addFormatter('estimate','estimate');
-         	$cr->grid->setFormatter('name','wrap');
-        }
         return $cr;
     }
 
