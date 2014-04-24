@@ -20,6 +20,7 @@ class page_reports extends Page_Functional {
 	    $v->setClass('atk-move-right');
 	    $this->addXSLButton($v);
 
+
 	    //Total spent time
 	    $total=0;
 	    foreach($this->m->getRows() as $r){
@@ -30,10 +31,12 @@ class page_reports extends Page_Functional {
 	    $v=$vv->add('View');
 	    $v->setClass('atk-move-left');
 	    $v->setHtml('<p style="font-weight:bold;font-size:18px;">TOTAL SPENT TIME: '.$total.'</p>');
+	    $this->filter->addViewToReload($v);
 
 	    $grid = $this->addReportsGrid();
 
-	    $this->add('View')->setHtml('<p style="font-weight:bold;font-size:18px;">TOTAL SPENT TIME: '.$total.'</p>');
+	    $v = $this->add('View')->setHtml('<p style="font-weight:bold;font-size:18px;">TOTAL SPENT TIME: '.$total.'</p>');
+	    $this->filter->addViewToReload($v);
 
 	    $this->filter->addViewToReload($grid);
 	    $this->filter->commit();

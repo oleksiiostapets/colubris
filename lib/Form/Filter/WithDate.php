@@ -4,8 +4,8 @@
  * Date: 3/27/14 3:01 PM
  */
 class Form_Filter_WithDate extends Form_Filter_Base {
-	protected $date_from     = false;
-	protected $date_to     = false;
+	protected $date_from = false;
+	protected $date_to   = false;
     function init() {
         parent::init();
 
@@ -20,7 +20,7 @@ class Form_Filter_WithDate extends Form_Filter_Base {
 			$this->date_from->set($g);
 		}
 		// reload on change
-		$this->date_from->select_options = array(
+		$this->date_from->selectnemu_options = array(
 			'change' => $this->js(null,'
                 function() {'.
 					$this->js()->colubris()->reloadForm($this->name,'date_from')
