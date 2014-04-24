@@ -116,7 +116,7 @@ class Page_Requirements extends Page {
         }
 
     }
-    /*function page_more(){
+    function page_more(){
         $this->api->stickyGET('requirement_id');
 
         $req_view=$this->add('View_Requirement');
@@ -128,7 +128,7 @@ class Page_Requirements extends Page {
         }
 
         $req_view->showGrids();
-    }*/
+    }
 
     function addBreacrumb($view){
         $view->add('x_bread_crumb/View_BC',array(
