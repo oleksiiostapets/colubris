@@ -28,8 +28,8 @@ class Frontend extends ApiFrontend {
 //            ),
             //'template'=>'atk4-addons/misc/templates',
         ))->setBasePath('.');
-        
-        $this->dbConnect();
+
+		$this->dbConnect();
         $this->add('jUI');
 
         $this->js(true)->_load('colubris');

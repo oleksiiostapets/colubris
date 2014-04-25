@@ -134,7 +134,7 @@ class page_task extends Page {
         );
         if($cr->grid){
             $cr->grid->addClass('zebra bordered');
-            $cr->add_button->setLabel('Add Comment');
+            //$cr->add_button->setLabel('Add Comment');
             //$cr->grid->setFormatter('text','text');
             $cr->grid->addFormatter('text','wrap');
             $cr->grid->addPaginator(10);
