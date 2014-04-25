@@ -150,7 +150,7 @@ class Grid_Quotes extends Grid {
         $this->addColumn('actions');
 
         // formatters
-        $this->addFormatter('status','wrap');
+//        $this->addFormatter('status','wrap');
         $this->addFormatter('status','status');
 
         $this->addPaginator(25);
@@ -229,6 +229,8 @@ class Grid_Quotes extends Grid {
             if (
                 in_array($this->current_row['status'], $this->posible_actions[$action]['status']) ||
                 in_array('any', $this->posible_actions[$action]['status'])
+	            &&
+                $this->current_row['is_archived'] != true
             ) {
                 $v->add('View')->set($this->posible_actions[$action]['name'])->addClass('a_look')
                         ->js('click')->univ()->ajaxec($this->api->url(null,array($this->posible_actions[$action]['get_var']=>$this->current_id)));

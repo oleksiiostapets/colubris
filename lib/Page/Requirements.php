@@ -130,10 +130,6 @@ class Page_Requirements extends Page {
         $req_view->showGrids();
     }
 
-
-
-
-
     function addBreacrumb($view){
         $view->add('x_bread_crumb/View_BC',array(
             'routes' => array(
@@ -286,7 +282,7 @@ class Page_Requirements extends Page {
         $gr = $v->add('Grid_Quote');
         $gr->addColumn('text','name','');
         $gr->addColumn('text','value','Info');
-        $gr->addFormatter('value','wrap');
+//        $gr->addFormatter('value','wrap');
         $gr->setSource($source);
 
     }
@@ -304,7 +300,7 @@ class Page_Requirements extends Page {
         $gr = $v->add('Grid_Quote');
         $gr->addColumn('text','name','');
         $gr->addColumn('text','value','Info');
-        $gr->addFormatter('value','wrap');
+//        $gr->addFormatter('value','wrap');
         $gr->setSource($source);
 
     }
@@ -316,7 +312,7 @@ class Page_Requirements extends Page {
 
         $total_view = $v->add('View')->setClass('estimate_total_time_to_reload');
 
-        if (count($fields = $this->api->currentUser()->getFloatingTotalFields())) {
+        if (count($fields = $this->app->user_access->getFloatingTotalFields())) {
             $total_view->add('View')->set('Estimated: ');
             foreach ($fields as $field) {
                 switch ($field) {
@@ -398,7 +394,7 @@ class Page_Requirements extends Page {
             $can_edit=false;
             $can_del=false;
         }
-        $cr = $view->add('CRUD',
+        $cr = $view->add('CRUD_Requirement',
             array(
                 'allow_add'    => false, // we cannot add from crud TODO make add from CRUD only
                 'allow_edit'   => $can_edit,
@@ -423,16 +419,10 @@ class Page_Requirements extends Page {
                 $quote->whatRequirementFieldsUserCanEdit($this->api->currentUser()),
                 $quote->whatRequirementFieldsUserCanSee($this->api->currentUser())
         );
+	    $cr->configure();
 
         $cr->js('reload',$total_view->js()->trigger('reload'));
 
-        if($cr->grid){
-            $cr->grid->addClass('zebra bordered');
-         	$cr->grid->addColumn('expander','more');
-         	$cr->grid->addFormatter('file','download');
-         	//$cr->grid->addFormatter('estimate','estimate');
-         	$cr->grid->setFormatter('name','wrap');
-        }
         return $cr;
     }
 

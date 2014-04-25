@@ -1,5 +1,5 @@
 <?php
-class View_Requirement extends AbstractView {
+class View_Requirement extends View {
     private $req;
     private $quote;
 
@@ -67,7 +67,7 @@ class View_Requirement extends AbstractView {
         $gr = $left->add('Grid_Quote');
         $gr->addColumn('text','name','');
         $gr->addColumn('text','value','Info');
-        $gr->addFormatter('value','wrap');
+        $gr->setFormatter('value','wrap');
         $gr->addFormatter('value','download');
         $gr->setSource($source);
 

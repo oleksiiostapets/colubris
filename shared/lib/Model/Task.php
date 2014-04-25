@@ -119,10 +119,12 @@ class Model_Task extends Model_Auditable {
 
     public function forTaskCRUD() {
         $this->Base();
+	    $this->addQuoteId();
         $this->addQuoteName();
         $this->addRoleCondition();
         $this->addGetConditions();
         $this->notDeleted();
+	    //$this->debug();
         return $this;
     }
     function addDashCondition() {
@@ -229,14 +231,14 @@ class Model_Task extends Model_Auditable {
     // ------------------------------------------------------------------------------
 
     function addQuoteId() {
-        $this->addExpression('quote_id',function($m,$q){
-            $req = $m->add('Model_Requirement')->notDeleted()->addCondition('id',$m->getElement('requirement_id'));
-            $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()->addCondition('id',$req->fieldQuery('quote_id'));
-            return $quote->fieldQuery('id');
-        });
+	    $this->addExpression('quote_id',function($m){
+		    $req = $m->add('Model_Requirement')->notDeleted()->addCondition('id',$m->getElement('requirement_id'));
+		    $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()->addCondition('id',$req->fieldQuery('quote_id'));
+		    return $quote->fieldQuery('id');
+	    });
     }
     function addQuoteName() {
-        $this->addExpression('quote',function($m,$q){
+        $this->addExpression('quote',function($m){
             $req = $m->add('Model_Requirement')->notDeleted()->addCondition('id',$m->getElement('requirement_id'));
             $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()->addCondition('id',$req->fieldQuery('quote_id'));
             return $quote->fieldQuery('name');

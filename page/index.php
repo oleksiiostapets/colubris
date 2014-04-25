@@ -22,9 +22,9 @@ class Page_index extends Page {
                 $auth->login($l);
                 if($form->get('memorize') == true){
                     $hash = $this->api->hg_cookie->rememberLoginHash($form->get('email'),true);
-                    $u=$this->add('Model_User')->getAdmins()->tryLoadBy('email',$form->get('email'));
+                    $u=$this->add('Model_User')->notDeleted()->tryLoadBy('email',$form->get('email'));
                     if($u->loaded()){
-                        $u->set('chash',$hash);
+                        $u->set('hash',$hash);
                         $u->saveAndUnload();
                     }
                 	//setcookie("colubris_auth_useremail",$form->get('email'),time()+60*60*24*30*6);
