@@ -140,6 +140,9 @@ class Model_Task extends Model_Auditable {
         $this->addRoleCondition();
         return $this;
     }
+	public function forTaskForm(){
+		$this->addQuoteId();
+	}
 
     // PREPARED CONDITIONS SETS :: END -----------------------------------------------------------
 

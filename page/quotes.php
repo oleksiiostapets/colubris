@@ -203,7 +203,7 @@ class page_quotes extends Page {
                 }
             }
 
-            $cr->grid->addClass('zebra bordered');
+//            $cr->grid->addClass('zebra bordered');
 //            $cr->grid->add('View_ExtendedPaginator',
 //                array(
 //                    'values'=>array('10','50','100'),

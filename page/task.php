@@ -15,11 +15,13 @@ class page_task extends Page_Functional {
         }elseif($this->api->currentUser()->isClient()){
             $mp->forClient();
         }
-        $this->task=$this->add('Model_Task');
+        $this->task=$this->add('Model_Task');//->debug();
+	    $this->task->forTaskForm();
         $this->task->tryLoad($_GET['task_id']);
         if(!$this->task->loaded()){
             throw $this->exception('Task not exist!','Exception_Task');
         }
+	    $this->quote_id = $this->task['quote_id'];
         $permission_granted=false;
         foreach($mp->getRows() as $pr){
             if ($pr['id']==$this->task->get('project_id')) $permission_granted=true;
@@ -33,14 +35,8 @@ class page_task extends Page_Functional {
         $this->task->load($_GET['task_id']);
 
 //        $this->add('View_SwitcherEditTask',array('task'=>$this->task));
-	    $this->addFilter();
-	    $this->stickeGetFilterVars();
 
-	    $form = $this->addTaskForm();
-
-	    $this->filter->addViewToReload($form);
-	    $this->filter->commit();
-
+	    $this->addTaskForm();
 
 	    $this->addTaskTime();
 
@@ -154,7 +150,30 @@ class page_task extends Page_Functional {
 		$this->add('H3')->set('Task details:');
 
 		$f=$this->add('Form');
-		$f->setModel($this->task,array('name','descr_original','priority','type','status','estimate','requester_id','assigned_id'));
+		$f->setModel($this->task,array(
+			'name',
+			'descr_original',
+			'priority',
+			'type',
+			'status',
+			'estimate',
+			'requester_id',
+			'project_id',
+			'requirement_id',
+			'assigned_id'
+		));
+		$m = $this->add('Model_Quote')->addCondition('project_id',$this->task->get('project_id'));
+		$current_quote = $m->tryLoad($this->quote_id);
+
+		$quote = $f->addField('DropDown','quote');
+		$quote->setModel($m,array('name'));
+		$quote->setEmptyText('Select a quote');
+		$quote->set($current_quote['id']);
+
+		$f->add('Order')
+			->move('quote','before','requirement_id')
+			->now();
+
 		$f->addSubmit('Save');
 		if($f->isSubmitted()){
 			if($_GET['edit_quote_id']>0 && $_GET['edit_requirement_id']==0){
