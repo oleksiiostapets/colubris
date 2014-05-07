@@ -46,6 +46,7 @@ class page_projects extends Page {
             $cr->grid->addClass('zebra bordered');
             $cr->grid->addPaginator(25);
 			if ($this->app->user_access->canSeeProjectParticipantes()) {
+				/*
 				$cr->grid->add('VirtualPage')
 					->addColumn('participants')
 					->set(function($page){
@@ -53,10 +54,19 @@ class page_projects extends Page {
 						$users = $this->add('Model_Participant')->addCondition('project_id',$id);
 						$cr_users = $page->add('CRUD',array('allow_edit'=>true,'allow_del'=>true,'allow_add'=>true));
 						$cr_users->setModel($users,array('user','role'));
-					});
-                //$cr->grid->addColumn('expander','participants');
+					});*/
+                $cr->grid->addColumn('expander','participants');
             }
 			if ($this->app->user_access->canSeeProjectTasks()) {
+				/*
+				$cr->grid->add('VirtualPage')
+					->addColumn('tasks')
+					->set(function($page){
+						$id = $_GET[$page->short_name.'_id'];
+						$tasks = $this->add('Model_Task')->notDeleted()->addCondition('project_id',$id);
+						$cr_tasks = $page->add('CRUD',array('allow_edit'=>true,'allow_del'=>true,'allow_add'=>true));
+						$cr_tasks->setModel($tasks,array('user','role'));
+					});*/
                 $cr->grid->addColumn('expander','tasks');
             }
             if ($cr->grid->hasColumn('demo_url')) {
@@ -93,7 +103,7 @@ class page_projects extends Page {
             array('name','estimate','priority','type','status','spent_time','requester','assigned')
         );
         if($cr->grid){
-            $cr->grid->addFormatter('status','status');
+            //$cr->grid->addFormatter('status','status');
             $cr->grid->addFormatter('name','wrap');
             $cr->grid->addPaginator(5);
         }
