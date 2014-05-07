@@ -121,7 +121,7 @@ class page_task extends Page_Functional {
 						)),
 				),
 				2 => array(
-					'name' => 'Task',
+					'name' => $this->task->get('name'),
 					'url' => 'task',
 				),
 			)

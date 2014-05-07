@@ -33,9 +33,9 @@ class Grid_Tasks extends Grid_Advanced {
             '
             <div class="name"><span>#'.$this->current_row['id'].'</span>
                 <a href="'.$this->api->url('task',array(
-	                            'project'=>$this->current_row['project_id'],
-	                            'quote'=>$this->current_row['quote_id'],
-					            'requirement'=>$this->current_row['requirement_id'],
+//	                            'project'=>$this->current_row['project_id'],
+//	                            'quote'=>$this->current_row['quote_id'],
+//					            'requirement'=>$this->current_row['requirement_id'],
 					            'task_id'=>$this->current_row['id'],
 	                            'requirement_id'=>null
             )).'">'.$this->current_row['name'].'</a></div>
@@ -133,6 +133,7 @@ class Grid_Tasks extends Grid_Advanced {
         ) {
             $this->removeColumn('estimate');
         }
+		$this->removeColumn('quote_id');
         $this->removeColumn('project');
         $this->removeColumn('quote');
     }

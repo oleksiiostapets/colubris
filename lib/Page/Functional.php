@@ -18,6 +18,16 @@ class Page_Functional extends Page {
     }
 
     protected function addFilter() {
+		if ($_GET['task_id']){
+			$task = $this->add('Model_Task')->debug()->load($_GET['task_id']);
+			$r=$task->leftJoin('requirement','requirement_id','left','_r');
+			$r->addField('quote_id','quote_id');
+
+			var_dump($task->get());
+			$_GET['project'] = $task->get('project_id');
+			$_GET['requirement'] = $task->get('requirement_id');
+		}
+
         $this->filter = $this->app->add('Controller_Filter');
         $filter_form = $this->add('Form_Filter_Base');
         $this->filter->setForm($filter_form);
