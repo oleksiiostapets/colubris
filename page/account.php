@@ -15,10 +15,9 @@ class page_account extends Page {
             )
         ));
 
-        $this->add('H1')->set('Settings');
-
         // Left side form
-        $v=$this->add('View')->setClass('span6 left');
+        $v=$this->add('View')->setClass('span_6 col')->addStyle('margin-top:20px;');
+		$v->add('H3')->set('Personal Data Form');
         $f=$v->add('Form');
         $user_model=$f->setModel($this->add('Model_User')->getActive()->load($this->api->auth->model['id']),array('name'));
         $f->addSubmit('Save');
@@ -29,7 +28,8 @@ class page_account extends Page {
 
         $u=$this->add('Model_User')->getActive()->load($this->api->auth->model['id']);
         
-        $v=$this->add('View')->setClass('span6 right');
+        $v=$this->add('View')->setClass('span_6 col')->addStyle('margin-top:20px;');
+		$v->add('H3')->set('Change Password');
         $f=$v->add('Form');
         $f->addField('password','pp','Old Password')->validateNotNULL();
         $f->addField('password','p1','New Password')->validateNotNULL();
@@ -51,12 +51,8 @@ class page_account extends Page {
             $f->js()->univ()->successMessage('password changed')->getjQuery()->reload()->execute();
         }
 
-        $this->add('View')->setClass('clear');
-
-        $this->add('H2')->set('Mail settings');
-
-        // Left side form
-        $v=$this->add('View')->setClass('span6 left');
+		$v=$this->add('View')->setClass('span_6 col')->addStyle('margin-top:20px;');
+		$v->add('H3')->set('Mail Settings');
         $f=$v->add('Form');
         $f->setModel($this->add('Model_User')->getActive()->load($this->api->auth->model['id']),array('mail_task_changes'));
         $f->addSubmit('Save');
@@ -65,6 +61,7 @@ class page_account extends Page {
             $f->js()->univ()->successMessage('Successfully updated your details')->execute();
         }
 
-        $this->add('View')->setClass('clear');
+		$v=$this->add('View')->setClass('span_6 col')->addStyle('margin-top:20px;');
+
     }
 }
