@@ -47,61 +47,12 @@ class page_task extends Page_Functional {
 		$v = $this->add('View');
 		$comments_view = $v->add('View');
 		$comments_view->add('H4')->set('Comments');
-
-		$cr=$comments_view->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
-
-		$m=$comments_view->add('Model_Taskcomment')->notDeleted()
-			->addCondition('task_id',$_GET['task_id']);
-
-		$cr->setModel($m,
-			array('text','file_id'),
-			array('text','user','file','file_thumb','created_dts')
-		);
-		if($cr->grid){
-			$cr->grid->addClass('zebra bordered');
-			$cr->add_button->setLabel('Add Comment');
-			//$cr->grid->setFormatter('text','text');
-			$cr->grid->addFormatter('text','wrap');
-			$cr->grid->addPaginator(10);
-		}
-		if($_GET['delete']){
-			$comment=$this->add('Model_Taskcomment')->notDeleted()->load($_GET['delete']);
-			$comment->delete();
-			$cr->js()->reload()->execute();
-		}
+		$comments_view->add('CRUD_TaskComments',array('task_id'=>$_GET['task_id']));
 	}
 	protected function addTaskTime(){
 		if (!$this->api->currentUser()->isClient()){
 			$this->add('H3')->set('Time details:');
-
-			$model=$this->add('Model_TaskTime')->addCondition('task_id',$_GET['task_id']);
-			$crud=$this->add('CRUD');
-			if ($this->api->auth->model['is_client']){
-				$crud->setModel($model,
-					array('spent_time','comment','date'),
-					array('user','spent_time','comment','date','remove_billing')
-				);
-			}else{
-				$crud->setModel($model,
-					array('spent_time','comment','date','remove_billing'),
-					array('user','spent_time','comment','date','remove_billing')
-				);
-			}
-			if ($crud->grid){
-				$crud->grid->addTotals(array('spent_time'));
-				$crud->grid->addClass('zebra bordered');
-				$crud->add_button->setLabel('Add Time');
-				$crud->grid->addPaginator(20);
-			}
-
-			if ($_GET['reload_view']) {
-				$this->js(true)->closest(".ui-dialog")->on("dialogbeforeclose",
-					$this->js(null,'function(event, ui){
-                                '.$this->js()->_selector('#'.$_GET['reload_view'])->trigger('reload').'
-                            }
-                    ')
-				);
-			}
+			$this->add('CRUD_TaskTime',array('task_id'=>$_GET['task_id']));
 		}
 	}
 	protected function addBC(){

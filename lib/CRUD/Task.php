@@ -11,9 +11,9 @@ class CRUD_Task extends CRUD {
 
     function init() {
         parent::init();
+	    $this->allow_edit = false;
     }
     function configure() {
-        $this->addTimeFrame();
         $this->addMoreFrame();
     }
 
@@ -50,47 +50,8 @@ class CRUD_Task extends CRUD {
 //            }
         }
     }
-    protected function addTimeFrame() {
-        if(!$this->app->auth->model->isClient()){
-            if($p = $this->addFrame('Time')){
-
-                if (!$this->id) {
-                    throw $this->exception('task_id must be provided!');
-                }
-
-                //$this->api->stickyGet('task_id');
-                $model = $p->add('Model_TaskTime')->addCondition('task_id',$this->id);
-                $crud = $p->add('CRUD');
-                  if ($p->app->currentUser()->isClient()){
-                      $crud->setModel($model,
-                          array('spent_time','comment','date'),
-                          array('user','estimate','comment','date','remove_billing')
-                      );
-                  } else {
-                      $crud->setModel($model,
-                          array('spent_time','comment','date','remove_billing'),
-                          array('user','spent_time','comment','date','remove_billing')
-                      );
-                  }
-                if ($crud->grid){
-                    $crud->grid->addClass('zebra bordered');
-                }
-                if ($crud->add_button) {
-                    $crud->add_button->setLabel('Add Time');
-                }
-
-                $p->js(true)->closest(".ui-dialog")->on("dialogbeforeclose",
-                    $p->js(null,'function(event, ui){
-                              '.$p->js()->_selector('#'.$this->name)->trigger('reload').'
-                          }
-                      ')
-                );
-
-            }
-        }
-    }
     protected function addMoreFrame() {
-        if($p = $this->addFrame('More')){
+        if($p = $this->addFrame('Info')){
             if (!$this->id) {
                 throw $this->exception('task_id must be provided!');
             }
@@ -103,43 +64,15 @@ class CRUD_Task extends CRUD {
             $descr_view->add('H4')->set('Description');
             $descr_view->add('View')->setHtml( $this->app->colubris->makeUrls($task->get('descr_original')) );
 
-                  /*
-                  // left view
-                  $left_view = $v->add('View')->setClass('span6 right');
-                  $left_view->add('H4')->set('Attachments');
+	        if (!$this->api->currentUser()->isClient()){
+		        $time_view = $v->add('View');
+		        $time_view->add('H4')->set('Spent Time');
+		        $time_view->add('CRUD_TaskTime',array('task_id'=>$this->id));
+	        }
 
-                    $model=$left_view->add('Model_Attach')->addCondition('task_id',$_GET['task_id']);
-                    $crud=$left_view->add('CRUD',array(
-                         'grid_class' => 'Grid_Attachments',
-                     ));
-                    $crud->setModel($model,
-                            array('description','file_id'),
-                            array('description','file','file_thumb','updated_dts')
-                    );
-                    */
-
-            $comments_view = $v->add('View');
+	        $comments_view = $v->add('View');
             $comments_view->add('H4')->set('Comments');
-
-            $crud = $comments_view->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
-
-            $m = $comments_view->add('Model_Taskcomment')->notDeleted()
-                    ->addCondition('task_id',$this->id);
-            $crud->setModel($m,
-                array('text','file_id'),
-                array('text','user','user_id','file','file_thumb','created_dts')
-            );
-            if($crud->grid){
-                $crud->grid->addClass('zebra bordered');
-            }
-            if ($crud->add_button) {
-                $crud->add_button->setLabel('Add Comment');
-            }
-            if($_GET['delete']){
-                $comment=$this->add('Model_Taskcomment')->notDeleted()->load($_GET['delete']);
-                $comment->delete();
-                $crud->js()->reload()->execute();
-            }
+	        $comments_view->add('CRUD_TaskComments',array('task_id'=>$this->id));
 
         }
     }
