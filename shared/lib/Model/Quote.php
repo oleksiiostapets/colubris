@@ -25,7 +25,7 @@ class Model_Quote extends Model_Auditable {
 		$this->addField('duration')->type('int');
 		$this->addField('deadline')->type('date')->caption('Duration/Deadline');
 
-		$this->addExpression('durdead')->caption('Duration(days)/Deadline')->set(function($m,$q){
+		$this->addExpression('durdead')->caption('Duration (days) / Deadline')->set(function($m,$q){
 			return $q->dsql()
 				->expr('if(deadline is null,duration,deadline)');
 		});

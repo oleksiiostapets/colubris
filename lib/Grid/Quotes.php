@@ -4,12 +4,12 @@ class Grid_Quotes extends Grid {
     public $posible_actions = array(
         'requirements'   => array('status'=>array('Quotation Requested'),'name'=>'Requirements',            'get_var'=>'requirements'),
         'estimation'     => array('status'=>array('Quotation Requested'),'name'=>'Submit for Quotation',    'get_var'=>'estimation'),
-        'send_to_client' => array('status'=>array('Estimated'),          'name'=>'Send Quote to the client','get_var'=>'send_to_client'),
+        'send_to_client' => array('status'=>array('Estimated'),          'name'=>'Send to client','get_var'=>'send_to_client'),
         'approve'        => array('status'=>array('Estimated'),          'name'=>'Approve Estimation',      'get_var'=>'approve'),
         'estimate'       => array('status'=>array('Estimate Needed'),    'name'=>'Estimate',                'get_var'=>'estimate'),
         'details'        => array('status'=>array('any'),                'name'=>'Details',                 'get_var'=>'details'),
-        'active'         => array('status'=>array('any'),                'name'=>'Move to Archive',         'get_var'=>'in_archive'),
-        'archive'        => array('status'=>array('any'),                'name'=>'Extract from Archive',    'get_var'=>'activate'),
+        'active'         => array('status'=>array('any'),                'name'=>'To Archive',         'get_var'=>'in_archive'),
+        'archive'        => array('status'=>array('any'),                'name'=>'From Archive',    'get_var'=>'activate'),
         'edit_details'   => array('status'=>array('Not Estimated','Quotation Requested'),
                                                                          'name'=>'Edit Details',            'get_var'=>'edit_details'),
     );
@@ -143,6 +143,7 @@ class Grid_Quotes extends Grid {
         $this->removeColumn('currency');
         $this->removeColumn('spent_time');
         $this->removeColumn('estimated');
+//        $this->removeColumn('status');
         if ($this->api->currentUser()->isClient()){
             $this->removeColumn('show_time_to_client');
         }
@@ -151,9 +152,10 @@ class Grid_Quotes extends Grid {
 
         // formatters
 //        $this->addFormatter('status','wrap');
-        $this->addFormatter('status','status');
+//        $this->addFormatter('status','status');
+        $this->setFormatter('actions','nowrap');
 
-        $this->addPaginator(25);
+	    $this->addPaginator(25);
     }
     function formatRow() {
     	parent::formatRow();
