@@ -1,5 +1,6 @@
 <?php
 class page_task extends Page_Functional {
+	private $task;
     function page_index(){
 
         // Checking client's read permission to this quote and redirect to denied if required
@@ -15,14 +16,14 @@ class page_task extends Page_Functional {
         }elseif($this->api->currentUser()->isClient()){
             $mp->forClient();
         }
+
         $this->task=$this->add('Model_Task');//->debug();
-	    $this->task->forTaskForm();
         $this->task->tryLoad($_GET['task_id']);
         if(!$this->task->loaded()){
             throw $this->exception('Task not exist!','Exception_Task');
         }
-	    $this->quote_id = $this->task['quote_id'];
-        $permission_granted=false;
+
+	    $permission_granted=false;
         foreach($mp->getRows() as $pr){
             if ($pr['id']==$this->task->get('project_id')) $permission_granted=true;
         }
@@ -31,12 +32,12 @@ class page_task extends Page_Functional {
 	    $this->addBC();
 
         $_GET['project_id']=$this->task->get('project_id');
-        $this->task=$this->add('Model_Task_RestrictedUsers');
-        $this->task->load($_GET['task_id']);
+	    $this->task=$this->add('Model_Task_RestrictedUsers');
+	    $this->task->forTaskForm();
+	    $this->task->load($_GET['task_id']);
 
-//        $this->add('View_SwitcherEditTask',array('task'=>$this->task));
-
-	    $this->addTaskForm();
+	    $this->add('H3')->set('Task details:');
+	    $this->add('Form_Task',['model'=>$this->task]);
 
 	    $this->addTaskTime();
 
@@ -145,45 +146,6 @@ class page_task extends Page_Functional {
 				);
 			}
 		}
-	}
-	protected function addTaskForm(){
-		$this->add('H3')->set('Task details:');
-
-		$f=$this->add('Form');
-		$f->setModel($this->task,array(
-			'name',
-			'descr_original',
-			'priority',
-			'type',
-			'status',
-			'estimate',
-			'requester_id',
-			'project_id',
-			'requirement_id',
-			'assigned_id'
-		));
-		$m = $this->add('Model_Quote')->addCondition('project_id',$this->task->get('project_id'));
-		$current_quote = $m->tryLoad($this->quote_id);
-
-		$quote = $f->addField('DropDown','quote');
-		$quote->setModel($m,array('name'));
-		$quote->setEmptyText('Select a quote');
-		$quote->set($current_quote['id']);
-
-		$f->add('Order')
-			->move('quote','before','requirement_id')
-			->now();
-
-		$f->addSubmit('Save');
-		if($f->isSubmitted()){
-			if($_GET['edit_quote_id']>0 && $_GET['edit_requirement_id']==0){
-				$f->js()->univ()->alert('You must select Requirement!')->execute();
-				return;
-			}
-			$f->update();
-			$f->js()->univ()->successMessage('Successfully updated task details')->execute();
-		}
-		return $this;
 	}
 	protected function addBC(){
 		$this->add('x_bread_crumb/View_BC',array(
