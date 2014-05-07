@@ -42,49 +42,6 @@ class page_task extends Page_Functional {
 	    $this->addTaskTime();
 
 	    $this->addComments();
-
-        $this->add('P');
-        $v = $this->add('View');
-
-        /*
-        // left view
-        $left_view = $v->add('View')->setClass('span6 right');
-        $left_view->add('H4')->set('Attachments');
-
-        $model=$left_view->add('Model_Attach')->addCondition('task_id',$_GET['task_id']);
-        $crud=$left_view->add('CRUD',array(
-            'grid_class' => 'Grid_Attachments',
-        ));
-        $crud->setModel($model,
-            array('description','file_id'),
-            array('description','file','file_thumb','updated_dts')
-        );
-*/
-
-        $comments_view = $v->add('View');
-        $comments_view->add('H4')->set('Comments');
-
-        $cr=$comments_view->add('CRUD', array('grid_class'=>'Grid_Reqcomments'));
-
-        $m=$comments_view->add('Model_Taskcomment')->notDeleted()
-            ->addCondition('task_id',$_GET['task_id']);
-
-        $cr->setModel($m,
-            array('text','file_id'),
-            array('text','user','file','file_thumb','created_dts')
-        );
-        if($cr->grid){
-            $cr->grid->addClass('zebra bordered');
-            //$cr->add_button->setLabel('Add Comment');
-            //$cr->grid->setFormatter('text','text');
-            $cr->grid->addFormatter('text','wrap');
-            $cr->grid->addPaginator(10);
-        }
-        if($_GET['delete']){
-            $comment=$this->add('Model_Taskcomment')->notDeleted()->load($_GET['delete']);
-            $comment->delete();
-            $cr->js()->reload()->execute();
-        }
     }
 	protected function addComments(){
 		$v = $this->add('View');
