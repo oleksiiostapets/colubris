@@ -34,7 +34,15 @@ class page_clients extends Page {
         if($crud->grid){
             $crud->grid->addClass('zebra bordered');
             $crud->grid->addFormatter('name','fullwidth');
-            $crud->grid->addColumn('expander','users','Users');
+			$crud->grid->add('VirtualPage')
+				->addColumn('users')
+				->set(function($page){
+					$id = $_GET[$page->short_name.'_id'];
+					$users = $this->add('Model_User')->getActive()->addCondition('client_id',$id);
+					$cr_users = $page->add('CRUD',array('allow_edit'=>false,'allow_del'=>false,'allow_add'=>false));
+					$cr_users->setModel($users,array('email','name'));
+				});
+//            $crud->grid->addColumn('expander','users','Users');
             //$crud->grid->addButton('Import from SortMyBooks')->js('click')
             //    ->univ()->frameURL('Import from SortMyBooks...',$this->api->getDestinationURL('./smboimport'));
         }

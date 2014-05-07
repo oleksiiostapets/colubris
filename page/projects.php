@@ -46,7 +46,15 @@ class page_projects extends Page {
             $cr->grid->addClass('zebra bordered');
             $cr->grid->addPaginator(25);
 			if ($this->app->user_access->canSeeProjectParticipantes()) {
-                $cr->grid->addColumn('expander','participants');
+				$cr->grid->add('VirtualPage')
+					->addColumn('participants')
+					->set(function($page){
+						$id = $_GET[$page->short_name.'_id'];
+						$users = $this->add('Model_Participant')->addCondition('project_id',$id);
+						$cr_users = $page->add('CRUD',array('allow_edit'=>true,'allow_del'=>true,'allow_add'=>true));
+						$cr_users->setModel($users,array('user','role'));
+					});
+                //$cr->grid->addColumn('expander','participants');
             }
 			if ($this->app->user_access->canSeeProjectTasks()) {
                 $cr->grid->addColumn('expander','tasks');
