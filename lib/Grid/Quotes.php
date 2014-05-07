@@ -2,15 +2,15 @@
 class Grid_Quotes extends Grid {
     public $allowed_actions = array();
     public $posible_actions = array(
-        'requirements'   => array('status'=>array('Quotation Requested'),'name'=>'Requirements',            'get_var'=>'requirements'),
-        'estimation'     => array('status'=>array('Quotation Requested'),'name'=>'Submit for Quotation',    'get_var'=>'estimation'),
-        'send_to_client' => array('status'=>array('Estimated'),          'name'=>'Send to client','get_var'=>'send_to_client'),
-        'approve'        => array('status'=>array('Estimated'),          'name'=>'Approve Estimation',      'get_var'=>'approve'),
-        'estimate'       => array('status'=>array('Estimate Needed'),    'name'=>'Estimate',                'get_var'=>'estimate'),
+        'requirements'   => array('status'=>array('quotation_requested'),'name'=>'Requirements',            'get_var'=>'requirements'),
+        'estimation'     => array('status'=>array('quotation_requested'),'name'=>'Submit for Quotation',    'get_var'=>'estimation'),
+        'send_to_client' => array('status'=>array('estimated'),          'name'=>'Send to client','get_var'=>'send_to_client'),
+        'approve'        => array('status'=>array('estimated'),          'name'=>'Approve Estimation',      'get_var'=>'approve'),
+        'estimate'       => array('status'=>array('estimate_needed'),    'name'=>'Estimate',                'get_var'=>'estimate'),
         'details'        => array('status'=>array('any'),                'name'=>'Details',                 'get_var'=>'details'),
         'active'         => array('status'=>array('any'),                'name'=>'To Archive',         'get_var'=>'in_archive'),
         'archive'        => array('status'=>array('any'),                'name'=>'From Archive',    'get_var'=>'activate'),
-        'edit_details'   => array('status'=>array('Not Estimated','Quotation Requested'),
+        'edit_details'   => array('status'=>array('not_estimated','quotation_requested'),
                                                                          'name'=>'Edit Details',            'get_var'=>'edit_details'),
     );
     function init() {
@@ -143,7 +143,7 @@ class Grid_Quotes extends Grid {
         $this->removeColumn('currency');
         $this->removeColumn('spent_time');
         $this->removeColumn('estimated');
-//        $this->removeColumn('status');
+        $this->removeColumn('status');
         if ($this->api->currentUser()->isClient()){
             $this->removeColumn('show_time_to_client');
         }
@@ -230,6 +230,7 @@ class Grid_Quotes extends Grid {
 	    if($this->current_row['is_archived']){
 		    $this->allowed_actions = ['archive'];
 	    }
+
         foreach ($this->allowed_actions as $action) {
             if (
                 in_array($this->current_row['status'], $this->posible_actions[$action]['status']) ||
