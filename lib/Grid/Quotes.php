@@ -225,12 +225,13 @@ class Grid_Quotes extends Grid {
 
         // actions
         $v = $this->add('View','action_'.$this->current_id,'content');
+	    if($this->current_row['is_archived']){
+		    $this->allowed_actions = ['archive'];
+	    }
         foreach ($this->allowed_actions as $action) {
             if (
                 in_array($this->current_row['status'], $this->posible_actions[$action]['status']) ||
                 in_array('any', $this->posible_actions[$action]['status'])
-	            &&
-                $this->current_row['is_archived'] != true
             ) {
                 $v->add('View')->set($this->posible_actions[$action]['name'])->addClass('a_look')
                         ->js('click')->univ()->ajaxec($this->api->url(null,array($this->posible_actions[$action]['get_var']=>$this->current_id)));
