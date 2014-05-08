@@ -8,7 +8,7 @@ class View_DashboardSystem extends View {
 
         $this->add('P');
         $this->add('H1')->set('Quotes');
-        $quotes = $this->add('Model_Quote_Guest');
+        $quotes = $this->add('Model_Quote');
         $quotes->addCondition('organisation_id','<',1);
 
         $this->addQuotesCRUD($this);
