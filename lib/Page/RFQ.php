@@ -10,7 +10,7 @@ class Page_RFQ extends Page {
 
     function init() {
         parent::init();
-        if (!$this->api->currentUser()->canSendRequestForQuotation()) {
+        if (!$this->app->user_access->canSendRequestForQuotation()) {
             throw $this->exception('This user cannot send quotation request','Exception_Denied');
         }
     }
