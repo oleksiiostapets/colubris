@@ -39,6 +39,9 @@ class Model_Task extends Model_Auditable {
 
         $this->hasOne('Requirement','requirement_id');
 
+		$this->hasOne('User','requester_id');
+		$this->hasOne('User','assigned_id');
+
         $this->addField('created_dts');
         $this->addField('updated_dts')->caption('Updated')->sortable(true);
 
