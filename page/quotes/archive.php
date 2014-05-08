@@ -196,7 +196,7 @@ class page_quotes_archive extends Page{
 					$mq->activate();
 					$mq->save();
 
-					$this->js()->univ()->redirect('quotes',array('active_tab'=>$this->active_tab))->execute();
+					$this->js()->univ()->redirect('quotes/archive',array('active_tab'=>$this->active_tab))->execute();
 					//$cr->grid->js()->reload()->execute();
 				}
 			}
