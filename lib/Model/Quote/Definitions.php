@@ -93,6 +93,7 @@ class Model_Quote_Definitions extends Model_Auditable {
                 ->field('sum(estimate)')
                 ->where('requirement.quote_id',$q->getField('id'))
                 ->where('requirement.is_included','1')
+                ->where('requirement.is_deleted','0')
                 ;
         });
 
