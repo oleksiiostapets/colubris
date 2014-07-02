@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_Reqcomment_Developer extends Model_Reqcomment {
 	function init(){
 		parent::init();

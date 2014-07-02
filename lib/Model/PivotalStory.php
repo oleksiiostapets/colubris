@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_PivotalStory extends Model_Table {
     public $table='pivotal_story';
 

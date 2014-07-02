@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_TaskcommentUser extends Model_Table {
     public $table='taskcomment_user';
     function init(){
