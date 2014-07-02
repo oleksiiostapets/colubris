@@ -35,8 +35,8 @@ class page_tasks extends Page_Functional {
         $cr = $this->add('CRUD_Task',array(
             'form_class' => 'Form_EditTask',
             'grid_class' => 'Grid_Tasks',
-            'allow_add'  => true,
-            'allow_edit' => true,
+            'allow_add'  => false,
+            'allow_edit' => false,
             'allow_del'  => true
         ));
         $cr->setModel($m,

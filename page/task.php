@@ -1,46 +1,40 @@
 <?php
-class page_task extends Page_Functional {
+class page_task extends Page {
 	private $task;
     function page_index(){
 
-        // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->app->user_access->canSeeTaskList() ){
-            throw $this->exception('You cannot see this page','Exception_Denied');
-        }
+        $this->checkUserRights();
+	    $this->addBC();
 
+        $this->task = $this->add('Model_Task')->restrictedUsers();//->debug();
+
+        if ($_GET['task_id']) {
+            $this->addEditForm();
+        } else {
+            $this->addCreateForm();
+        }
+    }
+    protected function addCreateForm() {
+        $this->add('Form_Task',['m'=>$this->task]);
+    }
+    protected function addEditForm() {
         $this->api->stickyGet('task_id');
-
-        $mp=$this->add('Model_Project')->notDeleted();
-        if($this->api->currentUser()->isDeveloper()){
-            $mp->forDeveloper();
-        }elseif($this->api->currentUser()->isClient()){
-            $mp->forClient();
-        }
-
-        $this->task=$this->add('Model_Task');//->debug();
         $this->task->tryLoad($_GET['task_id']);
         if(!$this->task->loaded()){
             throw $this->exception('Task not exist!','Exception_Task');
         }
 
-	    $permission_granted=false;
-        foreach($mp->getRows() as $pr){
-            if ($pr['id']==$this->task->get('project_id')) $permission_granted=true;
-        }
-        if(!$permission_granted) throw $this->exception('You cannot see this page','Exception_Denied');
+        $this->hasUserAccessToProject();
 
-	    $this->addBC();
-
-        $_GET['project_id']=$this->task->get('project_id');
-	    $this->task=$this->add('Model_Task_RestrictedUsers');
+        $_GET['project_id'] = $this->task->get('project_id');
+	    //$this->task=$this->add('Model_Task_RestrictedUsers');
 	    $this->task->forTaskForm();
 	    $this->task->load($_GET['task_id']);
 
 	    $this->add('H3')->set('Task details:');
-	    $this->add('Form_Task',['model'=>$this->task]);
+	    $this->add('Form_Task',['m'=>$this->task]);
 
 	    $this->addTaskTime();
-
 	    $this->addComments();
     }
 	protected function addComments(){
@@ -72,11 +66,31 @@ class page_task extends Page_Functional {
 						)),
 				),
 				2 => array(
-					'name' => $this->task->get('name'),
+					'name' => ($this->task)?$this->task->get('name'):'Create new Task',
 					'url' => 'task',
 				),
 			)
 		));
 	}
+    protected function checkUserRights() {
+        // Checking client's read permission to this quote and redirect to denied if required
+        if( !$this->app->user_access->canSeeTaskList() ){
+            throw $this->exception('You cannot see this page','Exception_Denied');
+        }
+    }
+    protected function hasUserAccessToProject() {
+        $mp=$this->add('Model_Project')->notDeleted();
+        if($this->api->currentUser()->isDeveloper()){
+            $mp->forDeveloper();
+        }elseif($this->api->currentUser()->isClient()){
+            $mp->forClient();
+        }
+
+        $permission_granted=false;
+        foreach($mp->getRows() as $pr){
+            if ($pr['id']==$this->task->get('project_id')) $permission_granted=true;
+        }
+        if(!$permission_granted) throw $this->exception('You cannot see this page','Exception_Denied');
+    }
 
 }

@@ -23,7 +23,7 @@ class Page_Functional extends Page {
 			$r=$task->leftJoin('requirement','requirement_id','left','_r');
 			$r->addField('quote_id','quote_id');
 
-			var_dump($task->get());
+			//var_dump($task->get());
 			$_GET['project'] = $task->get('project_id');
 			$_GET['requirement'] = $task->get('requirement_id');
 		}

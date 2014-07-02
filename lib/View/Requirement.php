@@ -93,7 +93,7 @@ class View_Requirement extends View {
             //$cr->grid->setFormatter('text','text');
         }
 
-        $this->tasks=$this->add('Model_Task_RestrictedUsers');
+        $this->tasks=$this->add('Model_Task')->restrictedUsers();
         $this->tasks->addCondition('project_id',$this->req['project_id']);
         $this->tasks->addCondition('requirement_id',$this->req['id']);
         $this->addTasksCRUD($this);

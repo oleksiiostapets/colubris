@@ -11,7 +11,7 @@ class CRUD_Task extends CRUD {
 
     function init() {
         parent::init();
-	    $this->allow_edit = false;
+        $this->addCreateButton();
     }
     function configure() {
         $this->addMoreFrame();
@@ -75,5 +75,9 @@ class CRUD_Task extends CRUD {
 	        $comments_view->add('CRUD_TaskComments',array('task_id'=>$this->id));
 
         }
+    }
+    protected function addCreateButton() {
+        $b = $this->addButton('Create New Task');
+        $b->js('click')->redirect('task');
     }
 }

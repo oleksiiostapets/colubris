@@ -5,25 +5,24 @@
  * Time: 19:55
  */
 class Form_Task extends Form{
-	public $model;
+	public $m;
 	function init(){
 		parent::init();
 
-		$this->setModel($this->model,array(
-			'name',
-			'descr_original',
-//			'project_id',
-			'priority',
-			'type',
-			'status',
-			'estimate',
-			'requester_id',
-			'assigned_id'
-		));
+        $this->addField('Line','name');
+        $this->addField('Text','descriptioin');
+        $this->addField('Line','estimate');
+        $this->addField('DropDown','requester_id')->setEmptyText('Please select...')->setModel('User_Task');
+        $this->addField('DropDown','assigned_id')->setEmptyText('Please select...')->setModel('User_Task');
+        $this->addSeparator('span_6 left');
+        $this->addField('DropDown','priority')->setValueList(Model_Task::$task_priority)->set('normal');
+        $this->addField('DropDown','type')->setValueList(Model_Task::$task_types)->set('change request');
+        $this->addField('DropDown','status')->setValueList(Model_Task::$task_statuses)->set('unstarted');
 
-		$this->addRequirement();
-		$this->addQuote();
-		$this->addProject();
+
+//		$this->addRequirement();
+//		$this->addQuote();
+//		$this->addProject();
 
 //		$this->order();
 
@@ -36,7 +35,14 @@ class Form_Task extends Form{
 //			$this->update();
 			$this->js()->univ()->successMessage('Successfully updated task details')->execute();
 		}
+        $this->styleIt();
 	}
+    protected function styleIt() {
+        $this->addClass('atk-form-stacked span_6 left');
+        $this->add('Order')
+            ->move($this->addSeparator('span_6 left'),'after','assigned_id')
+        ->now();
+    }
 	function addProject(){
 		$project_model = $this->add('Model_Project')->notDeleted();
 		$project_model->forRole($this->app->getCurrentUserRole());
@@ -63,7 +69,7 @@ class Form_Task extends Form{
 	private function addQuote(){
 		$quote = $this->addField('DropDown','quote');
 		$quote->setEmptyText('Select a quote');
-		if($_GET['quote'] || $this->model->get('quote_id')){//TODO temporary
+		if($_GET['quote'] || $this->m->get('quote_id')){//TODO temporary
 			$m = $this->add('Model_Quote')->notDeleted();
 			$m->addCondition('project_id',$this->model->get('project_id'));
 			$quote->setModel($m,array('name'));
@@ -88,12 +94,5 @@ class Form_Task extends Form{
 			$quote->setModel($m,array('name'));
 			$quote->set($this->model['requirement_id']);
 		}
-	}
-	private function order(){
-		$this->add('Order')
-			->move('project','after','descr_original')
-			->move('quote','after','project')
-			->move('requirement','after','quote')
-			->now();
 	}
 }

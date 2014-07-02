@@ -16,17 +16,16 @@ class Model_Task extends Model_Auditable {
         'support'=>'support',
         'drop'=>'drop',
     );
+    public static $task_priority = array(
+        'low'=>'low',
+        'normal'=>'normal',
+        'high'=>'high',
+    );
     function init(){
         parent::init(); //$this->debug();
 
         $this->addField('name')->mandatory(true);
-        $this->addField('priority')->setValueList(
-            array(
-                'low'=>'low',
-                'normal'=>'normal',
-                'high'=>'high',
-            )
-        )->defaultValue('normal');
+        $this->addField('priority')->setValueList(Model_Task::$task_priority)->defaultValue('normal');
 
         $this->addField('status')->setValueList(Model_Task::$task_statuses)->defaultValue('unstarted')->sortable(true);
         $this->addField('type')->setValueList(Model_Task::$task_types)->defaultValue('change request')->sortable(true);
@@ -143,6 +142,14 @@ class Model_Task extends Model_Auditable {
 	public function forTaskForm(){
 		$this->addQuoteId();
 	}
+    public function restrictedUsers() {
+        $this->notDeleted();
+        //$this->addField('requester_id')->refModel('Model_User_Task');
+        $this->hasOne('User_Task','requester_id');
+        //$this->addField('assigned_id')->refModel('Model_User_Task');
+        $this->hasOne('User_Task','assigned_id');
+        return $this;
+    }
 
     // PREPARED CONDITIONS SETS :: END -----------------------------------------------------------
 
