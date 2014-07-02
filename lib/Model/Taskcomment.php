@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_Taskcomment extends Model_Taskcomment_Base {
     function init(){
         parent::init(); //$this->debug();

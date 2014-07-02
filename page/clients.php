@@ -1,4 +1,4 @@
-<?
+<?php
 class page_clients extends Page {
 
     function init() {
