@@ -17,7 +17,9 @@ class page_quotation extends Page {
         $f->addField('line','client_name')->setCaption('Name');
         $f->addField('line','email');
         $f->addField('line','phone');
-        $f->addField('Line','captcha')->add('x_captcha/Controller_Captcha');
+        if($this->app->getConfig('show_captcha')){
+            $f->addField('Line','captcha')->add('x_captcha/Controller_Captcha');
+        }
 
         // Project data
         $f->add('H4')->set('Project details:');
@@ -25,10 +27,10 @@ class page_quotation extends Page {
         $f->addField('text','project_description')->setCaption('Description');
 
         //$f->addClass('atk-row');
-        $f->add('Order')
+        /*$f->add('Order')//TODO сломалось после апдэйта
             ->move($f->addSeparator  ('span6'),'first')
             ->move($f->addSeparator('span6'),'after','captcha')
-            ->now();
+            ->now();*/
 
         $f->addSubmit('Next Step');
 
