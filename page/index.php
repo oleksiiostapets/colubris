@@ -8,7 +8,7 @@ class Page_index extends Page {
         $this->template->trySet('guest_quotation_link',$this->api->url('/quotation'));
 
         $form=$this->add('Frame')->setTitle('Client Log-in')->add('Form');
-        $form->setFormClass('stacked');
+        $form->addClass('stacked');
         $form->addField('line','email')->js(true)->focus();
         $form->addField('password','password');
         $form->addField('Checkbox','memorize','Remember me');

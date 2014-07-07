@@ -1,7 +1,16 @@
-@import "../../vendor/atk4/agiletoolkit-css/framework/css/agiletoolkit.less";
+@import "../../vendor/atk4/agiletoolkit-css/framework/less/agiletoolkit.less";
 @import "atk-custom.css";
 @import "variables.less";
 @import "dev.css";
+
+.createViewport(
+@wrapperMargin: @margin,
+@colsGutter: @margin,
+@cols: 12,
+@viewportMinWidth:0,
+@wrapperMinWidth: 1012px,
+@wrapperMaxWidth: 1012px
+);
 
 @bodySize:             0.8rem;
 @bodyBaseline:         1.3;
