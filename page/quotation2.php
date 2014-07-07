@@ -4,7 +4,7 @@ class page_quotation2 extends Page {
 
         if ($this->api->recall('guest_quote_id')=='') $this->js()->univ()->redirect($this->api->url('quotation'))->execute();
 
-        $quote=$this->add('Model_Quote_Guest')->load($this->api->recall('guest_quote_id'));
+        $quote=$this->add('Model_Quote')->load($this->api->recall('guest_quote_id'));
 
         if ($this->api->recall('quote_'.$quote['id'])=='sent'){
             $this->add('View_Info')->set('Quote has been sent for estimation. We will contact you as soon as possible. Thank you.');
@@ -13,7 +13,7 @@ class page_quotation2 extends Page {
             $this->add('View')->set('Please fill information about your requirements. You can add file to each requirement (image, document etc).');
             $this->add('View')->set('When you finish to describe your requirements please click button "Submit for Quotation" (below the menu) and our manager contact with you.');
 
-            $requirements=$this->add('Model_Requirement_Guest');
+            $requirements=$this->add('Model_Requirement');
             $requirements->addCondition('quote_id',$this->api->recall('guest_quote_id'));
 
 
@@ -126,7 +126,7 @@ class page_quotation2 extends Page {
         $view->add('H4')->set('New Requirement:');
 
         $form=$view->add('Form');
-        $m=$this->setModel('Model_Requirement_Guest');
+        $m=$this->setModel('Model_Requirement');
         $form->setModel($m,array('name','descr','file_id'));
         $form->addSubmit('Save');
 

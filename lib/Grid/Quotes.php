@@ -4,12 +4,12 @@ class Grid_Quotes extends Grid {
     public $posible_actions = array(
         'requirements'   => array('status'=>array('quotation_requested'),'name'=>'Requirements',            'get_var'=>'requirements'),
         'estimation'     => array('status'=>array('quotation_requested'),'name'=>'Submit for Quotation',    'get_var'=>'estimation'),
-        'send_to_client' => array('status'=>array('estimated'),          'name'=>'Send to client','get_var'=>'send_to_client'),
+        'send_to_client' => array('status'=>array('estimated'),          'name'=>'Send to client',          'get_var'=>'send_to_client'),
         'approve'        => array('status'=>array('estimated'),          'name'=>'Approve Estimation',      'get_var'=>'approve'),
         'estimate'       => array('status'=>array('estimate_needed'),    'name'=>'Estimate',                'get_var'=>'estimate'),
         'details'        => array('status'=>array('any'),                'name'=>'Details',                 'get_var'=>'details'),
-        'active'         => array('status'=>array('any'),                'name'=>'To Archive',         'get_var'=>'in_archive'),
-        'archive'        => array('status'=>array('any'),                'name'=>'From Archive',    'get_var'=>'activate'),
+        'active'         => array('status'=>array('any'),                'name'=>'To Archive',              'get_var'=>'in_archive'),
+        'archive'        => array('status'=>array('any'),                'name'=>'From Archive',            'get_var'=>'activate'),
         'edit_details'   => array('status'=>array('not_estimated','quotation_requested'),
                                                                          'name'=>'Edit Details',            'get_var'=>'edit_details'),
     );
@@ -236,8 +236,11 @@ class Grid_Quotes extends Grid {
                 in_array($this->current_row['status'], $this->posible_actions[$action]['status']) ||
                 in_array('any', $this->posible_actions[$action]['status'])
             ) {
-                $v->add('View')->set($this->posible_actions[$action]['name'])->addClass('a_look')
-                        ->js('click')->univ()->ajaxec($this->api->url(null,array($this->posible_actions[$action]['get_var']=>$this->current_id)));
+                $v->add('View')
+	                ->set($this->posible_actions[$action]['name'])
+	                ->addClass('a_look')
+                    ->js('click')->univ()
+	                ->ajaxec($this->api->url(null,array($this->posible_actions[$action]['get_var']=>$this->current_id)));
             }
         }
         $this->current_row_html['actions'] = $v->getHTML();

@@ -17,7 +17,9 @@ class page_quotation extends Page {
         $f->addField('line','client_name')->setCaption('Name');
         $f->addField('line','email');
         $f->addField('line','phone');
-        $f->addField('Line','captcha')->add('x_captcha/Controller_Captcha');
+        if($this->app->getConfig('show_captcha')){
+            $f->addField('Line','captcha')->add('x_captcha/Controller_Captcha');
+        }
 
         // Project data
         $f->add('H4')->set('Project details:');
@@ -25,10 +27,10 @@ class page_quotation extends Page {
         $f->addField('text','project_description')->setCaption('Description');
 
         //$f->addClass('atk-row');
-        $f->add('Order')
+        /*$f->add('Order')//TODO сломалось после апдэйта
             ->move($f->addSeparator  ('span6'),'first')
             ->move($f->addSeparator('span6'),'after','captcha')
-            ->now();
+            ->now();*/
 
         $f->addSubmit('Next Step');
 
@@ -52,7 +54,7 @@ class page_quotation extends Page {
             if(trim($f->get('project_name'))==''){
                 $f->getElement('project_name')->displayFieldError('Cannot be empty!')->execute();
             }
-            $project_check=$this->add('Model_Project_Guest')->tryLoadBy('name',$f->get('project_name'));
+            $project_check=$this->add('Model_Project')->tryLoadBy('name',$f->get('project_name'));
             if ($project_check->loaded()) $f->getElement('project_name')->displayFieldError('This project already registered!')->execute();
 
             if(trim($f->get('project_description'))==''){
@@ -84,14 +86,14 @@ class page_quotation extends Page {
                     'password'=>$pass,
                 ));
 
-                $project=$this->add('Model_Project_Guest');
+                $project=$this->add('Model_Project');
                 $project->set('client_id',$client->get('id'));
                 $project->set('name',$f->get('project_name'));
                 $project->set('descr',$f->get('project_description'));
                 $project->set('organisation_id',$organisation->get('id'));
                 $project->save();
 
-                $quote=$this->add('Model_Quote_Guest');
+                $quote=$this->add('Model_Quote');
                 $quote->set('project_id',$project->get('id'));
                 $quote->set('name',$f->get('project_name'));
                 $quote->set('general_description',$f->get('project_description'));

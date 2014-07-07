@@ -32,7 +32,7 @@ class page_projects extends Page {
         if ($this->api->currentUser()->isClient())    $m->forClient();
         if ($this->api->currentUser()->isDeveloper()) $m->forDeveloper();
 
-        $cr=$this->add('CRUD', array(
+        $cr=$this->add('CRUD_Projects', array(
             'allow_del'  =>  $this->app->user_access->canDeleteProject(),
             'allow_edit' =>  $this->app->user_access->canEditProject(),
             'allow_add'  =>  $this->app->user_access->canCreateProject()
@@ -42,33 +42,15 @@ class page_projects extends Page {
 			$this->app->user_access->getProjectFormFields(),
 			$this->app->user_access->getProjectGridFields()
         );
+		if ($this->app->user_access->canSeeProjectParticipantes()) {
+			$cr->addParticipants();
+		}
+		if ($this->app->user_access->canSeeProjectTasks()) {
+			$cr->addTasks();
+		}
         if($cr->grid){
             $cr->grid->addClass('zebra bordered');
             $cr->grid->addPaginator(25);
-			if ($this->app->user_access->canSeeProjectParticipantes()) {
-				/*
-				$cr->grid->add('VirtualPage')
-					->addColumn('participants')
-					->set(function($page){
-						$id = $_GET[$page->short_name.'_id'];
-						$users = $this->add('Model_Participant')->addCondition('project_id',$id);
-						$cr_users = $page->add('CRUD',array('allow_edit'=>true,'allow_del'=>true,'allow_add'=>true));
-						$cr_users->setModel($users,array('user','role'));
-					});*/
-                $cr->grid->addColumn('expander','participants');
-            }
-			if ($this->app->user_access->canSeeProjectTasks()) {
-				/*
-				$cr->grid->add('VirtualPage')
-					->addColumn('tasks')
-					->set(function($page){
-						$id = $_GET[$page->short_name.'_id'];
-						$tasks = $this->add('Model_Task')->notDeleted()->addCondition('project_id',$id);
-						$cr_tasks = $page->add('CRUD',array('allow_edit'=>true,'allow_del'=>true,'allow_add'=>true));
-						$cr_tasks->setModel($tasks,array('user','role'));
-					});*/
-                $cr->grid->addColumn('expander','tasks');
-            }
             if ($cr->grid->hasColumn('demo_url')) {
                 $cr->grid->addFormatter('demo_url','blankurl');
             }
@@ -153,4 +135,58 @@ class Grid extends Grid_Advanced {
             $this->current_row_html[$field] = '';
         }
     }
+}
+
+class CRUD_Projects extends CRUD {
+	function init() {
+		parent::init();
+
+	}
+
+	function addParticipants() {
+		if($p = $this->addFrame('Participants')){
+			if (!$this->id) {
+				throw $this->exception('project_id must be provided!');
+			}
+			$p->add('View_Participants',array(
+				'project_id' => $this->id,
+			));
+		}
+	}
+	function addTasks() {
+		if($p = $this->addFrame('Tasks')){
+			if (!$this->id) {
+				throw $this->exception('project_id must be provided!');
+			}
+			$p->add('View_Tasks',array(
+				'project_id' => $this->id,
+			));
+		}
+	}
+}
+class View_Participants extends View {
+	function init(){
+		parent::init();
+
+		$id = $this->project_id;
+		$m = $this->add('Model_Participant')->addCondition('project_id',$id);
+		$crud = $this->add('CRUD',array('allow_edit'=>true,'allow_del'=>true,'allow_add'=>true));
+		$crud->setModel($m,
+			array('user_id','role'),
+			array('user','role')
+		);
+	}
+}
+class View_Tasks extends View {
+	function init(){
+		parent::init();
+
+		$id = $this->project_id;
+		$m = $this->add('Model_Task')->notDeleted()->addCondition('project_id',$id);
+		$crud = $this->add('CRUD',array('allow_edit'=>true,'allow_del'=>true,'allow_add'=>true));
+		$crud->setModel($m,
+			array('name','priority','status','type','estimate','spent_time','requester_id','assigned_id'),
+			array('name','priority','status','type','estimate','spent_time','requester','assigned')
+		);
+	}
 }
