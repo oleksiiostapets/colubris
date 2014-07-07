@@ -1,4 +1,4 @@
-<?
+<?php
 class page_users extends Page {
     function init(){
         parent::init();
