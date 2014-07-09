@@ -3,9 +3,9 @@ class Page_index extends Page {
     function init(){
         parent::init();
 
-        if($this->api->auth->isLoggedIn())$this->api->redirect('dashboard');
+        if($this->app->auth->isLoggedIn())$this->app->redirect('dashboard');
 
-        $this->template->trySet('guest_quotation_link',$this->api->url('/quotation'));
+        $this->template->trySet('guest_quotation_link',$this->app->url('/quotation'));
 
         $form=$this->add('Frame')->setTitle('Client Log-in')->add('Form');
         $form->addClass('stacked');
@@ -14,14 +14,14 @@ class Page_index extends Page {
         $form->addField('Checkbox','memorize','Remember me');
         $form->addSubmit('Login');
 //        $form->setFormClass('vertical');
-        $auth=$this->api->auth;
+        $auth=$this->app->auth;
         if($form->isSubmitted()){
             $l=$form->get('email');
             $p=$form->get('password');
             if($auth->verifyCredentials($l,$p)){
                 $auth->login($l);
                 if($form->get('memorize') == true){
-                    $hash = $this->api->hg_cookie->rememberLoginHash($form->get('email'),true);
+                    $hash = $this->app->hg_cookie->rememberLoginHash($form->get('email'),true);
                     $u=$this->add('Model_User')->notDeleted()->tryLoadBy('email',$form->get('email'));
                     if($u->loaded()){
                         $u->set('hash',$hash);

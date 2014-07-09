@@ -27,7 +27,7 @@ class CRUD_Task extends CRUD {
 //                    'grid'=>$g,
 //                ),
 //                'extended_paginator');
-            $g->addPaginator($this->items_per_page);
+            $g->add('Paginator')->ipp($this->items_per_page);
             //$g->js('reload')->reload();
 
             $g->addQuickSearch(array('name'));

@@ -125,7 +125,7 @@ class Frontend extends ApiFrontend {
         if(!$this->api->auth->model['id']){
             $hash = $this->hg_cookie->getLoginHash();
             if($hash){
-                $u = $this->add('Model_User')->getAdmins()->tryLoadBy('chash',$hash);
+                $u = $this->add('Model_User')->tryLoadBy('hash',$hash);
                 if($u->loaded()){
                     $this->api->auth->login($u["email"]);
                 }
