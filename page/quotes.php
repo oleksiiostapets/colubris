@@ -175,7 +175,7 @@ class page_quotes extends Page {
             'allow_edit'      => $quote->canUserEditQuote($user),
             'allow_del'       => $quote->canUserDeleteQuote($user),
             'allowed_actions' => $quote->userAllowedActions($user,$mode),
-        ));
+        ))->addClass('atk-box');
 
         $cr->setModel(
             $quote,

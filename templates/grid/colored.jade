@@ -1,4 +1,3 @@
-{$Misc}
 .atk-table.atk-table-zebra.atk-table-bordered(id="{$_name}" class="{$class}")
     {Pannel}
     .atk-box-small(class="{$pannel_class}") {$quick_search}
@@ -9,8 +8,12 @@
         {header}
         thead
             {cols}{col}
-            th
-                {$descr} {$sort}
+            th(id="{$sortid}")
+                a(href="javascript:void(0)")
+                    {$descr}
+                    {sort}
+                    span(class="{$sorticon}")
+                    {/}
             {/}{/}
         {/}
         {$subheader}
@@ -24,6 +27,12 @@
                 </td>
                 {/}{/}
             {/}{/}
+            {not_found}
+            tr
+                td.atk-padding-large.atk-align-center
+                    span.atk-label.atk-effect-warning
+                        span.icon-attention &nbsp;{$not_found_message}
+            {/}
 
             {totals}
             tr(class="totals")
