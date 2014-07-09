@@ -1,0 +1,30 @@
+<div class="span_6 atk-move-left">
+
+    <form>
+        <input type="hidden" ng-model="reqv.id" />
+    Name<input type="text" ng-model="reqv.name" />
+    Descr<textarea type="text" ng-model="reqv.descr"></textarea>
+        <button ng-click="Requirement.save(reqv)" class="atk-button-small atk-button" value="Add">Save</button>
+    </form>
+
+</div>
+<div class="span_6 atk-move-right">
+
+    Preview:
+
+    <div>{{reqv.id}}</div>
+    <div>{{reqv.name}}</div>
+    <div>{{reqv.user}}</div>
+    <div>{{reqv.descr}}</div>
+    <div>{{reqv.estimate}}</div>
+    <div>{{reqv.is_included}}</div>
+    <div>{{reqv.is_deleted}}</div>
+    <div>{{reqv.project_id}}</div>
+</div>
+
+
+
+
+
+
+

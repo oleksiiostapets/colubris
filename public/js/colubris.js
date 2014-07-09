@@ -109,6 +109,15 @@ $.each({
         //console.log(action);
         form.submit();
 
+    },
+    startRequirementApp: function(quote_id,base_url,prefix,postfix) {
+        angular.element(document).ready(function() {
+            app_module.quote_id = quote_id;
+            app_module.base_url = base_url;
+            app_module.prefix   = prefix;
+            app_module.postfix  = postfix;
+            angular.bootstrap(document, ['quotes.one.app']);
+        });
     }
 	
 },$.colubris._import);

@@ -1,0 +1,26 @@
+
+
+<div class="span_12">
+
+    <ul>
+        <li>
+            <span>Header</span>
+        </li>
+        <li ng-repeat="reqv in requirements track by $index">
+            <div>Order: {{$index}}</div>
+            <div>Id: {{reqv.id}}</div>
+            <div>Name: {{reqv.name}}</div>
+            <!--<div>{{reqv.quote}}</div> -->
+            <div>User: {{reqv.user}}</div>
+            <div>Descr: {{reqv.descr}}</div>
+            <div>Estimate: {{reqv.estimate}}</div>
+            <div>Is included: {{reqv.is_included}}</div>
+            <div>Is deleted: {{reqv.is_deleted}}</div>
+            <div>Project Id: {{reqv.project_id}}</div>
+            <button ng-click="Requirement.edit($index)">Edit</button>
+            <button ng-click="Requirement.remove($index)">Delete</button>
+        </li>
+    </ul>
+
+
+</div>

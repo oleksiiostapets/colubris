@@ -31,6 +31,7 @@ class Frontend extends ApiFrontend {
 
 		$this->dbConnect();
         $this->add('jUI');
+        $this->addRouter();
 
         $this->js(true)->_load('colubris');
 
@@ -79,7 +80,7 @@ class Frontend extends ApiFrontend {
             ->setHTML('
             <div class="row atk-wrapper">
                 <div class="col span_8">
-                    © 1998 - 2013 Agile55 Limited
+                    © 1998 - 2014 Agile55 Limited
                 </div>
                 <div class="col span_4 atk-align-center">
                     <img src="'.$this->pm->base_path.'images/powered_by_agile.png" alt="powered_by_agile">
@@ -216,6 +217,9 @@ class Frontend extends ApiFrontend {
                     'logs'
                 ));
             }
+            $this->addAllowedPages(array(
+                'api'
+            ));
         }
     }
     private $allowed_pages=array();
@@ -247,6 +251,21 @@ class Frontend extends ApiFrontend {
             $v->add('View')->setElement('h2')->set('You cannot see this page');
             $v->add('View_Error')->set('Try to change role if you have multiple roles for this account');
         }
+    }
+    protected function addRouter() {
+        $this->url_page = $this->page;
+        $this->add('Controller_PatternRouter');
+        $this->router->addRule('(quotes)\/([\d]+)','quotes_one',array('quotes','id'));
+        $this->router->route();
+
+        /*// cat/list => /:category
+        $this->api->router->link('cat/list',array(
+            'base_page'
+        ));
+        // cat/one => /:category/:id-:hash_url
+        $this->api->router->link('cat/one',array(
+            'base_page','url_hash'
+        ));*/
     }
 
 
