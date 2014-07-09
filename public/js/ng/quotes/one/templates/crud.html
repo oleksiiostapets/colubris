@@ -1,26 +1,37 @@
-
-
-<div class="span_12">
-
-    <ul>
-        <li>
-            <span>Header</span>
-        </li>
-        <li ng-repeat="reqv in requirements track by $index">
-            <div>Order: {{$index}}</div>
-            <div>Id: {{reqv.id}}</div>
-            <div>Name: {{reqv.name}}</div>
-            <!--<div>{{reqv.quote}}</div> -->
-            <div>User: {{reqv.user}}</div>
-            <div>Descr: {{reqv.descr}}</div>
-            <div>Estimate: {{reqv.estimate}}</div>
-            <div>Is included: {{reqv.is_included}}</div>
-            <div>Is deleted: {{reqv.is_deleted}}</div>
-            <div>Project Id: {{reqv.project_id}}</div>
-            <button ng-click="Requirement.edit($index)">Edit</button>
-            <button ng-click="Requirement.remove($index)">Delete</button>
-        </li>
-    </ul>
-
-
+<div class="atk-box">
+    <div class="atk-table atk-table-bordered">
+        <table>
+            <thead>
+            <tr>
+                <th>Order</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>User</th>
+                <th>Descr</th>
+                <th>Estimate</th>
+                <th>Is included</th>
+                <th>Is deleted</th>
+                <th>Project Id</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="reqv in requirements track by $index">
+                <td>{{$index}}</td>
+                <td>{{reqv.id}}</td>
+                <td>{{reqv.name}}</td>
+                <td>{{reqv.user}}</td>
+                <td>{{reqv.descr}}</td>
+                <td>{{reqv.estimate}}</td>
+                <td>{{reqv.is_included}}</td>
+                <td>{{reqv.is_deleted}}</td>
+                <td>{{reqv.project_id}}</td>
+                <td class="atk-text-nowrap">
+                    <button class="atk-button" ng-click="Requirement.edit($index)">Edit</button>
+                    <button class="atk-button atk-effect-danger" ng-click="Requirement.remove($index)">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

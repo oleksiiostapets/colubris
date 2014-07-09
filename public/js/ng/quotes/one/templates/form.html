@@ -1,25 +1,106 @@
-<div class="span_6 atk-move-left">
+<div class="atk-box atk-push">
+    <div class="atk-row">
+        <div class="atk-col-4">
 
-    <form>
-        <input type="hidden" ng-model="reqv.id" />
-    Name<input type="text" ng-model="reqv.name" />
-    Descr<textarea type="text" ng-model="reqv.descr"></textarea>
-        <button ng-click="Requirement.save(reqv)" class="atk-button-small atk-button" value="Add">Save</button>
-    </form>
+            <form class="atk-form">
+                <input type="hidden" ng-model="reqv.id" />
 
-</div>
-<div class="span_6 atk-move-right">
+                <div class="atk-push-small">
+                    <div class="atk-push-small">
+                        <label><strong>Name:</strong></label>
+                    </div>
+                    <input type="text" class="atk-jackscrew" ng-model="reqv.name" />
+                </div>
 
-    Preview:
+                <div class="atk-push-small">
+                    <div class="atk-push-small">
+                        <label><strong>User:</strong></label>
+                    </div>
+                    <input type="text" class="atk-jackscrew" ng-model="reqv.user" />
+                </div>
 
-    <div>{{reqv.id}}</div>
-    <div>{{reqv.name}}</div>
-    <div>{{reqv.user}}</div>
-    <div>{{reqv.descr}}</div>
-    <div>{{reqv.estimate}}</div>
-    <div>{{reqv.is_included}}</div>
-    <div>{{reqv.is_deleted}}</div>
-    <div>{{reqv.project_id}}</div>
+                <div class="atk-push-small">
+                    <div class="atk-push-small">
+                        <label><strong>Descr:</strong></label>
+                    </div>
+                    <textarea type="text" ng-model="reqv.descr"></textarea>
+                </div>
+
+                <div class="atk-push-small">
+                    <div class="atk-push-small">
+                        <label><strong>Estimate:</strong></label>
+                    </div>
+                    <input type="text" class="atk-jackscrew" ng-model="reqv.estimate" />
+                </div>
+
+                <div class="atk-cells atk-push-small">
+                    <div class="atk-cell atk-jackscrew">
+                        <div class="atk-input-radio atk-push-xsmall">
+                            <span>
+                                <label><strong>Is included:</strong></label>
+                                <input type="checkbox" ng-model="reqv.is_included" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="atk-cells atk-push-small">
+                    <div class="atk-cell atk-jackscrew">
+                        <div class="atk-input-radio atk-push-xsmall">
+                            <span>
+                                <label><strong>Is deleted:</strong></label>
+                                <input type="checkbox" ng-model="reqv.is_deleted" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="atk-push-small">
+                    <div class="atk-push-small">
+                        <label><strong>Project Id:</strong></label>
+                    </div>
+                    <input type="text" class="atk-jackscrew" ng-model="reqv.project_id" />
+                </div>
+
+                <div class="atk-actions">
+                    <button ng-click="Requirement.save(reqv)" class="atk-button-small atk-button" value="Add">Save</button>
+                    <button ng-click="Requirement.cancel(reqv)" class="atk-button-small atk-button" value="Cancel">Cancel</button>
+                </div>
+            </form>
+
+        </div>
+        <div class="atk-col-8">
+            <h5>Preview:</h5>
+            <div class="atk-table atk-table-bordered">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>User</th>
+                        <th>Descr</th>
+                        <th>Estimate</th>
+                        <th>Is included</th>
+                        <th>Is deleted</th>
+                        <th>Project Id</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{reqv.id}}</td>
+                        <td>{{reqv.name}}</td>
+                        <td>{{reqv.user}}</td>
+                        <td>{{reqv.descr}}</td>
+                        <td>{{reqv.estimate}}</td>
+                        <td>{{reqv.is_included}}</td>
+                        <td>{{reqv.is_deleted}}</td>
+                        <td>{{reqv.project_id}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 
