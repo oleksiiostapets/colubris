@@ -2,30 +2,36 @@
     <div class="atk-table atk-table-bordered">
         <table>
             <thead>
-            <tr>
+            <tr class="atk-swatch-blue">
                 <th>Order</th>
-                <th>Id</th>
-                <th>Name</th>
-                <th>User</th>
-                <th>Descr</th>
+                <th>Requirement</th>
                 <th>Estimate</th>
                 <th>Is included</th>
                 <th>Is deleted</th>
-                <th>Project Id</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="reqv in requirements track by $index">
                 <td>{{$index}}</td>
-                <td>{{reqv.id}}</td>
-                <td>{{reqv.name}}</td>
-                <td>{{reqv.user}}</td>
-                <td>{{reqv.descr}}</td>
+                <td>
+                   <div class="atk-action">
+                       <span class="atk-label atk-effect-info">#{{reqv.id}}</span>
+                       <span class="atk-label atk-effect-warning"><strong>{{reqv.name}}</strong></span>
+                   </div>
+                    <div class="atk-action">
+                        <span>Descr: {{reqv.descr}}</span>
+                    </div>
+                    <div class="atk-action atk-size-milli">
+                        <span>Project Id: {{reqv.project_id}}</span>
+                    </div>
+                    <div class="atk-action atk-size-milli">
+                        <span>User: {{reqv.user}}</span>
+                    </div>
+                </td>
                 <td>{{reqv.estimate}}</td>
                 <td>{{reqv.is_included}}</td>
                 <td>{{reqv.is_deleted}}</td>
-                <td>{{reqv.project_id}}</td>
                 <td class="atk-text-nowrap">
                     <button class="atk-button" ng-click="Requirement.edit($index)">Edit</button>
                     <button class="atk-button atk-effect-danger" ng-click="Requirement.remove($index)">Delete</button>
