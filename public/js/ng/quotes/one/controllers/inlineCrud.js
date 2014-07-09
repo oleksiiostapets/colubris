@@ -13,6 +13,8 @@ app_module.controller('inlineCrud', ['$scope','$http','Requirement', function ($
     $scope.requirements = Requirement.requirements;
     $scope.actionButtonSet = {};
 
+    Requirement.getFromServer();
+
     $scope.$on( 'reqv.update', function( event, args ) {
         $scope.reqv = args;
     });

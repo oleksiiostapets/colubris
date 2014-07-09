@@ -34,13 +34,13 @@ app_module.directive('buttonSet', function factory($q,$http, $templateCache,$com
         //
         //------------------------------------------------
 
-        var addGetDataButton = function(scope,$compile,element) {
-            var html = '<input type="button" ng-click="Requirement.getFromServer()" class="button" value="Get Data" />';
-            var template = angular.element(html);
-            var linkFn = $compile(template);
-            scope.actionButtonSet.button_get_data = linkFn(scope);
-            element.append(scope.actionButtonSet.button_get_data);
-        }
+//        var addGetDataButton = function(scope,$compile,element) {
+//            var html = '<input type="button" ng-click="Requirement.getFromServer()" class="button" value="Get Data" />';
+//            var template = angular.element(html);
+//            var linkFn = $compile(template);
+//            scope.actionButtonSet.button_get_data = linkFn(scope);
+//            element.append(scope.actionButtonSet.button_get_data);
+//        }
         var addReorderButton = function(scope,$compile,element) {
             var html = '<input type="button" ng-click="myData.doClick()" class="button" value="Reorder" />';
             var template = angular.element(html);
@@ -48,8 +48,8 @@ app_module.directive('buttonSet', function factory($q,$http, $templateCache,$com
             scope.actionButtonSet.button_get_data = linkFn(scope);
             element.append(scope.actionButtonSet.button_get_data);
         }
-        addGetDataButton(scope,$compile,element);
-        addReorderButton(scope,$compile,element);
+//        addGetDataButton(scope,$compile,element);
+//        addReorderButton(scope,$compile,element);
         // BUTTONS ------------------------------------------
 
 

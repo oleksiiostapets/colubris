@@ -5,15 +5,16 @@
 'use strict';
 
 app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope, $http ) {
+    var current_index = null;
     var service = {
         requirements: [],
 
-        save: function ( req ) {
+        save: function ( reqv ) {
 
-            console.log(req);
+            console.log(reqv);
 
-            if (typeof req.id === 'undefined' ) {
-                service.requirements.push( jQuery.extend({}, req)  );
+            if (typeof reqv.id === 'undefined' ) {
+                service.requirements.push( jQuery.extend({}, reqv)  );
             } else {
                 // send new data to the server
             }
@@ -21,8 +22,9 @@ app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope,
             this.saveOnServer();
             $rootScope.$broadcast('reqv.update', {});
             $rootScope.$broadcast( 'requirements.update' );
+            $rootScope.$broadcast('form.to_regular_place');
 
-            console.log(app_module.base_url);
+            this.resetBackupReqv();
         },
         remove: function(index) {
             service.requirements.splice(index, 1);
@@ -30,10 +32,19 @@ app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope,
             $rootScope.$broadcast( 'requirements.update' );
         },
         edit: function(index) {
-            console.log(index);
-            console.log(service.requirements[index]);
+            console.log('------> edit');
+            this.backupReqv(index);
             $rootScope.$broadcast('reqv.update', service.requirements[index]);
+            $rootScope.$broadcast('form.to_window_bottom');
             //$rootScope.$broadcast( 'requirements.update' );
+        },
+        cancel: function(reqv) {
+            console.log('------> cencel');
+            this.restoreReqv();
+            this.resetBackupReqv();
+            $rootScope.$broadcast('reqv.update', {});
+            $rootScope.$broadcast( 'requirements.update' );
+            $rootScope.$broadcast('form.to_regular_place');
         },
         saveOnServer: function() {
             var url = this.prepareUrl('saveAll',{quote_id: app_module.quote_id});
@@ -87,6 +98,19 @@ app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope,
                 count++;
             });
             return url;
+        },
+        backupReqv: function(index) {
+            current_index = index;
+            service.requirements[index].backup = jQuery.extend({}, service.requirements[index]);
+        },
+        resetBackupReqv: function() {
+            if (current_index) {
+                service.requirements[current_index].backup = {};
+                current_index = null;
+            }
+        },
+        restoreReqv: function() {
+            service.requirements[current_index] = service.requirements[current_index].backup;
         }
     }
 

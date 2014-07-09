@@ -18,6 +18,7 @@ class page_quotes_one extends Page {
         $this->app->jquery->addStaticInclude('ng/quotes/one/controllers/inlineCrud');
         $this->app->jquery->addStaticInclude('ng/quotes/one/directives/buttonSet');
         $this->app->jquery->addStaticInclude('ng/quotes/one/directives/inlineCrud');
+        $this->app->jquery->addStaticInclude('ng/quotes/one/directives/requirementForm');
         $this->app->jquery->addStaticInclude('ng/quotes/one/services/requirement');
 
         $this->js(true)->colubris()->startRequirementApp(

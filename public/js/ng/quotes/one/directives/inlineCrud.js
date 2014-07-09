@@ -7,24 +7,11 @@
 app_module.directive('inlineCrud', function factory($q,$http, $templateCache,$compile) {
     return function(scope,element,attrs) {
 
-
-
         //------------------------------------------------
         //
         //                 PANNEL
         //
         //------------------------------------------------
-//        var addForm = function(scope,$compile,element) {
-//            var html = '<form>' +
-//                    'Id<input type="text" ng-model="reqv.id" />' +
-//                    'Name<input type="text" ng-model="reqv.name" />' +
-//                    '<button ng-click="Requirement.add(reqv)" class="atk-button-small atk-button" value="Add">Add</button>' +
-//                    '</form>';
-//            var template = angular.element(html);
-//            var linkFn = $compile(template);
-//            scope.actionButtonSet.button_get_data = linkFn(scope);
-//            element.append(scope.actionButtonSet.button_get_data);
-//        }
 //        var addGrid = function(scope,$compile,element) {
 //            var html = '<ul>' +
 //                '<li>bla</li>' +
@@ -49,7 +36,6 @@ app_module.directive('inlineCrud', function factory($q,$http, $templateCache,$co
 //            element.append(scope.actionButtonSet.button_get_data);
 //        }
 //
-//        addForm(scope,$compile,element);
 //        addGrid(scope,$compile,element);
         // PANNEL ----------------------------------------
 
