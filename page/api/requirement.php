@@ -3,11 +3,7 @@
  * Created by Vadym Radvansky
  * Date: 7/8/14 12:12 PM
  */
-class page_api_requirement extends Page {
-
-    use Helper_Url;
-
-    protected $m;
+class page_api_requirement extends page_api_general {
 
     function init() {
         parent::init();
@@ -24,9 +20,6 @@ class page_api_requirement extends Page {
         exit();
 
     }
-    function page_getById() {
-
-    }
     function page_saveAll() {
         $quote_id = $this->getQuoteId();
         echo $quote_id;
@@ -34,12 +27,6 @@ class page_api_requirement extends Page {
     }
     private function getQuoteId() {
         $quote_id = $this->checkGetParameter('quote_id'); // method from trait
-        if (!$quote_id) {
-            echo json_encode([
-                'result' => 'Error'
-            ]);
-            exit();
-        }
         return $quote_id;
     }
 }

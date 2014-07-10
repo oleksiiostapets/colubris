@@ -5,10 +5,20 @@
  */
 trait Helper_Url {
 
-    protected function checkGetParameter($name) {
+    protected function getParameter($name) {
         if (isset($_GET[$name])) {
             return $_GET[$name];
         }
         return false;
+    }
+    protected function checkGetParameter($name) {
+        if (isset($_GET[$name])) {
+            return $_GET[$name];
+        }
+        echo json_encode([
+            'result' => 'error',
+            'error_message'   => 'no '.$name.' parameter',
+        ]);
+        exit();
     }
 }
