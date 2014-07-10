@@ -1,8 +1,6 @@
-
-<div class="atk-box requirement-form"  requirement-form>
-    <div class="atk-row">
-        <div class="close icon-cancel-circled" ng-click="Requirement.cancel(reqv)"></div>
-        <div class="atk-col-4">
+<div class="atk-box atk-push requirement-form"  requirement-form>
+    <div class="atk-cells">
+        <div class="atk-col-4 atk-cell atk-padding-small">
 
             <form class="atk-form">
                 <input type="hidden" ng-model="reqv.id" />
@@ -71,17 +69,42 @@
             </form>
 
         </div>
-        <div class="atk-col-4 preview">
-            <h4>Preview:</h4>
-            <div class="atk-table atk-table-bordered">
-                <div class="atk-label atk-effect-info">#{{reqv.id}}</div>
-                <div class="atk-label atk-effect-warning">{{reqv.name}}</div>
-                <div>User: {{reqv.user}}</div>
-                <div>Descr: {{reqv.descr}}</div>
-                <div>Estimate: {{reqv.estimate}}</div>
-                <div>Is included: {{reqv.is_included}}</div>
-                <div>Is deleted: {{reqv.is_deleted}}</div>
-                <div>Project Id: {{reqv.project_id}}</div>
+        <div class="atk-col-8 atk-cell atk-padding-small atk-valign-top">
+            <h5>Preview:</h5>
+            <div class="atk-cell atk-cells atk-table atk-table-bordered atk-jackscrew" style="height: 100%">
+
+                <table class="">
+                    <thead>
+                    <tr class="atk-swatch-blue">
+                        <th>Requirement</th>
+                        <th>Estimate</th>
+                        <th>Is included</th>
+                        <th>Is deleted</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="atk-action">
+                                <span class="atk-label atk-effect-info">Req#{{reqv.id}}</span>
+                                <span class="atk-label atk-effect-warning"><strong>{{reqv.name}}</strong></span>
+                            </div>
+                            <div class="atk-action">
+                                <span>Descr: {{reqv.descr}}</span>
+                            </div>
+                            <div class="atk-action atk-size-milli">
+                                <span>Project Id: {{reqv.project_id}}</span>
+                            </div>
+                            <div class="atk-action atk-size-milli">
+                                <span>User: {{reqv.user}}</span>
+                            </div>
+                        </td>
+                        <td>{{reqv.estimate}}</td>
+                        <td>{{reqv.is_included}}</td>
+                        <td>{{reqv.is_deleted}}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="atk-col-4 comments">
