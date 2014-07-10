@@ -3,7 +3,7 @@
  * Created by Vadym Radvansky
  * Date: 7/8/14 12:12 PM
  */
-class page_api_requirement extends page_api_general {
+class page_api_requirement extends Page_api_general {
 
     function init() {
         parent::init();

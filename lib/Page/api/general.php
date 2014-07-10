@@ -1,5 +1,5 @@
 <?php
-class page_api_general extends Page {
+class Page_api_general extends Page {
 
     use Helper_Url;
 
