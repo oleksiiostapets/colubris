@@ -63,6 +63,15 @@ table {
 
 
 
+.requirement-form {
+  position: relative;
+  .close {
+    display: none;
+  }
+  .comments {
+    display: none;
+  }
+}
 .requirement-form.fixed {
   position: fixed;
   top: 0;
@@ -73,6 +82,57 @@ table {
   padding: 10px;
   margin: 50px auto;
   background-color: rgb(245, 245, 245);
+
+//  -webkit-transition-property: -webkit-transform, opacity;
+//      -moz-transition-property:    -moz-transform, opacity;
+//       -ms-transition-property:     -ms-transform, opacity;
+//        -o-transition-property:      -o-transform, opacity;
+//           transition-property:         transform, opacity;
+
+//  -webkit-transition-duration: 0.2s;
+//     -moz-transition-duration: 0.2s;
+//      -ms-transition-duration: 0.2s;
+//       -o-transition-duration: 0.2s;
+//          transition-duration: 0.2s;
+
+
+//  -webkit-transition-property: height, width;
+//     -moz-transition-property: height, width;
+//      -ms-transition-property: height, width;
+//       -o-transition-property: height, width;
+//          transition-property: height, width;
+
+
+  .close {
+    position: fixed;
+    left: 95%;
+    display: block;
+    font-size: 18px;
+  }
+  .preview {
+    position: absolute;
+    left: 33%;
+    min-height: 97%;
+    max-height: 97%;
+    height: 97%;
+    width: 33%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    //background-color: red;
+  }
+  .comments {
+    display: block;
+    position: absolute;
+    left: 66%;
+    min-height: 97%;
+    max-height: 97%;
+    height: 97%;;
+    width: 30%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    //background-color: #0fff0a;
+  }
+
 }
 
 
