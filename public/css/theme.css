@@ -7054,6 +7054,9 @@ table .requirement {
   display: block;
   font-size: 18px;
 }
+.requirement-form.fixed .close:hover {
+  color: red;
+}
 .requirement-form.fixed .preview {
   position: absolute;
   left: 33%;
