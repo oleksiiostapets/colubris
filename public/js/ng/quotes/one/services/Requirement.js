@@ -38,7 +38,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope,
             $rootScope.$broadcast('form.to_fixed_position',service.requirements[index]);
             //$rootScope.$broadcast( 'requirements.update' );
         },
-        cancel: function(reqv) {
+        cancel: function() {
             console.log('------> cencel');
             this.restoreReqv();
             this.resetBackupReqv();
@@ -102,6 +102,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope,
         backupReqv: function(index) {
             current_index = index;
             service.requirements[index].backup = jQuery.extend({}, service.requirements[index]);
+            console.log(service.requirements[current_index].backup);
         },
         resetBackupReqv: function() {
             if (current_index) {

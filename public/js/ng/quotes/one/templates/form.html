@@ -1,5 +1,5 @@
 <div class="atk-box atk-push requirement-form"  requirement-form>
-    <div class="icon-cancel-circled close" ng-click="Requirement.cancel(reqv)"></div>
+    <div id="close-button" class="icon-cancel-circled close" ng-click="Requirement.cancel()"></div>
     <div class="atk-cells">
         <div class="atk-col-4 atk-cell atk-padding-small">
 
@@ -65,7 +65,7 @@
 
                 <div class="atk-actions">
                     <button ng-click="Requirement.save(reqv)" class="atk-button-small atk-button" >Save</button>
-                    <button ng-click="Requirement.cancel(reqv)" class="atk-button-small atk-button" >Cancel</button>
+                    <button ng-click="Requirement.cancel()" class="atk-button-small atk-button" >Cancel</button>
                 </div>
             </form>
 
