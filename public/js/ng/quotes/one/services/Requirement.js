@@ -111,7 +111,12 @@ app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope,
             }
         },
         restoreReqv: function() {
-            service.requirements[current_index] = service.requirements[current_index].backup;
+            if (
+                typeof service.requirements[current_index] !== 'undefined' &&
+                typeof service.requirements[current_index].backup !== 'undefined'
+            ) {
+                service.requirements[current_index] = service.requirements[current_index].backup;
+            }
         }
     }
 

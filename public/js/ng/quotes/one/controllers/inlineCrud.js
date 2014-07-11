@@ -6,7 +6,8 @@
 
 app_module.controller(
     'inlineCrud',
-    ['$scope','$http','Requirement','Comment', function ($scope,$http,Requirement,Comment) {
+            ['$scope','$document','$http','Requirement','Comment',
+    function ($scope,  $document,  $http,  Requirement,  Comment) {
 
     $scope.form = app_module.base_url + 'js/ng/quotes/one/templates/form.html';
     $scope.crud = app_module.base_url + 'js/ng/quotes/one/templates/crud.html';
@@ -35,14 +36,13 @@ app_module.controller(
         $scope.comments = Comment.comments;
     });
 
-    document.onkeydown = function(evt) {
+    // ESC key close requirement div
+    $(document).on('keydown', function(evt){
         evt = evt || window.event;
         if (evt.keyCode == 27) {
             $('#close-button').trigger('click');
-            //if(!$.isEmptyObject(Requirement.requirements[0])) Requirement.cancel();
         }
-    };
-
+     });
 
     $scope.toggle = function(show,hide) {
         $('#'+show).removeClass('ui-helper-hidden');

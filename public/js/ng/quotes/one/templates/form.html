@@ -15,13 +15,6 @@
 
                 <div class="atk-push-small">
                     <div class="atk-push-small">
-                        <label><strong>User:</strong></label>
-                    </div>
-                    <input type="text" class="atk-jackscrew" ng-model="reqv.user" />
-                </div>
-
-                <div class="atk-push-small">
-                    <div class="atk-push-small">
                         <label><strong>Descr:</strong></label>
                     </div>
                     <textarea type="text" ng-model="reqv.descr"></textarea>
@@ -56,16 +49,10 @@
                     </div>
                 </div>
 
-                <div class="atk-push-small">
-                    <div class="atk-push-small">
-                        <label><strong>Project Id:</strong></label>
-                    </div>
-                    <input type="text" class="atk-jackscrew" ng-model="reqv.project_id" />
-                </div>
-
                 <div class="atk-actions">
-                    <button ng-click="Requirement.save(reqv)" class="atk-button-small atk-button" >Save</button>
-                    <button ng-click="Requirement.cancel()" class="atk-button-small atk-button" >Cancel</button>
+                    <button ng-click="Requirement.save(reqv)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
+                    <button ng-click="Requirement.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
+                    <button ng-click="Requirement.delete()" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
                 </div>
             </form>
 
