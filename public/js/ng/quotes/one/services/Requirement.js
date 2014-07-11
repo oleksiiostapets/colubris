@@ -35,7 +35,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope,
             console.log('------> edit');
             this.backupReqv(index);
             $rootScope.$broadcast('reqv.update', service.requirements[index]);
-            $rootScope.$broadcast('form.to_window_bottom');
+            $rootScope.$broadcast('form.to_fixed_position',service.requirements[index]);
             //$rootScope.$broadcast( 'requirements.update' );
         },
         cancel: function(reqv) {

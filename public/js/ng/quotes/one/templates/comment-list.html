@@ -1,0 +1,15 @@
+<div class="atk-box ">
+<h4>Comments:</h4>
+
+    <ul>
+        <li ng-repeat="comm in comments track by $index">
+            <span class="atk-label atk-effect-info">{{$index}} (#{{comm.id}})</span>
+            <span class="atk-label atk-effect-warning">
+                <strong class="">
+                    {{comm.user}}
+                </strong> says:
+            </span>
+            <div>{{comm.text}}</div>
+        </li>
+    </ul>
+</div>
