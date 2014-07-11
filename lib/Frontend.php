@@ -8,7 +8,7 @@ class Frontend extends ApiFrontend {
         parent::init();
         $this->checkCookies();
 
-        if(strtolower($this->api->page)=='logout'){
+        if(strtolower($this->page)=='logout'){
             setcookie("fuser", "", time()-3600);
             setcookie("fhash", "", time()-3600);
         }
@@ -58,23 +58,11 @@ class Frontend extends ApiFrontend {
         //$this->add('MySubMenu', 'SubMenu', 'SubMenu');
 
         // show current user name
-        $view_header->template->set('name',$this->api->auth->model['name']?$this->api->auth->model['name']:'Guest' . ' @ ' .'Colubris Team Manager, ver.'.$this->api->getVer());
+        $view_header->template->set('name',$this->auth->model['name']?$this->auth->model['name']:'Guest' . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer());
 
         $this->template->trySet('year',date('Y',time()));
 
-        $this->api->defineAllowedPages();
-
-//        try {
-//            if(!$this->api->auth->isPageAllowed($this->api->page)){
-//                throw $this->exception('This user cannot see this page','Exception_Denied');
-//            }
-//        } catch (Exception_Denied $e) {
-//            // TODO show denied page
-//            //throw $e;
-//            $v = $this->add('View')->addClass('denied');
-//            $v->add('View')->setElement('h2')->set('You cannot see this page');
-//            $v->add('View_Error')->set('Try to change role if you have multiple roles for this account');
-//        }
+        $this->defineAllowedPages();
 
         $this->layout->addFooter()//->addClass('atk-swatch-ink')
             ->setHTML('
@@ -89,23 +77,6 @@ class Frontend extends ApiFrontend {
         ');
         
         $this->autoLogin();
-
-//        $this->task_statuses = array(
-//                'unstarted'=>'unstarted',
-//                'started'=>'started',
-//            	'finished'=>'finished',
-//                'tested'=>'tested',
-//            	'rejected'=>'rejected',
-//            	'accepted'=>'accepted',
-//            );
-//        $this->task_types = array(
-//            'project'=>'project',
-//            'change request'=>'change request',
-//            'bug'=>'bug',
-//            'support'=>'support',
-//            'drop'=>'drop',
-//        );
-
     }
     protected function addControllers() {
         $this->colubris    = $this->add('Controller_Colubris');
@@ -120,19 +91,16 @@ class Frontend extends ApiFrontend {
             ->usePasswordEncryption('md5')
             ->setModel($mu, 'email', 'password')
         ;
-        $this->api->auth->add('auth/Controller_Cookie');
+        $this->auth->add('auth/Controller_Cookie');
 
-        if(!$this->api->auth->model['id']){
+        if(!$this->auth->model['id']){
             $hash = $this->hg_cookie->getLoginHash();
             if($hash){
                 $u = $this->add('Model_User')->tryLoadBy('hash',$hash);
                 if($u->loaded()){
-                    $this->api->auth->login($u["email"]);
+                    $this->auth->login($u["email"]);
                 }
             }
-//        	if($_COOKIE["colubris_auth_useremail"] != NULL){
-//        		$this->api->auth->login($_COOKIE["colubris_auth_useremail"]);
-//        	}
         }
         $this->user_access->setUser($this->currentUser());
     }
@@ -166,8 +134,8 @@ class Frontend extends ApiFrontend {
                 exit;
             }
             unset($u['password']);
-            $this->api->auth->addInfo('user',$u);
-            $this->api->auth->login($u['email']);
+            $this->auth->addInfo('user',$u);
+            $this->auth->login($u['email']);
             if($_GET['clear']==1){
                 setcookie("fuser", "", time()-3600);
                 setcookie("fhash", "", time()-3600);
@@ -178,7 +146,7 @@ class Frontend extends ApiFrontend {
     function defineAllowedPages() {
         // Allowed pages for guest
         $this->addAllowedPages(array(
-            'index', 'intro', 'denied',
+            'index', 'intro', 'denied','test',
         ));
 
         // For Guests
@@ -187,7 +155,7 @@ class Frontend extends ApiFrontend {
                 'quotation','quotation2',
             ));
             if(!$this->auth->isPageAllowed($this->page)){
-                $this->api->redirect('index');
+                $this->redirect('index');
             }
         } else {
             if (!$this->currentUser()->canBeSystem()) {
@@ -240,7 +208,7 @@ class Frontend extends ApiFrontend {
 
     function initLayout(){
         try {
-            if(!$this->api->auth->isPageAllowed($this->page)){
+            if(!$this->auth->isPageAllowed($this->page)){
                 throw $this->exception('This user cannot see this page','Exception_Denied');
             }
             parent::initLayout();
@@ -257,15 +225,6 @@ class Frontend extends ApiFrontend {
         $this->add('Controller_PatternRouter');
         $this->router->addRule('(quotes)\/([\d]+)','quotes_one',array('quotes','id'));
         $this->router->route();
-
-        /*// cat/list => /:category
-        $this->api->router->link('cat/list',array(
-            'base_page'
-        ));
-        // cat/one => /:category/:id-:hash_url
-        $this->api->router->link('cat/one',array(
-            'base_page','url_hash'
-        ));*/
     }
 
 
