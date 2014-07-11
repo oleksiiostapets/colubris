@@ -57,5 +57,23 @@ class Page_api_general extends Page {
         $_GET['value'] = $id;
         $this->page_getByField();
     }
+    function page_saveParams(){
+        $id = $this->checkGetParameter('id');
+        $this->m->tryLoad($id);
+        if(!$this->m->loaded()){
+            echo json_encode([
+                'result' => 'error',
+                'error_message' => 'Record with the id was not found',
+            ]);
+            exit();
+        }
+        $this->m->set($_GET);
+        $this->m->save();
+        echo json_encode([
+            'result' => 'success',
+            'data' => $this->m->get(),
+        ]);
+        exit;
+    }
 
 }
