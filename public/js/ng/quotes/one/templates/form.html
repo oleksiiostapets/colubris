@@ -1,88 +1,99 @@
-<div class="atk-box atk-push requirement-form"  requirement-form>
+<div class="atk-box atk-push requirement-form ui-dialog"  requirement-form>
     <div id="close-button" class="icon-cancel-circled close" ng-click="Requirement.cancel()"></div>
-    <div class="atk-cells">
+    <div class="atk-cells atk-cells-gutter-small atk-row">
         <div class="atk-col-4 atk-cell atk-padding-small">
+            <div class="atk-box">
+                <form class="atk-form">
+                    <input type="hidden" ng-model="reqv.id" />
 
-            <form class="atk-form">
-                <input type="hidden" ng-model="reqv.id" />
-
-                <div class="atk-push-small">
                     <div class="atk-push-small">
-                        <label><strong>Name:</strong></label>
+                        <div class="atk-push-small">
+                            <label><strong>Name:</strong></label>
+                        </div>
+                        <input type="text" class="atk-jackscrew" ng-model="reqv.name" />
                     </div>
-                    <input type="text" class="atk-jackscrew" ng-model="reqv.name" />
-                </div>
 
-                <div class="atk-push-small">
                     <div class="atk-push-small">
-                        <label><strong>Descr:</strong></label>
+                        <div class="atk-push-small">
+                            <label><strong>Descr:</strong></label>
+                        </div>
+                        <textarea type="text" rows="12" ng-model="reqv.descr"></textarea>
                     </div>
-                    <textarea type="text" ng-model="reqv.descr"></textarea>
-                </div>
 
-                <div class="atk-push-small">
                     <div class="atk-push-small">
-                        <label><strong>Estimate:</strong></label>
+                        <div class="atk-push-small">
+                            <label><strong>Estimate:</strong></label>
+                        </div>
+                        <input type="text" class="atk-jackscrew" ng-model="reqv.estimate" />
                     </div>
-                    <input type="text" class="atk-jackscrew" ng-model="reqv.estimate" />
-                </div>
 
-                <div class="atk-cells atk-push-small">
-                    <div class="atk-cell atk-jackscrew">
-                        <div class="atk-input-radio atk-push-xsmall">
+                    <div class="atk-cells atk-push-small">
+                        <div class="atk-cell atk-jackscrew">
+                            <div class="atk-input-radio atk-push-xsmall">
                             <span>
                                 <label><strong>Is included:</strong></label>
                                 <input type="checkbox" ng-model="reqv.is_included" />
                             </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="atk-cells atk-push-small">
-                    <div class="atk-cell atk-jackscrew">
-                        <div class="atk-input-radio atk-push-xsmall">
+                    <div class="atk-cells atk-push-small">
+                        <div class="atk-cell atk-jackscrew">
+                            <div class="atk-input-radio atk-push-xsmall">
                             <span>
                                 <label><strong>Is deleted:</strong></label>
                                 <input type="checkbox" ng-model="reqv.is_deleted" />
                             </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="atk-actions">
-                    <button ng-click="Requirement.save(reqv)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
-                    <button ng-click="Requirement.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
-                    <button ng-click="Requirement.delete()" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
-                </div>
-            </form>
+                    <div class="atk-actions">
+                        <button ng-click="Requirement.save(reqv)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
+                        <button ng-click="Requirement.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
+                        <button ng-click="Requirement.delete()" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="atk-col-4 atk-cells atk-padding-small atk-valign-top preview">
+            <div class="atk-box">
+                <div class="atk-cells atk-push small">
+                    <div class="atk-cell atk-valign-top">
+                        <div class="atk-label atk-effect-info">Req#{{reqv.id}}</div>
+                    </div>
+                    <div class="atk-cell">
+                        <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><strong>{{reqv.name}}</strong></div>
 
+                    </div>
+                </div>
+                <div class="atk-action atk-box">
+                    <span>{{reqv.descr}}</span>
+                </div>
+                <div class="atk-action atk-size-milli">
+                    <span>Project Id: {{reqv.project_id}}</span>
+                </div>
+                <div class="atk-action atk-size-milli">
+                    <span>User: {{reqv.user}}</span>
+                </div>
+                <div>Estimates: {{reqv.estimate}}</div>
+                <div>Is Included: {{reqv.is_included}}</div>
+                <div>Is Deleted: {{reqv.is_deleted}}</div>
+            </div>
         </div>
-        <div class="atk-col-4 atk-cell atk-padding atk-valign-top preview">
-            <div class="atk-action">
-                <span class="atk-label atk-effect-info">Req#{{reqv.id}}</span>
-                <span class="atk-label atk-effect-warning"><strong>{{reqv.name}}</strong></span>
-            </div>
-            <div class="atk-action atk-box">
-                <span>{{reqv.descr}}</span>
-            </div>
-            <div class="atk-action atk-size-milli">
-                <span>Project Id: {{reqv.project_id}}</span>
-            </div>
-            <div class="atk-action atk-size-milli">
-                <span>User: {{reqv.user}}</span>
-            </div>
-            <div>{{reqv.estimate}}</div>
-            <div>{{reqv.is_included}}</div>
-            <div>{{reqv.is_deleted}}</div>
-        </div>
-        <div class="atk-col-4 comments" requirement-comm-task>
-            <button ng-click="toggle('comments-view','tasks-view')" class="atk-button-small atk-button">Comments</button>
-            <button ng-click="toggle('tasks-view','comments-view')" class="atk-button-small atk-button">Tasks</button>
-            <div id="comments-view" class="">
-                <ng-include src="comment_list"></ng-include>
-            </div>
-            <div id="tasks-view" class="ui-helper-hidden">
-                <ng-include src="task_list"></ng-include>
+        <div class="atk-col-4 atk-cell atk-padding-small comments" requirement-comm-task>
+            <div class="atk-box">
+                <div class="atk-push-small">
+                    <button ng-click="toggle('comments-view','tasks-view')" class="atk-button-small atk-button">Comments</button>
+                    <button ng-click="toggle('tasks-view','comments-view')" class="atk-button-small atk-button">Tasks</button>
+                </div>
+                <div id="comments-view" class="">
+                    <ng-include src="comment_list"></ng-include>
+                </div>
+                <div id="tasks-view" class="ui-helper-hidden">
+                    <ng-include src="task_list"></ng-include>
+                </div>
             </div>
         </div>
     </div>
