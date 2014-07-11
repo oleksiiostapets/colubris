@@ -4,3 +4,7 @@
 'use strict';
 
 var app_module = angular.module('quotes.one.app',[]);
+
+
+//  inline editing
+// http://vitalets.github.io/angular-xeditable/

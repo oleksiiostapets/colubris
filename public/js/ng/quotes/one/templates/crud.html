@@ -19,14 +19,14 @@
                        <span class="atk-label atk-effect-info">Req.#{{reqv.id}}</span>
                        <span class="atk-label atk-effect-warning"><strong>{{reqv.name}}</strong></span>
                    </div>
-                    <div class="atk-action">
-                        <span>Descr: {{reqv.descr}}</span>
+                    <div class="atk-action atk-size-milli">
+                        <span>Project: {{reqv.project_name}}</span>
                     </div>
                     <div class="atk-action atk-size-milli">
-                        <span>Project name: {{reqv.project_name}}</span>
+                        <span>Added by {{reqv.user}}</span>
                     </div>
-                    <div class="atk-action atk-size-milli">
-                        <span>User: {{reqv.user}}</span>
+                    <div class="atk-action atk-box">
+                        <span>{{reqv.descr}}</span>
                     </div>
                 </td>
                 <td>{{reqv.estimate}}</td>
