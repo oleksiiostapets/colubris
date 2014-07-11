@@ -67,7 +67,7 @@ class Page_api_general extends Page {
             ]);
             exit();
         }
-        $this->m->set($_GET);
+        $this->m->set($_REQUEST);
         $this->m->save();
         echo json_encode([
             'result' => 'success',
