@@ -2,7 +2,7 @@
 class Model_Requirement extends Model_Auditable {
 	public $table='requirement';
 	function init(){
-		parent::init();
+		parent::init();//$this->debug();
 		$this->hasOne('Quote');
 		$this->hasOne('User')->Caption('Creator');
 		$this->addField('name')->mandatory('required');
@@ -46,7 +46,17 @@ class Model_Requirement extends Model_Auditable {
 				;
 		});
 
-		$this->addExpression('spent_time')->set(function($m,$q){
+        $this->addExpression('project_name')->set(function($m,$q){
+            return $q->dsql()
+                ->table('project')
+                ->table('quote')
+                ->field('project.name')
+                ->where('quote.id',$q->getField('quote_id'))
+                ->where('quote.project_id=project.id')
+                ;
+        });
+
+        $this->addExpression('spent_time')->set(function($m,$q){
 			return $q->dsql()
 				->table('task')
 				->table('task_time')
