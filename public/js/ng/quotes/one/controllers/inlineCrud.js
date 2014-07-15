@@ -9,10 +9,6 @@ app_module.controller(
             ['$scope','$document','$http','Requirement','Comment',
     function ($scope,  $document,  $http,  Requirement,  Comment) {
 
-    $scope.form = app_module.base_url + 'js/ng/quotes/one/templates/form.html';
-    $scope.crud = app_module.base_url + 'js/ng/quotes/one/templates/crud.html';
-    $scope.comment_list = app_module.base_url + 'js/ng/quotes/one/templates/comment-list.html';
-    $scope.task_list = app_module.base_url + 'js/ng/quotes/one/templates/task-list.html';
 
     // reqv
     $scope.reqv = {};

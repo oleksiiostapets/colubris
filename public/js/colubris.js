@@ -118,6 +118,14 @@ $.each({
             app_module.postfix  = postfix;
             angular.bootstrap(document, ['quotes.one.app']);
         });
+    },
+    startClientsApp: function(base_url,prefix,postfix) {
+        angular.element(document).ready(function() {
+            app_module.base_url = base_url;
+            app_module.prefix   = prefix;
+            app_module.postfix  = postfix;
+            angular.bootstrap(document, ['clients.app']);
+        });
     }
 	
 },$.colubris._import);

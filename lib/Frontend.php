@@ -186,7 +186,7 @@ class Frontend extends ApiFrontend {
                 ));
             }
             $this->addAllowedPages(array(
-                'api'
+                'api','clients2'
             ));
         }
     }
