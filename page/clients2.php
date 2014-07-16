@@ -13,12 +13,11 @@ class page_clients2 extends Page {
         $this->app->jquery->addStaticInclude('ng/vendor/angularjs');
         $this->app->jquery->addStaticInclude('ng/clients/app');
 //        $this->app->jquery->addStaticInclude('ng/clients/controllers/buttonSet');
-//        $this->app->jquery->addStaticInclude('ng/clients/controllers/inlineCrud');
+        $this->app->jquery->addStaticInclude('ng/clients/controllers/inlineCrud');
 //        $this->app->jquery->addStaticInclude('ng/clients/directives/buttonSet');
-//        $this->app->jquery->addStaticInclude('ng/clients/directives/inlineCrud');
-//        $this->app->jquery->addStaticInclude('ng/clients/directives/requirementForm');
-//        $this->app->jquery->addStaticInclude('ng/clients/services/Requirement');
-//        $this->app->jquery->addStaticInclude('ng/clients/services/Comment');
+        $this->app->jquery->addStaticInclude('ng/clients/directives/inlineCrud');
+        $this->app->jquery->addStaticInclude('ng/clients/directives/clientForm');
+        $this->app->jquery->addStaticInclude('ng/clients/services/Client');
 
         $this->js(true)->colubris()->startClientsApp(
             $this->app->url('/'),

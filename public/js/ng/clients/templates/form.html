@@ -1,0 +1,55 @@
+<div class="atk-box atk-push requirement-form"  client-form>
+    <div id="close-button" class="icon-cancel-circled close" ng-click="Client.cancel()"></div>
+    <div class="atk-row full-height-box atk-padding-small">
+        <div class="atk-col-4 ">
+            <div class="atk-box">
+                <form class="atk-form">
+                    <input type="hidden" ng-model="client.id" />
+
+                    <div class="atk-push-small">
+                        <div class="atk-push-small">
+                            <label><strong>Name:</strong></label>
+                        </div>
+                        <input type="text" class="atk-jackscrew" ng-model="client.name" />
+                    </div>
+
+                    <div class="atk-push-small">
+                        <div class="atk-push-small">
+                            <label><strong>Email:</strong></label>
+                        </div>
+                        <input type="text" class="atk-jackscrew" ng-model="client.email" />
+                    </div>
+
+                    <div class="atk-actions">
+                        <button ng-click="Client.save(client)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
+                        <button ng-click="Client.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
+                        <button ng-click="Client.delete()" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="atk-col-4">
+            <div class="atk-box">
+                <div class="atk-push small atk-cells">
+                    <div class="atk-cell atk-valign-top">
+                        <div class="atk-label atk-effect-info">ID#{{client.id}}</div>
+                    </div>
+                    <div class="atk-cell atk-jackscrew">
+                        <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><strong>{{client.name}}</strong></div>
+
+                    </div>
+                </div>
+                <div class="atk-action atk-box">
+                    <span>Email: {{client.email}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

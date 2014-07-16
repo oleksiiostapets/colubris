@@ -1,0 +1,25 @@
+<div class="atk-box atk-push ">
+    <div class="atk-table atk-table-bordered">
+        <table>
+            <thead>
+            <tr class="atk-swatch-blue">
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="client in clients track by $index">
+                <td>{{$index}}</td>
+                <td>{{client.name}}</td>
+                <td>{{client.email}}</td>
+                <td class="atk-text-nowrap">
+                    <button class="atk-button" ng-click="Client.edit($index)">Edit</button>
+                    <button class="atk-button atk-effect-danger" ng-click="Client.remove($index)">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
