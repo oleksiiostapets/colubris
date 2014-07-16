@@ -9,6 +9,7 @@ class page_settings extends Page {
     protected function addNgJs() {
         $this->app->jquery->addStaticInclude('ng/vendor/angularjs');
         $this->app->jquery->addStaticInclude('ng/settings/app');
+        $this->app->jquery->addStaticInclude('ng/settings/controllers/form');
 //        $this->app->jquery->addStaticInclude('ng/settings/controllers/buttonSet');
 //        $this->app->jquery->addStaticInclude('ng/settings/controllers/inlineCrud');
 //        $this->app->jquery->addStaticInclude('ng/settings/directives/buttonSet');

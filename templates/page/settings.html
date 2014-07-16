@@ -2,9 +2,15 @@
 
     <!--<div ng-controller="buttonSet" button-set class="action-buttons-set"></div>-->
 
-    <!--<div ng-controller="inlineCrud" inline-crud class="crud">-->
-        <!--<ng-include src="crud"></ng-include>-->
-        <!--<ng-include src="form"></ng-include>-->
-    <!--</div>-->
+    <div ng-controller="form">
+
+        {{reqv.id}}
+
+        <form>
+            <input type="text" ng-model="reqv.id" />
+        </form>
+    </div>
+
+
     {$Content}
 </div>
