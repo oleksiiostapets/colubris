@@ -4,30 +4,14 @@
 
 'use strict';
 
-app_module.directive('isIncluded', function factory($q,$http, $templateCache,$compile,Requirement) {
-    return function(scope,element,attrs) {
+app_module.directive('isIncluded',
+            ['$q','$http', '$templateCache','$compile','$rootScope','Requirement',
+    function( $q,  $http,   $templateCache,  $compile,  $rootScope,  Requirement) {
 
-        console.log($templateCache);
+    function link(scope,element,attrs) {
         scope.rreqv.css = {};
 
-
-        element.find('.toggle_is_included').on('click',function(e) {
-            console.log(scope.rreqv);
-            if (scope.rreqv.is_included == 1) {
-                scope.rreqv.is_included = 0;
-            } else {
-                scope.rreqv.is_included = 1;
-            }
-            //$(this).css('border','1px red solid');
-
-            //scope.$broadcast('checkbox.update',scope.rreqv);
-            update();
-        });
-
         function update() {
-            console.log('update');
-            console.log(scope.rreqv);
-            //console.log(scope.rreqv);
 
             if (scope.rreqv.is_included == 1) {
                 scope.rreqv.css.is_included = '☑';
@@ -44,30 +28,39 @@ app_module.directive('isIncluded', function factory($q,$http, $templateCache,$co
             } else {
                 scope.rreqv.css.can_toggle  = '';
             }
-            //console.log(scope.rreqv);
         }
         update();
 
-//        scope.$on( 'checkbox.update', function( event ) {
-//            console.log(scope.rreqv);
-//            update();
-//        });
+        scope.$on( 'checkbox.update.'+scope.rreqv.id, function( event, args ) {
+            //console.log('$on checkbox.update.'+scope.rreqv.id);
+            //console.log(args);
+            if (args.is_included == 1) {
+                args.is_included = 0;
+            } else {
+                args.is_included = 1;
+            }
+            update();
+
+        });
     }
-});
-//app_module.directive('isIncludedCheckbox', function factory($q,$http, $templateCache,$compile) {
-//    return function(scope,element,attrs) {
-//
-//        element.on('click',function(e) {
-//            //console.log(scope.rreqv);
-//            if (scope.rreqv.is_included == 1) {
-//                scope.rreqv.is_included = 0;
-//            } else {
-//                scope.rreqv.is_included = 1;
-//            }
-//            //$(this).css('border','1px red solid');
-//
-//            scope.$broadcast('checkbox.update',scope.rreqv);
-//        });
-//
-//    }
-//});
+    return {
+        link: link
+    };
+
+ }]);
+
+
+
+//            $rootScope.$broadcast( 'requirements.update' );
+//            $(Requirement.requirements).each(function(i,e){
+//                console.log(scope.rreqv.id);
+//                console.log(e.id);
+//                if (e.id == scope.rreqv.id) {
+//                    console.log(i);
+//                    console.log(scope.rreqv.css);
+//                    console.log(e.css);
+//                    console.log(Requirement.requirements[i].css);
+//                }
+//            });
+
+

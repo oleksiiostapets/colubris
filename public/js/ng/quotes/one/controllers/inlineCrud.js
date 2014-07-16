@@ -26,6 +26,8 @@ app_module.controller(
         $scope.reqv = args;
     });
     $scope.$on( 'requirements.update', function( event ) {
+        console.log('### requirements.update');
+        console.log(Requirement.requirements);
         $scope.requirements = Requirement.requirements;
     });
     $scope.$on( 'comments.update', function( event ) {
@@ -43,6 +45,12 @@ app_module.controller(
     $scope.toggle = function(show,hide) {
         $('#'+show).removeClass('ui-helper-hidden');
         $('#'+hide).addClass('ui-helper-hidden');
+    }
+
+    $scope.toggleIsIncluded = function(args){
+        console.log('>>>> toggleIsIncluded');
+        console.log(args);
+        $scope.$broadcast('checkbox.update.'+args.id,args);
     }
 }])
 ;
