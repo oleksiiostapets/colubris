@@ -7071,4 +7071,13 @@ table .requirement {
 }
 .requirement-form.fixed .comments {
   display: block;
+  background-position: center;
+  background-size: cover;
+}
+.can-toggle {
+  cursor: pointer;
+}
+.not-active {
+  color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(164, 164, 164, 0.1);
 }
