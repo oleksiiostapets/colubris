@@ -3,35 +3,39 @@
         <table>
             <thead>
             <tr class="atk-swatch-blue">
-                <th>Order</th>
-                <th>Requirement</th>
+                <th></th>
+                <th></th>
+                <th>Info</th>
                 <th>Estimate</th>
-                <th>Is included</th>
-                <th>Is deleted</th>
-                <th>Actions</th>
+                <th>Deleted</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="reqv in requirements track by $index">
+            <tr ng-repeat="rreqv in requirements track by $index"  is-included class=" {{rreqv.css.is_active}}">
                 <td>{{$index}}</td>
                 <td>
-                   <div class="atk-action">
-                       <span class="atk-label atk-effect-info">Req.#{{reqv.id}}</span>
-                       <span class="atk-label atk-effect-warning"><strong>{{reqv.name}}</strong></span>
-                   </div>
-                    <div class="atk-action atk-size-milli">
-                        <span>Project: {{reqv.project_name}}</span>
-                    </div>
-                    <div class="atk-action atk-size-milli">
-                        <span>Added by {{reqv.user}}</span>
-                    </div>
-                    <div class="atk-action atk-box">
-                        <span>{{reqv.descr}}</span>
+                    <div class="toggle_is_included {{rreqv.css.is_active}} {{rreqv.css.can_toggle}}" >
+                        {{rreqv.css.is_included}}
                     </div>
                 </td>
-                <td>{{reqv.estimate}}</td>
-                <td>{{reqv.is_included}}</td>
-                <td>{{reqv.is_deleted}}</td>
+                <td>
+                   <div class="atk-action">
+                       <span class="atk-label atk-effect-info">Req.#{{rreqv.id}}</span>
+                       <span class="atk-label atk-effect-warning"><strong>{{rreqv.name}}</strong></span>
+                   </div>
+                    <div class="atk-action atk-size-milli">
+                        <span>Project: {{rreqv.project_name}}</span>
+                    </div>
+                    <div class="atk-action atk-size-milli">
+                        <span>Added by {{rreqv.user}}</span>
+                    </div>
+                    <div class="atk-action atk-box">
+                        <span>{{rreqv.descr}}</span>
+                    </div>
+                </td>
+                <td>{{rreqv.estimate}}</td>
+                <td>{{rreqv.is_deleted}}</td>
                 <td class="atk-text-nowrap">
                     <button class="atk-button" ng-click="Requirement.edit($index)">Edit</button>
                     <button class="atk-button atk-effect-danger" ng-click="Requirement.remove($index)">Delete</button>

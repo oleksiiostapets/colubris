@@ -7077,3 +7077,10 @@ table .requirement {
   height: 100%;
   overflow: auto;
 }
+.can-toggle {
+  cursor: pointer;
+}
+.not-active {
+  color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(164, 164, 164, 0.1);
+}

@@ -126,6 +126,15 @@ $.each({
             app_module.postfix  = postfix;
             angular.bootstrap(document, ['clients.app']);
         });
+    },
+    startSettingsApp: function(user_id,base_url,prefix,postfix) {
+        angular.element(document).ready(function() {
+            app_module.user_id  = user_id;
+            app_module.base_url = base_url;
+            app_module.prefix   = prefix;
+            app_module.postfix  = postfix;
+            angular.bootstrap(document, ['settings.app']);
+        });
     }
 	
 },$.colubris._import);
