@@ -15,7 +15,7 @@
             <tr ng-repeat="rreqv in requirements track by $index"  is-included class=" {{rreqv.css.is_active}}">
                 <td>{{$index}}</td>
                 <td>
-                    <div class="toggle_is_included {{rreqv.css.is_active}} {{rreqv.css.can_toggle}}" >
+                    <div class="toggle_is_included {{rreqv.css.is_active}} {{rreqv.css.can_toggle}}" ng-click="toggleIsIncluded(rreqv)">
                         {{rreqv.css.is_included}}
                     </div>
                 </td>

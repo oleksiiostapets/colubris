@@ -15,6 +15,7 @@ app_module.directive('requirementForm', function factory($q,$http, $templateCach
             console.log(reqv);
 
             scope.Comment.getFromServer(reqv.id);
+            scope.Task.getFromServer(reqv.id);
             console.log(scope.comments);
         });
         scope.$on( 'form.to_regular_place', function( event ) {

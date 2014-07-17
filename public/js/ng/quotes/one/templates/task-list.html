@@ -1,6 +1,27 @@
-<div class="atk-box ">
-    <h4>Tasks (если шо):</h4>
+<h4>Tasks:</h4>
+<div class="atk-box-small" ng-repeat="task in tasks track by $index">
+    <!--<div class="atk-push-small">
+        <span class="atk-label atk-effect-info">{{$index}} (#{{task.id}})</span>
+        <span class="atk-label atk-effect-warning">
+            <strong class="">
+                {{task.name}}
+            </strong>
+        </span>
+    </div>-->
+    <div class="atk-push small atk-cells">
+        <div class="atk-cell atk-valign-top">
+            <div class="atk-label atk-effect-info">{{$index}} (#{{task.id}})</div>
+        </div>
+        <div class="atk-cell atk-jackscrew">
+            <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><strong>{{task.name}}</strong></div>
+
+        </div>
+    </div>
+    <div>Asigned: {{task.assigned}}</div>
+    <div>Created: {{task.created_dts}}</div>
+    <div>Last updated: {{task.updated_dts}}</div>
+    <div>{{task.descr_original}}</div>
+    <div>Estimate: {{task.estimate}}</div>
+    <div>Status: {{task.status}}</div>
+    <div>Type: {{task.type}}</div>
 </div>
-
-
-

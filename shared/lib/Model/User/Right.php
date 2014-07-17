@@ -3,425 +3,198 @@
  *Created by Konstantin Kolodnitsky
  * Date: 11.07.14
  * Time: 11:38
+ *
+ * HOW TO!
+ * You can:
+ * - check right:
+ *     - can_see_tasks() or;
+ *     - getRight($right_name).
+ * - set rights for new user:
+ *     - save_new_user_as_developer() as a pattern or;
+ *     - setRight(<right_name>,[true||false]) for individual right.
+ * - set rights for existing user:
+ *     - make_existing_user_as_developer();
+ *     - setRight(<right_name>,[true||false]) for individual right.
+ * - switch right:
+ *     - toggle_can_see_tasks() or;
+ *     - toggle_right($right).
+ * You CANNOT use set()
  */
 class Model_User_Right extends Model_Auditable{
-    //task
-    public $can_see_tasks;
-    public $can_add_task;
-    public $can_edit_task;
-    public $can_delete_task;
-    public $can_add_comment_to_task;
-    //Project
-    public $can_see_projects;
-    public $can_add_projects;
-    public $can_edit_projects;
-    public $can_delete_projects;
-    //Quote
-    public $can_add_quote;//Request for quotation
-    public $can_edit_quote;
-    public $can_delete_quote;
-    public $can_submit_for_quotation;
-    //Requirement
-    public $can_add_requirement;
-    public $can_edit_requirement;
-    public $can_delete_requirement;
-    public $can_add_comment_to_requirement;
-    //Setting
-    public $can_see_settings;
-    public $can_edit_settings;
-    //User
-    public $can_see_users;
-    public $can_manage_users;
-    //Rates
-    public $can_see_rates;
-    public $can_manage_rates;
-    //Developers
-    public $can_see_developers;
-    public $can_manage_developers;
-    //Clients
-    public $can_see_clients;
-    public $can_manage_clients;
-    //Reports
-    public $can_see_reports;
-    //Deleted Items
-    public $can_see_deleted;
-    public $can_restore_deleted;
-    //Logs
-    public $can_see_logs;
-    //Mics
-    public $can_see_dashboard;
-    public $can_move_to_from_archive;
-    public $can_track_time;
-    public $can_login_as_any_user;
+    public $table = 'right';
+    private $user;
+    static $available_rights = array(
+        //task
+        'can_see_tasks',
+        'can_add_task',
+        'can_edit_task',
+        'can_delete_task',
+        'can_add_comment_to_task',
+        //Project
+        'can_see_projects',
+        'can_add_projects',
+        'can_edit_projects',
+        'can_delete_projects',
+        //Quote
+        'can_add_quote',
+        //Request for quotation
+        'can_edit_quote',
+        'can_delete_quote',
+        'can_submit_for_quotation',
+        //Requirement
+        'can_add_requirement',
+        'can_edit_requirement',
+        'can_delete_requirement',
+        'can_add_comment_to_requirement',
+        //Setting
+        'can_see_settings',
+        'can_edit_settings',
+        //User
+        'can_see_users',
+        'can_manage_users',
+        //Rates
+        'can_see_rates',
+        'can_manage_rates',
+        //Developers
+        'can_see_developers',
+        'can_manage_developers',
+        //Clients
+        'can_see_clients',
+        'can_manage_clients',
+        //Reports
+        'can_see_reports',
+        //Deleted Items
+        'can_see_deleted',
+        'can_restore_deleted',
+        //Logs
+        'can_see_logs',
+        //Mics
+        'can_see_dashboard',
+        'can_move_to_from_archive',
+        'can_track_time',
+        'can_login_as_any_user',
+    );
+    private $developer_pattern = 'can_see_tasks,can_add_task,can_edit_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_reports,can_see_dashboard,can_move_to_from_archive,can_track_time';
+    private $client_pattern = 'can_see_tasks,can_add_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_add_projects,can_add_quote,can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_dashboard';
+    private $sales_manager_pattern = 'can_add_quote,can_add_requirement,can_see_settings,can_edit_settings,can_see_dashboard,can_move_to_from_archive';
+    private $manager_pattern = 'can_see_tasks,can_add_task,can_edit_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_add_projects,can_edit_projects,can_delete_projects,can_add_quote,can_edit_quote,can_delete_quote,can_submit_for_quotation,can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_rates,can_manage_rates,can_see_clients,can_manage_clients,can_see_reports,can_see_deleted,can_restore_deleted,can_see_dashboard,can_move_to_from_archive,can_track_time';
+    private $admin_pattern = 'can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_users,can_manage_users,can_see_rates,can_manage_rates,can_see_developers,can_manage_developers,can_see_logs,can_see_dashboard,can_login_as_any_user';
 
     function init(){
         parent::init();
+//        $this->addField('user_id');
+        $this->hasOne('User');
+        $this->addField('right')->type('text');
+        $this->user = $this->app->auth->model;
     }
-    
-    
-    //////////////////
-    //Right patterns//
-    //////////////////
-    private function getDeveloperPattern(){
-        $rights_pattern = array(
-            //task
-            'can_see_tasks'=>true,
-            'can_add_task'=>true,
-            'can_edit_task'=>true,
-            'can_delete_task'=>true,
-            'can_add_comment_to_task'=>true,
-            //Project
-            'can_see_projects'=>true,
-            'can_add_projects'=>false,
-            'can_edit_projects'=>false,
-            'can_delete_projects'=>false,
-            //Quote
-            'can_add_quote'=>false,//Request for quotation
-            'can_edit_quote'=>false,
-            'can_delete_quote'=>false,
-            'can_submit_for_quotation'=>false,
-            //Requirement
-            'can_add_requirement'=>false,
-            'can_edit_requirement'=>false,
-            'can_delete_requirement'=>false,
-            'can_add_comment_to_requirement'=>true,
-            //Setting
-            'can_see_settings'=>true,
-            'can_edit_settings'=>true,
-            //User
-            'can_see_users'=>false,
-            'can_manage_users'=>false,
-            //Rates
-            'can_see_rates'=>false,
-            'can_manage_rates'=>false,
-            //Developers
-            'can_see_developers'=>false,
-            'can_manage_developers'=>false,
-            //Clients
-            'can_see_clients'=>false,
-            'can_manage_clients'=>false,
-            //Reports
-            'can_see_reports'=>true,
-            //Deleted Items
-            'can_see_deleted'=>false,
-            'can_restore_deleted'=>false,
-            //Logs
-            'can_see_logs'=>false,
-            //Mics
-            'can_see_dashboard'=>true,
-            'can_move_to_from_archive'=>true,
-            'can_track_time'=>true,
-            'can_login_as_any_user'=>false,
-        );
-        return $rights_pattern;
-    }
-    private function getClientPattern(){
-        $rights_pattern = array(
-            //task
-            'can_see_tasks'=>true,
-            'can_add_task'=>true,
-            'can_edit_task'=>false,
-            'can_delete_task'=>true,
-            'can_add_comment_to_task'=>true,
-            //Project
-            'can_see_projects'=>true,
-            'can_add_projects'=>true,
-            'can_edit_projects'=>false,
-            'can_delete_projects'=>false,
-            //Quote
-            'can_add_quote'=>true,//Request for quotation
-            'can_edit_quote'=>false,
-            'can_delete_quote'=>false,
-            'can_submit_for_quotation'=>false,
-            //Requirement
-            'can_add_requirement'=>true,
-            'can_edit_requirement'=>true,
-            'can_delete_requirement'=>true,
-            'can_add_comment_to_requirement'=>true,
-            //Setting
-            'can_see_settings'=>true,
-            'can_edit_settings'=>true,
-            //User
-            'can_see_users'=>false,
-            'can_manage_users'=>false,
-            //Rates
-            'can_see_rates'=>false,
-            'can_manage_rates'=>false,
-            //Developers
-            'can_see_developers'=>false,
-            'can_manage_developers'=>false,
-            //Clients
-            'can_see_clients'=>false,
-            'can_manage_clients'=>false,
-            //Reports
-            'can_see_reports'=>false,
-            //Deleted Items
-            'can_see_deleted'=>false,
-            'can_restore_deleted'=>false,
-            //Logs
-            'can_see_logs'=>false,
-            //Mics
-            'can_see_dashboard'=>true,
-            'can_move_to_from_archive'=>false,
-            'can_track_time'=>false,
-            'can_login_as_any_user'=>false,
-        );
-        return $rights_pattern;
-    }
-    private function getSalesManagerPattern(){
-        $rights_pattern = array(
-            //task
-            'can_see_tasks'=>false,
-            'can_add_task'=>false,
-            'can_edit_task'=>false,
-            'can_delete_task'=>false,
-            'can_add_comment_to_task'=>false,
-            //Project
-            'can_see_projects'=>false,
-            'can_add_projects'=>false,
-            'can_edit_projects'=>false,
-            'can_delete_projects'=>false,
-            //Quote
-            'can_add_quote'=>true,//Request for quotation
-            'can_edit_quote'=>false,
-            'can_delete_quote'=>false,
-            'can_submit_for_quotation'=>false,
-            //Requirement
-            'can_add_requirement'=>true,
-            'can_edit_requirement'=>false,
-            'can_delete_requirement'=>false,
-            'can_add_comment_to_requirement'=>false,
-            //Setting
-            'can_see_settings'=>true,
-            'can_edit_settings'=>true,
-            //User
-            'can_see_users'=>false,
-            'can_manage_users'=>false,
-            //Rates
-            'can_see_rates'=>false,
-            'can_manage_rates'=>false,
-            //Developers
-            'can_see_developers'=>false,
-            'can_manage_developers'=>false,
-            //Clients
-            'can_see_clients'=>false,
-            'can_manage_clients'=>false,
-            //Reports
-            'can_see_reports'=>false,
-            //Deleted Items
-            'can_see_deleted'=>false,
-            'can_restore_deleted'=>false,
-            //Logs
-            'can_see_logs'=>false,
-            //Mics
-            'can_see_dashboard'=>true,
-            'can_move_to_from_archive'=>true,
-            'can_track_time'=>false,
-            'can_login_as_any_user'=>false,
-        );
-        return $rights_pattern;
-    }
-    private function getManagerPattern(){
-        $rights_pattern = array(
-            //task
-            'can_see_tasks'=>true,
-            'can_add_task'=>true,
-            'can_edit_task'=>true,
-            'can_delete_task'=>true,
-            'can_add_comment_to_task'=>true,
-            //Project
-            'can_see_projects'=>true,
-            'can_add_projects'=>true,
-            'can_edit_projects'=>true,
-            'can_delete_projects'=>true,
-            //Quote
-            'can_add_quote'=>true,//Request for quotation
-            'can_edit_quote'=>true,
-            'can_delete_quote'=>true,
-            'can_submit_for_quotation'=>true,
-            //Requirement
-            'can_add_requirement'=>true,
-            'can_edit_requirement'=>true,
-            'can_delete_requirement'=>true,
-            'can_add_comment_to_requirement'=>true,
-            //Setting
-            'can_see_settings'=>true,
-            'can_edit_settings'=>true,
-            //User
-            'can_see_users'=>false,
-            'can_manage_users'=>false,
-            //Rates
-            'can_see_rates'=>true,
-            'can_manage_rates'=>true,
-            //Developers
-            'can_see_developers'=>false,
-            'can_manage_developers'=>false,
-            //Clients
-            'can_see_clients'=>true,
-            'can_manage_clients'=>true,
-            //Reports
-            'can_see_reports'=>true,
-            //Deleted Items
-            'can_see_deleted'=>true,
-            'can_restore_deleted'=>true,
-            //Logs
-            'can_see_logs'=>false,
-            //Mics
-            'can_see_dashboard'=>true,
-            'can_move_to_from_archive'=>true,
-            'can_track_time'=>true,
-            'can_login_as_any_user'=>false,
-        );
-        return $rights_pattern;
-    }
-    private function getadminPattern(){
-        $rights_pattern = array(
-            //task
-            'can_see_tasks'=>false,
-            'can_add_task'=>false,
-            'can_edit_task'=>false,
-            'can_delete_task'=>false,
-            'can_add_comment_to_task'=>false,
-            //Project
-            'can_see_projects'=>false,
-            'can_add_projects'=>false,
-            'can_edit_projects'=>false,
-            'can_delete_projects'=>false,
-            //Quote
-            'can_add_quote'=>false,//Request for quotation
-            'can_edit_quote'=>false,
-            'can_delete_quote'=>false,
-            'can_submit_for_quotation'=>false,
-            //Requirement
-            'can_add_requirement'=>true,
-            'can_edit_requirement'=>true,
-            'can_delete_requirement'=>true,
-            'can_add_comment_to_requirement'=>true,
-            //Setting
-            'can_see_settings'=>true,
-            'can_edit_settings'=>true,
-            //User
-            'can_see_users'=>true,
-            'can_manage_users'=>true,
-            //Rates
-            'can_see_rates'=>true,
-            'can_manage_rates'=>true,
-            //Developers
-            'can_see_developers'=>true,
-            'can_manage_developers'=>true,
-            //Clients
-            'can_see_clients'=>false,
-            'can_manage_clients'=>false,
-            //Reports
-            'can_see_reports'=>false,
-            //Deleted Items
-            'can_see_deleted'=>false,
-            'can_restore_deleted'=>false,
-            //Logs
-            'can_see_logs'=>true,
-            //Mics
-            'can_see_dashboard'=>true,
-            'can_move_to_from_archive'=>false,
-            'can_track_time'=>false,
-            'can_login_as_any_user'=>true,
-        );
-        return $rights_pattern;
-    }
-    /*
-     * New user's rights
-     */
-    public function save_new_user_as_developer(){
-        if($this->loaded()){
-            throw $this->exception('This user exists and already has his rights saved. Use make_as_developer() to change them');
-        }else{
-            $rights = $this->getDeveloperPattern();
-            $this->set($rights)->save();
+
+    private $_set = false;
+    function set($name,$value=UNDEFINED) {
+        if ($this->_set) {
+            parent::set($name,$value);
             return $this;
         }
+        throw $this->exception('This method is private in this model');
+    }
+
+    function setRight($what,$can=true) {
+        if ($this->checkRight($what)) {
+            $curr = $this->get('right');
+            $arr = explode(',',$curr);
+            $new_curr = $arr;
+            if ($can) {
+                $already_exist = false;
+                foreach ($arr as $k=>$v) {
+                    if ($v == $what) {
+                        $already_exist = true;
+                    }
+                }
+                if (!$already_exist) {
+                    $arr[] = $what;
+                }
+                $new_curr = implode(',',$arr);
+            } else {
+                $new_arr = array();
+                foreach ($arr as $k=>$v) {
+                    if ($v != $what) {
+                        $new_arr[] = $v;
+                    }
+                }
+                $new_curr = implode(',',$new_arr);
+            }
+            $this->_set = true;
+            $this->set('right',$new_curr)->saveLater();
+            $this->_set = false;
+            return $this;
+        }else{
+            throw $this->exception('There is no such an access right defined');
+        }
+    }
+    private function checkRight($what) {
+        if (in_array($what,self::$available_rights)) {
+            return true;
+        }
+        return false;
+    }
+    
+    /*
+     * Set rights for new user
+     */
+    private function setPatternForNew($pattern){
+        $this->tryLoadBy('user_id',$this->user->id);
+        if($this->loaded()){
+            throw $this->exception('This user exists and already has his rights saved. Use make_as_() to change them');
+        }else{
+            $this->_set = true;
+            $this->set('right',$pattern)->save();
+            $this->_set = false;
+            return $this;
+        }
+    }
+    public function save_new_user_as_developer(){
+        $this->setPatternForNew($this->developer_pattern);
+
     }
     public function save_new_user_as_client(){
-        if($this->loaded()){
-            throw $this->exception('This user exists and already has his rights saved. Use make_as_client() to change them');
-        }else{
-            $rights = $this->getClientPattern();
-            $this->set($rights)->save();
-            return $this;
-        }
+        $this->setPatternForNew($this->client_pattern);
     }
     public function save_new_user_as_salesManager(){
-        if($this->loaded()){
-            throw $this->exception('This user exists and already has his rights saved. Use make_as_salesManager() to change them');
-        }else{
-            $rights = $this->getSalesManagerPattern();
-            $this->set($rights)->save();
-            return $this;
-        }
+        $this->setPatternForNew($this->sales_manager_pattern);
     }
     public function save_new_user_as_manager(){
-        if($this->loaded()){
-            throw $this->exception('This user exists and already has his rights saved. Use make_as_manager() to change them');
-        }else{
-            $rights = $this->getManagerPattern();
-            $this->set($rights)->save();
-            return $this;
-        }
+        $this->setPatternForNew($this->manager_pattern);
     }
     public function save_new_user_as_admin(){
-        if($this->loaded()){
-            throw $this->exception('This user exists and already has his rights saved. Use make_as_admin() to change them');
-        }else{
-            $rights = $this->getadminPattern();
-            $this->set($rights)->save();
-            return $this;
-        }
+        $this->setPatternForNew($this->admin_pattern);
     }
     /*
      * Set rights for existing user
      */
-    public function make_existing_user_as_developer(){
+    private function setPatternForExisting($pattern){
+        $this->tryLoadBy('user_id',$this->user->id);
         if($this->loaded()){
-            $rights = $this->getDeveloperPattern();
-            $this->set($rights)->save();
+            $this->_set = true;
+            $this->set('right',$pattern)->save();
+            $this->_set = false;
             return $this;
         }else{
-            throw $this->exception('The user is not loaded');
+            throw $this->exception('There is no rights record for current user. Use "save_new_user_as_()" method to set user rights.');
         }
+    }
+    public function make_existing_user_as_developer(){
+        $this->setPatternForExisting($this->developer_pattern);
     }
     public function make_existing_user_as_client(){
-        if($this->loaded()){
-            $rights = $this->getClientPattern();
-            $this->set($rights)->save();
-            return $this;
-        }else{
-            throw $this->exception('The user is not loaded');
-        }
+        $this->setPatternForExisting($this->client_pattern);
     }
     public function make_existing_user_as_salesManager(){
-        if($this->loaded()){
-            $rights = $this->getSalesManagerPattern();
-            $this->set($rights)->save();
-            return $this;
-        }else{
-            throw $this->exception('The user is not loaded');
-        }
+        $this->setPatternForExisting($this->sales_manager_pattern);
     }
     public function make_existing_user_as_manager(){
-        if($this->loaded()){
-            $rights = $this->getManagerPattern();
-            $this->set($rights)->save();
-            return $this;
-        }else{
-            throw $this->exception('The user is not loaded');
-        }
+        $this->setPatternForExisting($this->manager_pattern);
     }
     public function make_existing_user_as_admin(){
-        if($this->loaded()){
-            $rights = $this->getadminPattern();
-            $this->set($rights)->save();
-            return $this;
-        }else{
-            throw $this->exception('The user is not loaded');
-        }
+        $this->setPatternForExisting($this->admin_pattern);
     }
     
     
@@ -429,14 +202,28 @@ class Model_User_Right extends Model_Auditable{
     //////////////
     //Get rights//
     //////////////
-    private function getRight($name){
-        /*$user = $this->app->auth->model;//TODO Use app->auth->model or $this?
-        if($user){
-            return $user[$name];
+    private function fetchRights($rights_string,$right_name){
+        $rights_array = explode(',',$rights_string);
+        if(in_array($right_name,$rights_array,true)){
+            return true;
+        }
+        return false;
+    }
+    public function getRight($right_name){
+        if(!$this->checkRight($right_name)) throw $this->exception('There is no such an access right defined');
+        if($this->user->loaded()){
+            $this->tryLoadBy('user_id',$this->user['id']);
+            if($this->loaded()){
+                $rights_array = $this->getRows();
+                if(!$rights_array[0]['right']) throw $this->exception('User rights setup as NULL. User ID is "'.$this->user['id'].'"');
+                $right = $this->fetchRights($rights_array[0]['right'],$right_name);
+                return $right;
+            }else{
+                throw $this->exception('This user has no rights being setup. User ID is "'.$this->user['id'].'"');
+            }
         }else{
             throw $this->exception('User is not logged in');
-        }*/
-        return true; //TODO Temporary!!!!!!!!!!!!!!!!!!
+        }
     }
     //task
     public function can_see_tasks(){return $this->getRight('can_see_tasks');}
@@ -490,7 +277,8 @@ class Model_User_Right extends Model_Auditable{
     /////////////////
     //Toggle rights//
     /////////////////
-    private function toggle_right($right){
+    public function toggle_right($right){
+        if(!$this->checkRight($right)) throw $this->exception('There is no such an access right defined');
         if($this->$right){
             $this->$right = false;
         }else{

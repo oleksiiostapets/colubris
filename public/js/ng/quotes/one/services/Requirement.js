@@ -36,7 +36,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope,
             this.backupReqv(index);
             $rootScope.$broadcast('reqv.update', service.requirements[index]);
             $rootScope.$broadcast('form.to_fixed_position',service.requirements[index]);
-            //$rootScope.$broadcast( 'requirements.update' );
+            $rootScope.$broadcast( 'requirements.update' );
         },
         cancel: function() {
             console.log('------> cencel');
