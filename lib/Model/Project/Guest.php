@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_Project_Guest extends Model_Table {
     public $table='project';
 
