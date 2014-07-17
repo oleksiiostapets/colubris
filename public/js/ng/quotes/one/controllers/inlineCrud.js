@@ -6,8 +6,8 @@
 
 app_module.controller(
     'inlineCrud',
-            ['$scope','$document','$http','Requirement','Comment',
-    function ($scope,  $document,  $http,  Requirement,  Comment) {
+            ['$scope','$document','$http','Requirement','Comment','Task',
+    function ($scope,  $document,  $http,  Requirement,  Comment,  Task) {
 
 
     // reqv
@@ -18,6 +18,11 @@ app_module.controller(
     // comm
     $scope.Comment = Comment;
     $scope.comments = Comment.comments;
+    $scope.actionButtonSet = {};
+
+    // task
+    $scope.Task = Task;
+    $scope.tasks = Task.tasks;
     $scope.actionButtonSet = {};
 
     Requirement.getFromServer();
@@ -32,6 +37,9 @@ app_module.controller(
     });
     $scope.$on( 'comments.update', function( event ) {
         $scope.comments = Comment.comments;
+    });
+    $scope.$on( 'tasks.update', function( event ) {
+        $scope.tasks = Task.tasks;
     });
 
     // ESC key close requirement div
@@ -48,8 +56,6 @@ app_module.controller(
     }
 
     $scope.toggleIsIncluded = function(args){
-        console.log('>>>> toggleIsIncluded');
-        console.log(args);
         $scope.$broadcast('checkbox.update.'+args.id,args);
     }
 }])

@@ -22,6 +22,7 @@ class page_quotes_one extends Page {
         $this->app->jquery->addStaticInclude('ng/quotes/one/directives/isIncluded');
         $this->app->jquery->addStaticInclude('ng/quotes/one/services/Requirement');
         $this->app->jquery->addStaticInclude('ng/quotes/one/services/Comment');
+        $this->app->jquery->addStaticInclude('ng/quotes/one/services/Task');
 
         $this->js(true)->colubris()->startRequirementApp(
             $this->id,
