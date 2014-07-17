@@ -3,6 +3,22 @@
  *Created by Konstantin Kolodnitsky
  * Date: 11.07.14
  * Time: 11:38
+ *
+ * HOW TO!
+ * You can:
+ * - check right:
+ *     - can_see_tasks() or;
+ *     - getRight($right_name).
+ * - set rights for new user:
+ *     - save_new_user_as_developer() as a pattern or;
+ *     - setRight(<right_name>,[true||false]) for individual right.
+ * - set rights for existing user:
+ *     - make_existing_user_as_developer();
+ *     - setRight(<right_name>,[true||false]) for individual right.
+ * - switch right:
+ *     - toggle_can_see_tasks() or;
+ *     - toggle_right($right).
+ * You CANNOT use set()
  */
 class Model_User_Right extends Model_Auditable{
     public $table = 'right';
@@ -193,7 +209,8 @@ class Model_User_Right extends Model_Auditable{
         }
         return false;
     }
-    private function getRight($right_name){
+    public function getRight($right_name){
+        if(!$this->checkRight($right_name)) throw $this->exception('There is no such an access right defined');
         if($this->user->loaded()){
             $this->tryLoadBy('user_id',$this->user['id']);
             if($this->loaded()){
@@ -260,7 +277,8 @@ class Model_User_Right extends Model_Auditable{
     /////////////////
     //Toggle rights//
     /////////////////
-    private function toggle_right($right){
+    public function toggle_right($right){
+        if(!$this->checkRight($right)) throw $this->exception('There is no such an access right defined');
         if($this->$right){
             $this->$right = false;
         }else{
