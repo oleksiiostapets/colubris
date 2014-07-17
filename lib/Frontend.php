@@ -33,6 +33,8 @@ class Frontend extends ApiFrontend {
         $this->add('jUI');
         $this->addRouter();
 
+        $this->app->jquery->addStylesheet('custom');
+
         $this->js(true)->_load('colubris');
 
         // controllers
