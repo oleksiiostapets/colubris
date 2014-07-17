@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_Task_Report extends Model_Task {
 
     function init(){

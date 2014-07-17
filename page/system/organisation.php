@@ -1,4 +1,4 @@
-<?
+<?php
 class page_system_organisation extends Page {
     function init(){
         parent::init();

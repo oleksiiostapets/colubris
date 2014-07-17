@@ -1,4 +1,4 @@
-<?
+<?php
 class Model_Project_Participant extends Model_Project {
 
     function init(){
