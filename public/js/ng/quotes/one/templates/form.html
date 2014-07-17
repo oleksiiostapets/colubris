@@ -88,10 +88,10 @@
                     <button ng-click="toggle('comments-view','tasks-view')" class="atk-button-small atk-button">Comments</button>
                     <button ng-click="toggle('tasks-view','comments-view')" class="atk-button-small atk-button">Tasks</button>
                 </div>
-                <div id="comments-view" class="ui-helper-hidden">
+                <div id="comments-view" class="">
                     <ng-include src="comment_list"></ng-include>
                 </div>
-                <div id="tasks-view" class="">
+                <div id="tasks-view" class="ui-helper-hidden">
                     <ng-include src="task_list"></ng-include>
                 </div>
             </div>
