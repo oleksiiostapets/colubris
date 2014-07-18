@@ -7029,16 +7029,30 @@ table .requirement {
   font-size: 11px;
   color: #5b5b5b;
 }
-.requirement-form {
+.floating-form {
   position: relative;
 }
-.requirement-form .close {
+.floating-form .close {
   display: none;
 }
-.requirement-form .comments {
+.floating-form .comments {
   display: none;
 }
-.requirement-form.fixed {
+.floating-form .full-height-box {
+  position: relative;
+  height: 500px;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+.floating-form .full-height-box > *[class*=atk-col] {
+  height: 100%;
+}
+.floating-form .full-height-box > *[class*=atk-col] > *[class*=atk-box] {
+  height: 100%;
+  overflow: auto;
+}
+.floating-form.fixed {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -7049,7 +7063,21 @@ table .requirement {
   margin: 50px 15px;
   background-color: #f5f5f5;
 }
-.requirement-form.fixed .close {
+.floating-form.fixed .full-height-box {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+}
+.floating-form.fixed .full-height-box > *[class*=atk-col] {
+  height: 100%;
+}
+.floating-form.fixed .full-height-box > *[class*=atk-col] > *[class*=atk-box] {
+  height: 100%;
+  overflow: auto;
+}
+.floating-form.fixed .close {
   position: fixed;
   left: 95%;
   display: block;
@@ -7057,26 +7085,13 @@ table .requirement {
   cursor: pointer;
   z-index: 10;
 }
-.requirement-form.fixed .close:hover {
+.floating-form.fixed .close:hover {
   color: red;
 }
-.requirement-form.fixed .comments {
+.floating-form.fixed .comments {
   display: block;
   background-position: center;
   background-size: cover;
-}
-.full-height-box {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-}
-.full-height-box > *[class*=atk-col] {
-  height: 100%;
-}
-.full-height-box > *[class*=atk-col] > *[class*=atk-box] {
-  height: 100%;
-  overflow: auto;
 }
 .can-toggle {
   cursor: pointer;
