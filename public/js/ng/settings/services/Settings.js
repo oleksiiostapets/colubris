@@ -1,21 +1,5 @@
 'use strict';
 
-function hideTag(tag_id,time){
-    setTimeout(function(){
-        $(tag_id).hide();
-    }, time);
-}
-function removeTag(tag_id,time){
-    setTimeout(function(){
-        $(tag_id).remove();
-    }, time);
-}
-function showSystemMsg(msg){
-    $("#msg").html(msg);
-    $("#msg").show();
-    hideTag("#msg", 3000);
-}
-
 app_module.service( 'Settings', [ '$rootScope','$http', function( $rootScope, $http ) {
     var current_index = null;
     var service = {
@@ -64,7 +48,7 @@ app_module.service( 'Settings', [ '$rootScope','$http', function( $rootScope, $h
                             $.each(value,function(key2,value2) {
                                 i = i + 1;
                                 $( "#" + key2).parent().after( '<span id="val_error_' + i + '" class="validation_error">' + value2 + '<br /></span>' );
-                                removeTag("#val_error_" + i, 3000);
+                                $rootScope.removeTag("#val_error_" + i, 3000);
                             });
                         });
                     } else {
@@ -89,7 +73,7 @@ app_module.service( 'Settings', [ '$rootScope','$http', function( $rootScope, $h
                         alert('Error! No data received.');
                     }
                     if (obj.result === 'success') {
-                        showSystemMsg('saved');
+                        $rootScope.showSystemMsg('saved');
                     } else {
                         alert('Error! No success message received.');
                     }

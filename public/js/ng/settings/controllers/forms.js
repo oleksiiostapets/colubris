@@ -6,8 +6,8 @@
 
 app_module.controller(
     'forms',
-            ['$scope','$document','$http','Settings',
-    function ($scope,  $document,  $http, Settings) {
+            ['$scope','$document','$http','Settings','$rootScope',
+    function ($scope,  $document,  $http,  Settings , $rootScope) {
 
         Settings.getFromServer();
 
@@ -59,5 +59,23 @@ app_module.controller(
             $scope.account.new_password = '';
             $scope.account.verify_password = '';
         });
+
+
+
+        $rootScope.hideTag = function(tag_id,time) {
+            setTimeout(function(){
+                $(tag_id).hide();
+            }, time);
+        }
+        $rootScope.removeTag = function(tag_id,time) {
+            setTimeout(function(){
+                $(tag_id).remove();
+            }, time);
+        }
+        $rootScope.showSystemMsg = function(msg) {
+            $("#msg").html(msg);
+            $("#msg").show();
+            $rootScope. hideTag("#msg", 3000);
+        }
     }]
 );
