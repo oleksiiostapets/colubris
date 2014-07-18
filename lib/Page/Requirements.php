@@ -115,6 +115,29 @@ class Page_Requirements extends Page {
             $this->addRequirementForm($this, $quote, $cr);
         }
 
+        $properties = array(
+            'creator'        => 'Oleksii Ostapets',
+            'lastModifiedBy' => 'Oleksii Ostapets',
+            'title'          => 'Colubris report',
+            'subject'        => 'Colubris report',
+            'description'    => 'Colubris report',
+            'keywords'       => 'Colubris report',
+            'category'       => 'Colubris report'
+        );
+
+        $fields = array('name','estimate');
+        $fields_width = array(15, 30, 10, 14, 12, 15);
+        $this->add('kk_xls\View_ButtonXLS',array(
+            'data'         => $requirements,
+            'properties'   => $properties,
+            'fields'       => $fields,
+            'fields_width' => $fields_width,
+            'count_totals' => array('estimate')
+        ))->set('Export to XLS');
+
+        $v=$this->add('View');
+        $v->setClass('cc');
+
     }
     function page_more(){
         $this->api->stickyGET('requirement_id');
