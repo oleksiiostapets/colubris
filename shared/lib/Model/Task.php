@@ -148,9 +148,9 @@ class Model_Task extends Model_Auditable {
     public function restrictedUsers() {
         $this->notDeleted();
         //$this->addField('requester_id')->refModel('Model_User_Task');
-        $this->hasOne('User_Task','requester_id');
+        //$this->hasOne('User_Task','requester_id');
         //$this->addField('assigned_id')->refModel('Model_User_Task');
-        $this->hasOne('User_Task','assigned_id');
+        //$this->hasOne('User_Task','assigned_id');
         return $this;
     }
 
@@ -205,9 +205,9 @@ class Model_Task extends Model_Auditable {
     function Base() {
         //$this->addField('requester_id')->refModel('Model_User_Organisation');
 		$mu = $this->add('Model_User')->getUsersOfOrganisation();
-        $this->hasOne($mu,'requester_id');
+        //$this->hasOne($mu,'requester_id');
         //$this->addField('assigned_id')->refModel('Model_User_Organisation');
-        $this->hasOne($mu,'assigned_id');
+        //$this->hasOne($mu,'assigned_id');
         return $this;
     }
     function addGetConditions() {

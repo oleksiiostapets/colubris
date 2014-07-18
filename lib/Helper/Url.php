@@ -21,4 +21,14 @@ trait Helper_Url {
         ]);
         exit();
     }
+    protected function checkPostParameter($name) {
+        if (isset($_POST[$name])) {
+            return $_POST[$name];
+        }
+        echo json_encode([
+            'result' => 'error',
+            'error_message'   => 'no '.$name.' parameter',
+        ]);
+        exit();
+    }
 }

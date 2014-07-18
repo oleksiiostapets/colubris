@@ -21,6 +21,14 @@ app_module.service( 'Settings', [ '$rootScope','$http', function( $rootScope, $h
     var service = {
         settings: [],
 
+        upload: function ( account ) {
+
+            console.log('upload');
+            console.log(account);
+
+            //this.saveOnServer(account);
+            //$rootScope.$broadcast('account.update', {});
+        },
         save: function ( account ) {
 
             //console.log(account);
@@ -35,7 +43,7 @@ app_module.service( 'Settings', [ '$rootScope','$http', function( $rootScope, $h
             this.changePasswordOnServer(account);
             //$rootScope.$broadcast('account.update', {});
         },
-        changePasswordOnServer: function(account, old_password, new_password, verify_password) {
+        changePasswordOnServer: function(account) {
             //console.log(old_password);
             var url = this.prepareUrl('api/account/','changePassword',{id : account.id, old_password : account.old_password, new_password : account.new_password, verify_password : account.verify_password});
             $http.get(url)

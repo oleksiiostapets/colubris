@@ -17,6 +17,7 @@ class Model_User extends Model_BaseTable {
 		$this->addField('hash');
 		$this->addField('mail_task_changes')->type('boolean')->caption('Send when task changed');
 		$this->addField('is_deleted')->type('boolean')->defaultValue('0');
+        $this->addField('avatar_id');
 		$this->hasOne('User','deleted_id');
 		$this->addHook('beforeDelete', function($m){
 			$m['deleted_id']=$m->app->currentUser()->get('id');
@@ -34,6 +35,22 @@ class Model_User extends Model_BaseTable {
 			return $q->dsql()
 				->expr('if(client_id is null,false,true)');
 		});
+        $this->addExpression('avatar')->set(function($m,$q){
+            return $q->dsql()
+                ->table('filestore_file')
+                ->field('filename')
+                ->where('filestore_file.id',$q->getField('avatar_id'))
+                ;
+        });
+        $this->addExpression('avatar_thumb')->set(function($m,$q){
+            return $q->dsql()
+                ->table('filestore_file')
+                ->table('filestore_image')
+                ->field('filename')
+                ->where('filestore_image.original_file_id',$q->getField('avatar_id'))
+                ->where('filestore_image.thumb_file_id=filestore_file.id')
+                ;
+        });
 
 		// order
 		$this->setOrder('name');
