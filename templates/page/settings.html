@@ -2,13 +2,19 @@
 
     <!--<div ng-controller="buttonSet" button-set class="action-buttons-set"></div>-->
 
-    <div ng-controller="form">
+    <div ng-controller="forms" class="forms">
 
-        {{reqv.id}}
+        <div id="msg" class="system-msg"></div>
 
-        <form>
-            <input type="text" ng-model="reqv.id" />
-        </form>
+        <h3> Personal Data Form</h3>
+        <ng-include src="formPersonal"></ng-include>
+
+        <h3> Change Password​</h3>
+        <ng-include src="formPassword"></ng-include>
+
+        <h3> Mail Settings​</h3>
+        <ng-include src="formMail"></ng-include>
+
     </div>
 
 
