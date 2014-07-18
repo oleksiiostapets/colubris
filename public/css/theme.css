@@ -7069,6 +7069,7 @@ table .requirement {
   position: absolute;
   top: 0;
   bottom: 0;
+  width: 100%;
 }
 .full-height-box > *[class*=atk-col] {
   height: 100%;
