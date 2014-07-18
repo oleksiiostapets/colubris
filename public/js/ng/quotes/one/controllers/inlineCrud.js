@@ -37,8 +37,12 @@ app_module.controller(
         $scope.comments = Comment.comments;
         $.each($scope.comments,function(key,value) {
             $.each(value,function(key2,value2) {
-                if(key2 == 'user_avatar_thumb' && value2 == null){
-                    $scope.comments[key][key2] = 'no-user-image.gif';
+                if(key2 == 'user_avatar_thumb'){
+                    if(value2 == null){
+                        $scope.comments[key][key2] = 'http://' + document.domain + window.location.pathname + 'upload/no-user-image.gif';
+                    }else{
+                        $scope.comments[key][key2] = 'http://' + document.domain + window.location.pathname + 'upload/' + value2;
+                    }
                 }
             });
         });
