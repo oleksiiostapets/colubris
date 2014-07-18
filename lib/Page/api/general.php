@@ -63,7 +63,7 @@ class Page_api_general extends Page {
         if(!$this->m->loaded()){
             echo json_encode([
                 'result' => 'error',
-                'error_message' => 'Record with the id was not found',
+                'error_message' => 'Record with the id '.$id.' was not found',
             ]);
             exit();
         }
