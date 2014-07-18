@@ -11,6 +11,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope,
 
         save: function ( reqv ) {
 
+            console.log('### Requirement.save');
             console.log(reqv);
 
             if (typeof reqv.id === 'undefined' ) {
@@ -48,6 +49,20 @@ app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope,
         },
         saveOnServer: function() {
             var url = this.prepareUrl('saveAll',{quote_id: app_module.quote_id});
+            $http.post(url,angular.toJson(service.requirements))
+                .success(function(data) {
+                    console.log(data);
+                })
+                .error(function(data, status) {
+                    console.log(data);
+                    console.log(status);
+                })
+            ;
+        },
+        saveRequirementOnServer: function(reqv) {
+            console.log('### Requirement.saveRequirementOnServer()');
+
+            var url = this.prepareUrl('saveParams',{id: reqv.id, is_included: reqv.is_included});
             $http.post(url,angular.toJson(service.requirements))
                 .success(function(data) {
                     console.log(data);

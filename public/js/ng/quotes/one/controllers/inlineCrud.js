@@ -31,8 +31,6 @@ app_module.controller(
         $scope.reqv = args;
     });
     $scope.$on( 'requirements.update', function( event ) {
-        console.log('### requirements.update');
-        console.log(Requirement.requirements);
         $scope.requirements = Requirement.requirements;
     });
     $scope.$on( 'comments.update', function( event ) {
@@ -56,7 +54,10 @@ app_module.controller(
     }
 
     $scope.toggleIsIncluded = function(args){
+        console.log('### toggleIsIncluded');
         $scope.$broadcast('checkbox.update.'+args.id,args);
+        Requirement.saveRequirementOnServer(args);
+        var reqv_cloned = jQuery.extend({}, args);
     }
 }])
 ;
