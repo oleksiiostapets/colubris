@@ -1,1 +1,2 @@
 ALTER TABLE `user` ADD COLUMN `avatar_id` INT(11) NULL ;
+ALTER TABLE `filestore_type` ADD COLUMN `allow` TINYINT(1) NULL DEFAULT 1 ;
