@@ -13,6 +13,7 @@ class page_quotes_one extends Page {
     }
     protected function addNgJs() {
         $this->app->jquery->addStaticInclude('ng/vendor/angularjs');
+        //$this->app->jquery->addStaticInclude('ng/vendor/angular-xeditable/js/xeditable.min');
         $this->app->jquery->addStaticInclude('ng/quotes/one/app');
         $this->app->jquery->addStaticInclude('ng/quotes/one/controllers/buttonSet');
         $this->app->jquery->addStaticInclude('ng/quotes/one/controllers/inlineCrud');

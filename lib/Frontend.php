@@ -226,6 +226,7 @@ class Frontend extends ApiFrontend {
         $this->url_page = $this->page;
         $this->add('Controller_PatternRouter');
         $this->router->addRule('(quotes)\/([\d]+)','quotes_one',array('quotes','id'));
+        //$this->router->link('quotes',array('quote_id'));
         $this->router->route();
     }
 
