@@ -11,15 +11,14 @@
             </strong> says:
         </span>
     </div>
-    <div>{{comm.text}}</div>
+    <div editable-textarea="comm.text" onaftersave="Comment.save(comm)">{{comm.text}}</div>
 </div>
 
 <div class="atk-box-small">
     <form class="atk-form">
         <input type="hidden" ng-model="comm.id" />
-
         <div class="atk-push-small">
-            <input type="text" class="atk-jackscrew" ng-model="comm.name" />
+            <textarea type="text" class="atk-jackscrew" ng-model="comm.name"></textarea>
         </div>
 
     </form>

@@ -7100,3 +7100,13 @@ table .requirement {
   color: rgba(0, 0, 0, 0.2);
   background-color: rgba(164, 164, 164, 0.1);
 }
+.editable-click {
+  cursor: pointer;
+}
+.editable-hide {
+  display: none;
+}
+.editable-controls textarea {
+  width: 100%;
+  height: 200px;
+}

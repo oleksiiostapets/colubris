@@ -11,6 +11,7 @@ app_module.service( 'Comment', [ '$rootScope','$http', function( $rootScope, $ht
 
         save: function ( comm ) {
 
+            console.log('save() comm');
             console.log(comm);
 
             if (typeof comm.id === 'undefined' ) {
@@ -19,7 +20,7 @@ app_module.service( 'Comment', [ '$rootScope','$http', function( $rootScope, $ht
                 // send new data to the server
             }
 
-            this.saveOnServer();
+            this.saveOnServer(comm);
             $rootScope.$broadcast('comm.update', {});
             $rootScope.$broadcast( 'comments.update' );
 
@@ -43,18 +44,18 @@ app_module.service( 'Comment', [ '$rootScope','$http', function( $rootScope, $ht
             $rootScope.$broadcast('comm.update', {});
             $rootScope.$broadcast( 'comments.update' );
         },
-//        saveOnServer: function() {
-//            var url = this.prepareUrl('saveAll',{quote_id: app_module.quote_id});
-//            $http.post(url,angular.toJson(service.requirements))
-//                .success(function(data) {
-//                    console.log(data);
-//                })
-//                .error(function(data, status) {
-//                    console.log(data);
-//                    console.log(status);
-//                })
-//            ;
-//        },
+        saveOnServer: function(comm) {
+            var url = this.prepareUrl('saveParams',{id: comm.id});
+            $http.post(url,comm)
+                .success(function(data) {
+                    console.log(data);
+                })
+                .error(function(data, status) {
+                    console.log(data);
+                    console.log(status);
+                })
+            ;
+        },
         getFromServer: function(requirement_id) {
             var url = this.prepareUrl('getByField',{field:'requirement_id',value: requirement_id});
             $http.get(url)

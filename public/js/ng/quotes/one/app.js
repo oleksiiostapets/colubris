@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var app_module = angular.module('quotes.one.app',[]);
+var app_module = angular.module('quotes.one.app',['xeditable']);
 
 
 //  inline editing

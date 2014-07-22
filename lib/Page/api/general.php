@@ -58,6 +58,13 @@ class Page_api_general extends Page {
         $this->page_getByField();
     }
     function page_saveParams(){
+        $data = file_get_contents("php://input");
+        $data_arr = @json_decode($data,true);
+        if (is_array($data_arr)) {
+            $all = array_merge($_REQUEST,$data_arr);
+        } else {
+            $all = $_REQUEST;
+        }
         $id = $this->checkGetParameter('id');
         $this->m->tryLoad($id);
         if(!$this->m->loaded()){
@@ -67,7 +74,7 @@ class Page_api_general extends Page {
             ]);
             exit();
         }
-        $this->m->set($_REQUEST);
+        $this->m->set($all);
         $this->m->save();
         echo json_encode([
             'result' => 'success',
