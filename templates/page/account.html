@@ -2,22 +2,36 @@
 
     <!--<div ng-controller="buttonSet" button-set class="action-buttons-set"></div>-->
 
-    <div ng-controller="forms" class="forms">
+    <div ng-controller="forms" class="atk-box">
 
         <div id="msg" class="system-msg"></div>
 
-        <h3> Avatar</h3>
-        <ng-include src="formAvatar"></ng-include>
-
-        <h3> Personal Data Form</h3>
-        <ng-include src="formPersonal"></ng-include>
-
-        <h3> Change Password​</h3>
-        <ng-include src="formPassword"></ng-include>
-
-        <h3> Mail Settings​</h3>
-        <ng-include src="formMail"></ng-include>
-
+        <div class="atk-row">
+            <div class="atk-col-6">
+                <div class="atk-box">
+                    <div class="atk-cells">
+                        <div class="atk-cell atk-padding-small">
+                            <h3> Avatar</h3>
+                            <ng-include src="formAvatar"></ng-include>
+                        </div>
+                        <div class="atk-cell atk-padding-small atk-jackscrew atk-valign-top">
+                            <h3> Personal Data Form</h3>
+                            <ng-include src="formPersonal"></ng-include>
+                        </div>
+                    </div>
+                    <div class="atk-padding-small">
+                        <h3> Mail Settings​</h3>
+                        <ng-include src="formMail"></ng-include>
+                    </div>
+                </div>
+            </div>
+            <div class="atk-col-6">
+                <div class="atk-box">
+                    <h3> Change Password​</h3>
+                    <ng-include src="formPassword"></ng-include>
+                </div>
+            </div>
+        </div>
     </div>
 
 
