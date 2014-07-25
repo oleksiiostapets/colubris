@@ -49,7 +49,7 @@ app_module.service( 'Task', [ '$rootScope','$http', function( $rootScope, $http 
         },
         paginate: function(page){
             $rootScope.current_page = page;
-            this.getFromServer();
+            this.getFromServerByFields();
         },
         getFromServer: function() {
             var url = this.prepareUrl('getByField',{"count":$rootScope.tasks_on_page,"offset":(($rootScope.current_page-1)*$rootScope.tasks_on_page)});

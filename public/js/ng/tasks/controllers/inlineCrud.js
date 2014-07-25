@@ -6,16 +6,24 @@
 
 app_module.controller(
     'inlineCrud',
-            ['$scope','$document','$http','Task','User','TaskStatus','Project','$rootScope',
-    function ($scope,  $document,  $http,  Task,  User,  TaskStatus,  Project,  $rootScope) {
+            ['$scope','$document','$http','Task','User','TaskStatus','Project','Quote','Requirement','$rootScope',
+    function ($scope,  $document,  $http,  Task,  User,  TaskStatus,  Project,  Quote,  Requirement,  $rootScope) {
 
         $rootScope.filter_values = {};
+        $rootScope.tasks_on_page = 25;
+        $rootScope.current_page = 1;
 
         $scope.filter = {};
 
         $scope.Project = Project;
         $scope.projects = Project.projects;
         Project.getFromServer();
+
+        $scope.Quote = Quote;
+        $scope.quotes = Quote.quotes;
+
+        $scope.Requirement = Requirement;
+        $scope.requirements = Requirement.requirements;
 
         $scope.User = User;
         $scope.assigneds = User.users;
@@ -24,9 +32,6 @@ app_module.controller(
         $scope.TaskStatus = TaskStatus;
         $scope.task_statuses = TaskStatus.task_statuses;
         TaskStatus.getFromServer();
-
-        $rootScope.tasks_on_page = 25;
-        $rootScope.current_page = 1;
 
         $scope.task = {};
         $scope.Task = Task;
@@ -59,6 +64,14 @@ app_module.controller(
 
         $scope.$on( 'projects.update', function( event ) {
             $scope.projects = Project.projects;
+        });
+
+        $scope.$on( 'quotes.update', function( event ) {
+            $scope.quotes = Quote.quotes;
+        });
+
+        $scope.$on( 'requirements.update', function( event ) {
+            $scope.requirements = Requirement.requirements;
         });
 
         $scope.$on( 'task_statuses.update', function( event ) {
