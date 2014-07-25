@@ -1,49 +1,29 @@
 <?php
-class page_tasks extends Page_Functional {
-    function page_index(){
-
-        // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->app->user_access->canSeeTaskList() ){
-            throw $this->exception('You cannot see this page','Exception_Denied');
-        }
-
-        $this->addFilter();
-        $this->stickeGetFilterVars();
-        $this->addBC();
-        $crud = $this->addTaskCRUD();
-
-        $this->filter->addViewToReload($crud);
-        $this->filter->commit();
+/**
+ * Created by Vadym Radvansky
+ * Date: 7/8/14 12:10 PM
+ */
+class page_tasks extends Page {
+    use Helper_Url;
+    function init() {
+        parent::init();
+        $this->addNgJs();
     }
-    private function addBC() {
-        $this->add('x_bread_crumb/View_BC',array(
-            'routes' => array(
-                0 => array(
-                    'name' => 'Home',
-                ),
-                1 => array(
-                    'name' => 'Tasks',
-                    'url' => 'tasks',
-                ),
-            )
-        ));
-   }
-    private function addTaskCRUD() {
-        $m = $this->add('Model_Task');
-        $m->forTaskCRUD();
+    protected function addNgJs() {
+        $this->app->jquery->addStaticInclude('ng/vendor/angularjs');
+        $this->app->jquery->addStaticInclude('ng/tasks/app');
+        $this->app->jquery->addStaticInclude('ng/tasks/controllers/inlineCrud');
+        $this->app->jquery->addStaticInclude('ng/tasks/directives/inlineCrud');
+        //$this->app->jquery->addStaticInclude('ng/tasks/directives/clientForm');
+        $this->app->jquery->addStaticInclude('ng/tasks/services/Task');
 
-        $cr = $this->add('CRUD_Task',array(
-            'form_class' => 'Form_EditTask',
-            'grid_class' => 'Grid_Tasks',
-            'allow_add'  => false,
-            'allow_edit' => false,
-            'allow_del'  => true
-        ));
-        $cr->setModel($m,
-            $this->app->user_access->whatTaskFieldsUserCanEdit(),
-            $this->app->user_access->whatTaskFieldsUserCanSee()
+        $this->js(true)->colubris()->startTasksApp(
+            $this->app->url('/'),
+            $this->app->getConfig('url_prefix'),
+            $this->app->getConfig('url_postfix')
         );
-        $cr->configure();
-        return $cr;
+    }
+    function defaultTemplate() {
+        return array('page/tasks');
     }
 }

@@ -26,21 +26,26 @@ class Page_api_general extends Page {
      */
     function page_getByField() {
         try{
-            $field = $this->checkGetParameter('field');
-            $value = $this->checkGetParameter('value');
-            if($this->method){
-                if($this->method == 'rlike') $value = $value . '%';
-                if($this->method == 'llike') $value = '%' . $value;
-                if($this->method == 'alike') $value = '%' . $value . '%';
-                $this->m->addCondition($field,'LIKE',$value);
-            }else{
-                $this->m->addCondition($field,$value);
+            $field = $this->getParameter('field');
+            $value = $this->getParameter('value');
+            if($field != ''){
+                if($this->method){
+                    if($this->method == 'rlike') $value = $value . '%';
+                    if($this->method == 'llike') $value = '%' . $value;
+                    if($this->method == 'alike') $value = '%' . $value . '%';
+                    $this->m->addCondition($field,'LIKE',$value);
+                }else{
+                    $this->m->addCondition($field,$value);
+                }
             }
             $this->m->setLimit($this->count,$this->offset);
             $data = $this->m->getRows();
+            $this->m->setLimit(999999999,0);
+            $total_rows = count($this->m->getRows());
             echo json_encode([
                 'result' => 'success',
                 'data'   => $data,
+                'total_rows' => $total_rows,
             ]);
             exit();
         }catch(Exception $e){
