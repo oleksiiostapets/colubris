@@ -4,7 +4,7 @@
 
 'use strict';
 
-app_module.service( 'Comment', [ '$rootScope','$http', function( $rootScope, $http ) {
+app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScope, $http, API ) {
     var current_index = null;
     var service = {
         comments: [],
@@ -15,9 +15,10 @@ app_module.service( 'Comment', [ '$rootScope','$http', function( $rootScope, $ht
             console.log(comm);
 
             if (typeof comm.id === 'undefined' ) {
-                service.comments.push( jQuery.extend({}, comm)  );
+                service.comments.push( angular.clone(comm) );
             } else {
                 // send new data to the server
+                service.comments.push( angular.clone(comm) );
             }
 
             this.saveOnServer(comm);
@@ -57,6 +58,10 @@ app_module.service( 'Comment', [ '$rootScope','$http', function( $rootScope, $ht
             ;
         },
         getFromServer: function(requirement_id) {
+
+            API.saveOne('comment','save');
+
+
             var url = this.prepareUrl('getByField',{field:'requirement_id',value: requirement_id});
             $http.get(url)
                 .success(function(data) {
