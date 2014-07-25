@@ -69,30 +69,12 @@ class Page_api_general extends Page {
      */
     function page_getByFields() {
         try{
-            $field1 = $this->getParameter('field1');
-            $value1 = $this->getParameter('value1');
-            if($field1 != '' && $value1 != ''){
-                $this->m->addCondition($field1,$value1);
-            }
-            $field2 = $this->getParameter('field2');
-            $value2 = $this->getParameter('value2');
-            if($field2 != '' && $value2 != ''){
-                $this->m->addCondition($field2,$value2);
-            }
-            $field3 = $this->getParameter('field3');
-            $value3 = $this->getParameter('value3');
-            if($field3 != '' && $value3 != ''){
-                $this->m->addCondition($field3,$value3);
-            }
-            $field4 = $this->getParameter('field4');
-            $value4 = $this->getParameter('value4');
-            if($field4 != '' && $value4 != ''){
-                $this->m->addCondition($field4,$value4);
-            }
-            $field5 = $this->getParameter('field5');
-            $value5 = $this->getParameter('value5');
-            if($field5 != '' && $value5 != ''){
-                $this->m->addCondition($field5,$value5);
+            for($i=1; $i<100; $i++){
+                $field = $this->getParameter('field'.$i);
+                $value = $this->getParameter('value'.$i);
+                if($field != '' && $value != ''){
+                    $this->m->addCondition($field,$value);
+                }
             }
             $this->m->setLimit($this->count,$this->offset);
             $data = $this->m->getRows();

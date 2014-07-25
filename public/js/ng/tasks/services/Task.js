@@ -10,6 +10,7 @@ app_module.service( 'Task', [ '$rootScope','$http', function( $rootScope, $http 
         total_rows: 0,
 
         filter: function(field,value){
+            //console.log(value);
             $rootScope.filter_values[field] = value.id;
             $rootScope.current_page = 1;
             this.getFromServerByFields();

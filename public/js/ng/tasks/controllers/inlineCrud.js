@@ -6,20 +6,23 @@
 
 app_module.controller(
     'inlineCrud',
-            ['$scope','$document','$http','Task','User','TaskStatus','$rootScope',
-    function ($scope,  $document,  $http,  Task,  User,  TaskStatus,  $rootScope) {
+            ['$scope','$document','$http','Task','User','TaskStatus','Project','$rootScope',
+    function ($scope,  $document,  $http,  Task,  User,  TaskStatus,  Project,  $rootScope) {
 
         $rootScope.filter_values = {};
 
         $scope.filter = {};
+
+        $scope.Project = Project;
+        $scope.projects = Project.projects;
+        Project.getFromServer();
+
         $scope.User = User;
         $scope.assigneds = User.users;
-
         User.getFromServer('assigneds.update');
 
         $scope.TaskStatus = TaskStatus;
         $scope.task_statuses = TaskStatus.task_statuses;
-
         TaskStatus.getFromServer();
 
         $rootScope.tasks_on_page = 25;
@@ -54,12 +57,16 @@ app_module.controller(
         });
 
 
-        $scope.$on( 'assigneds.update', function( event ) {
-            $scope.assigneds = User.users;
+        $scope.$on( 'projects.update', function( event ) {
+            $scope.projects = Project.projects;
         });
 
         $scope.$on( 'task_statuses.update', function( event ) {
             $scope.task_statuses = TaskStatus.task_statuses;
+        });
+
+        $scope.$on( 'assigneds.update', function( event ) {
+            $scope.assigneds = User.users;
         });
 
         $scope.combined = function(user){
