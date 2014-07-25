@@ -6,8 +6,21 @@
 
 app_module.controller(
     'inlineCrud',
-            ['$scope','$document','$http','Task','$rootScope',
-    function ($scope,  $document,  $http,  Task, $rootScope) {
+            ['$scope','$document','$http','Task','User','TaskStatus','$rootScope',
+    function ($scope,  $document,  $http,  Task,  User,  TaskStatus,  $rootScope) {
+
+        $rootScope.filter_values = {};
+
+        $scope.filter = {};
+        $scope.User = User;
+        $scope.assigneds = User.users;
+
+        User.getFromServer('assigneds.update');
+
+        $scope.TaskStatus = TaskStatus;
+        $scope.task_statuses = TaskStatus.task_statuses;
+
+        TaskStatus.getFromServer();
 
         $rootScope.tasks_on_page = 25;
         $rootScope.current_page = 1;
@@ -39,5 +52,23 @@ app_module.controller(
             if ($rootScope.current_page < total_pages) $scope.next_page = $rootScope.current_page + 1; else $scope.next_page = $rootScope.current_page;
             $scope.last_page = total_pages;
         });
+
+
+        $scope.$on( 'assigneds.update', function( event ) {
+            $scope.assigneds = User.users;
+        });
+
+        $scope.$on( 'task_statuses.update', function( event ) {
+            $scope.task_statuses = TaskStatus.task_statuses;
+        });
+
+        $scope.combined = function(user){
+            if(user.name == undefined || user.name == ''){
+                return user.email;
+            }
+            else {
+                return user.name + " (" + user.email + ")";
+            }
+        }
     }]
 );

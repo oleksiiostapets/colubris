@@ -1,7 +1,7 @@
 <?php
 class Model_Task extends Model_Auditable {
     public $table='task';
-    public static $task_statuses = array(
+    public $task_statuses = array(
         'unstarted'=>'unstarted',
         'started'=>'started',
         'finished'=>'finished',
@@ -27,7 +27,7 @@ class Model_Task extends Model_Auditable {
         $this->addField('name')->mandatory(true);
         $this->addField('priority')->setValueList(Model_Task::$task_priority)->defaultValue('normal');
 
-        $this->addField('status')->setValueList(Model_Task::$task_statuses)->defaultValue('unstarted')->sortable(true);
+        $this->addField('status')->setValueList($this->task_statuses)->defaultValue('unstarted')->sortable(true);
         $this->addField('type')->setValueList(Model_Task::$task_types)->defaultValue('change request')->sortable(true);
 
         $this->addField('descr_original')->dataType('text');
@@ -54,6 +54,19 @@ class Model_Task extends Model_Auditable {
 
         $this->addSpentTime();
 
+        // expressions
+        $this->addExpression('quote_id')->set(function($m,$q){
+            return $q->dsql()
+                ->expr('if(requirement_id is null,"",
+                            (SELECT id FROM quote WHERE quote.id=(SELECT quote_id FROM requirement WHERE requirement.id=task.requirement_id))
+                )');
+        });
+        $this->addExpression('quote_name')->set(function($m,$q){
+            return $q->dsql()
+                ->expr('if(requirement_id is null,"",
+                            (SELECT name FROM quote WHERE quote.id=(SELECT quote_id FROM requirement WHERE requirement.id=task.requirement_id))
+                )');
+        });
 
         $this->addHooks();
 

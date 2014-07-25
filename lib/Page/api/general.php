@@ -18,8 +18,8 @@ class Page_api_general extends Page {
 
     /**
      * Parameters:
-     * field - which field will be used for search (required)
-     * value - value for the field (required)
+     * field - which field will be used for search (optional)
+     * value - value for the field (optional)
      * count - count rows (optional)
      * offset - offset for query (optional)
      * method - for defining type of search. If empty - strong search, 'rlike', llike', 'alike'
@@ -42,6 +42,63 @@ class Page_api_general extends Page {
             $data = $this->m->getRows();
             $this->m->setLimit(999999999,0);
             $total_rows = count($this->m->getRows());
+//            var_dump($data);exit;
+            echo json_encode([
+                'result' => 'success',
+                'data'   => $data,
+                'total_rows' => $total_rows,
+            ]);
+            exit();
+        }catch(Exception $e){
+            echo json_encode([
+                'result' => 'error',
+                'error_message'   => $e->getMessage(),
+            ]);
+            exit();
+        }
+    }
+    /**
+     * Parameters:
+     * field1 - which field will be used for search (optional)
+     * value1 - value for the field (optional)
+     * ...
+     * field5 - which field will be used for search (optional)
+     * value5 - value for the field (optional)
+     * count - count rows (optional)
+     * offset - offset for query (optional)
+     */
+    function page_getByFields() {
+        try{
+            $field1 = $this->getParameter('field1');
+            $value1 = $this->getParameter('value1');
+            if($field1 != '' && $value1 != ''){
+                $this->m->addCondition($field1,$value1);
+            }
+            $field2 = $this->getParameter('field2');
+            $value2 = $this->getParameter('value2');
+            if($field2 != '' && $value2 != ''){
+                $this->m->addCondition($field2,$value2);
+            }
+            $field3 = $this->getParameter('field3');
+            $value3 = $this->getParameter('value3');
+            if($field3 != '' && $value3 != ''){
+                $this->m->addCondition($field3,$value3);
+            }
+            $field4 = $this->getParameter('field4');
+            $value4 = $this->getParameter('value4');
+            if($field4 != '' && $value4 != ''){
+                $this->m->addCondition($field4,$value4);
+            }
+            $field5 = $this->getParameter('field5');
+            $value5 = $this->getParameter('value5');
+            if($field5 != '' && $value5 != ''){
+                $this->m->addCondition($field5,$value5);
+            }
+            $this->m->setLimit($this->count,$this->offset);
+            $data = $this->m->getRows();
+            $this->m->setLimit(999999999,0);
+            $total_rows = count($this->m->getRows());
+
             echo json_encode([
                 'result' => 'success',
                 'data'   => $data,
