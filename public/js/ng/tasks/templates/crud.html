@@ -1,0 +1,40 @@
+<div class="atk-box atk-push ">
+    <div class="atk-table atk-table-bordered">
+        <table>
+            <thead>
+            <tr class="atk-swatch-blue">
+                <th>#</th>
+                <th>Name</th>
+                <th>Priority</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Spent Time</th>
+                <th>Requester</th>
+                <th>Assigned</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="task in tasks track by $index">
+                <td>{{$index+1}}</td>
+                <td>{{task.name}}</td>
+                <td>{{task.priority}}</td>
+                <td>{{task.type}}</td>
+                <td>{{task.status}}</td>
+                <td>{{task.spent_time}}</td>
+                <td>{{task.requester}}</td>
+                <td>{{task.assigned}}</td>
+                <td class="atk-text-nowrap">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="atk-box-small atk-actions atk-align-center paginator" id="tasks_paginator">
+            <a ng-click="Task.paginate(1);" href="javascript:void(null);" class="itemlits first">&laquo;</a>
+            <a ng-click="Task.paginate(prev_page);" href="javascript:void(null);" class="itemlits">&lt;</a>
+            <a ng-repeat="paginator in paginators" ng-click="Task.paginate(paginator.name);" href="javascript:void(null);" class="itemlits {{paginator.class}}">{{paginator.name}}</a>
+            <a ng-click="Task.paginate(next_page);" href="javascript:void(null);" class="itemlits">&gt;</a>
+            <a ng-click="Task.paginate(last_page);" href="javascript:void(null);" class="itemlits last">&raquo;</a>
+        </div>
+    </div>
+</div>

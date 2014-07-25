@@ -127,6 +127,14 @@ $.each({
             angular.bootstrap(document, ['clients.app']);
         });
     },
+    startTasksApp: function(base_url,prefix,postfix) {
+        angular.element(document).ready(function() {
+            app_module.base_url = base_url;
+            app_module.prefix   = prefix;
+            app_module.postfix  = postfix;
+            angular.bootstrap(document, ['tasks.app']);
+        });
+    },
     startSettingsApp: function(user_id,base_url,prefix,postfix) {
         angular.element(document).ready(function() {
             app_module.user_id  = user_id;
