@@ -6,9 +6,11 @@
 
 app_module.controller(
     'inlineCrud',
-            ['$scope','$document','$http','Requirement','Comment','Task',
-    function ($scope,  $document,  $http,  Requirement,  Comment,  Task) {
+            ['$scope','$document','$http','Requirement','Comment','Task','Quote',
+    function ($scope,  $document,  $http,  Requirement,  Comment,  Task, Quote) {
 
+   // quote info
+    Quote.getFromServer();
 
     // reqv
     $scope.reqv = {};
@@ -27,6 +29,9 @@ app_module.controller(
 
     Requirement.getFromServer();
 
+    $scope.$on( 'quote.update', function( event) {
+        $scope.quote = Quote.quote;
+    });
     $scope.$on( 'reqv.update', function( event, args ) {
         $scope.reqv = args;
     });

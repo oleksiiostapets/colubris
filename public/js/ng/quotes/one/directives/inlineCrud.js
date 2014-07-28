@@ -11,6 +11,7 @@ app_module.directive('inlineCrud', function factory($q,$http, $templateCache,$co
         scope.crud = app_module.base_url + 'js/ng/quotes/one/templates/crud.html';
         scope.comment_list = app_module.base_url + 'js/ng/quotes/one/templates/comment-list.html';
         scope.task_list = app_module.base_url + 'js/ng/quotes/one/templates/task-list.html';
+        scope.info = app_module.base_url + 'js/ng/quotes/one/templates/info.html';
 
         //------------------------------------------------
         //
