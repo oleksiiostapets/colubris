@@ -102,7 +102,7 @@ class Page_api_general extends Page {
         $this->page_getByField();
     }
     function page_saveParams(){
-        $data = file_get_contents("php://input");
+        $data = file_get_contents("php://input"); // TODO: not safe data
         $data_arr = @json_decode($data,true);
         if (is_array($data_arr)) {
             $all = array_merge($_REQUEST,$data_arr);
