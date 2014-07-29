@@ -9,8 +9,7 @@ app_module.directive('inlineCrud', function factory($q,$http, $templateCache,$co
 
         scope.form = app_module.base_url + 'js/ng/clients/templates/form.html';
         scope.crud = app_module.base_url + 'js/ng/clients/templates/crud.html';
-//        scope.comment_list = app_module.base_url + 'js/ng/quotes/one/templates/comment-list.html';
-//        scope.task_list = app_module.base_url + 'js/ng/quotes/one/templates/task-list.html';
+        scope.project_list = app_module.base_url + 'js/ng/clients/templates/project-list.html';
     }
 })
 ;

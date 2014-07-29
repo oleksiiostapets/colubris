@@ -15,7 +15,9 @@ class page_clients2 extends Page {
         $this->app->jquery->addStaticInclude('ng/clients/controllers/inlineCrud');
         $this->app->jquery->addStaticInclude('ng/clients/directives/inlineCrud');
         $this->app->jquery->addStaticInclude('ng/clients/directives/clientForm');
+        $this->app->jquery->addStaticInclude('ng/_shared/services/API');
         $this->app->jquery->addStaticInclude('ng/clients/services/Client');
+        $this->app->jquery->addStaticInclude('ng/_shared/services/Project');
 
         $this->js(true)->colubris()->startClientsApp(
             $this->app->url('/'),

@@ -5,7 +5,11 @@
             <div class="atk-box">
                 <form class="atk-form">
                     <input type="hidden" ng-model="client.id" />
-
+                    <div class="atk-push-small">
+                        <div class="atk-cell atk-valign-top">
+                            <div class="atk-label atk-effect-info">ID#{{client.id}}</div>
+                        </div>
+                    </div>
                     <div class="atk-push-small">
                         <div class="atk-push-small">
                             <label><strong>Name:</strong></label>
@@ -29,18 +33,8 @@
             </div>
         </div>
         <div class="atk-col-4">
-            <div class="atk-box">
-                <div class="atk-push small atk-cells">
-                    <div class="atk-cell atk-valign-top">
-                        <div class="atk-label atk-effect-info">ID#{{client.id}}</div>
-                    </div>
-                    <div class="atk-cell atk-jackscrew">
-                        <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><strong>{{client.name}}</strong></div>
-
-                    </div>
-                </div>
-                <div class="atk-action atk-box">
-                    <span>Email: {{client.email}}</span>
+                <div id="project-view" class="">
+                    <ng-include src="project_list"></ng-include>
                 </div>
             </div>
         </div>

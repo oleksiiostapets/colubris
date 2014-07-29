@@ -6,8 +6,8 @@
 
 app_module.controller(
     'inlineCrud',
-            ['$scope','$document','$http','Client',
-    function ($scope,  $document,  $http,  Client) {
+            ['$scope','$document','$http','Client','Project',
+    function ($scope,  $document,  $http,  Client, Project) {
 
 
     // client
@@ -15,14 +15,20 @@ app_module.controller(
     $scope.Client = Client;
     $scope.clients = Client.client;
 
-
     Client.getFromServer();
+
+    // projects
+    $scope.Project = Project;
+    $scope.projects = Project.projects;
 
     $scope.$on( 'client.update', function( event, args ) {
         $scope.client = args;
     });
     $scope.$on( 'clients.update', function( event ) {
         $scope.clients = Client.clients;
+    });
+    $scope.$on( 'projects.update', function( event ) {
+        $scope.projects = Project.projects;
     });
 }])
 ;

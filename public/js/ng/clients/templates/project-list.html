@@ -1,0 +1,9 @@
+<h4>Projects:</h4>
+<div class="atk-box-small" ng-repeat="proj in projects track by $index">
+    <div class="atk-push-small">
+        <span class="atk-label atk-effect-info">{{$index}} (#{{proj.id}})</span>
+        <div class="atk-cell atk-jackscrew">
+            <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><strong>{{proj.name}}</strong></div>
+        </div>
+    </div>
+</div>
