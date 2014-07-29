@@ -4,7 +4,7 @@
 
 'use strict';
 
-app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope, $http ) {
+app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $rootScope, $http, API ) {
     var current_index = null;
     var service = {
         requirements: [],
@@ -74,28 +74,17 @@ app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope,
             ;
         },
         getFromServer: function() {
-            var url = this.prepareUrl('getForQuote',{quote_id: app_module.quote_id});
-            $http.get(url)
-                .success(function(data) {
-                    try {
-                        var obj = angular.fromJson(data);
-                    } catch (e) {
-                        alert('Error! No data received.');
-                    }
-                    if (obj.result === 'success') {
-                        service.requirements = obj.data;
-                        $rootScope.$broadcast( 'requirements.update' );
-                    } else {
-                        alert('Error! No success message received.');
-                    }
-                })
-                .error(function(data, status) {
-                    console.log('Error: -------------------->');
-                    console.log(data);
-                    console.log(status);
-                    alert('Error! No data received.');
-                })
-            ;
+            API.getAll(
+                'requirement',
+                'getForQuote',
+                {quote_id: app_module.quote_id},
+                function(obj) {
+                    console.log('### requirements.update');
+                    console.log(service.comments);
+                    service.requirements = obj.data;
+                    $rootScope.$broadcast( 'requirements.update' );
+                }
+            );
         },
         prepareUrl: function(action,args) {
             var url = app_module.base_url + app_module.prefix  + 'api/requirement/' + action + app_module.postfix;

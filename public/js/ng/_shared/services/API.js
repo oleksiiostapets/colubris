@@ -9,13 +9,27 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
     var api_base_url = app_module.base_url + app_module.prefix  + 'api/' + replace_tag + app_module.postfix;
     var service = {
 
-        getAll: function(what) {
-
+        /**
+         *
+         * @param what     - api page (reauired)
+         * @param method   - api method (can be null or undefined)
+         * @param args     - GET apgs (can be null or undefined)
+         * @param callback - callback to be performed on success API request  (can be null or undefined)
+         */
+        getAll: function(what,method,args,callback) {
+            if (typeof method === 'undefined' || method === null) {
+                method = 'getByField';
+            }
+            if (typeof args === 'undefined' || args === null) {
+                args = {};
+            }
+            if (typeof callback === 'undefined' || callback === null) {
+                callback = function(obj) {};
+            }
+            var url = this.prepareUrl(what,method,args);
+            this.request(url,null,null,callback);
         },
         getOne: function(what,one) {
-
-        },
-        updateOne: function(what,one) {
 
         },
         saveOne: function(what,one,method) {
@@ -24,7 +38,7 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
             }
             var url = this.prepareUrl('comment',method,{id: one.id});
 
-            console.log('### prepared Url');
+            console.log('### saveOne() prepared Url');
             console.log(url);
             return;
         },
@@ -56,44 +70,87 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
             });
             return url;
         },
+        request: function(url,type,args,callback) {
+            if (typeof type === 'undefined' || type === null) {
+                type = 'get';
+            }
+            if (typeof args === 'undefined' || args === null) {
+                args = {};
+            }
+
+            switch (type) {
+                case 'get':
+                    var request = $http.get(url);
+                    break;
+                case 'post':
+                    var request = $http.post(url,args);
+                    break;
+                default:
+                    // TODO: Error message to console here
+            }
+
+            if (typeof request !== 'undefined') {
+                request
+                    .success(function(data) {
+                        try {
+                            var obj = angular.fromJson(data);
+                        } catch (e) {
+                            alert('Error! Data is not a peropper JSON.');
+                        }
+                        if (obj.result === 'success') {
+                            callback(obj);
+                        } else {
+                            alert('Error! No success message received.');
+                        }
+                    })
+                    .error(function(data, status) {
+                        console.log('Error: -------------------->');
+                        console.log(data);
+                        console.log(status);
+                        alert('Error! No data received.');
+                    })
+            } else {
+                alert("typeof type === 'undefined'");
+            }
+        }
 
 //////////////////////
-        saveOnServer: function(comm) {
-            var url = this.prepareUrl('saveParams',{id: comm.id});
-            $http.post(url,comm)
-                .success(function(data) {
-                    console.log(data);
-                })
-                .error(function(data, status) {
-                    console.log(data);
-                    console.log(status);
-                })
-            ;
-        },
-        getFromServer: function(requirement_id) {
-            var url = this.prepareUrl('getByField',{field:'requirement_id',value: requirement_id});
-            $http.get(url)
-                .success(function(data) {
-                    try {
-                        var obj = angular.fromJson(data);
-                    } catch (e) {
-                        alert('Error! No data received.');
-                    }
-                    if (obj.result === 'success') {
-                        service.comments = obj.data;
-                        $rootScope.$broadcast( 'comments.update' );
-                    } else {
-                        alert('Error! No success message received.');
-                    }
-                })
-                .error(function(data, status) {
-                    console.log('Error: -------------------->');
-                    console.log(data);
-                    console.log(status);
-                    alert('Error! No data received.');
-                })
-            ;
-        }
+//        saveOnServer: function(comm) {
+//            var url = this.prepareUrl('saveParams',{id: comm.id});
+//            $http.post(url,comm)
+//                .success(function(data) {
+//                    console.log(data);
+//                })
+//                .error(function(data, status) {
+//                    console.log(data);
+//                    console.log(status);
+//                })
+//            ;
+//        },
+//        getFromServer: function(requirement_id) {
+//            var url = this.prepareUrl('getByField',{field:'requirement_id',value: requirement_id});
+//            $http.get(url)
+//                .success(function(data) {
+//                    try {
+//                        var obj = angular.fromJson(data);
+//                    } catch (e) {
+//                        alert('Error! No data received.');
+//                    }
+//                    if (obj.result === 'success') {
+//                        service.comments = obj.data;
+//                        $rootScope.$broadcast( 'comments.update' );
+//                    } else {
+//                        alert('Error! No success message received.');
+//                    }
+//                })
+//                .error(function(data, status) {
+//                    console.log('Error: -------------------->');
+//                    console.log(data);
+//                    console.log(status);
+//                    alert('Error! No data received.');
+//                })
+//            ;
+//        }
     }
 
   return service;
