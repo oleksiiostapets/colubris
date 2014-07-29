@@ -34,8 +34,7 @@ class Grid_Quotes extends Grid {
         // estimate
         if( $_GET['estimate'] ) {
             if ( in_array('estimate',$this->allowed_actions) ) {
-                $this->js()->univ()->redirect($this->api->url('quotes/rfq/requirements',
-               			array('quote_id'=>$_GET['estimate'])))->execute();
+                $this->js()->univ()->redirect($this->api->url('quotes/'.$_GET['estimate']))->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['estimate']['name'].'" is not allowed!')->execute();
             }
@@ -73,7 +72,7 @@ class Grid_Quotes extends Grid {
                 $this->api->mailer->addClientReceiver($quote->get('project_id'));
                 $this->api->mailer->sendMail('quote_approved',array(
                     'quotename'=>$quote->get('name'),
-                    'link'=>$this->api->siteURL().$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
+                    'link'=>$this->api->siteURL().$this->api->url('quotes/'.$quote->get('id')),
                 ));
 
                 // Clearing email receivers and Sending email to managers
@@ -81,7 +80,7 @@ class Grid_Quotes extends Grid {
                 $this->api->mailer->addAllManagersReceivers($this->api->auth->model['organisation_id']);
                 $this->api->mailer->sendMail('quote_approved',array(
                     'quotename'=>$quote->get('name'),
-                    'link'=>$this->api->siteURL().$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
+                    'link'=>$this->api->siteURL().$this->api->url('quotes/'.$quote->get('id')),
                 ));
 
                 $this->js()->reload()->execute();
@@ -109,8 +108,7 @@ class Grid_Quotes extends Grid {
         // details
         if( $_GET['details'] ){
             if ( in_array('details',$this->allowed_actions) ) {
-                $this->js()->univ()->redirect($this->api->url('quotes/rfq/requirements',
-                        array('quote_id'=>$_GET['details'])))->execute();
+                $this->js()->univ()->redirect($this->api->url('quotes/'.$_GET['details']))->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['details']['name'].'" is not allowed')->execute();
             }
@@ -119,8 +117,7 @@ class Grid_Quotes extends Grid {
         // edit_details
         if( $_GET['edit_details'] ){
             if ( in_array('edit_details',$this->allowed_actions) ) {
-            $this->js()->univ()->redirect($this->api->url('quotes/rfq/requirements',
-                array('quote_id'=>$_GET['edit_details'])))->execute();
+            $this->js()->univ()->redirect($this->api->url('quotes/'.$_GET['edit_details']))->execute();
             } else {
                 $this->js()->univ()->errorMessage('Action "'.$this->posible_actions['edit_details']['name'].'" is not allowed')->execute();
             }
@@ -162,9 +159,8 @@ class Grid_Quotes extends Grid {
     	//$this->js('click')->_selector('[data-id='.$this->current_row['id'].']')->univ()->redirect($this->current_row['id']);
 
         $this->current_row_html['quotation'] =
-                '<div class="quote_name"><a href="'.$this->api->url('quotes/rfq/requirements',array(
-                    'quote_id'=>$this->current_row['id']
-                )).'">'.$this->current_row['name'].'</a></div>'.
+                '<div class="quote_name"><a href="'.$this->api->url('/quotes/'.$this->current_row['id']
+                ).'">'.$this->current_row['name'].'</a></div>'.
                 '<div class="quote_project"><span>Project:</span>'.$this->current_row['project'].'</div>'
         ;
         if (!$this->api->currentUser()->isClient()){

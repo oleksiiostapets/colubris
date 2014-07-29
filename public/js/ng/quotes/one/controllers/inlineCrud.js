@@ -12,6 +12,8 @@ app_module.controller(
    // quote info
     Quote.getFromServer();
 
+    $scope.calc = {};
+
     // reqv
     $scope.reqv = {};
     $scope.Requirement = Requirement;
@@ -37,6 +39,15 @@ app_module.controller(
     });
     $scope.$on( 'requirements.update', function( event ) {
         $scope.requirements = Requirement.requirements;
+        $scope.calc.net = 0;
+        $.each($scope.requirements,function(key,value){
+            if(value.is_included == 1){
+                $scope.calc.net = $scope.calc.net + parseFloat(value.estimate);
+            }
+        });
+        $scope.calc.subtotal = $scope.calc.net;
+        $scope.calc.pm = Math.ceil($scope.calc.subtotal/5);
+        $scope.calc.total = $scope.calc.subtotal + $scope.calc.pm;
     });
     $scope.$on( 'comments.update', function( event ) {
         $scope.comments = Comment.comments;
@@ -73,6 +84,14 @@ app_module.controller(
         console.log('### toggleIsIncluded');
         $scope.$broadcast('checkbox.update.'+args.id,args);
         Requirement.saveRequirementOnServer(args);
+        if(args.is_included == 1){
+            $scope.calc.net = $scope.calc.net + parseFloat(args.estimate);
+        }else{
+            $scope.calc.net = $scope.calc.net - parseFloat(args.estimate);
+        }
+        $scope.calc.subtotal = $scope.calc.net;
+        $scope.calc.pm = Math.ceil($scope.calc.subtotal/5);
+        $scope.calc.total = $scope.calc.subtotal + $scope.calc.pm;
         var reqv_cloned = jQuery.extend({}, args);
     }
 }])

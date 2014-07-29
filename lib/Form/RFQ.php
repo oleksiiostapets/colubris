@@ -35,6 +35,7 @@ class Form_RFQ extends Form {
         $this->model->set('status','quotation_requested');
         $this->model->set('currency','GBP');
         $this->update();
-        $this->api->redirect($this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->model->get('id'))));
+        //$this->api->redirect($this->api->url('/quotes/rfq/requirements',array('quote_id'=>$this->model->get('id'))));
+        $this->api->redirect($this->api->url('/quotes/'.$this->model->get('id')));
     }
 }

@@ -25,7 +25,7 @@ class View_RFQQuote extends View {
         			|| ( $this->api->auth->model['is_client'] && $this->quote->get('status')=='not_estimated' ))
             ){
 		        $b=$v->add('Button')->set('Edit requirements');
-		        $b->js('click')->univ()->redirect($this->api->url('/'.$page[0].'/quotes/rfq/requirements',array('quote_id'=>$this->quote->get('id'))));
+		        $b->js('click')->univ()->redirect($this->api->url('/'.$page[0].'/quotes/'.$this->quote->get('id')));
             }
         }
         

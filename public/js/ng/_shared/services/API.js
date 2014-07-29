@@ -12,20 +12,20 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
         /**
          * @param what     - api page (*required)
          * @param method   - api method (can be null or undefined)
-         * @param args     - Object for GET args (can be null or undefined)
-         * @param callback - callback to be performed on success API request  (can be null or undefined)
+         * @param get_args - Object for GET args (can be null or undefined)
+         * @param callback - callback function to be executed on success API request  (can be null or undefined)
          */
-        getAll: function(what,method,args,callback) {
+        getAll: function(what,method,get_args,callback) {
             if (typeof method === 'undefined' || method === null) {
                 method = 'getByField';
             }
-            if (typeof args === 'undefined' || args === null) {
-                args = {};
+            if (typeof get_args === 'undefined' || get_args === null) {
+                get_args = {};
             }
             if (typeof callback === 'undefined' || callback === null) {
                 callback = function(obj) {};
             }
-            var url = this.prepareUrl(what,method,args);
+            var url = this.prepareUrl(what,method,get_args);
             this.request(url,'get',null,callback);
         },
 
@@ -34,7 +34,7 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
          * @param method    - api method (can be null or undefined)
          * @param get_args  - Object for GET args (can be null or undefined)
          * @param post_data - POST data to be sent to the server (can be null or undefined)
-         * @param callback  - callback to be performed on success API request  (can be null or undefined)
+         * @param callback  - callback function to be executed on success API request  (can be null or undefined)
          */
         saveOne: function(what,method,get_args,post_data,callback) {
             if (typeof method === 'undefined' || method === null) {
@@ -49,37 +49,53 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
             var url = this.prepareUrl(what,method,get_args);
             this.request(url,'post',post_data,callback);
         },
-        getOne: function(what,one) {
 
-        },
-        removeOne: function(what,one) {
-
-        },
-
-        prepareUrl: function(table,action,args) {
-            var url = api_base_url;
-            var api_command = table + '/' + action;
-            url = url.replace(replace_tag,api_command);
-
-            //var url = app_module.base_url + app_module.prefix  + 'api/reqcomment/' + action + app_module.postfix;
-            if (url.indexOf('?') === false) {
-                url = url + '?';
-            } else {
-                url = url + '&';
+        /**
+         * @param what      - api page (*required)
+         * @param method    - api method (can be null or undefined)
+         * @param get_args  - Object for GET args (can be null or undefined)
+         * @param callback  - callback function to be executed on success API request  (can be null or undefined)
+         */
+        getOne: function(what,method,get_args,callback) {
+            if (typeof method === 'undefined' || method === null) {
+                method = 'getById';
             }
-            var count = 1;
-            $.each(args,function(key,value) {
-                if (typeof value === 'undefined') {
-                    return;
-                }
-                if (count > 1) {
-                    url = url + '&';
-                }
-                url = url + key + '=' + value;
-                count++;
-            });
-            return url;
+            if (typeof get_args === 'undefined' || get_args === null) {
+                get_args = {};
+            }
+            if (typeof callback === 'undefined' || callback === null) {
+                callback = function(obj) {};
+            }
+            var url = this.prepareUrl(what,method,get_args);
+            this.request(url,'get',null,callback);
         },
+
+        /**
+         * @param what      - api page (*required)
+         * @param method    - api method (can be null or undefined)
+         * @param get_args  - Object for GET args (can be null or undefined)
+         * @param callback  - callback function to be executed on success API request  (can be null or undefined)
+         */
+        removeOne: function(what,method,get_args,callback) {
+            if (typeof method === 'undefined' || method === null) {
+                method = 'deleteById';
+            }
+            if (typeof get_args === 'undefined' || get_args === null) {
+                get_args = {};
+            }
+            if (typeof callback === 'undefined' || callback === null) {
+                callback = function(obj) {};
+            }
+            var url = this.prepareUrl(what,method,get_args);
+            this.request(url,'get',null,callback);
+        },
+
+        /**
+         * @param url      - url to call
+         * @param type     - get | post
+         * @param args     - Object for GET args (can be null or undefined)
+         * @param callback - callback function to be executed on success API request  (can be null or undefined)
+         */
         request: function(url,type,args,callback) {
             if (typeof type === 'undefined' || type === null) {
                 type = 'get';
@@ -122,6 +138,37 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
             } else {
                 alert("typeof type === 'undefined'");
             }
+        },
+
+        /**
+         * @param table      - API page
+         * @param action     - API action
+         * @param args       - Object for GET args (can be null or undefined)
+         * @returns {string}
+         */
+        prepareUrl: function(table,action,args) {
+            var url = api_base_url;
+            var api_command = table + '/' + action;
+            url = url.replace(replace_tag,api_command);
+
+            //var url = app_module.base_url + app_module.prefix  + 'api/reqcomment/' + action + app_module.postfix;
+            if (url.indexOf('?') === false) {
+                url = url + '?';
+            } else {
+                url = url + '&';
+            }
+            var count = 1;
+            $.each(args,function(key,value) {
+                if (typeof value === 'undefined') {
+                    return;
+                }
+                if (count > 1) {
+                    url = url + '&';
+                }
+                url = url + key + '=' + value;
+                count++;
+            });
+            return url;
         }
 
 //////////////////////
