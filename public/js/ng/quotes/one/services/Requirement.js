@@ -4,7 +4,7 @@
 
 'use strict';
 
-app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope, $http ) {
+app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $rootScope, $http, API ) {
     var current_index = null;
     var service = {
         requirements: [],
@@ -60,42 +60,23 @@ app_module.service( 'Requirement', [ '$rootScope','$http', function( $rootScope,
             ;
         },
         saveRequirementOnServer: function(reqv) {
-            console.log('### Requirement.saveRequirementOnServer()');
-
-            var url = this.prepareUrl('saveParams',{id: reqv.id, is_included: reqv.is_included});
-            $http.post(url,angular.toJson(service.requirements))
-                .success(function(data) {
-                    console.log(data);
-                })
-                .error(function(data, status) {
-                    console.log(data);
-                    console.log(status);
-                })
-            ;
+            API.saveOne(
+                'requirement',
+                null,
+                {id: reqv.id, is_included: reqv.is_included},
+                angular.toJson(service.requirements)
+            );
         },
         getFromServer: function() {
-            var url = this.prepareUrl('getForQuote',{quote_id: app_module.quote_id});
-            $http.get(url)
-                .success(function(data) {
-                    try {
-                        var obj = angular.fromJson(data);
-                    } catch (e) {
-                        alert('Error! No data received.');
-                    }
-                    if (obj.result === 'success') {
-                        service.requirements = obj.data;
-                        $rootScope.$broadcast( 'requirements.update' );
-                    } else {
-                        alert('Error! No success message received.');
-                    }
-                })
-                .error(function(data, status) {
-                    console.log('Error: -------------------->');
-                    console.log(data);
-                    console.log(status);
-                    alert('Error! No data received.');
-                })
-            ;
+            API.getAll(
+                'requirement',
+                'getForQuote',
+                {quote_id: app_module.quote_id},
+                function(obj) {
+                    service.requirements = obj.data;
+                    $rootScope.$broadcast( 'requirements.update' );
+                }
+            );
         },
         prepareUrl: function(action,args) {
             var url = app_module.base_url + app_module.prefix  + 'api/requirement/' + action + app_module.postfix;

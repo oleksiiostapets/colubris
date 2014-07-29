@@ -58,32 +58,15 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
             ;
         },
         getFromServer: function(requirement_id) {
-
-            API.saveOne('comment','save');
-
-
-            var url = this.prepareUrl('getByField',{field:'requirement_id',value: requirement_id});
-            $http.get(url)
-                .success(function(data) {
-                    try {
-                        var obj = angular.fromJson(data);
-                    } catch (e) {
-                        alert('Error! No data received.');
-                    }
-                    if (obj.result === 'success') {
-                        service.comments = obj.data;
-                        $rootScope.$broadcast( 'comments.update' );
-                    } else {
-                        alert('Error! No success message received.');
-                    }
-                })
-                .error(function(data, status) {
-                    console.log('Error: -------------------->');
-                    console.log(data);
-                    console.log(status);
-                    alert('Error! No data received.');
-                })
-            ;
+            API.getAll(
+                'reqcomment',
+                undefined,
+                {field:'requirement_id',value:requirement_id},
+                function(obj) {
+                    service.comments = obj.data;
+                    $rootScope.$broadcast( 'comments.update' );
+                }
+            );
         },
         prepareUrl: function(action,args) {
             var url = app_module.base_url + app_module.prefix  + 'api/reqcomment/' + action + app_module.postfix;
