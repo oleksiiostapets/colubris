@@ -60,18 +60,12 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             ;
         },
         saveRequirementOnServer: function(reqv) {
-            console.log('### Requirement.saveRequirementOnServer()');
-
-            var url = this.prepareUrl('saveParams',{id: reqv.id, is_included: reqv.is_included});
-            $http.post(url,angular.toJson(service.requirements))
-                .success(function(data) {
-                    console.log(data);
-                })
-                .error(function(data, status) {
-                    console.log(data);
-                    console.log(status);
-                })
-            ;
+            API.saveOne(
+                'requirement',
+                'saveParams',
+                {id: reqv.id, is_included: reqv.is_included},
+                angular.toJson(service.requirements)
+            );
         },
         getFromServer: function() {
             API.getAll(
@@ -79,8 +73,6 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                 'getForQuote',
                 {quote_id: app_module.quote_id},
                 function(obj) {
-                    console.log('### requirements.update');
-                    console.log(service.comments);
                     service.requirements = obj.data;
                     $rootScope.$broadcast( 'requirements.update' );
                 }

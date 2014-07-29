@@ -10,10 +10,9 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
     var service = {
 
         /**
-         *
-         * @param what     - api page (reauired)
+         * @param what     - api page (*required)
          * @param method   - api method (can be null or undefined)
-         * @param args     - GET apgs (can be null or undefined)
+         * @param args     - Object for GET args (can be null or undefined)
          * @param callback - callback to be performed on success API request  (can be null or undefined)
          */
         getAll: function(what,method,args,callback) {
@@ -27,20 +26,31 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
                 callback = function(obj) {};
             }
             var url = this.prepareUrl(what,method,args);
-            this.request(url,null,null,callback);
+            this.request(url,'get',null,callback);
+        },
+
+        /**
+         * @param what      - api page (*required)
+         * @param method    - api method (can be null or undefined)
+         * @param get_args  - Object for GET args (can be null or undefined)
+         * @param post_data - POST data to be sent to the server (can be null or undefined)
+         * @param callback  - callback to be performed on success API request  (can be null or undefined)
+         */
+        saveOne: function(what,method,get_args,post_data,callback) {
+            if (typeof method === 'undefined' || method === null) {
+                method = 'getByField';
+            }
+            if (typeof get_args === 'undefined' || get_args === null) {
+                get_args = {};
+            }
+            if (typeof callback === 'undefined' || callback === null) {
+                callback = function(obj) {};
+            }
+            var url = this.prepareUrl(what,method,get_args);
+            this.request(url,'post',post_data,callback);
         },
         getOne: function(what,one) {
 
-        },
-        saveOne: function(what,one,method) {
-            if (typeof method === 'undefined') {
-                method = 'saveParams';
-            }
-            var url = this.prepareUrl('comment',method,{id: one.id});
-
-            console.log('### saveOne() prepared Url');
-            console.log(url);
-            return;
         },
         removeOne: function(what,one) {
 
