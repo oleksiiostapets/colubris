@@ -4,56 +4,26 @@
 
 'use strict';
 
-app_module.service( 'Project', [ '$rootScope','$http', function( $rootScope, $http ) {
+app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScope, $http, API ) {
     var current_index = null;
     var service = {
         projects: [],
 
-        getFromServer: function() {
+        getFromServer: function(field,value) {
 
+            var field_val = field ? {field:field, value:value} : {};
 
-            var url = this.prepareUrl('getByField',{});
-            $http.get(url)
-                .success(function(data) {
-                    try {
-                        var obj = angular.fromJson(data);
-                    } catch (e) {
-                        alert('Error! No data received.');
-                    }
-                    if (obj.result === 'success') {
-                        service.projects = obj.data;
-                        service.projects.unshift({id:"",name:'all'})
-                        $rootScope.$broadcast( 'projects.update' );
-                    } else {
-                        alert('Error! No success message received.');
-                    }
-                })
-                .error(function(data, status) {
-                    console.log('Error: -------------------->');
-                    console.log(data);
-                    console.log(status);
-                    alert('Error! No data received.');
-                })
-            ;
-        },
-        prepareUrl: function(action,args) {
-            var url = app_module.base_url + app_module.prefix  + 'api/project/' + action + app_module.postfix;
-            if (url.indexOf('?') === false) {
-                url = url + '?';
-            } else {
-                url = url + '&';
-            }
-            var count = 1;
-            $.each(args,function(key,value) {
-                if (count > 1) {
-                    url = url + '&';
+            API.getAll(
+                'project',
+                undefined,
+                field_val,
+                function(obj) {
+                    service.projects = obj.data;
+                    if(!field)   service.projects.unshift({id:"",name:'all'});  //default element for filter by field
+                    $rootScope.$broadcast( 'projects.update' );
                 }
-                url = url + key + '=' + value;
-                count++;
-            });
-            return url;
+            );
         }
     }
-
     return service;
 }]);
