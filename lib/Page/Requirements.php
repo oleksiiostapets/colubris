@@ -198,7 +198,7 @@ class Page_Requirements extends Page {
                 $this->api->mailer->addClientReceiver($quote->get('project_id'));
                 $this->api->mailer->sendMail('quote_approved',array(
                     'quotename'=>$quote->get('name'),
-                    'link'=>$this->api->siteURL().$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
+                    'link'=>$this->api->siteURL().$this->api->url('quotes/'.$quote->get('id')),
                 ));
 
                 // Clearing email receivers and Sending email to managers
@@ -206,7 +206,7 @@ class Page_Requirements extends Page {
                 $this->api->mailer->addAllManagersReceivers($this->api->auth->model['organisation_id']);
                 $this->api->mailer->sendMail('quote_approved',array(
                     'quotename'=>$quote->get('name'),
-                    'link'=>$this->api->siteURL().$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))),
+                    'link'=>$this->api->siteURL().$this->api->url('quotes/'.$quote->get('id')),
                 ));
 
                 $this->api->redirect($this->api->url('/quotes'));
@@ -271,7 +271,7 @@ class Page_Requirements extends Page {
         			|| ( $this->api->auth->model['is_client'] && $quote->get('status')=='not_estimated' ))
             ){
 		        $b=$v->add('Button')->set('Edit requirements');
-		        $b->js('click')->univ()->redirect($this->api->url('/'.$page[0].'/quotes/rfq/requirements',array('quote_id'=>$quote->get('id'))));
+		        $b->js('click')->univ()->redirect($this->api->url('/'.$page[0].'/quotes/'.$quote->get('id')));
             }
         }
 
@@ -402,7 +402,7 @@ class Page_Requirements extends Page {
         if ($quote->canUserEditRequirements($this->api->currentUser())) {
             $b=$view->add('Button')->set('Edit requirements');
             $b->js('click')->univ()->redirect(
-                $this->api->url('quotes/rfq/requirements',array('quote_id'=>$this->quote->get('id')))
+                $this->api->url('quotes/'.$this->quote->get('id'))
             );
         }
     }

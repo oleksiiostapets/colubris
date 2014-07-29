@@ -21,7 +21,7 @@ class View_Requirement extends View {
                 ),
                 2 => array(
                     'name' => 'Quote',
-                    'url' => $this->api->url('quotes/rfq/requirements',array('quote_id'=>$this->quote->get('id'))),
+                    'url' => $this->api->url('quotes/'.$this->quote->get('id')),
                 ),
                 3 => array(
                     'name' => 'Details of requirement',

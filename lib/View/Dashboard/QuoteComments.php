@@ -14,7 +14,7 @@ class View_Dashboard_QuoteComments extends View_Dashboard_Comments {
         // quote
         if ($this->current_row['quote_name']) {
             $this->current_row_html['quote'] =
-                '<a href="'.$this->app->url('/quotes/rfq/requirements',array('quote_id'=>$this->current_row['quote_id'])).'">'
+                '<a href="'.$this->app->url('/quotes/'.$this->current_row['quote_id']).'">'
                         .$this->current_row['quote_name'].'</a>';
         } else {
             $this->current_row_html['quote'] = 'none';

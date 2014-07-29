@@ -101,6 +101,22 @@ class Page_api_general extends Page {
         $_GET['value'] = $id;
         $this->page_getByField();
     }
+    function page_deleteById() {
+        $id = $this->checkGetParameter('id');
+        try{
+            $this->m->delete($id);
+            echo json_encode([
+                'result' => 'success',
+            ]);
+            exit();
+        }catch(Exception $e){
+            echo json_encode([
+                'result' => 'error',
+                'error_message'   => $e->getMessage(),
+            ]);
+            exit();
+        }
+    }
     function page_saveParams(){
         $data = file_get_contents("php://input");
         $data_arr = @json_decode($data,true);

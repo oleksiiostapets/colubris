@@ -53,7 +53,7 @@ class Model_Client extends Model_BaseTable {
             $this->api->mailer->addClientReceiver($quote->get('project_id'));
             //$this->api->mailer->setReceivers(array($this['name'].' <'.$this['email'].'>'));//'"'.$this['name'].' <'.$this['email'].'>"'));
             $this->api->mailer->sendMail('send_quote',array(
-                'link'=>$this->api->siteURL().$this->api->url('quotes/rfq/requirements',array('quote_id'=>$quote_id)),
+                'link'=>$this->api->siteURL().$this->api->url('quotes/'.$quote_id),
                 'username'=>$this['name'],
                 'quotename'=>$quote['name'],
 //               'link'=>$this->api->siteURL().$this->api->url('client/quotes/rfq/estimated',array('quote_id'=>$quote_id))

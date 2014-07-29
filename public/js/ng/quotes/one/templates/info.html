@@ -1,4 +1,31 @@
-<div ng-repeat="info in quote">
+<div style="position:absolute;right:50px;border:1px solid red;color:red;-moz-border-radius: 10px;border-radius: 10px;padding:20px;">
+    <table>
+    <tr>
+        <td></td>
+        <td>Net:</td>
+        <td>{{calc.net}} hours</td>
+    </tr>
+    <tr>
+        <td>+</td>
+        <td>Bla:</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>+</td>
+        <td>Foo:</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="3">---------------</td>
+    </tr>
+    <tr>
+        <td>=</td>
+        <td>SubTotal:</td>
+        <td>{{calc.subtotal}} h</td>
+    </tr>
+    </table>
+</div>
+<div ng-repeat="info in quote" style="height:200px;">
     <h3>{{info.name}}</h3>
     <h4>Project: {{info.project}}</h4>
     <h4>Status: {{info.status}}</h4>
