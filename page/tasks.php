@@ -14,6 +14,7 @@ class page_tasks extends Page {
         $this->app->jquery->addStaticInclude('ng/tasks/app');
         $this->app->jquery->addStaticInclude('ng/tasks/controllers/inlineCrud');
         $this->app->jquery->addStaticInclude('ng/tasks/directives/inlineCrud');
+        $this->app->jquery->addStaticInclude('ng/_shared/services/API');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Project');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Quote');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Requirement');
