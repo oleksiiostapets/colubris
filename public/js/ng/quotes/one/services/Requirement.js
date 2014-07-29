@@ -62,7 +62,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
         saveRequirementOnServer: function(reqv) {
             API.saveOne(
                 'requirement',
-                'saveParams',
+                null,
                 {id: reqv.id, is_included: reqv.is_included},
                 angular.toJson(service.requirements)
             );

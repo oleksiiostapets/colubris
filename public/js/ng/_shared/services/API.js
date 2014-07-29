@@ -38,7 +38,7 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
          */
         saveOne: function(what,method,get_args,post_data,callback) {
             if (typeof method === 'undefined' || method === null) {
-                method = 'getByField';
+                method = 'saveParams';
             }
             if (typeof get_args === 'undefined' || get_args === null) {
                 get_args = {};
