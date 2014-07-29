@@ -14,7 +14,7 @@ app_module.directive('clientForm', function factory($q,$http, $templateCache,$co
             element.addClass('fixed');
             console.log(client);
 
-            scope.Comment.getFromServer(client.id);
+            scope.Client.getFromServer(client.id);
         });
         scope.$on( 'form.to_regular_place', function( event ) {
             console.log('form.to_fixed_position');
