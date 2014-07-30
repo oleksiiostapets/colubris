@@ -1,14 +1,14 @@
 'use strict';
 
-app_module.service( 'Settings', [ '$rootScope','$http', function( $rootScope, $http ) {
+app_module.service( 'Setting', [ '$rootScope','$http','API', function( $rootScope, $http, API ) {
     var current_index = null;
     var service = {
         settings: [],
 
         upload: function ( account ) {
 
-            console.log('upload');
-            console.log(account);
+            //console.log('upload');
+            //console.log(account);
 
             //this.saveOnServer(account);
             //$rootScope.$broadcast('account.update', {});
@@ -22,13 +22,40 @@ app_module.service( 'Settings', [ '$rootScope','$http', function( $rootScope, $h
         },
         savePassword: function ( account ) {
 
-            console.log(account);
+            //console.log(account);
 
             this.changePasswordOnServer(account);
             //$rootScope.$broadcast('account.update', {});
         },
         changePasswordOnServer: function(account) {
             //console.log(old_password);
+            API.saveOne(
+                'account',
+                'changePassword',
+                {id : account.id, old_password : account.old_password, new_password : account.new_password, verify_password : account.verify_password},
+                angular.toJson(service.settings),
+                function(obj) {
+                    $(".validation_error").remove();
+                    console.log('---');
+                    console.log(obj.result);
+                    if (obj.result === 'success') {
+                        $rootScope.showSystemMsg('password changed');
+                        $rootScope.$broadcast( 'settings.password_changed', null );
+                    } else if(obj.result === 'validation_error') {
+                        var i = 0;
+                        $.each(obj.errors,function(key,value) {
+                            $.each(value,function(key2,value2) {
+                                i = i + 1;
+                                $( "#" + key2).parent().after( '<span id="val_error_' + i + '" class="validation_error">' + value2 + '<br /></span>' );
+                                $rootScope.removeTag("#val_error_" + i, 3000);
+                            });
+                        });
+                    } else {
+                        alert('Error! No success message received.');
+                    }
+                }
+            );
+/*
             var url = this.prepareUrl('api/account/','changePassword',{id : account.id, old_password : account.old_password, new_password : account.new_password, verify_password : account.verify_password});
             $http.get(url)
                 .success(function(data) {
@@ -61,55 +88,33 @@ app_module.service( 'Settings', [ '$rootScope','$http', function( $rootScope, $h
                     console.log(status);
                     alert('Error! No data received.');
                 })
-            ;
+            ;*/
         },
         saveOnServer: function(account) {
-            var url = this.prepareUrl('api/account/','saveParams',{id : account.id, name : account.name, mail_task_changes : account.mail_task_changes});
-            $http.get(url)
-                .success(function(data) {
-                    try {
-                        var obj = angular.fromJson(data);
-                    } catch (e) {
-                        alert('Error! No data received.');
-                    }
+            API.saveOne(
+                'account',
+                null,
+                {id : account.id, name : account.name, mail_task_changes : account.mail_task_changes},
+                angular.toJson(service.settings),
+                function(obj) {
                     if (obj.result === 'success') {
                         $rootScope.showSystemMsg('saved');
                     } else {
                         alert('Error! No success message received.');
                     }
-                })
-                .error(function(data, status) {
-                    console.log('Error: -------------------->');
-                    console.log(data);
-                    console.log(status);
-                    alert('Error! No data received.');
-                })
-            ;
+                }
+            );
         },
         getFromServer: function() {
-            var url = this.prepareUrl('api/account/','getById',{id: app_module.user_id});
-            $http.get(url)
-                .success(function(data) {
-                    //console.log(data);
-                    try {
-                        var obj = angular.fromJson(data);
-                    } catch (e) {
-                        alert('Error! No data received.');
-                    }
-                    if (obj.result === 'success') {
-                        service.settings = obj.data;
-                        $rootScope.$broadcast( 'settings.update',service.settings );
-                    } else {
-                        alert('Error! No success message received.');
-                    }
-                })
-                .error(function(data, status) {
-                    console.log('Error: -------------------->');
-                    console.log(data);
-                    console.log(status);
-                    alert('Error! No data received.');
-                })
-            ;
+            API.getAll(
+                'account',
+                'getById',
+                {id: app_module.user_id},
+                function(obj) {
+                    service.settings = obj.data;
+                    $rootScope.$broadcast( 'settings.update',service.settings );
+                }
+            );
         },
         prepareUrl: function(page,action,args) {
             var url = app_module.base_url + app_module.prefix  + page + action + app_module.postfix;
@@ -127,25 +132,6 @@ app_module.service( 'Settings', [ '$rootScope','$http', function( $rootScope, $h
                 count++;
             });
             return url;
-        },
-        backupReqv: function(index) {
-            current_index = index;
-            service.settings[index].backup = jQuery.extend({}, service.settings[index]);
-            console.log(service.settings[current_index].backup);
-        },
-        resetBackupReqv: function() {
-            if (current_index) {
-                service.settings[current_index].backup = {};
-                current_index = null;
-            }
-        },
-        restoreReqv: function() {
-            if (
-                typeof service.settings[current_index] !== 'undefined' &&
-                typeof service.settings[current_index].backup !== 'undefined'
-            ) {
-                service.settings[current_index] = service.settings[current_index].backup;
-            }
         }
     }
 

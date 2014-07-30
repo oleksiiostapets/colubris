@@ -4,7 +4,7 @@
 
 'use strict';
 
-app_module.service( 'Client', [ '$rootScope','$http', function( $rootScope, $http ) {
+app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope, $http, API ) {
     var current_index = null;
     var service = {
         clients: [],
@@ -59,28 +59,15 @@ app_module.service( 'Client', [ '$rootScope','$http', function( $rootScope, $htt
             ;
         },
         getFromServer: function() {
-            var url = this.prepareUrl('getForClient',{});
-            $http.get(url)
-                .success(function(data) {
-                    try {
-                        var obj = angular.fromJson(data);
-                    } catch (e) {
-                        alert('Error! No data received.');
-                    }
-                    if (obj.result === 'success') {
-                        service.clients = obj.data;
-                        $rootScope.$broadcast( 'clients.update' );
-                    } else {
-                        alert('Error! No success message received.');
-                    }
-                })
-                .error(function(data, status) {
-                    console.log('Error: -------------------->');
-                    console.log(data);
-                    console.log(status);
-                    alert('Error! No data received.');
-                })
-            ;
+            API.getAll(
+                'client',
+                'getForClient',
+                undefined,
+                function(obj) {
+                    service.clients = obj.data;
+                    $rootScope.$broadcast( 'clients.update' );
+                }
+            );
         },
         prepareUrl: function(action,args) {
             var url = app_module.base_url + app_module.prefix  + 'api/client/' + action + app_module.postfix;

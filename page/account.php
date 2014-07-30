@@ -11,7 +11,8 @@ class page_account extends Page {
         $this->app->jquery->addStaticInclude('ng/settings/app');
         $this->app->jquery->addStaticInclude('ng/settings/controllers/forms');
         $this->app->jquery->addStaticInclude('ng/settings/directives/forms');
-        $this->app->jquery->addStaticInclude('ng/settings/services/Settings');
+        $this->app->jquery->addStaticInclude('ng/_shared/services/API');
+        $this->app->jquery->addStaticInclude('ng/_shared/services/Setting');
 
         $this->js(true)->colubris()->startSettingsApp(
             $this->app->currentUser()->get('id'),

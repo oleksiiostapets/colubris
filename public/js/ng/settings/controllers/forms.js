@@ -6,18 +6,18 @@
 
 app_module.controller(
     'forms',
-            ['$scope','$document','$http','Settings','$rootScope',
-    function ($scope,  $document,  $http,  Settings , $rootScope) {
+            ['$scope','$document','$http','Setting','$rootScope',
+    function ($scope,  $document,  $http,  Setting , $rootScope) {
 
-        Settings.getFromServer();
+        Setting.getFromServer();
 
         $scope.account = {};
         $scope.formAvatar = app_module.base_url + 'js/ng/settings/templates/formAvatar.html';
         $scope.formPersonal = app_module.base_url + 'js/ng/settings/templates/formPersonal.html';
         $scope.formPassword = app_module.base_url + 'js/ng/settings/templates/formPassword.html';
         $scope.formMail = app_module.base_url + 'js/ng/settings/templates/formMail.html';
-        $scope.Settings = Settings;
-        $scope.settings = Settings.settings;
+        $scope.Setting = Setting;
+        $scope.settings = Setting.settings;
 
         $scope.upload = function() {
             var url = app_module.base_url + app_module.prefix  + 'api/account/' + 'addToFilestore' + app_module.postfix;
