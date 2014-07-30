@@ -41,7 +41,7 @@ app_module.controller(
         $scope.requirements = Requirement.requirements;
         $scope.calc.net = 0;
         $.each($scope.requirements,function(key,value){
-            if(value.is_included == 1){
+            if(value.is_included == 1 && value.estimate!=null){
                 $scope.calc.net = $scope.calc.net + parseFloat(value.estimate);
             }
         });

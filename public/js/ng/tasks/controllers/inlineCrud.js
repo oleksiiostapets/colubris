@@ -6,8 +6,8 @@
 
 app_module.controller(
     'inlineCrud',
-            ['$scope','$document','$http','Task','User','TaskStatus','Project','Quote','Requirement','$rootScope',
-    function ($scope,  $document,  $http,  Task,  User,  TaskStatus,  Project,  Quote,  Requirement,  $rootScope) {
+            ['$scope','$document','$http','Task','User','Project','Quote','Requirement','$rootScope',
+    function ($scope,  $document,  $http,  Task,  User,  Project,  Quote,  Requirement,  $rootScope) {
 
         $rootScope.filter_values = {};
         $rootScope.tasks_on_page = 30;
@@ -30,15 +30,13 @@ app_module.controller(
         $scope.assigneds = User.users;
         User.getFromServer('assigneds.update');
 
-        $scope.TaskStatus = TaskStatus;
-        $scope.task_statuses = TaskStatus.task_statuses;
-        TaskStatus.getFromServer();
-
         $scope.task = {};
         $scope.Task = Task;
         $scope.tasks = Task.task;
+        $scope.task_statuses = Task.task_statuses;
 
         Task.getFromServer($rootScope.current_page);
+        Task.getStatusesFromServer();
 
         $scope.$on( 'task.update', function( event, args ) {
             $scope.task = args;
@@ -80,7 +78,7 @@ app_module.controller(
         });
 
         $scope.$on( 'task_statuses.update', function( event ) {
-            $scope.task_statuses = TaskStatus.task_statuses;
+            $scope.task_statuses = Task.task_statuses;
         });
 
         $scope.$on( 'assigneds.update', function( event ) {
