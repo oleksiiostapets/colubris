@@ -105,6 +105,24 @@ class Model_Quote extends Model_Auditable {
 				->where('project.id',$q->getField('project_id'))
 				;
 		});
+		$this->addExpression('client_name')->set(function($m,$q){
+			return $q->dsql()
+                ->table('client')
+                ->table('project')
+                ->field('client.name')
+                ->where('client.id=project.client_id')
+                ->where('project.id',$q->getField('project_id'))
+				;
+		});
+		$this->addExpression('client_email')->set(function($m,$q){
+			return $q->dsql()
+                ->table('client')
+                ->table('project')
+                ->field('client.email')
+                ->where('client.id=project.client_id')
+                ->where('project.id',$q->getField('project_id'))
+				;
+		});
 
 		$this->addExpression('estimated')->caption('Est.time(hours)')->set(function($m,$q){
 			return $q->dsql()

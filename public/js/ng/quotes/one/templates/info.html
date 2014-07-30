@@ -1,45 +1,37 @@
-<div style="position:absolute;right:50px;border:1px solid red;color:red;-moz-border-radius: 10px;border-radius: 10px;padding:20px;">
-    <table>
-    <tr>
-        <td></td>
-        <td>Net:</td>
-        <td>{{calc.net}}h</td>
-    </tr>
-    <tr>
-        <td>+</td>
-        <td>Bla:</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>+</td>
-        <td>Foo:</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td colspan="3" style="border-bottom:1px solid red;"></td>
-    </tr>
-    <tr>
-        <td>=</td>
-        <td>SubTotal:</td>
-        <td>{{calc.subtotal}}h</td>
-    </tr>
-    <tr>
-        <td>+</td>
-        <td>PM:</td>
-        <td>{{calc.pm}}h (20%)</td>
-    </tr>
-    <tr>
-        <td colspan="3" style="border-bottom:1px solid red;"></td>
-    </tr>
-    <tr>
-        <td>=</td>
-        <td>Total:</td>
-        <td>{{calc.total}}h</td>
-    </tr>
-    </table>
-</div>
-<div ng-repeat="info in quote" style="height:200px;">
-    <h3>{{info.name}}</h3>
-    <h4>Project: {{info.project}}</h4>
-    <h4>Status: {{info.status}}</h4>
+<div class="atk-box atk-push" ng-repeat="info in quote">
+    <div class="atk-row">
+        <div class="atk-col-4">
+            <div class="atk-box-small">
+                <h3>Quote Info</h3>
+                <div class="">Name: {{info.name}}</div>
+                <div class="">Project: {{info.project}}</div>
+                <div class="">General Description:</div>
+                <div class="">Status: {{info.status}}</div>
+                <div class="">Creator:{{info.}}</div>
+                <div class="">Created: {{info.created_dts}}</div>
+                <div class="">Expires at: {{info.expires_dts}}</div>
+                <div class="">Organisation: {{info.organisation}}</div>
+            </div>
+        </div>
+        <div class="atk-col-4">
+            <div class="atk-box-small">
+                <h3>Client Info</h3>
+                <div class="">Client: {{info.client_name}}</div>
+                <div class="">Email: {{info.client_email}}</div>
+            </div>
+        </div>
+        <div class="atk-col-4">
+            <div class="atk-box-small">
+                <h3>Time Info</h3>
+                <div class="">Estimated: {{calc.net}}h</div>
+                <div class="">foo shit</div>
+                <div class="">bar shit</div>
+                <div class="">SubTotal: {{calc.subtotal}}h</div>
+                <div class="">PM: {{calc.pm}}h (20%)</div>
+                <div class="">Total: {{calc.total}}h</div>
+                <div class="atk-label {{calc.color}}">Spent: {{calc.spent}}h</div>
+            </div>
+        </div>
+    </div>
+
 </div>

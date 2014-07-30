@@ -40,14 +40,24 @@ app_module.controller(
     $scope.$on( 'requirements.update', function( event ) {
         $scope.requirements = Requirement.requirements;
         $scope.calc.net = 0;
+        $scope.calc.spent = 0;
         $.each($scope.requirements,function(key,value){
             if(value.is_included == 1 && value.estimate!=null){
                 $scope.calc.net = $scope.calc.net + parseFloat(value.estimate);
+            }
+            if(parseFloat(value.spent_time)){
+                $scope.calc.spent = $scope.calc.spent + parseFloat(value.spent_time);
             }
         });
         $scope.calc.subtotal = $scope.calc.net;
         $scope.calc.pm = Math.ceil($scope.calc.subtotal/5);
         $scope.calc.total = $scope.calc.subtotal + $scope.calc.pm;
+        if($scope.calc.spent > $scope.calc.total){
+            $scope.calc.color = 'atk-effect-danger';
+        }else{
+            $scope.calc.color = 'atk-effect-success';
+
+        }
     });
     $scope.$on( 'comments.update', function( event ) {
         $scope.comments = Comment.comments;
