@@ -119,9 +119,9 @@ $.each({
             angular.bootstrap(document, ['quotes.one.app']);
         });
     },
-    startClientsApp: function(client_id,base_url,prefix,postfix) {
+    startClientsApp: function(base_url,prefix,postfix) {
         angular.element(document).ready(function() {
-            app_module.client_id = client_id;
+//            app_module.client_id = client_id;
             app_module.base_url = base_url;
             app_module.prefix   = prefix;
             app_module.postfix  = postfix;

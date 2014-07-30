@@ -8,13 +8,15 @@ app_module.directive('clientForm', function factory($q,$http, $templateCache,$co
     return function(scope,element,attrs) {
 
 
-        scope.$on( 'form.to_fixed_position', function( event, client ) {
+        scope.$on( 'form.to_fixed_position', function( event, client, project ) {
             console.log('form.to_fixed_position');
             element.addClass('fixed');
             console.log(client);
+            console.log('===========' + project);//TODO undefined
 
             scope.Client.getFromServer(client.id);
             scope.Project.getFromServer('client_id',client.id);
+            scope.Quote.getFromServerByProject(project);//TODO
         });
         scope.$on( 'form.to_regular_place', function( event ) {
             console.log('form.to_fixed_position');

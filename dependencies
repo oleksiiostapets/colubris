@@ -1,3 +1,5 @@
 vendor/atk4/atk4 https://github.com/atk4/atk4.git
+atk4-addons https://github.com/atk4/atk4-addons.git
 vendor/atk4/agiletoolkit-css git@github.com:atk4/agiletoolkit-css.git
 vendor/KonstantinKolodnitsky/kk_xls git@github.com:KonstantinKolodnitsky/kk_xls.git
+addons/x_bread_crumb git@github.com:rvadym/x_bread_crumb.git
