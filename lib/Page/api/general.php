@@ -125,14 +125,16 @@ class Page_api_general extends Page {
         } else {
             $all = $_REQUEST;
         }
-        $id = $this->checkGetParameter('id');
-        $this->m->tryLoad($id);
-        if(!$this->m->loaded()){
-            echo json_encode([
-                'result' => 'error',
-                'error_message' => 'Record with the id '.$id.' was not found',
-            ]);
-            exit();
+        $id = $this->checkGetParameter('id',true);
+        if ($id) {
+            $this->m->tryLoad($id);
+            if(!$this->m->loaded()){
+                echo json_encode([
+                    'result' => 'error',
+                    'error_message' => 'Record with the id '.$id.' was not found',
+                ]);
+                exit();
+            }
         }
         $this->m->set($all);
         $this->m->save();
