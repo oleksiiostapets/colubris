@@ -5,11 +5,8 @@
             <tr class="atk-swatch-blue">
                 <th>#</th>
                 <th>Name</th>
-                <th>Descr</th>
                 <th>Client</th>
-                <th>Demo URL</th>
-                <th>Prod URL</th>
-                <th>Repository</th>
+                <th>Descr</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -17,11 +14,8 @@
             <tr ng-repeat="project in projects track by $index">
                 <td>{{$index+1}}</td>
                 <td>{{project.name}}</td>
-                <td>{{project.descr}}</td>
                 <td>{{project.client}}</td>
-                <td>{{project.demo_url}}</td>
-                <td>{{project.prod_url}}</td>
-                <td>{{project.repository}}</td>
+                <td>{{project.descr}}</td>
                 <td class="atk-text-nowrap">
                     <button class="atk-button" ng-click="Client.edit($index)">Edit</button>
                     <button class="atk-button atk-effect-danger" ng-confirm-click="Are you sure?" confirmed-click="Project.remove($index)">Delete</button>
