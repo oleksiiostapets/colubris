@@ -11,24 +11,28 @@ trait Helper_Url {
         }
         return false;
     }
-    protected function checkGetParameter($name) {
+    protected function checkGetParameter($name,$can_by_null=false) {
         if (isset($_GET[$name])) {
             return $_GET[$name];
         }
-        echo json_encode([
-            'result' => 'error',
-            'error_message'   => 'no '.$name.' parameter',
-        ]);
-        exit();
+        if (!$can_by_null) {
+            echo json_encode([
+                'result' => 'error',
+                'error_message'   => 'no '.$name.' parameter',
+            ]);
+            exit();
+        }
     }
-    protected function checkPostParameter($name) {
+    protected function checkPostParameter($name,$can_by_null=false) {
         if (isset($_POST[$name])) {
             return $_POST[$name];
         }
-        echo json_encode([
-            'result' => 'error',
-            'error_message'   => 'no '.$name.' parameter',
-        ]);
-        exit();
+        if (!$can_by_null) {
+            echo json_encode([
+                'result' => 'error',
+                'error_message'   => 'no '.$name.' parameter',
+            ]);
+            exit();
+        }
     }
 }
