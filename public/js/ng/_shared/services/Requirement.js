@@ -37,7 +37,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             console.log(reqv);
 
             if (typeof reqv.id === 'undefined' ) {
-                service.requirements.push( jQuery.extend({}, reqv)  );
+                service.requirements.push( angular.copy(reqv)  );
             }
 
             API.saveOne(
@@ -46,11 +46,11 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                 {id : reqv.id},
                 angular.toJson(reqv),
                 function(obj) {
-                    if (obj.result === 'success') {
+                    /*if (obj.result === 'success') {
                         $rootScope.showSystemMsg('saved');
                     } else {
                         alert('Error! No success message received.');
-                    }
+                    }*/
                     $rootScope.$broadcast('reqv.update', {});
                     $rootScope.$broadcast( 'requirements.update' );
                     $rootScope.$broadcast('form.to_regular_place');
@@ -128,7 +128,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
         },
         backupReqv: function(index) {
             current_index = index;
-            service.requirements[index].backup = jQuery.extend({}, service.requirements[index]);
+            service.requirements[index].backup = angular.copy( service.requirements[index]);
             console.log(service.requirements[current_index].backup);
         },
         resetBackupReqv: function() {

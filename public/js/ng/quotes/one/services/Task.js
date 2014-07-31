@@ -14,7 +14,7 @@ app_module.service( 'Task', [ '$rootScope','$http', function( $rootScope, $http 
             console.log(task);
 
             if (typeof task.id === 'undefined' ) {
-                service.tasks.push( jQuery.extend({}, task)  );
+                service.tasks.push( angular.copy( task)  );
             } else {
                 // send new data to the server
             }
@@ -98,7 +98,7 @@ app_module.service( 'Task', [ '$rootScope','$http', function( $rootScope, $http 
         },
         backupComm: function(index) {
             current_index = index;
-            service.tasks[index].backup = jQuery.extend({}, service.tasks[index]);
+            service.tasks[index].backup = angular.copy( service.tasks[index]);
         },
         resetBackupComm: function() {
             if (current_index) {

@@ -102,7 +102,7 @@ app_module.controller(
         $scope.calc.subtotal = $scope.calc.net;
         $scope.calc.pm = Math.ceil($scope.calc.subtotal/5);
         $scope.calc.total = $scope.calc.subtotal + $scope.calc.pm;
-        var reqv_cloned = jQuery.extend({}, args);
+        var reqv_cloned = angular.copy( args);
     }
 }])
 ;

@@ -15,7 +15,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             console.log(reqv);
 
             if (typeof reqv.id === 'undefined' ) {
-                service.requirements.push( jQuery.extend({}, reqv)  );
+                service.requirements.push( angular.copy( reqv)  );
             } else {
                 // send new data to the server
             }
@@ -97,7 +97,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
         },
         backupReqv: function(index) {
             current_index = index;
-            service.requirements[index].backup = jQuery.extend({}, service.requirements[index]);
+            service.requirements[index].backup = angular.copy( service.requirements[index]);
             console.log(service.requirements[current_index].backup);
         },
         resetBackupReqv: function() {

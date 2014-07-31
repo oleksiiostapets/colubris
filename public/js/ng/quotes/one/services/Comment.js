@@ -87,7 +87,7 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
         },
         backupComm: function(index) {
             current_index = index;
-            service.comments[index].backup = jQuery.extend({}, service.comments[index]);
+            service.comments[index].backup = angular.copy( service.comments[index]);
         },
         resetBackupComm: function() {
             if (current_index) {

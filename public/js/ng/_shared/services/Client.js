@@ -14,7 +14,7 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
             console.log(client);
 
             if (typeof client.id === 'undefined' ) {
-                service.clients.push( jQuery.extend({}, client)  );
+                service.clients.push( angular.copy( client)  );
             } else {
                 // send new data to the server
             }
@@ -88,7 +88,7 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
         },
         backupClient: function(index) {
             current_index = index;
-            service.clients[index].backup = jQuery.extend({}, service.clients[index]);
+            service.clients[index].backup = angular.copy( service.clients[index]);
             console.log(service.clients[current_index].backup);
         },
         resetBackupClient: function() {
