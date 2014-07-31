@@ -67,14 +67,17 @@ app_module.controller(
 
         $scope.$on( 'projects.update', function( event ) {
             $scope.projects = Project.projects;
+            $scope.projects.unshift({id:"",name:'all'});  //default element for filter by field
         });
 
         $scope.$on( 'quotes.update', function( event ) {
             $scope.quotes = Quote.quotes;
+            $scope.quotes.unshift({id:"",name:'all'})
         });
 
         $scope.$on( 'requirements.update', function( event ) {
             $scope.requirements = Requirement.requirements;
+            $scope.requirements.unshift({id:"",name:'all'})
         });
 
         $scope.$on( 'task_statuses.update', function( event ) {
@@ -83,6 +86,7 @@ app_module.controller(
 
         $scope.$on( 'assigneds.update', function( event ) {
             $scope.assigneds = User.users;
+            $scope.assigneds.unshift({id:"",email:'all'})
         });
 
         $scope.combined = function(user){

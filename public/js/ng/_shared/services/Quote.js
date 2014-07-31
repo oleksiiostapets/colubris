@@ -23,7 +23,6 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
                 {field:'project_id',value:project.id},
                 function(obj) {
                     service.quotes = obj.data;
-                    service.quotes.unshift({id:"",name:'all'})
                     $rootScope.$broadcast( 'quotes.update' );
                 }
             );

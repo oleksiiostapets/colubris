@@ -18,7 +18,6 @@ app_module.service( 'User', [ '$rootScope','$http','API', function( $rootScope, 
                 undefined,
                 function(obj) {
                     service.users = obj.data;
-                    service.users.unshift({id:"",email:'all'})
                     $rootScope.$broadcast( broadcast_message );
                 }
             );

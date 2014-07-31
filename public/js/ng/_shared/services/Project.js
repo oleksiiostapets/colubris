@@ -19,10 +19,28 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
                 field_val,
                 function(obj) {
                     service.projects = obj.data;
-                    if(!field)   service.projects.unshift({id:"",name:'all'});  //default element for filter by field
                     $rootScope.$broadcast( 'projects.update' );
                 }
             );
+        },
+        remove: function(index) {
+            try {
+                API.removeOne(
+                    'project',
+                    'deleteById',
+                    {id:service.projects[index].id},
+                    function(obj) {
+                        if (obj.result === 'success') {
+                            service.projects.splice(index, 1);
+                            $rootScope.$broadcast( 'projects.update' );
+                        } else {
+                            alert('Error! No success message received.');
+                        }
+                    }
+                );
+            } catch (e) {
+                alert('Error! No data received.');
+            }
         }
     }
     return service;
