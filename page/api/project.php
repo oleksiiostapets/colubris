@@ -4,6 +4,7 @@ class page_api_project extends Page_api_general {
     function init() {
         parent::init();
         $this->m = $this->add('Model_Project');
+        $this->m->addCondition('is_deleted',false);
     }
 
     function page_getParticipants() {

@@ -27,7 +27,6 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                 {field:'quote_id',value:quote.id},
                 function(obj) {
                     service.requirements = obj.data;
-                    service.requirements.unshift({id:"",name:'all'})
                     $rootScope.$broadcast( 'requirements.update' );
                 }
             );
