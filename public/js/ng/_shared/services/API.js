@@ -123,11 +123,7 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
                         } catch (e) {
                             alert('Error! Data is not a peropper JSON.');
                         }
-                        if (obj.result === 'success') {
-                            callback(obj);
-                        } else {
-                            alert('Error! No success message received.');
-                        }
+                        callback(obj);
                     })
                     .error(function(data, status) {
                         console.log('Error: -------------------->');
