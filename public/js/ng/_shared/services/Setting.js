@@ -36,8 +36,6 @@ app_module.service( 'Setting', [ '$rootScope','$http','API', function( $rootScop
                 angular.toJson(service.settings),
                 function(obj) {
                     $(".validation_error").remove();
-                    console.log('---');
-                    console.log(obj.result);
                     if (obj.result === 'success') {
                         $rootScope.showSystemMsg('password changed');
                         $rootScope.$broadcast( 'settings.password_changed', null );
@@ -55,40 +53,6 @@ app_module.service( 'Setting', [ '$rootScope','$http','API', function( $rootScop
                     }
                 }
             );
-/*
-            var url = this.prepareUrl('api/account/','changePassword',{id : account.id, old_password : account.old_password, new_password : account.new_password, verify_password : account.verify_password});
-            $http.get(url)
-                .success(function(data) {
-                    try {
-                        var obj = angular.fromJson(data);
-                    } catch (e) {
-                        alert('Error! No data received.');
-                    }
-                    //console.log(obj);
-                    $(".validation_error").remove();
-                    if (obj.result === 'success') {
-                        showSystemMsg('password changed');
-                        $rootScope.$broadcast( 'settings.password_changed', null );
-                    } else if(obj.result === 'validation_error') {
-                        var i = 0;
-                        $.each(obj.errors,function(key,value) {
-                            $.each(value,function(key2,value2) {
-                                i = i + 1;
-                                $( "#" + key2).parent().after( '<span id="val_error_' + i + '" class="validation_error">' + value2 + '<br /></span>' );
-                                $rootScope.removeTag("#val_error_" + i, 3000);
-                            });
-                        });
-                    } else {
-                        alert('Error! No success message received.');
-                    }
-                })
-                .error(function(data, status) {
-                    console.log('Error: -------------------->');
-                    console.log(data);
-                    console.log(status);
-                    alert('Error! No data received.');
-                })
-            ;*/
         },
         saveOnServer: function(account) {
             API.saveOne(
