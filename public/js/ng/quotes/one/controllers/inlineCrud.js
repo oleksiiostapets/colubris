@@ -93,8 +93,8 @@ app_module.controller(
     $scope.toggleIsIncluded = function(args){
         console.log('### toggleIsIncluded');
         $scope.$broadcast('checkbox.update.'+args.id,args);
-        Requirement.saveRequirementOnServer(args);
-        if(args.is_included == 1){
+        Requirement.save(args);
+        if(args.is_included == true){
             $scope.calc.net = $scope.calc.net + parseFloat(args.estimate);
         }else{
             $scope.calc.net = $scope.calc.net - parseFloat(args.estimate);

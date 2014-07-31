@@ -33,18 +33,26 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
         },
         save: function ( reqv ) {
 
-            console.log('### Requirement.save');
-            console.log(reqv);
+            var args = angular.copy(reqv);
+            args.quote_id = app_module.quote_id;
+            if (args.is_included === true) {
+                args.is_included = 1;
+            } else {
+                args.is_included = 0;
+            }
 
-            if (typeof reqv.id === 'undefined' ) {
+//            console.log('### Requirement.save');
+//            console.log(args);
+
+            if (typeof args.id === 'undefined' ) {
                 service.requirements.push( angular.copy(reqv)  );
             }
 
             API.saveOne(
                 'requirement',
                 null,
-                {id : reqv.id},
-                angular.toJson(reqv),
+                {id : args.id},
+                angular.toJson(args),
                 function(obj) {
                     /*if (obj.result === 'success') {
                         $rootScope.showSystemMsg('saved');
@@ -90,14 +98,14 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                 })
             ;
         },
-        saveRequirementOnServer: function(reqv) {
-            API.saveOne(
-                'requirement',
-                null,
-                {id: reqv.id, is_included: reqv.is_included},
-                angular.toJson(service.requirements)
-            );
-        },
+//        saveRequirementOnServer: function(reqv) {
+//            API.saveOne(
+//                'requirement',
+//                null,
+//                {id: reqv.id, is_included: reqv.is_included},
+//                angular.toJson(service.requirements)
+//            );
+//        },
         getFromServer: function() {
             API.getAll(
                 'requirement',
@@ -128,7 +136,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
         },
         backupReqv: function(index) {
             current_index = index;
-            service.requirements[index].backup = angular.copy( service.requirements[index]);
+            service.requirements[index].backup = angular.copy(service.requirements[index]);
             console.log(service.requirements[current_index].backup);
         },
         resetBackupReqv: function() {
