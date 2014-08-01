@@ -7,17 +7,16 @@
  * HOW TO!
  * You can:
  * - check right:
- *     - can_see_tasks() or;
+ *     - canSeeTasks() or;
  *     - getRight($right_name).
  * - set rights for new user:
- *     - save_new_user_as_developer() as a pattern or;
+ *     - saveNewUserAsDeveloper() as a pattern or;
  *     - setRight(<right_name>,[true||false]) for individual right.
  * - set rights for existing user:
  *     - make_existing_user_as_developer();
  *     - setRight(<right_name>,[true||false]) for individual right.
  * - switch right:
- *     - toggle_can_see_tasks() or;
- *     - toggle_right($right).
+ *     - toggle_right($right_name).
  * You CANNOT use set()
  */
 class Model_User_Right extends Model_Auditable{
@@ -151,20 +150,20 @@ class Model_User_Right extends Model_Auditable{
             return $this;
         }
     }
-    public function save_new_user_as_developer(){
+    public function saveNewUserAsDeveloper(){
         $this->setPatternForNew($this->developer_pattern);
 
     }
-    public function save_new_user_as_client(){
+    public function saveNewUserAsClient(){
         $this->setPatternForNew($this->client_pattern);
     }
-    public function save_new_user_as_salesManager(){
+    public function saveNewUserAsSalesManager(){
         $this->setPatternForNew($this->sales_manager_pattern);
     }
-    public function save_new_user_as_manager(){
+    public function saveNewUserAsManager(){
         $this->setPatternForNew($this->manager_pattern);
     }
-    public function save_new_user_as_admin(){
+    public function saveNewUserAsAdmin(){
         $this->setPatternForNew($this->admin_pattern);
     }
     /*
@@ -181,19 +180,19 @@ class Model_User_Right extends Model_Auditable{
             throw $this->exception('There is no rights record for current user. Use "save_new_user_as_()" method to set user rights.');
         }
     }
-    public function make_existing_user_as_developer(){
+    public function makeExistingUserAsDeveloper(){
         $this->setPatternForExisting($this->developer_pattern);
     }
-    public function make_existing_user_as_client(){
+    public function makeExistingUserAsClient(){
         $this->setPatternForExisting($this->client_pattern);
     }
-    public function make_existing_user_as_salesManager(){
+    public function makeExistingUserAsSalesManager(){
         $this->setPatternForExisting($this->sales_manager_pattern);
     }
-    public function make_existing_user_as_manager(){
+    public function makeExistingUserAsManager(){
         $this->setPatternForExisting($this->manager_pattern);
     }
-    public function make_existing_user_as_admin(){
+    public function makeExistingUserAsAadmin(){
         $this->setPatternForExisting($this->admin_pattern);
     }
     
@@ -226,58 +225,58 @@ class Model_User_Right extends Model_Auditable{
         }
     }
     //task
-    public function can_see_tasks(){return $this->getRight('can_see_tasks');}
-    public function can_add_task(){return $this->getRight('can_add_task');}
-    public function can_edit_task(){return $this->getRight('can_edit_task');}
-    public function can_delete_task(){return $this->getRight('can_delete_task');}
-    public function can_add_comment_to_task(){return $this->getRight('can_add_comment_to_task');}
+    public function canSeeTasks(){return $this->getRight('can_see_tasks');}
+    public function canAddTask(){return $this->getRight('can_add_task');}
+    public function canEditTask(){return $this->getRight('can_edit_task');}
+    public function canDeleteTask(){return $this->getRight('can_delete_task');}
+    public function canAddCommentToTask(){return $this->getRight('can_add_comment_to_task');}
     //Project
-    public function can_see_projects(){return $this->getRight('can_see_projects');}
-    public function can_add_projects(){return $this->getRight('can_add_projects');}
-    public function can_edit_projects(){return $this->getRight('can_edit_projects');}
-    public function can_delete_projects(){return $this->getRight('can_delete_projects');}
+    public function canSeeProjects(){return $this->getRight('can_see_projects');}
+    public function canAddProjects(){return $this->getRight('can_add_projects');}
+    public function canEditProjects(){return $this->getRight('can_edit_projects');}
+    public function canDeleteProjects(){return $this->getRight('can_delete_projects');}
     //Quote
-    public function can_add_quote(){return $this->getRight('can_add_quote');}//Request for quotation
-    public function can_edit_quote(){return $this->getRight('can_edit_quote');}
-    public function can_delete_quote(){return $this->getRight('can_delete_quote');}
-    public function can_submit_for_quotation(){return $this->getRight('can_submit_for_quotation');}
+    public function canAddQuote(){return $this->getRight('can_add_quote');}//Request for quotation
+    public function canEditQuote(){return $this->getRight('can_edit_quote');}
+    public function canDeleteQuote(){return $this->getRight('can_delete_quote');}
+    public function canSubmitForQuotation(){return $this->getRight('can_submit_for_quotation');}
     //Requirement
-    public function can_add_requirement(){return $this->getRight('can_add_requirement');}
-    public function can_edit_requirement(){return $this->getRight('can_edit_requirement');}
-    public function can_delete_requirement(){return $this->getRight('can_delete_requirement');}
-    public function can_add_comment_to_requirement(){return $this->getRight('can_add_comment_to_requirement');}
+    public function canAddRequirement(){return $this->getRight('can_add_requirement');}
+    public function canEditRequirement(){return $this->getRight('can_edit_requirement');}
+    public function canDeleteRequirement(){return $this->getRight('can_delete_requirement');}
+    public function canAddCommentToRequirement(){return $this->getRight('can_add_comment_to_requirement');}
     //Setting
-    public function can_see_settings(){return $this->getRight('can_see_settings');}
-    public function can_edit_settings(){return $this->getRight('can_edit_settings');}
+    public function canSeeSettings(){return $this->getRight('can_see_settings');}
+    public function canEditSettings(){return $this->getRight('can_edit_settings');}
     //User
-    public function can_see_users(){return $this->getRight('can_see_users');}
-    public function can_manage_users(){return $this->getRight('can_manage_users');}
+    public function canSeeUsers(){return $this->getRight('can_see_users');}
+    public function canManageUsers(){return $this->getRight('can_manage_users');}
     //Rates
-    public function can_see_rates(){return $this->getRight('can_see_rates');}
-    public function can_manage_rates(){return $this->getRight('can_manage_rates');}
+    public function canSeeRates(){return $this->getRight('can_see_rates');}
+    public function canManageRates(){return $this->getRight('can_manage_rates');}
     //Developers
-    public function can_see_developers(){return $this->getRight('can_see_developers');}
-    public function can_manage_developers(){return $this->getRight('can_manage_developers');}
+    public function canSeeDevelopers(){return $this->getRight('can_see_developers');}
+    public function canManageDevelopers(){return $this->getRight('can_manage_developers');}
     //Clients
-    public function can_see_clients(){return $this->getRight('can_see_clients');}
-    public function can_manage_clients(){return $this->getRight('can_manage_clients');}
+    public function canSeeClients(){return $this->getRight('can_see_clients');}
+    public function canManageClients(){return $this->getRight('can_manage_clients');}
     //Reports
-    public function can_see_reports(){return $this->getRight('can_see_reports');}
+    public function canSeeReports(){return $this->getRight('can_see_reports');}
     //Deleted Items
-    public function can_see_deleted(){return $this->getRight('can_see_deleted');}
-    public function can_restore_deleted(){return $this->getRight('can_restore_deleted');}
+    public function canSeeDeleted(){return $this->getRight('can_see_deleted');}
+    public function canRestoreDeleted(){return $this->getRight('can_restore_deleted');}
     //Logs
-    public function can_see_logs(){return $this->getRight('can_see_logs');}
+    public function canSeeLogs(){return $this->getRight('can_see_logs');}
     //Mics
-    public function can_see_dashboard(){return $this->getRight('can_see_dashboard');}
-    public function can_move_to_from_archive(){return $this->getRight('can_move_to_from_archive');}
-    public function can_track_time(){return $this->getRight('can_track_time');}
-    public function can_login_as_any_user(){return $this->getRight('can_login_as_any_user');}
+    public function canSeeDashboard(){return $this->getRight('can_see_dashboard');}
+    public function canMoveToFromArchive(){return $this->getRight('can_move_to_from_archive');}
+    public function canTrackTime(){return $this->getRight('can_track_time');}
+    public function canLoginAsAnyUser(){return $this->getRight('can_login_as_any_user');}
 
     /////////////////
     //Toggle rights//
     /////////////////
-    public function toggle_right($right){
+    public function toggleRight($right){
         if(!$this->checkRight($right)) throw $this->exception('There is no such an access right defined');
         if($this->$right){
             $this->$right = false;
@@ -287,94 +286,4 @@ class Model_User_Right extends Model_Auditable{
         $this->set($right,$this->$right)->save();
         return $this;
     }
-    //task
-    public function toggle_can_see_tasks(){
-        $this->toggle_right('can_see_tasks');
-        return $this;
-    }
-    public function toggle_can_add_task(){
-        $this->toggle_right('can_add_task');
-        return $this;
-    }
-    public function toggle_can_edit_task(){
-        $this->toggle_right('can_edit_task');
-        return $this;
-    }
-    public function toggle_can_delete_task(){
-        $this->toggle_right('can_delete_task');
-        return $this;
-    }
-    public function toggle_can_add_comment_to_task(){
-        $this->toggle_right('can_add_comment_to_task');
-        return $this;
-    }
-    //Project
-    public function toggle_can_see_projects(){
-        $this->toggle_right('can_see_projects');
-        return $this;
-    }
-    public function toggle_can_add_projects(){
-        $this->toggle_right('can_add_projects');
-        return $this;
-    }
-    public function toggle_can_edit_projects(){
-        $this->toggle_right('can_edit_projects');
-        return $this;
-    }
-    public function toggle_can_delete_projects(){
-        $this->toggle_right('can_delete_projects');
-        return $this;
-    }
-    //Quote
-    public function toggle_can_add_quote(){
-        $this->toggle_right('can_add_quote');
-        return $this;
-    }//Request for quotation
-    public function toggle_can_edit_quote(){
-        $this->toggle_right('can_edit_quote');
-        return $this;
-    }
-    public function toggle_can_delete_quote(){
-        $this->toggle_right('can_delete_quote');
-        return $this;
-    }
-    public function toggle_can_submit_for_quotation(){
-        $this->toggle_right('can_submit_for_quotation');
-        return $this;
-    }
-    //Requirement
-    public function toggle_can_add_requirement(){
-        $this->toggle_right('can_add_requirement');
-        return $this;
-    }
-    public function toggle_can_edit_requirement(){}
-    public function toggle_can_delete_requirement(){}
-    public function toggle_can_add_comment_to_requirement(){}
-    //Setting
-    public function toggle_can_see_settings(){}
-    public function toggle_can_edit_settings(){}
-    //User
-    public function toggle_can_see_users(){}
-    public function toggle_can_manage_users(){}
-    //Rates
-    public function toggle_can_see_rates(){}
-    public function toggle_can_manage_rates(){}
-    //Developers
-    public function toggle_can_see_developers(){}
-    public function toggle_can_manage_developers(){}
-    //Clients
-    public function toggle_can_see_clients(){}
-    public function toggle_can_manage_clients(){}
-    //Reports
-    public function toggle_can_see_reports(){}
-    //Deleted Items
-    public function toggle_can_see_deleted(){}
-    public function toggle_can_restore_deleted(){}
-    //Logs
-    public function toggle_can_see_logs(){}
-    //Mics
-    public function toggle_can_see_dashboard(){}
-    public function toggle_can_move_to_from_archive(){}
-    public function toggle_can_track_time(){}
-    public function toggle_can_login_as_any_user(){}
 }
