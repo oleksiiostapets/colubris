@@ -1,0 +1,11 @@
+<h4>Quotes:</h4>
+<div class="atk-box-small" ng-repeat="quote in quotes track by $index">
+    <div class="atk-cells atk-push small">
+        <div class="atk-cell atk-valign-top">
+            <div class="atk-label atk-effect-info">{{$index}} (ID#{{quote.id}})</div>
+        </div>
+        <div class="atk-cell atk-jackscrew">
+            <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><strong>{{quote.name}}</strong></div>
+        </div>
+    </div>
+</div>
