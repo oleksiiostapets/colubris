@@ -148,7 +148,7 @@ class Frontend extends ApiFrontend {
     function defineAllowedPages() {
         // Allowed pages for guest
         $this->addAllowedPages(array(
-            'index', 'intro', 'denied','test',
+            'index', 'intro', 'denied','test','api',
         ));
 
         // For Guests
