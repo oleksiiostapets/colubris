@@ -16,7 +16,9 @@ app_module.directive('clientForm', function factory($q,$http, $templateCache,$co
 
             scope.Client.getFromServer(client.id);
             scope.Project.getFromServer('client_id',client.id);
-            scope.Quote.getFromServerByProject(project);//TODO
+            if(project) {
+                scope.Quote.getFromServerByProject(project);
+            }
         });
         scope.$on( 'form.to_regular_place', function( event ) {
             console.log('form.to_fixed_position');

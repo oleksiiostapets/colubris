@@ -9,9 +9,14 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
     var service = {
         quotes: [],
 
+        clear: function(){
+            service.quotes = [];
+            $rootScope.$broadcast( 'quotes.update' );
+        },
         getFromServerByProject: function(project) {
             // Clearing previous quote and requirement parameters to exclude it from crud results
             var params = {};
+            if(!project)return;
             $.each($rootScope.filter_values,function(key,value) {
                 if (key != 'quote_id' && key != 'requirement_id') params[key]=value;
             });

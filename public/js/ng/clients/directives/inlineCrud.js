@@ -10,6 +10,7 @@ app_module.directive('inlineCrud', function factory($q,$http, $templateCache,$co
         scope.form = app_module.base_url + 'js/ng/clients/templates/form.html';
         scope.crud = app_module.base_url + 'js/ng/clients/templates/crud.html';
         scope.project_list = app_module.base_url + 'js/ng/clients/templates/project-list.html';
+        scope.quote_list = app_module.base_url + 'js/ng/clients/templates/quote-list.html';
     }
 })
 ;

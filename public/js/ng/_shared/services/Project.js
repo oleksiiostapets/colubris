@@ -9,6 +9,10 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
     var service = {
         projects: [],
 
+        clear: function(){
+            service.projects = [];
+            $rootScope.$broadcast( 'projects.update' );
+        },
         getFromServer: function(field,value) {
 
             var field_val = field ? {field:field, value:value} : {};

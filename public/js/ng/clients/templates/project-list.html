@@ -1,16 +1,12 @@
 <h4>Projects:</h4>
-<div class="atk-box-small" ng-repeat="proj in projects track by $index">
+<div class="atk-box-small"  style="cursor: pointer;" ng-repeat="proj in projects track by $index"  ng-click="Quote.getFromServerByProject(proj)">
     <div class="atk-cells atk-push small">
         <div class="atk-cell atk-valign-top">
             <div class="atk-label atk-effect-info">{{$index}} (ID#{{proj.id}})</div>
         </div>
         <div class="atk-cell atk-jackscrew">
-            <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><strong>{{proj.name}}</strong></div>
+            <div class="atk-label atk-effect-warning" style="white-space: pre-wrap" ><strong>{{proj.name}}</strong></div>
         </div>
     </div>
     <div>Description: {{proj.descr}}</div>
-
-</div>
-<div class="atk-box-small" ng-repeat="quote in quotes track by $index">
-    <div class="">Quote: {{quote.name}}</div>
 </div>

@@ -1,5 +1,5 @@
 <div class="atk-box atk-push floating-form"  client-form>
-    <div id="close-button" class="icon-cancel-circled close" ng-click="Client.cancel()"></div>
+    <div id="close-button" class="icon-cancel-circled close" ng-click="clearForm()"></div>
     <div class="atk-row full-height-box atk-padding-small">
         <div class="atk-col-4 ">
             <div class="atk-box">
@@ -35,6 +35,11 @@
         <div class="atk-col-4">
             <div class="atk-box">
                 <ng-include src="project_list"></ng-include>
+            </div>
+        </div>
+        <div class="atk-col-4">
+            <div class="atk-box">
+                <ng-include src="quote_list"></ng-include>
             </div>
         </div>
     </div>
