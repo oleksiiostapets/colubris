@@ -14,16 +14,20 @@ app_module.directive('isIncluded',
         function update() {
 
 
-//            console.log('update');
-//            console.log(scope.rreqv.is_included);
-//            console.log( (scope.rreqv.is_included === 1 || scope.rreqv.is_included === '1' || scope.rreqv.is_included === true) );
-
-            if (scope.rreqv.is_included === 1 || scope.rreqv.is_included === '1' || scope.rreqv.is_included === true) {
+            if (scope.rreqv.is_included === 1 || scope.rreqv.is_included === '1') {
                 scope.rreqv.is_included = true;
+            } else {
+                scope.rreqv.is_included = false;
+            }
+
+
+            console.log('### directive isIncluded . update');
+            console.log(scope.rreqv.is_included);
+
+            if (scope.rreqv.is_included === true) {
                 scope.rreqv.css.is_included = '☑';
                 scope.rreqv.css.is_active   = 'active';
             } else {
-                scope.rreqv.is_included = false;
                 scope.rreqv.css.is_included = '☐';
                 scope.rreqv.css.is_active   = 'not-active';
             }
@@ -39,13 +43,9 @@ app_module.directive('isIncluded',
         update();
 
         scope.$on( 'checkbox.update.'+scope.rreqv.id, function( event, args ) {
-//            console.log('$on checkbox.update.'+scope.rreqv.id);
-//            console.log(args);
-            if (args.is_included === true) {
-                args.is_included = false;
-            } else {
-                args.is_included = true;
-            }
+            console.log('### $on checkbox.update.'+scope.rreqv.id);
+            console.log(args);
+            console.log(args.is_included);
             update();
 
         });

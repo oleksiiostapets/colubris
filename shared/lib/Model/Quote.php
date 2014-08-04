@@ -54,7 +54,6 @@ class Model_Quote extends Model_Auditable {
 		)->mandatory('Cannot be empty');
 
 		$this->addField('is_deleted')->type('boolean')->defaultValue('0');
-//        $this->addField('deleted_id')->refModel('Model_User');
 		$this->hasOne('User','deleted_id');
 		$this->addHook('beforeDelete', function($m){
 			$m['deleted_id']=$m->api->currentUser()->get('id');
@@ -81,7 +80,7 @@ class Model_Quote extends Model_Auditable {
 
 	// ------------------------------------------------------------------------------
 	//
-	//            HOOKS :: BEGIN
+	//                          HOOKS
 	//
 	// ------------------------------------------------------------------------------
 
@@ -96,7 +95,14 @@ class Model_Quote extends Model_Auditable {
 			if($m['status']=='finished') $m['warranty_end']=date('Y-m-d G:i:s', time()+60*60*24*30);
 		});
 	}
+	// HOOKS --------------------------------------------------------------------------
 
+
+	// ------------------------------------------------------------------------------
+	//
+	//                          Expressions
+	//
+	// ------------------------------------------------------------------------------
 	function addExpressions(){
 		$this->addExpression('client_id')->set(function($m,$q){
 			return $q->dsql()
@@ -248,6 +254,7 @@ class Model_Quote extends Model_Auditable {
 				;
 		});
 	}
+	// Expressions --------------------------------------------------------------
 
 	function deleted() {
 		$this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);

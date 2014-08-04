@@ -92,8 +92,25 @@ app_module.controller(
 
     $scope.toggleIsIncluded = function(args){
         console.log('### toggleIsIncluded');
-        $scope.$broadcast('checkbox.update.'+args.id,args);
+        var reqv = angular.copy(args);
+        if (reqv.is_included === true) {
+            console.log('### controller inlineCrud toggleIsIncluded :: true >>>');
+        } else {
+            console.log('### controller inlineCrud toggleIsIncluded :: false >>>');
+        }
+        reqv.is_included = !reqv.is_included;
+
+        console.log('### controller inlineCrud toggleIsIncluded :: after reverting');
+        console.log(reqv);
+        console.log(reqv.is_included);
+        args = reqv;
+        console.log(args);
+        //$scope.$broadcast('checkbox.update.'+args.id,args);
         Requirement.save(args);
+
+
+
+        ///   floating total
         if(args.is_included == true){
             $scope.calc.net = $scope.calc.net + parseFloat(args.estimate);
         }else{

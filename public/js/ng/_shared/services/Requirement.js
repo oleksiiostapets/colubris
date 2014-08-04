@@ -36,13 +36,16 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             var args = angular.copy(reqv);
             args.quote_id = app_module.quote_id;
             if (args.is_included === true) {
+                console.log('### service Requirement save true >>>');
                 args.is_included = 1;
             } else {
+                console.log('### service Requirement save false >>>');
                 args.is_included = 0;
             }
 
-//            console.log('### Requirement.save');
-//            console.log(args);
+            console.log('### Requirement.save');
+            console.log(args);
+            console.log(reqv);
 
             if (typeof args.id === 'undefined' ) {
                 service.requirements.push( angular.copy(reqv)  );
@@ -60,6 +63,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                         alert('Error! No success message received.');
                     }*/
                     $rootScope.$broadcast('reqv.update', {});
+                    $rootScope.$broadcast( 'checkbox.update.'+args.id,reqv);
                     $rootScope.$broadcast( 'requirements.update' );
                     $rootScope.$broadcast('form.to_regular_place');
                 }
@@ -86,26 +90,6 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             $rootScope.$broadcast( 'requirements.update' );
             $rootScope.$broadcast('form.to_regular_place');
         },
-        saveOnServer: function() {
-            var url = this.prepareUrl('saveAll',{quote_id: app_module.quote_id});
-            $http.post(url,angular.toJson(service.requirements))
-                .success(function(data) {
-                    console.log(data);
-                })
-                .error(function(data, status) {
-                    console.log(data);
-                    console.log(status);
-                })
-            ;
-        },
-//        saveRequirementOnServer: function(reqv) {
-//            API.saveOne(
-//                'requirement',
-//                null,
-//                {id: reqv.id, is_included: reqv.is_included},
-//                angular.toJson(service.requirements)
-//            );
-//        },
         getFromServer: function() {
             API.getAll(
                 'requirement',
@@ -116,23 +100,6 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                     $rootScope.$broadcast( 'requirements.update' );
                 }
             );
-        },
-        prepareUrl: function(action,args) {
-            var url = app_module.base_url + app_module.prefix  + 'api/requirement/' + action + app_module.postfix;
-            if (url.indexOf('?') === false) {
-                url = url + '?';
-            } else {
-                url = url + '&';
-            }
-            var count = 1;
-            $.each(args,function(key,value) {
-                if (count > 1) {
-                    url = url + '&';
-                }
-                url = url + key + '=' + value;
-                count++;
-            });
-            return url;
         },
         backupReqv: function(index) {
             current_index = index;
