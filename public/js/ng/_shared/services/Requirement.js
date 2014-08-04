@@ -36,19 +36,19 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             var args = angular.copy(reqv);
             args.quote_id = app_module.quote_id;
             if (args.is_included === true) {
-                console.log('### service Requirement save true >>>');
                 args.is_included = 1;
             } else {
-                console.log('### service Requirement save false >>>');
                 args.is_included = 0;
             }
 
-            console.log('### Requirement.save');
-            console.log(args);
-            console.log(reqv);
-
             if (typeof args.id === 'undefined' ) {
                 service.requirements.push( angular.copy(reqv)  );
+            } else {
+                $.each(service.requirements,function(i,e){
+                    if (e.id == args.id) {
+                        service.requirements[i] = args;
+                    }
+                });
             }
 
             API.saveOne(
@@ -62,9 +62,9 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                     } else {
                         alert('Error! No success message received.');
                     }*/
-                    $rootScope.$broadcast('reqv.update', {});
-                    $rootScope.$broadcast( 'checkbox.update.'+args.id,reqv);
+                    //$rootScope.$broadcast('reqv.update', {});
                     $rootScope.$broadcast( 'requirements.update' );
+                    $rootScope.$broadcast( 'checkbox.update.'+args.id,reqv);
                     $rootScope.$broadcast('form.to_regular_place');
                 }
             );
