@@ -1,9 +1,9 @@
-<div class="atk-box atk-push floating-form"  user-form>
+<div class="atk-box atk-push floating-form" user-form>
     <div id="close-button" class="icon-cancel-circled close" ng-click="User.cancel()"></div>
     <div class="atk-row full-height-box atk-padding-small">
-        <div class="atk-col-4 ">
+        <div class="atk-col-4">
             <div class="atk-box">
-                <form class="atk-form">
+                <form class="atk-form" name="userbasic">
                     <input type="hidden" ng-model="user.id" />
                     <div class="atk-push-small">
                         <div class="atk-cell atk-valign-top">
@@ -33,8 +33,7 @@
             </div>
         </div>
         <div class="atk-col-4">
-            <div class="atk-box">
-            </div>
+            <ng-include src="right_list"></ng-include>
         </div>
     </div>
 </div>

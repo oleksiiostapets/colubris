@@ -1,0 +1,1 @@
+alter table `right` add unique (`user_id`);

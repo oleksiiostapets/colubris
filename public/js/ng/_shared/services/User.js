@@ -65,7 +65,6 @@ app_module.service( 'User', [ '$rootScope','$http','API', function( $rootScope, 
         backupUser: function(index) {
             current_index = index;
             service.users[index].backup = jQuery.extend({}, service.users[index]);
-            console.log(service.users[current_index].backup);
         },
         cancel: function() {
             this.restoreUser();

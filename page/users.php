@@ -13,6 +13,7 @@ class page_users extends Page {
         $this->app->jquery->addStaticInclude('ng/users/directives/userForm');
         $this->app->jquery->addStaticInclude('ng/_shared/services/API');
         $this->app->jquery->addStaticInclude('ng/_shared/services/User');
+        $this->app->jquery->addStaticInclude('ng/_shared/services/Right');
 //        $this->app->jquery->addStaticInclude('ng/_shared/services/Project');
 //        $this->app->jquery->addStaticInclude('ng/_shared/services/Quote');
 

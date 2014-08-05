@@ -8,11 +8,12 @@ app_module.directive('userForm', function factory($q,$http, $templateCache,$comp
     return function(scope,element,attrs) {
 
 
-        scope.$on( 'form.to_fixed_position', function( event, user ) {
+        scope.$on( 'form.to_fixed_position', function( event, user, right ) {
             console.log('form.to_fixed_position');
             element.addClass('fixed');
 
             scope.User.getFromServer(user.id);
+            scope.Right.getForUser(user,'rights.update');
         });
         scope.$on( 'form.to_regular_place', function( event ) {
             console.log('form.to_fixed_position');
