@@ -8,6 +8,7 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
     var current_index = null;
     var service = {
         rights: [],
+        all_rights:[],
 
         getFromServer: function(broadcast_message) {
 
@@ -22,16 +23,50 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
                 }
             );
         },
-        getForUser: function(user,broadcast_message) {
+        getAllRights: function(user,broadcast_message) {
+            var that = this;
+            API.getOne(
+                'right',
+                'getAvailableRights',
+                undefined,
+                function(obj) {
+                    if (obj.result === 'success') {
+                        that.getForUser(user,broadcast_message, obj.data);
+                    } else {
+                        alert('Error! getAllRights method failed');
+                    }
+                }
+            );
+        },
+        getForUser: function(user,broadcast_message, all_rights) {
+            console.log('-----> getForUser()');
+            var that = this;
             API.getOne(
                 'right',
                 'getByField',
                 {field: 'user_id', value:user.id},
                 function(obj) {
-                    service.rights = obj.data;
+                    var data;
+                    data = that.prepareArray(obj,all_rights);
+                    service.rights = data;
                     $rootScope.$broadcast( broadcast_message );
                 }
             );
+        },
+        prepareArray: function(obj,all_rights){
+            console.log('-----> prepareArray()');
+
+            var can_rights = obj.data[0].right.split(',');
+            var rights_obj = {};
+            $.each(all_rights, function(index, value) {
+                if(can_rights.indexOf(value) === -1){
+                    rights_obj[index] = [value,false];
+                }else{
+                    rights_obj[index] = [value,true];
+                }
+            });
+//            console.log(rights_obj);
+            return rights_obj;
         },
         save: function ( right ) {
 

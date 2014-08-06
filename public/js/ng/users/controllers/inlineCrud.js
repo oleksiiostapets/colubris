@@ -18,14 +18,13 @@ app_module.controller(
             User.getFromServer('users.update');
 
             // rights
+            $scope.rights = null;
             $scope.Right = Right;
             $scope.rights = Right.rights;
 
             $scope.$on( 'rights.update', function( event ) {
                 $scope.rights = Right.rights;
-            });
-            $scope.$on( 'right.update', function( event, args ) {
-                $scope.right = args;
+//                console.log(Right.rights);
             });
 
             $scope.$on( 'user.update', function( event, args ) {
