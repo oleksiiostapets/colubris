@@ -19,7 +19,7 @@
  *     - toggle_right($right_name).
  * You CANNOT use set()
  */
-class Model_User_Right extends Model_Auditable{
+class Model_User_Right extends Model_BaseTable{
     public $table = 'right';
     private $user;
     static $available_rights = array(
@@ -96,6 +96,20 @@ class Model_User_Right extends Model_Auditable{
         throw $this->exception('This method is private in this model');
     }
 
+    function setRights($id = null, $rights = null){
+        if(!$id || !$rights){
+            throw $this->exception('You didn\'t specified necessary arguments for setRights() method');
+        }
+        $this->tryLoad($id);
+        if(!$this->loaded()){
+            throw $this->exception('There is no such a record for this user yet.');
+        }
+
+        foreach($rights['right'] as $right){
+            $this->setRight($right);
+        }
+        return $this;
+    }
     function setRight($what,$can=true) {
         if ($this->checkRight($what)) {
             $curr = $this->get('right');

@@ -48,6 +48,7 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
                 function(obj) {
                     var data;
                     data = that.prepareArray(obj,all_rights);
+//                    console.log(data);
                     service.rights = data;
                     $rootScope.$broadcast( broadcast_message );
                 }
@@ -65,13 +66,17 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
                     rights_obj[index] = [value,true];
                 }
             });
-//            console.log(rights_obj);
-            return rights_obj;
+            var object = {};
+            object.id = obj.data[0].id;
+            object.user_id = obj.data[0].user_id;
+            object.data = rights_obj;
+            return object;
         },
         save: function ( right ) {
 
+            console.log('------>save()');
             if (typeof right.id === 'undefined' ) {
-                service.users.push( jQuery.extend({}, right)  );
+                service.rights.push( jQuery.extend({}, right)  );
             } else {
                 // send new data to the server
             }
@@ -80,14 +85,17 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
             $rootScope.$broadcast('rights.update' );
             $rootScope.$broadcast('form.to_regular_place');
 
-            this.resetBackupUser();
+            this.resetBackupRight();
         },
         saveOnServer: function(right) {
+            console.log('------>saveOnServer()');
+            var that = this;
+            var arr = that.mergeArray(right.data);
             API.saveOne(
                 'right',
-                null,
-                {id : right.id, name : right.name, email : right.email},//TODO
-                angular.toJson(service.rights),
+                'setRights',
+                {id: right.id},
+                angular.toJson({right:arr}),
                 function(obj) {
                     if (obj.result === 'success') {
                         alert('Saved.');
@@ -96,6 +104,18 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
                     }
                 }
             );
+        },
+        mergeArray: function(arr){
+            console.log('------>mergeArray()');
+
+            var new_arr = [];
+            $.each(arr, function(index, value) {
+                if(value[1]){
+                    new_arr.push(value[0]);
+//                    new_arr[] = value[0];
+                }
+            });
+            return new_arr;
         },
         remove: function(index) {
             service.rights.splice(index, 1);
