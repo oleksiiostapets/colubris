@@ -5,8 +5,20 @@ class page_api_right extends Page_api_general {
         parent::init();
         $this->m = $this->add('Model_User_Right');
     }
-    function canSeeTasks(){
-//        return $this->m->canSeeTasks();
-        return 'afdgnbf';
+    function page_getAvailableRights(){
+        try{
+
+            echo json_encode([
+                'result' => 'success',
+                'data'   => Model_User_Right::$available_rights,
+            ]);
+            exit();
+        }catch(Exception $e){
+            echo json_encode([
+                'result' => 'error',
+                'error_message'   => $e->getMessage(),
+            ]);
+            exit();
+        }
     }
 }

@@ -13,7 +13,7 @@ app_module.directive('userForm', function factory($q,$http, $templateCache,$comp
             element.addClass('fixed');
 
             scope.User.getFromServer(user.id);
-            scope.Right.getForUser(user,'rights.update');
+            scope.Right.getAllRights(user,'rights.update');
         });
         scope.$on( 'form.to_regular_place', function( event ) {
             console.log('form.to_fixed_position');
