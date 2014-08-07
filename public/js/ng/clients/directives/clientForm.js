@@ -31,7 +31,6 @@ app_module.directive('clientForm', function factory($q,$http, $templateCache,$co
                 $(event.currentTarget).removeClass('default').addClass('active');
             }else{
             //default set class 'active' to first element
-                debugger;
                 if(!$('.selectable-list .active').length && $('.selectable-list .default').length){
                     $($('.selectable-list .default')[0]).removeClass('default').addClass('active');
                 }
