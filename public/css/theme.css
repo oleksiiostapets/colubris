@@ -7110,3 +7110,33 @@ table .requirement {
   width: 100%;
   height: 200px;
 }
+.selectable-list .default {
+  cursor: pointer;
+}
+.selectable-list .default:hover {
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMSAxIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQtdWNnZy1nZW5lcmF0ZWQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6dHJhbnNwYXJlbnQ7c3RvcC1vcGFjaXR5PTEiIC8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZWJlYmViO3N0b3Atb3BhY2l0eToxIiAvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz48L3N2Zz4=);
+  background: -moz-linear-gradient(left, transparent 0%, #ebebeb 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, transparent), color-stop(100%, #ebebeb));
+  background: -webkit-linear-gradient(left, transparent 0%, #ebebeb 100%);
+  background: -o-linear-gradient(left, transparent 0%, #ebebeb 100%);
+  background: -ms-linear-gradient(left, transparent 0%, #ebebeb 100%);
+  background: linear-gradient(to right, transparent 0%, #ebebeb 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='transparent', endColorstr='#ebebeb',GradientType=1 );
+}
+:root .selectable-list .default:hover {
+  filter: none;
+}
+.selectable-list .active {
+  border-right: transparent;
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMSAxIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQtdWNnZy1nZW5lcmF0ZWQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2ViZWJlYjtzdG9wLW9wYWNpdHk9MSIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnRyYW5zcGFyZW50O3N0b3Atb3BhY2l0eToxIiAvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz48L3N2Zz4=);
+  background: -moz-linear-gradient(left, #ebebeb 0%, transparent 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #ebebeb), color-stop(100%, transparent));
+  background: -webkit-linear-gradient(left, #ebebeb 0%, transparent 100%);
+  background: -o-linear-gradient(left, #ebebeb 0%, transparent 100%);
+  background: -ms-linear-gradient(left, #ebebeb 0%, transparent 100%);
+  background: linear-gradient(to right, #ebebeb 0%, transparent 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebebeb', endColorstr='transparent',GradientType=1 );
+}
+:root .selectable-list .active {
+  filter: none;
+}

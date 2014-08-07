@@ -33,6 +33,12 @@ app_module.controller(
                 Quote.clear( 'quotes.update' );
             };
 
+            //project selection
+            $scope.projectSelect = function(project, event){
+                Quote.getFromServerByProject(project);
+                $rootScope.$broadcast( 'project.selected' );
+            }
+
             $scope.$on( 'client.update', function( event, args ) {
                 $scope.client = args;
             });
@@ -47,6 +53,7 @@ app_module.controller(
             });
             $scope.$on( 'quotes.update', function( event ) {
                 $scope.quotes = Quote.quotes;
+                $rootScope.$broadcast( 'project.selected' );
             });
         }])
 ;

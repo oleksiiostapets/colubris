@@ -24,6 +24,19 @@ app_module.directive('clientForm', function factory($q,$http, $templateCache,$co
             console.log('form.to_fixed_position');
             element.removeClass('fixed');
         });
+        scope.$on( 'project.selected',function(){//TODO make global
+            //set class 'active' to clicked element
+            if( (event.currentTarget.hasOwnProperty('classList') && $.inArray('default',event.currentTarget.classList)) || event.currentTarget.className==='default'){
+                $('.selectable-list .active').removeClass('active').addClass('default');
+                $(event.currentTarget).removeClass('default').addClass('active');
+            }else{
+            //default set class 'active' to first element
+                debugger;
+                if(!$('.selectable-list .active').length && $('.selectable-list .default').length){
+                    $($('.selectable-list .default')[0]).removeClass('default').addClass('active');
+                }
+            }
+        });
     }
 })
 ;

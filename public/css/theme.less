@@ -181,3 +181,16 @@ table {
     height: 200px;
   }
 }
+
+.selectable-list{
+  .default{
+    cursor: pointer;
+    &:hover{
+      #gradient >.horizontal(transparent,#ebebeb);
+    }
+  }
+  .active{
+    border-right: transparent;
+    #gradient >.horizontal(#ebebeb,transparent);
+  }
+}
