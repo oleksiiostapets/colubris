@@ -105,19 +105,25 @@ class Model_User_Right extends Model_BaseTable{
             throw $this->exception('There is no such a record for this user yet.');
         }
 
+        $new_arr= array();
         foreach($rights['right'] as $right){
-            $this->setRight($right);
+            if ($this->checkRight($right)) {
+                $new_arr[] = $right;
+            }
         }
+        $new_str = implode(',',$new_arr);
+        $this->_set = true;
+        $this->set('right',$new_str)->save();
+        $this->_set = false;
         return $this;
     }
     function setRight($what,$can=true) {
         if ($this->checkRight($what)) {
             $curr = $this->get('right');
-            $arr = explode(',',$curr);
-            $new_curr = $arr;
+            $curr_arr = explode(',',$curr);
             if ($can) {
                 $already_exist = false;
-                foreach ($arr as $k=>$v) {
+                foreach ($curr_arr as $k=>$v) {
                     if ($v == $what) {
                         $already_exist = true;
                     }
@@ -125,10 +131,10 @@ class Model_User_Right extends Model_BaseTable{
                 if (!$already_exist) {
                     $arr[] = $what;
                 }
-                $new_curr = implode(',',$arr);
+                $new_curr = implode(',',$curr_arr);
             } else {
                 $new_arr = array();
-                foreach ($arr as $k=>$v) {
+                foreach ($curr_arr as $k=>$v) {
                     if ($v != $what) {
                         $new_arr[] = $v;
                     }

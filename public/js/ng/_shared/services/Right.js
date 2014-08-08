@@ -24,6 +24,7 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
             );
         },
         getAllRights: function(user,broadcast_message) {
+            console.log('-----> getAllRights()---START');
             var that = this;
             API.getOne(
                 'right',
@@ -37,9 +38,10 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
                     }
                 }
             );
+            console.log('-----> getAllRights()---END');
         },
         getForUser: function(user,broadcast_message, all_rights) {
-            console.log('-----> getForUser()');
+            console.log('-----> getForUser()---START');
             var that = this;
             API.getOne(
                 'right',
@@ -48,14 +50,14 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
                 function(obj) {
                     var data;
                     data = that.prepareArray(obj,all_rights);
-//                    console.log(data);
                     service.rights = data;
                     $rootScope.$broadcast( broadcast_message );
                 }
             );
+            console.log('-----> getForUser()---END');
         },
         prepareArray: function(obj,all_rights){
-            console.log('-----> prepareArray()');
+            console.log('-----> prepareArray()---START');
 
             var can_rights = obj.data[0].right.split(',');
             var rights_obj = {};
@@ -70,25 +72,28 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
             object.id = obj.data[0].id;
             object.user_id = obj.data[0].user_id;
             object.data = rights_obj;
+            console.log('-----> prepareArray()---END');
             return object;
         },
         save: function ( right ) {
 
-            console.log('------>save()');
-            if (typeof right.id === 'undefined' ) {
-                service.rights.push( jQuery.extend({}, right)  );
+            console.log('------>save()---START');
+            var t = angular.copy(right);
+            if (typeof t.id === 'undefined' ) {
+                service.rights.push( jQuery.extend({}, t)  );
             } else {
                 // send new data to the server
             }
-            this.saveOnServer(right);
+            this.saveOnServer(t);
             $rootScope.$broadcast('right.update', {});
             $rootScope.$broadcast('rights.update' );
             $rootScope.$broadcast('form.to_regular_place');
 
             this.resetBackupRight();
+            console.log('------>save()---END');
         },
         saveOnServer: function(right) {
-            console.log('------>saveOnServer()');
+            console.log('------>saveOnServer()---START');
             var that = this;
             var arr = that.mergeArray(right.data);
             API.saveOne(
@@ -104,9 +109,10 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
                     }
                 }
             );
+            console.log('------>saveOnServer()---END');
         },
         mergeArray: function(arr){
-            console.log('------>mergeArray()');
+            console.log('------>mergeArray()---START');
 
             var new_arr = [];
             $.each(arr, function(index, value) {
@@ -115,6 +121,7 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
 //                    new_arr[] = value[0];
                 }
             });
+            console.log('------>mergeArray()---END');
             return new_arr;
         },
         remove: function(index) {
@@ -131,7 +138,7 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
         backupUser: function(index) {
             current_index = index;
             service.rights[index].backup = jQuery.extend({}, service.rights[index]);
-            console.log(service.rights[current_index].backup);
+//            console.log(service.rights[current_index].backup);
         },
         cancel: function() {
             this.restoreRight();

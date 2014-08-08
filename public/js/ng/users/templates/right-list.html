@@ -1,10 +1,18 @@
 <h4>User's Rights</h4>
 <form class="atk-form" ng-controller="inlineCrud">
     <div class="atk-push-small atk-row" ng-repeat="right in rights.data track by $index">
-        <!--<div class="atk-cell atk-cells atk-valign-top">-->
-            <label class="atk-col-10" for="{{right[0]}}">{{right[0]}}</label>
-            <input class="atk-col-2" id="{{right[0]}}" type="checkbox" attr="checked" is-checked should-check="{{right[1]}}" name="{{right[0]}}" />
-        <!--</div>-->
+        <label class="atk-col-10" for="{{right[0]}}">{{right[0]}}</label>
+        <input
+                class="atk-col-2"
+                id="{{right[0]}}"
+                type="checkbox"
+                attr="checked"
+                is-checked
+                should-check="{{right[1]}}"
+                name="{{right[0]}}"
+                value="{{right[1]}}"
+                ng-model="right[1]"
+                />
     </div>
     <div class="atk-actions">
         <button ng-click="Right.save(rights)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
