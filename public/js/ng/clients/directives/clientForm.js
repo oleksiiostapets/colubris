@@ -4,9 +4,11 @@
 
 'use strict';
 
-app_module.directive('clientForm', function factory($q,$http, $templateCache,$compile) {
+app_module.directive('clientForm', function factory($q,$http, $templateCache, $compile, $location) {
     return function(scope,element,attrs) {
 
+
+        scope.formAvatar = app_module.base_url + 'js/ng/clients/templates/formAvatar.html';
 
         scope.$on( 'form.to_fixed_position', function( event, client, project ) {
             console.log('form.to_fixed_position');

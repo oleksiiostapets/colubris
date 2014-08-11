@@ -5,18 +5,39 @@ class Model_Client extends Model_BaseTable {
 	function init(){
 		parent::init();
 
+        //fields
 		$this->newField('name');
 
 		$this->addField('email');
 		$this->addField('phone');
-		$this->addField('is_archive')->type('boolean');
+        $this->addField('is_archive')->type('boolean');
+        $this->addField('avatar_id');
 
-		$this->addField('is_deleted')->type('boolean')->defaultValue('0');
+        $this->addField('is_deleted')->type('boolean')->defaultValue('0');
 //        $this->addField('deleted_id')->refModel('Model_User');
 		$this->hasOne('User','deleted_id');
 
 //        $this->addField('organisation_id')->refModel('Model_Organisation');
 		$this->hasOne('Organisation','organisation_id');
+
+        // expressions
+        $this->addExpression('avatar')->set(function($m,$q){
+            return $q->dsql()
+                ->table('filestore_file')
+                ->field('filename')
+                ->where('filestore_file.id',$q->getField('avatar_id'))
+                ;
+        });
+        $this->addExpression('avatar_thumb')->set(function($m,$q){
+            return $q->dsql()
+                ->table('filestore_file')
+                ->table('filestore_image')
+                ->field('filename')
+                ->where('filestore_image.original_file_id',$q->getField('avatar_id'))
+                ->where('filestore_image.thumb_file_id=filestore_file.id')
+                ;
+        });
+
 
 		$this->addHooks();
 	}

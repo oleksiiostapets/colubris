@@ -6,6 +6,12 @@
                 <form class="atk-form">
                     <input type="hidden" ng-model="client.id" />
                     <div class="atk-push-small">
+                        <div class="atk-cell atk-padding-small"     ng-show="showAvatar">
+                            <h3> Avatar</h3>
+                            <ng-include src="formAvatar"></ng-include>
+                        </div>
+                    </div>
+                    <div class="atk-push-small">
                         <div class="atk-cell atk-valign-top">
                             <div class="atk-label atk-effect-info">ID#{{client.id}}</div>
                         </div>
