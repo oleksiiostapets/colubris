@@ -39,7 +39,7 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
             //$rootScope.$broadcast( 'requirements.update' );
         },
         cancel: function() {
-            console.log('------> cencel');
+            console.log('------> cancel');
             this.restoreClient();
             this.resetBackupClient();
             $rootScope.$broadcast('client.update', {});
