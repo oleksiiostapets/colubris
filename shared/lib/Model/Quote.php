@@ -242,16 +242,16 @@ class Model_Quote extends Model_Auditable {
 		});
 
 		$this->addExpression('spent_time')->set(function($m,$q){
-			return $q->dsql()
-				->table('task')
-				->table('task_time')
-				->table('requirement')
-				->field('sum(task_time.spent_time)')
-				->where('requirement.id=task.requirement_id')
-				->where('task.id=task_time.task_id')
-				->where('requirement.quote_id',$q->getField('id'))
-				->where('remove_billing',0)
-				;
+            $m_r = $this->add('Model_Requirement')
+                ->addCondition('quote_id',$m->getField('id'))
+                ->fieldQuery('id');
+            $m_t = $this->add('Model_Task')
+                ->addCondition('requirement_id','in',$m_r)
+                ->addCondition('project_id',$m->getField('project_id'))
+                ->fieldQuery('id');
+            $m_tt = $this->add('Model_TaskTime')
+                ->addCondition('task_id','in',$m_t);
+            return $m_tt->sum('spent_time');
 		});
 	}
 	// Expressions --------------------------------------------------------------
