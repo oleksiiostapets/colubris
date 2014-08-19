@@ -133,7 +133,7 @@ class Model_User extends Model_BaseTable {
     // For APIs
     function setLHash(){
         $this->set('lhash',md5(time().$this->get('password')));
-        $this->set('lhash_exp',date('Y-m-d G:i:s', time() + $this->app->getConfig('api_login_expire_minutes') * 60));
+        $this->set('lhash_exp',date('Y-m-d G:i:s', time() + $this->app->getConfig('api_login_expire_minutes', 60) * 60));
         $this->save();
         return array('lhash' => $this->get('lhash'), 'lhash_exp' => $this->get('lhash_exp'));
     }
