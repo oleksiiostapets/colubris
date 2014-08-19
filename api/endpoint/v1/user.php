@@ -9,8 +9,10 @@ class endpoint_v1_user extends Endpoint_v1_General {
 
     function post_login() {
         if(!$this->app->auth->verifyCredentials($_POST['u'],$_POST['p'])) return false; else {
-            $u = $this->add('Model_User')->loadBy('email',$_POST['u']);
-            $res = $u->setLHash();
+            $u = $this->add('Model_User')->tryLoadBy('email',$_POST['u']);
+            if($u->loaded()){
+                $res = $u->setLHash();
+            }else return false;
             //$res = $u->checkUserByLHash('72ffa947a251bec0e71887ad689a2bcf');
             return $res;
         }

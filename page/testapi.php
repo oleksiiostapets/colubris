@@ -17,13 +17,13 @@ class page_testapi extends Page {
         if ($f->isSubmitted()){
             //var_dump($f->get());
             $url = 'http://localhost/colubris43/api/?page=v1/user/login/';
-            $data = array('u'=>'oleksii.ostapets@gmail.com','p'=>'123');
+            $data = array('u'=>$f->get('u'),'p'=>$f->get('p'));
             $res = $this->do_post_request($url,$data);
-            if($res) {
+            if($res == 'false') {
+                $this->js()->redirect($this->app->url('testapi',array('message' => 'wrong login')))->execute();
+            } else {
                 $res = json_decode($res);
                 $this->js()->redirect($this->app->url('testapi',array('message' => 'user logged in and have got lhash=' . $res->lhash, 'lhash' => $res->lhash)))->execute();
-            } else {
-                $this->js()->redirect($this->app->url('testapi',array('message' => 'wrong login')));
             }
         }
     }
