@@ -16,8 +16,8 @@ class page_testapi extends Page {
 
         if ($f->isSubmitted()){
             //var_dump($f->get());
-            $absolute_url = $this->full_url($_SERVER);
             //$url = 'http://localhost/colubris43/api/?page=v1/user/login/';
+            $absolute_url = $this->full_url($_SERVER);
             $url = $absolute_url.'/api/?page=v1/user/login/';
             $data = array('u'=>$f->get('u'),'p'=>$f->get('p'));
             $res = $this->do_post_request($url,$data);
@@ -45,7 +45,9 @@ class page_testapi extends Page {
         return $this->url_origin($s, $use_forwarded_host) . substr($s['REQUEST_URI'],0,strpos($s['REQUEST_URI'],'/public'));
     }
     function page_check(){
-        $url = 'http://localhost/colubris43/api/?page=v1/user/check&lhash='.$_GET['lhash'];
+        //$url = 'http://localhost/colubris43/api/?page=v1/user/check&lhash='.$_GET['lhash'];
+        $absolute_url = $this->full_url($_SERVER);
+        $url = $absolute_url.'/api/?page=v1/user/check&lhash='.$_GET['lhash'];
         $data = array('lhash'=>$_GET['lhash']);
         $res = $this->do_get_request($url,$data);
 
