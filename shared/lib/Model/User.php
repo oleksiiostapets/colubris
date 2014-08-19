@@ -30,7 +30,11 @@ class Model_User extends Model_BaseTable {
 
 		$this->hasOne('Organisation')->mandatory('required');
 
-		// expressions
+        // For logging through APIs
+        $this->addField('lhash');
+        $this->addField('lhash_exp');
+
+        // expressions
 		$this->addExpression('is_client')->datatype('boolean')->set(function($m,$q){
 			return $q->dsql()
 				->expr('if(client_id is null,false,true)');
@@ -125,6 +129,20 @@ class Model_User extends Model_BaseTable {
 	function resetPassword(){
 		throw $this->exception('Function resetPassword is not implemented yet');
 	}
+
+    // For APIs
+    function setLHash(){
+        $this->set('lhash',md5(time().$this->get('password')));
+        $this->set('lhash_exp',date('Y-m-d G:i:s', time() + $this->app->getConfig('api_login_expire_minutes') * 60));
+        $this->save();
+        return array('lhash' => $this->get('lhash'), 'lhash_exp' => $this->get('lhash_exp'));
+    }
+
+    function checkUserByLHash($lhash){
+        $this->addCondition('lhash_exp','>',date('Y-m-d G:i:s', time()));
+        $this->tryLoadBy('lhash',$lhash);
+        if($this->loaded()) return true; else return false;
+    }
 
 
 
