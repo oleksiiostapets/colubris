@@ -6,8 +6,6 @@
     "repositories": [
     ],
     "require": {
-        "atk4/atk4": "4.3.*@dev",
-        "atk4/agiletoolkit-css": "dev-master",
-        "KonstantinKolodnitsky/kk_xls": "4.3.*@dev"
+        "atk4/atk4": "4.3.*@dev"
     }
 }
