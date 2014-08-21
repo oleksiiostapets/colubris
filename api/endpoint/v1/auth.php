@@ -10,7 +10,7 @@ class endpoint_v1_auth extends Endpoint_REST {
         if(!$this->app->auth->verifyCredentials($_POST['u'],$_POST['p'])) {
             return [
                 'result' => 'error',
-                'message'   => 'User not found'
+                'message'   => 'Wrong password'
             ];
         } else {
             $u = $this->add('Model_User')->tryLoadBy('email',$_POST['u']);
@@ -47,7 +47,7 @@ class endpoint_v1_auth extends Endpoint_REST {
         }else{
             return [
                 'result' => 'success',
-                'user'   => $res,
+                'user'   => $res->get(),
                 'message' => 'User found'
             ];
         }

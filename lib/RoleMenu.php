@@ -49,14 +49,14 @@ class RoleMenu extends CompleteLister {
 
 
     private function defineCurrentRole() {
-        if ($this->api->auth->isLoggedIn()) {
+        if ($this->app->currentUser()) {
             // get all posible roles for current user
-            if ($this->api->currentUser()->canBeSystem())    $this->current_user_posible_roles[] = 'system';
-            if ($this->api->currentUser()->canBeAdmin())     $this->current_user_posible_roles[] = 'admin';
-            if ($this->api->currentUser()->canBeManager())   $this->current_user_posible_roles[] = 'manager';
-            if ($this->api->currentUser()->canBeSales())     $this->current_user_posible_roles[] = 'sales';
-            if ($this->api->currentUser()->canBeDeveloper()) $this->current_user_posible_roles[] = 'developer';
-            if ($this->api->currentUser()->canBeClient())    $this->current_user_posible_roles[] = 'client';
+            if ($this->app->currentUser()->canBeSystem())    $this->current_user_posible_roles[] = 'system';
+            if ($this->app->currentUser()->canBeAdmin())     $this->current_user_posible_roles[] = 'admin';
+            if ($this->app->currentUser()->canBeManager())   $this->current_user_posible_roles[] = 'manager';
+            if ($this->app->currentUser()->canBeSales())     $this->current_user_posible_roles[] = 'sales';
+            if ($this->app->currentUser()->canBeDeveloper()) $this->current_user_posible_roles[] = 'developer';
+            if ($this->app->currentUser()->canBeClient())    $this->current_user_posible_roles[] = 'client';
 
             // in case if there is no any role for this user
             if (!count($this->current_user_posible_roles)) throw $this->exception('You don\'t have any role in system :(');
@@ -65,7 +65,7 @@ class RoleMenu extends CompleteLister {
 
             if (!in_array($session_role,$this->current_user_posible_roles)) {
                 $this->setRole($this->current_user_posible_roles[0]);
-                $this->api->redirect($this->api->url('/'));
+                $this->app->redirect($this->app->url('/'));
             }
         }
     }

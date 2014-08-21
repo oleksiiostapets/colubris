@@ -43,6 +43,7 @@ class Frontend extends ApiFrontend {
 
         if ($this->page=='logout') {
             $this->hg_cookie->forgetLoginHash();
+            $this->redirect('index');
 //        	setcookie("colubris_auth_useremail", "", time()-3600);
         }
 
@@ -60,12 +61,12 @@ class Frontend extends ApiFrontend {
             //$this->add('MySubMenu', 'SubMenu', 'SubMenu');
 
             // show current user name
-            $view_header->template->set('name',$this->auth->model['name']?$this->auth->model['name']:'Guest' . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer());
+            $view_header->template->set('name',$this->currentUser()->get('name')?$this->currentUser()->get('name'):'Guest' . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer());
         }
 
         $this->template->trySet('year',date('Y',time()));
 
-        //$this->defineAllowedPages();
+        $this->defineAllowedPages();
 
         $this->layout->addFooter()//->addClass('atk-swatch-ink')
             ->setHTML('
@@ -83,13 +84,13 @@ class Frontend extends ApiFrontend {
     protected function checkAuth(){
         if(isset($_COOKIE[$this->app->name.'_auth_token'])){
             $absolute_url = $this->full_url($_SERVER);
-            $url = $absolute_url.'/api/?page=v1/auth/check';
-            $data = array('lhash'=>$_GET['lhash']);
-            $res = json_decode($this->do_get_request($url,$data));
+            $url = $absolute_url.'/api/?page=v1/auth/check&lhash='.$_COOKIE[$this->app->name.'_auth_token'];
+            $res = json_decode($this->do_get_request($url));
             if($res->result == 'error'){
                 $this->current_user = false;
             }else{
-                $this->current_user = $this->add('Model_User')->load($res->id);
+                $this->current_user = $this->add('Model_User')->load($res->user->id);
+                $this->user_access->setUser($this->currentUser());
             }
         }
     }
@@ -123,9 +124,69 @@ class Frontend extends ApiFrontend {
         return $this->current_user;
     }
 
+    function defineAllowedPages() {
+        // Allowed pages for guest
+        $this->addAllowedPages(array(
+            'index', 'intro', 'denied','logout','test','api','testapi'
+        ));
+
+        // For Guests
+        if (!$this->currentUser()){
+            $this->addAllowedPages(array(
+                'quotation','quotation2',
+            ));
+            if(!$this->isPageAllowed($this->page)){
+                $this->redirect('index');
+            }
+        } else {
+            if (!$this->currentUser()->canBeSystem()) {
+                // Access for all non-system roles
+                $this->addAllowedPages(array(
+                    'quotation','quotation2','account', 'about', 'home', 'quotes','clients','projects','tasks','tasks2','deleted','developers','users','dashboard','trace','task'
+                ));
+                // Grant access for non-client users
+                if($this->user_access->canSeeReportList()){
+                    $this->addAllowedPages(array(
+                        'reports'
+                    ));
+                }
+                // Grant access for Financial Manager
+                if($this->currentUser()->canSeeFinance()){
+                    $this->addAllowedPages(array(
+                        'rates'
+                    ));
+                }
+            } else {
+                $this->addAllowedPages(array(
+                    'home','system','about','dashboard'
+                ));
+            }
+            if($this->user_access->canSeeLogs()) {
+                $this->addAllowedPages(array(
+                    'logs'
+                ));
+            }
+            $this->addAllowedPages(array(
+                'api','clients2','settings'
+            ));
+        }
+    }
+    private $allowed_pages=array();
+
+    private function addAllowedPages($allowed_pages){
+        $this->allowed_pages = array_merge($allowed_pages,$this->allowed_pages);
+        // allow all subpages of allowed pages
+        $page = explode("_",$this->page);
+        if( $page[1] && in_array($page[0],$this->allowed_pages) ) $this->allowed_pages[]=$this->page;
+        $this->allowed_pages = array_unique($this->allowed_pages);
+    }
+
+    function isPageAllowed($page){
+        if(in_array($page, $this->allowed_pages)) return true; else return false;
+    }
     function initLayout(){
         try {
-            if(!$this->auth->isPageAllowed($this->page)){
+            if(!$this->isPageAllowed($this->page)){
                 throw $this->exception('This user cannot see this page','Exception_Denied');
             }
             parent::initLayout();
@@ -205,11 +266,9 @@ class Frontend extends ApiFrontend {
 
         return $response;
     }
-    function do_get_request($url, $data, $optional_headers = null) {
-        $data = http_build_query($data);
+    function do_get_request($url, $optional_headers = null) {
         $params = array('http' => array(
-            'method' => 'GET',
-            'content' => $data
+            'method' => 'GET'
         ));
 
         if ($optional_headers !== null) {

@@ -48,7 +48,7 @@ class Model_Task extends Model_Auditable {
         $this->hasOne('User','deleted_id');
 
         $this->hasOne('Organisation','organisation_id');
-        $this->addCondition('organisation_id',$this->app->auth->model['organisation_id']);
+        $this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 
         $this->setOrder('updated_dts',true);
 
@@ -148,8 +148,8 @@ class Model_Task extends Model_Auditable {
         }
         $this->_dsql()->where(
             $this->_dsql()->orExpr()
-                ->where('requester_id',$this->app->auth->model['id'])
-                ->where('assigned_id',$this->app->auth->model['id'])
+                ->where('requester_id',$this->app->currentUser()->get('id'))
+                ->where('assigned_id',$this->app->currentUser()->get('id'))
         );
         $this->notDeleted();
         $this->addRoleCondition();
