@@ -16,11 +16,10 @@ trait Helper_Url {
             return $_GET[$name];
         }
         if (!$can_by_null) {
-            echo json_encode([
+            return [
                 'result' => 'error',
                 'error_message'   => 'no '.$name.' parameter',
-            ]);
-            exit();
+            ];
         }
     }
     protected function checkPostParameter($name,$can_by_null=false) {

@@ -1,6 +1,6 @@
 <?php
 class Controller_MyCookie extends AbstractController {
-    public $login_hash = '_login_hash';
+    public $login_hash = '_auth_token';
     function init() {
         parent::init();
         $this->app->hg_cookie = $this;

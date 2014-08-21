@@ -158,12 +158,14 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
                 if (typeof value === 'undefined') {
                     return;
                 }
-                if (count > 1) {
-                    url = url + '&';
-                }
-                url = url + key + '=' + value;
+//                if (count > 1) {
+//                    url = url + '&';
+//                }
+                url = url + key + '=' + value + '&';
                 count++;
             });
+
+            // TODO add token from cookie
             return url;
         }
 

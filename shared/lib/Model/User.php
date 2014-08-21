@@ -141,7 +141,7 @@ class Model_User extends Model_BaseTable {
     function checkUserByLHash($lhash){
         $this->addCondition('lhash_exp','>',date('Y-m-d G:i:s', time()));
         $this->tryLoadBy('lhash',$lhash);
-        if($this->loaded()) return true; else return false;
+        if($this->loaded()) return $this; else return false;
     }
 
 

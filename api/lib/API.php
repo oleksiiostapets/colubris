@@ -10,6 +10,9 @@
  * https://github.com/atk4/agiletoolkit.org/blob/master/api/lib/Api2.php
  */
 class API extends App_REST {
+
+    public $current_user;
+
     function init(){
         parent::init();
 
@@ -20,7 +23,7 @@ class API extends App_REST {
 
     }
     function currentUser() {
-        return $this->auth->model;
+        return $this->current_user;
     }
     protected function addPathfinder() {
         $this->pathfinder->addLocation(array(
@@ -35,7 +38,7 @@ class API extends App_REST {
         $router
             ->link('v1/taskcomment',array('method','field_name','field_value'))
             ->link('v1/requirement',array('method','field_name','field_value'))
-            ->link('v1/user',array('method'))
+            ->link('v1/auth',array('method'))
         ;
         $router->route();
     }

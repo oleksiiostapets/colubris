@@ -18,9 +18,30 @@ class Endpoint_v1_General extends Endpoint_REST {
     function init() {
         parent::init();
 
+        $auth_res = $this->checkAuth();
+        if (is_array($auth_res)) {
+            return $auth_res;
+        }
+
         $this->getParameter('count') ? $this->count = $this->getParameter('count') : $this->count = 999999999999;
         $this->getParameter('offset') ? $this->offset = $this->getParameter('offset') : $this->offset = 0;
         $this->getParameter('method') ? $this->method = $this->getParameter('method') : $this->method = false;
+    }
+
+    protected function checkAuth() {
+        $lhash = $this->checkGetParameter('lhash');
+        if (is_array($lhash)) {
+            return $lhash;
+        }
+        $current_user = $this->add('Model_User');
+
+        if(!$current_user->checkUserByLHash('lhash',$lhash)) return [
+            'result' => 'error',
+            'message' => 'User cannot be authorized'
+        ];
+
+        $this->app->current_user = $current_user;
+        return true;
     }
 
     /**
