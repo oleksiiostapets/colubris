@@ -83,8 +83,7 @@ class Frontend extends ApiFrontend {
     }
     protected function checkAuth(){
         if(isset($_COOKIE[$this->app->name.'_auth_token'])){
-            $absolute_url = $this->full_url($_SERVER);
-            $url = $absolute_url.'/api/?page=v1/auth/check&lhash='.$_COOKIE[$this->app->name.'_auth_token'];
+            $url = 'v1/auth/check&lhash='.$_COOKIE[$this->app->name.'_auth_token'];
             $res = json_decode($this->do_get_request($url));
             if($res->result == 'error'){
                 $this->current_user = false;
@@ -245,6 +244,7 @@ class Frontend extends ApiFrontend {
 
     // NET functions
     function do_post_request($url, $data, $optional_headers = null) {
+        $url = $this->getConfig('api_base_url').$url;
         $data = http_build_query($data);
         $params = array('http' => array(
             'method' => 'POST',
@@ -267,6 +267,7 @@ class Frontend extends ApiFrontend {
         return $response;
     }
     function do_get_request($url, $optional_headers = null) {
+        $url = $this->getConfig('api_base_url').$url;
         $params = array('http' => array(
             'method' => 'GET'
         ));

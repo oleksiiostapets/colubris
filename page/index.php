@@ -16,8 +16,7 @@ class Page_index extends Page {
             $l=$form->get('email');
             $p=$form->get('password');
 
-            $absolute_url = $this->app->full_url($_SERVER);
-            $url = $absolute_url.'/api/?page=v1/auth/login/';
+            $url = 'v1/auth/login/';
             $data = array('u'=>$l,'p'=>$p);
             $res = json_decode($this->app->do_post_request($url,$data));
 
