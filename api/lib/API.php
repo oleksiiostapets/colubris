@@ -39,6 +39,7 @@ class API extends App_REST {
             ->link('v1/taskcomment',array('method','field_name','field_value'))
             ->link('v1/requirement',array('method','field_name','field_value'))
             ->link('v1/auth',array('method'))
+            ->link('v1/account',array('method'))
         ;
         $router->route();
     }

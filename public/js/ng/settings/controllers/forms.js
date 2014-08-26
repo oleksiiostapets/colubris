@@ -46,7 +46,7 @@ app_module.controller(
         $scope.$on( 'settings.update', function( event, args ) {
             $scope.settings = args;
             $scope.account = $scope.settings[0];
-            console.log($scope.account.avatar_thumb);
+            //console.log($scope.account.avatar_thumb);
             if($scope.account.avatar_thumb != '' && $scope.account.avatar_thumb != null) $("#avatar").html('<img src="http://' + document.domain + window.location.pathname + 'upload/' + $scope.account.avatar_thumb + '" alt="Avatar" />');
             //console.log($scope.account);
         });

@@ -20,7 +20,8 @@ class Endpoint_v1_General extends Endpoint_REST {
 
         $auth_res = $this->checkAuth();
         if (is_array($auth_res)) {
-            return $auth_res;
+            echo json_encode([$auth_res]);
+            exit;
         }
 
         $this->getParameter('count') ? $this->count = $this->getParameter('count') : $this->count = 999999999999;
@@ -34,8 +35,7 @@ class Endpoint_v1_General extends Endpoint_REST {
             return $lhash;
         }
         $current_user = $this->add('Model_User');
-
-        if(!$current_user->checkUserByLHash('lhash',$lhash)) return [
+        if(!$current_user->checkUserByLHash($lhash)) return [
             'result' => 'error',
             'message' => 'User cannot be authorized'
         ];
