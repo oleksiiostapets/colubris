@@ -110,29 +110,35 @@ $.each({
         form.submit();
 
     },
-    startRequirementApp: function(quote_id,base_url,prefix,postfix) {
+    startRequirementApp: function(quote_id,base_url,prefix,postfix,api_base_url,lhash) {
         angular.element(document).ready(function() {
             app_module.quote_id = quote_id;
             app_module.base_url = base_url;
             app_module.prefix   = prefix;
             app_module.postfix  = postfix;
+            app_module.api_base_url = api_base_url;
+            app_module.lhash  = lhash;
             angular.bootstrap(document, ['quotes.one.app']);
         });
     },
-    startClientsApp: function(base_url,prefix,postfix) {
+    startClientsApp: function(base_url,prefix,postfix,api_base_url,lhash) {
         angular.element(document).ready(function() {
 //            app_module.client_id = client_id;
             app_module.base_url = base_url;
             app_module.prefix   = prefix;
             app_module.postfix  = postfix;
+            app_module.api_base_url = api_base_url;
+            app_module.lhash  = lhash;
             angular.bootstrap(document, ['clients.app']);
         });
     },
-    startTasksApp: function(base_url,prefix,postfix) {
+    startTasksApp: function(base_url,prefix,postfix,api_base_url,lhash) {
         angular.element(document).ready(function() {
             app_module.base_url = base_url;
             app_module.prefix   = prefix;
             app_module.postfix  = postfix;
+            app_module.api_base_url = api_base_url;
+            app_module.lhash  = lhash;
             angular.bootstrap(document, ['tasks.app']);
         });
     },
@@ -147,11 +153,13 @@ $.each({
             angular.bootstrap(document, ['settings.app']);
         });
     },
-    startProjectsApp: function(base_url,prefix,postfix) {
+    startProjectsApp: function(base_url,prefix,postfix,api_base_url,lhash) {
         angular.element(document).ready(function() {
             app_module.base_url = base_url;
             app_module.prefix   = prefix;
             app_module.postfix  = postfix;
+            app_module.api_base_url = api_base_url;
+            app_module.lhash  = lhash;
             angular.bootstrap(document, ['projects.app']);
         });
     },
