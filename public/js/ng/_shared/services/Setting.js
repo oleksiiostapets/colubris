@@ -36,7 +36,6 @@ app_module.service( 'Setting', [ '$rootScope','$http','API', function( $rootScop
                 angular.toJson(service.settings),
                 function(obj) {
                     $(".validation_error").remove();
-                    console.log(obj[0]);
                     if (obj.result === 'success') {
                         $rootScope.showSystemMsg('password changed');
                         $rootScope.$broadcast( 'settings.password_changed', null );
