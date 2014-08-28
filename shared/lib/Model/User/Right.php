@@ -84,7 +84,6 @@ class Model_User_Right extends Model_BaseTable{
 //        $this->addField('user_id');
         $this->hasOne('User');
         $this->addField('right')->type('text');
-        $this->user = $this->app->auth->model;
     }
 
     private $_set = false;
@@ -159,38 +158,45 @@ class Model_User_Right extends Model_BaseTable{
     /*
      * Set rights for new user
      */
-    private function setPatternForNew($pattern){
-        $this->tryLoadBy('user_id',$this->user->id);
+    private function setPatternForNew($id,$pattern){
+        $this->tryLoadBy('user_id',$id);
         if($this->loaded()){
             throw $this->exception('This user exists and already has his rights saved. Use make_as_() to change them');
         }else{
             $this->_set = true;
-            $this->set('right',$pattern)->save();
+            $this->set(array(
+                'user_id' => $id,
+                'right'   => $pattern
+            ))->save();
             $this->_set = false;
             return $this;
         }
     }
-    public function saveNewUserAsDeveloper(){
-        $this->setPatternForNew($this->developer_pattern);
+    public function saveNewUserAsEmpty($id){
+        $this->setPatternForNew($id,'');
 
     }
-    public function saveNewUserAsClient(){
-        $this->setPatternForNew($this->client_pattern);
+    public function saveNewUserAsDeveloper($id){
+        $this->setPatternForNew($id,$this->developer_pattern);
+
     }
-    public function saveNewUserAsSalesManager(){
-        $this->setPatternForNew($this->sales_manager_pattern);
+    public function saveNewUserAsClient($id){
+        $this->setPatternForNew($id,$this->client_pattern);
     }
-    public function saveNewUserAsManager(){
-        $this->setPatternForNew($this->manager_pattern);
+    public function saveNewUserAsSalesManager($id){
+        $this->setPatternForNew($id,$this->sales_manager_pattern);
     }
-    public function saveNewUserAsAdmin(){
-        $this->setPatternForNew($this->admin_pattern);
+    public function saveNewUserAsManager($id){
+        $this->setPatternForNew($id,$this->manager_pattern);
+    }
+    public function saveNewUserAsAdmin($id){
+        $this->setPatternForNew($id,$this->admin_pattern);
     }
     /*
      * Set rights for existing user
      */
-    private function setPatternForExisting($pattern){
-        $this->tryLoadBy('user_id',$this->user->id);
+    private function setPatternForExisting($id,$pattern){
+        $this->tryLoadBy('user_id',$id);
         if($this->loaded()){
             $this->_set = true;
             $this->set('right',$pattern)->save();
@@ -200,20 +206,20 @@ class Model_User_Right extends Model_BaseTable{
             throw $this->exception('There is no rights record for current user. Use "save_new_user_as_()" method to set user rights.');
         }
     }
-    public function makeExistingUserAsDeveloper(){
-        $this->setPatternForExisting($this->developer_pattern);
+    public function makeExistingUserAsDeveloper($id){
+        $this->setPatternForExisting($id, $this->developer_pattern);
     }
-    public function makeExistingUserAsClient(){
-        $this->setPatternForExisting($this->client_pattern);
+    public function makeExistingUserAsClient($id){
+        $this->setPatternForExisting($id, $this->client_pattern);
     }
-    public function makeExistingUserAsSalesManager(){
-        $this->setPatternForExisting($this->sales_manager_pattern);
+    public function makeExistingUserAsSalesManager($id){
+        $this->setPatternForExisting($id, $this->sales_manager_pattern);
     }
-    public function makeExistingUserAsManager(){
-        $this->setPatternForExisting($this->manager_pattern);
+    public function makeExistingUserAsManager($id){
+        $this->setPatternForExisting($id, $this->manager_pattern);
     }
-    public function makeExistingUserAsAadmin(){
-        $this->setPatternForExisting($this->admin_pattern);
+    public function makeExistingUserAsAadmin($id){
+        $this->setPatternForExisting($id, $this->admin_pattern);
     }
     
     
@@ -228,70 +234,67 @@ class Model_User_Right extends Model_BaseTable{
         }
         return false;
     }
-    public function getRight($right_name){
+    public function getRight($id, $right_name){
         if(!$this->checkRight($right_name)) throw $this->exception('There is no such an access right defined');
-        if($this->user->loaded()){
-            $this->tryLoadBy('user_id',$this->user['id']);
-            if($this->loaded()){
-                $rights_array = $this->getRows();
-                if(!$rights_array[0]['right']) throw $this->exception('User rights setup as NULL. User ID is "'.$this->user['id'].'"');
-                $right = $this->fetchRights($rights_array[0]['right'],$right_name);
-                return $right;
-            }else{
-                throw $this->exception('This user has no rights being setup. User ID is "'.$this->user['id'].'"');
-            }
+        $this->tryLoadBy('user_id',$id);
+        if($this->loaded()){
+            $rights_array = $this->getRows();
+            if(!$rights_array[0]['right']) throw $this->exception('User rights setup as NULL. User ID is "'.$id.'"');
+            $right = $this->fetchRights($rights_array[0]['right'],$right_name);
+            return $right;
         }else{
-            throw $this->exception('User is not logged in');
+            throw $this->exception('This user has no rights being setup. User ID is "'.$id.'"');
         }
+
     }
     //task
-    public function canSeeTasks(){return $this->getRight('can_see_tasks');}
-    public function canAddTask(){return $this->getRight('can_add_task');}
-    public function canEditTask(){return $this->getRight('can_edit_task');}
-    public function canDeleteTask(){return $this->getRight('can_delete_task');}
-    public function canAddCommentToTask(){return $this->getRight('can_add_comment_to_task');}
+    public function canSeeTasks($id)             {return $this->getRight($id,'can_see_tasks');}
+    public function canAddTask($id)              {return $this->getRight($id,'can_add_task');}
+    public function canEditTask($id)             {return $this->getRight($id,'can_edit_task');}
+    public function canDeleteTask($id)           {return $this->getRight($id,'can_delete_task');}
+    public function canAddCommentToTask($id)        {return $this->getRight($id,'can_add_comment_to_task');}
     //Project
-    public function canSeeProjects(){return $this->getRight('can_see_projects');}
-    public function canAddProjects(){return $this->getRight('can_add_projects');}
-    public function canEditProjects(){return $this->getRight('can_edit_projects');}
-    public function canDeleteProjects(){return $this->getRight('can_delete_projects');}
+    public function canSeeProjects($id)             {return $this->getRight($id,'can_see_projects');}
+    public function canAddProjects($id)             {return $this->getRight($id,'can_add_projects');}
+    public function canEditProjects($id)            {return $this->getRight($id,'can_edit_projects');}
+    public function canDeleteProjects($id)          {return $this->getRight($id,'can_delete_projects');}
     //Quote
-    public function canAddQuote(){return $this->getRight('can_add_quote');}//Request for quotation
-    public function canEditQuote(){return $this->getRight('can_edit_quote');}
-    public function canDeleteQuote(){return $this->getRight('can_delete_quote');}
-    public function canSubmitForQuotation(){return $this->getRight('can_submit_for_quotation');}
+    public function canAddQuote($id)                {return $this->getRight($id,'can_add_quote');}//Request for quotation
+    public function canEditQuote($id)               {return $this->getRight($id,'can_edit_quote');}
+    public function canDeleteQuote($id)             {return $this->getRight($id,'can_delete_quote');}
+    public function canSubmitForQuotation($id)      {return $this->getRight($id,'can_submit_for_quotation');}
     //Requirement
-    public function canAddRequirement(){return $this->getRight('can_add_requirement');}
-    public function canEditRequirement(){return $this->getRight('can_edit_requirement');}
-    public function canDeleteRequirement(){return $this->getRight('can_delete_requirement');}
-    public function canAddCommentToRequirement(){return $this->getRight('can_add_comment_to_requirement');}
+    public function canAddRequirement($id)          {return $this->getRight($id,'can_add_requirement');}
+    public function canEditRequirement($id)         {return $this->getRight($id,'can_edit_requirement');}
+    public function canDeleteRequirement($id)       {return $this->getRight($id,'can_delete_requirement');}
+    public function canAddCommentToRequirement($id) {return $this->getRight($id,'can_add_comment_to_requirement');}
     //Setting
-    public function canSeeSettings(){return $this->getRight('can_see_settings');}
-    public function canEditSettings(){return $this->getRight('can_edit_settings');}
+    public function canSeeSettings($id)             {return $this->getRight($id,'can_see_settings');}
+    public function canEditSettings($id)            {return $this->getRight($id,'can_edit_settings');}
     //User
-    public function canSeeUsers(){return $this->getRight('can_see_users');}
-    public function canManageUsers(){return $this->getRight('can_manage_users');}
+    public function canSeeUsers($id)                {return $this->getRight($id,'can_see_users');}
+    public function canManageUsers($id)             {return $this->getRight($id,'can_manage_users');}
     //Rates
-    public function canSeeRates(){return $this->getRight('can_see_rates');}
-    public function canManageRates(){return $this->getRight('can_manage_rates');}
+    public function canSeeRates($id)                {return $this->getRight($id,'can_see_rates');}
+    public function canManageRates($id)             {return $this->getRight($id,'can_manage_rates');}
     //Developers
-    public function canSeeDevelopers(){return $this->getRight('can_see_developers');}
-    public function canManageDevelopers(){return $this->getRight('can_manage_developers');}
+    public function canSeeDevelopers($id)           {return $this->getRight($id,'can_see_developers');}
+    public function canManageDevelopers($id)        {return $this->getRight($id,'can_manage_developers');}
     //Clients
-    public function canSeeClients(){return $this->getRight('can_see_clients');}
-    public function canManageClients(){return $this->getRight('can_manage_clients');}
+    public function canSeeClients($id)              {return $this->getRight($id,'can_see_clients');}
+    public function canManageClients($id)           {return $this->getRight($id,'can_manage_clients');}
     //Reports
-    public function canSeeReports(){return $this->getRight('can_see_reports');}
+    public function canSeeReports($id)              {return $this->getRight($id,'can_see_reports');}
     //Deleted Items
-    public function canSeeDeleted(){return $this->getRight('can_see_deleted');}
-    public function canRestoreDeleted(){return $this->getRight('can_restore_deleted');}
+    public function canSeeDeleted($id)              {return $this->getRight($id,'can_see_deleted');}
+    public function canRestoreDeleted($id)          {return $this->getRight($id,'can_restore_deleted');}
     //Logs
-    public function canSeeLogs(){return $this->getRight('can_see_logs');}
+    public function canSeeLogs($id)                 {return $this->getRight($id,'can_see_logs');}
     //Mics
-    public function canSeeDashboard(){return $this->getRight('can_see_dashboard');}
-    public function canMoveToFromArchive(){return $this->getRight('can_move_to_from_archive');}
-    public function canTrackTime(){return $this->getRight('can_track_time');}
-    public function canLoginAsAnyUser(){return $this->getRight('can_login_as_any_user');}
+    public function canSeeDashboard($id)            {return $this->getRight($id,'can_see_dashboard');}
+    public function canMoveToFromArchive($id)       {return $this->getRight($id,'can_move_to_from_archive');}
+    public function canTrackTime($id)               {return $this->getRight($id,'can_track_time');}
+    public function canLoginAsAnyUser($id)          {return $this->getRight($id,'can_login_as_any_user');}
 
     /////////////////
     //Toggle rights//

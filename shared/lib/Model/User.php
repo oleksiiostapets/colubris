@@ -30,7 +30,11 @@ class Model_User extends Model_BaseTable {
 
 		$this->hasOne('Organisation')->mandatory('required');
 
-		// expressions
+        // For logging through APIs
+        $this->addField('lhash');
+        $this->addField('lhash_exp');
+
+        // expressions
 		$this->addExpression('is_client')->datatype('boolean')->set(function($m,$q){
 			return $q->dsql()
 				->expr('if(client_id is null,false,true)');
@@ -77,6 +81,12 @@ class Model_User extends Model_BaseTable {
 				->exception('Do not change email for existing user','ValidityCheck')
 				->setField('email');
 		});
+		$this->addHook('afterLoad',function($m){
+			$m_rights = $this->add('Model_User_Right')->tryLoadBy('user_id',$m->id);
+            if(!$m_rights->loaded()){
+                $m_rights->saveNewUserAsEmpty($m->id);
+            }
+		});
 	}
 
 	// HOOKS :: END -----------------------------------------------------------
@@ -105,7 +115,7 @@ class Model_User extends Model_BaseTable {
 		return $this;
 	}
 	function getUsersOfOrganisation(){
-		$this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+		$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 		return $this;
 	}
 	function getSystemUsers(){
@@ -125,6 +135,20 @@ class Model_User extends Model_BaseTable {
 	function resetPassword(){
 		throw $this->exception('Function resetPassword is not implemented yet');
 	}
+
+    // For APIs
+    function setLHash(){
+        $this->set('lhash',md5(time().$this->get('password')));
+        $this->set('lhash_exp',date('Y-m-d G:i:s', time() + $this->app->getConfig('api_login_expire_minutes', 60) * 60));
+        $this->save();
+        return array('lhash' => $this->get('lhash'), 'lhash_exp' => $this->get('lhash_exp'));
+    }
+
+    function checkUserByLHash($lhash){
+        $this->addCondition('lhash_exp','>',date('Y-m-d G:i:s', time()));
+        $this->tryLoadBy('lhash',$lhash);
+        if($this->loaded()) return $this; else return false;
+    }
 
 
 

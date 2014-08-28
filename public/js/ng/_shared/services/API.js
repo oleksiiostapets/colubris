@@ -6,7 +6,8 @@
 
 app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http ) {
     var replace_tag = '<$api_command$>';
-    var api_base_url = app_module.base_url + app_module.prefix  + 'api/' + replace_tag + app_module.postfix;
+    var api_base_url = app_module.api_base_url + 'v1/' + replace_tag + app_module.postfix;
+//    var api_base_url = app_module.base_url + app_module.prefix  + 'api/' + replace_tag + app_module.postfix;
     var service = {
 
         /**
@@ -158,12 +159,14 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
                 if (typeof value === 'undefined') {
                     return;
                 }
-                if (count > 1) {
-                    url = url + '&';
-                }
-                url = url + key + '=' + value;
+//                if (count > 1) {
+//                    url = url + '&';
+//                }
+                url = url + key + '=' + value + '&';
                 count++;
             });
+            // Token from cookie
+            url = url + 'lhash=' + app_module.lhash;
             return url;
         }
 

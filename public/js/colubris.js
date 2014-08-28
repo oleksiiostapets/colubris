@@ -136,12 +136,14 @@ $.each({
             angular.bootstrap(document, ['tasks.app']);
         });
     },
-    startSettingsApp: function(user_id,base_url,prefix,postfix) {
+    startSettingsApp: function(user_id,base_url,prefix,postfix,api_base_url,lhash) {
         angular.element(document).ready(function() {
             app_module.user_id  = user_id;
             app_module.base_url = base_url;
             app_module.prefix   = prefix;
             app_module.postfix  = postfix;
+            app_module.api_base_url = api_base_url;
+            app_module.lhash  = lhash;
             angular.bootstrap(document, ['settings.app']);
         });
     },

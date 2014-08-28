@@ -1,8 +1,9 @@
 <?php
 class Frontend extends ApiFrontend {
+    public $current_user;
 
     function getVer(){
-        return 2.1;
+        return 2.2;
     }
     function init() {
         parent::init();
@@ -42,25 +43,26 @@ class Frontend extends ApiFrontend {
 
         if ($this->page=='logout') {
             $this->hg_cookie->forgetLoginHash();
+            $this->redirect('index');
 //        	setcookie("colubris_auth_useremail", "", time()-3600);
         }
 
-        // auth
-        $this->addAuth();
+        $this->checkAuth();
 
-//        $this->layout = $this->add('Layout_Colubris');
         $this->layout = $this->add('Layout_Fluid')->addClass('atk-swatch-ink');
         $this->template->set('page_title','Colubris');
         $this->layout->template->set('page_title','Colubris');
 
         $view_header = $this->layout->add('View',null,'Header_Content',array('view/header'));
 
-        $this->layout->rm = $view_header->add('RoleMenu', 'SubMenu','SubMenu');
-        $view_header->add('MyMenu',null,'Main_Menu');
-        //$this->add('MySubMenu', 'SubMenu', 'SubMenu');
+        if($this->currentUser()){
+            $this->layout->rm = $view_header->add('RoleMenu', 'SubMenu','SubMenu');
+            $view_header->add('MyMenu',null,'Main_Menu');
+            //$this->add('MySubMenu', 'SubMenu', 'SubMenu');
 
-        // show current user name
-        $view_header->template->set('name',$this->auth->model['name']?$this->auth->model['name']:'Guest' . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer());
+            // show current user name
+            $view_header->template->set('name',$this->currentUser()->get('name')?$this->currentUser()->get('name'):'Guest' . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer());
+        }
 
         $this->template->trySet('year',date('Y',time()));
 
@@ -78,7 +80,18 @@ class Frontend extends ApiFrontend {
             </div>
         ');
         
-        $this->autoLogin();
+    }
+    protected function checkAuth(){
+        if(isset($_COOKIE[$this->app->name.'_auth_token'])){
+            $url = 'v1/auth/check&lhash='.$_COOKIE[$this->app->name.'_auth_token'];
+            $res = json_decode($this->do_get_request($url));
+            if($res->result == 'error'){
+                $this->current_user = false;
+            }else{
+                $this->current_user = $this->add('Model_User')->load($res->user->id);
+                $this->user_access->setUser($this->currentUser());
+            }
+        }
     }
     protected function addControllers() {
         $this->colubris    = $this->add('Controller_Colubris');
@@ -86,25 +99,6 @@ class Frontend extends ApiFrontend {
         $this->mailer      = $this->add('Controller_Mailer');
         $this->hg_cookie   = $this->add('Controller_MyCookie');
         $this->user_access = $this->add('Controller_UserAccess');
-    }
-    protected function addAuth() {
-		$mu=$this->add('Model_User')->notDeleted();
-        $this->add('Auth')
-            ->usePasswordEncryption('md5')
-            ->setModel($mu, 'email', 'password')
-        ;
-        $this->auth->add('auth/Controller_Cookie');
-
-        if(!$this->auth->model['id']){
-            $hash = $this->hg_cookie->getLoginHash();
-            if($hash){
-                $u = $this->add('Model_User')->tryLoadBy('hash',$hash);
-                if($u->loaded()){
-                    $this->auth->login($u["email"]);
-                }
-            }
-        }
-        $this->user_access->setUser($this->currentUser());
     }
     function getUserType(){
     	if ($this->currentUser()->canBeManager()) return 'manager';
@@ -125,38 +119,22 @@ class Frontend extends ApiFrontend {
         return $protocol.$domainName;
     }
 
-    function autoLogin() {
-        // Autologin from admin/users
-        if( (isset($_GET['id'])) && (isset($_GET['hash'])) ){
-            $u=$this->add('Model_User')->getActive();
-			$u->load($_GET["id"]);
-            if($u['hash']!=$_GET["hash"]){
-                echo json_encode("Wrong user hash");
-                $this->logVar('wrong user hash: '.$u['hash']);
-                exit;
-            }
-            unset($u['password']);
-            $this->auth->addInfo('user',$u);
-            $this->auth->login($u['email']);
-            if($_GET['clear']==1){
-                setcookie("fuser", "", time()-3600);
-                setcookie("fhash", "", time()-3600);
-            }
-        }
+    function currentUser() {
+        return $this->current_user;
     }
 
     function defineAllowedPages() {
         // Allowed pages for guest
         $this->addAllowedPages(array(
-            'index', 'intro', 'denied','test','api',
+            'index', 'intro', 'denied','logout','test','api','testapi'
         ));
 
         // For Guests
-        if (!$this->auth->isLoggedIn()){
+        if (!$this->currentUser()){
             $this->addAllowedPages(array(
                 'quotation','quotation2',
             ));
-            if(!$this->auth->isPageAllowed($this->page)){
+            if(!$this->isPageAllowed($this->page)){
                 $this->redirect('index');
             }
         } else {
@@ -182,7 +160,7 @@ class Frontend extends ApiFrontend {
                     'home','system','about','dashboard'
                 ));
             }
-            if( ($this->auth->isLoggedIn()) && ($this->user_access->canSeeLogs()) ) {
+            if($this->user_access->canSeeLogs()) {
                 $this->addAllowedPages(array(
                     'logs'
                 ));
@@ -193,24 +171,21 @@ class Frontend extends ApiFrontend {
         }
     }
     private $allowed_pages=array();
+
     private function addAllowedPages($allowed_pages){
         $this->allowed_pages = array_merge($allowed_pages,$this->allowed_pages);
-
         // allow all subpages of allowed pages
         $page = explode("_",$this->page);
         if( $page[1] && in_array($page[0],$this->allowed_pages) ) $this->allowed_pages[]=$this->page;
         $this->allowed_pages = array_unique($this->allowed_pages);
-
-        $this->auth->allowPage($this->allowed_pages);
     }
 
-    function currentUser() {
-        return $this->auth->model;
+    function isPageAllowed($page){
+        if(in_array($page, $this->allowed_pages)) return true; else return false;
     }
-
     function initLayout(){
         try {
-            if(!$this->auth->isPageAllowed($this->page)){
+            if(!$this->isPageAllowed($this->page)){
                 throw $this->exception('This user cannot see this page','Exception_Denied');
             }
             parent::initLayout();
@@ -265,5 +240,66 @@ class Frontend extends ApiFrontend {
             //setcookie('version',$v, 60*60*24*30*12*10,'/');
         }
 //        $this->redirect($this->url('/'));
+    }
+
+    // NET functions
+    function do_post_request($url, $data, $optional_headers = null) {
+        $url = $this->getConfig('api_base_url').$url;
+        $data = http_build_query($data);
+        $params = array('http' => array(
+            'method' => 'POST',
+            'content' => $data
+        ));
+
+        if ($optional_headers !== null) {
+            $params['http']['header'] = $optional_headers;
+        }
+        $ctx = stream_context_create($params);
+        $fp = @fopen($url, 'rb', false, $ctx);
+        if (!$fp) {
+            throw new Exception("Problem with $url, $php_errormsg");
+        }
+        $response = @stream_get_contents($fp);
+        if ($response === false) {
+            throw new Exception("Problem reading data from $url, $php_errormsg");
+        }
+
+        return $response;
+    }
+    function do_get_request($url, $optional_headers = null) {
+        $url = $this->getConfig('api_base_url').$url;
+        $params = array('http' => array(
+            'method' => 'GET'
+        ));
+
+        if ($optional_headers !== null) {
+            $params['http']['header'] = $optional_headers;
+        }
+        $ctx = stream_context_create($params);
+        $fp = @fopen($url, 'rb', false, $ctx);
+        if (!$fp) {
+            throw new Exception("Problem with $url, $php_errormsg");
+        }
+        $response = @stream_get_contents($fp);
+        if ($response === false) {
+            throw new Exception("Problem reading data from $url, $php_errormsg");
+        }
+
+        return $response;
+    }
+    function url_origin($s, $use_forwarded_host=false)
+    {
+        $ssl = (!empty($s['HTTPS']) && $s['HTTPS'] == 'on') ? true:false;
+        $sp = strtolower($s['SERVER_PROTOCOL']);
+        $protocol = substr($sp, 0, strpos($sp, '/')) . (($ssl) ? 's' : '');
+        $port = $s['SERVER_PORT'];
+        $port = ((!$ssl && $port=='80') || ($ssl && $port=='443')) ? '' : ':'.$port;
+        $host = ($use_forwarded_host && isset($s['HTTP_X_FORWARDED_HOST'])) ? $s['HTTP_X_FORWARDED_HOST'] : (isset($s['HTTP_HOST']) ? $s['HTTP_HOST'] : null);
+        $host = isset($host) ? $host : $s['SERVER_NAME'] . $port;
+        return $protocol . '://' . $host;
+    }
+    function full_url($s, $use_forwarded_host=false)
+    {
+        return $this->url_origin($s, $use_forwarded_host) . substr($s['REQUEST_URI'],0,strpos($s['REQUEST_URI'],'/public'));
     }
 }

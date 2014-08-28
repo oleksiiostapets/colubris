@@ -48,6 +48,8 @@ app_module.service( 'Setting', [ '$rootScope','$http','API', function( $rootScop
                                 $rootScope.removeTag("#val_error_" + i, 3000);
                             });
                         });
+                    } else if(obj[0].message != '') {
+                        alert(obj[0].message);
                     } else {
                         alert('Error! No success message received.');
                     }
@@ -79,23 +81,6 @@ app_module.service( 'Setting', [ '$rootScope','$http','API', function( $rootScop
                     $rootScope.$broadcast( 'settings.update',service.settings );
                 }
             );
-        },
-        prepareUrl: function(page,action,args) {
-            var url = app_module.base_url + app_module.prefix  + page + action + app_module.postfix;
-            if (url.indexOf('?') === false) {
-                url = url + '?';
-            } else {
-                url = url + '&';
-            }
-            var count = 1;
-            $.each(args,function(key,value) {
-                if (count > 1) {
-                    url = url + '&';
-                }
-                url = url + key + '=' + value;
-                count++;
-            });
-            return url;
         }
     }
 
