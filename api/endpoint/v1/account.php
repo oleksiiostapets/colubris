@@ -6,7 +6,7 @@ class endpoint_v1_account extends Endpoint_v1_General {
     function init() {
         parent::init();
     }
-    function page_changePassword(){
+    function post_changePassword(){
         $id = $this->checkGetParameter('id');
         $this->model->tryLoad($id);
         if(!$this->model->loaded()){
@@ -17,9 +17,9 @@ class endpoint_v1_account extends Endpoint_v1_General {
             exit();
         }
         // Validations
-        $old_password = $this->checkGetParameter('old_password');
-        $new_password = $this->checkGetParameter('new_password');
-        $verify_password = $this->checkGetParameter('verify_password');
+        $old_password = $this->getParameter('old_password');
+        $new_password = $this->getParameter('new_password');
+        $verify_password = $this->getParameter('verify_password');
 
         $validation_errors = array();
 

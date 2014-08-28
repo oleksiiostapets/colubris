@@ -172,6 +172,33 @@ class Endpoint_v1_General extends Endpoint_REST {
         ]);
         exit;
     }
+    function post_saveParams(){
+        $data = file_get_contents("php://input"); // TODO: not safe data
+        $data_arr = @json_decode($data,true);
+        if (is_array($data_arr)) {
+            $all = array_merge($_REQUEST,$data_arr);
+        } else {
+            $all = $_REQUEST;
+        }
+        $id = $this->checkGetParameter('id',true);
+        if ($id) {
+            $this->model->tryLoad($id);
+            if(!$this->model->loaded()){
+                echo json_encode([
+                    'result' => 'error',
+                    'error_message' => 'Record with the id '.$id.' was not found',
+                ]);
+                exit();
+            }
+        }
+        $this->model->set($all);
+        $this->model->save();
+        echo json_encode([
+            'result' => 'success',
+            'data' => $this->model->get(),
+        ]);
+        exit;
+    }
 
 
 
