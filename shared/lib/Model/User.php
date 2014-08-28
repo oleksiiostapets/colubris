@@ -81,6 +81,12 @@ class Model_User extends Model_BaseTable {
 				->exception('Do not change email for existing user','ValidityCheck')
 				->setField('email');
 		});
+		$this->addHook('afterLoad',function($m){
+			$m_rights = $this->add('Model_User_Right')->tryLoadBy('user_id',$m->id);
+            if(!$m_rights->loaded()){
+                $m_rights->saveNewUserAsEmpty($m->id);
+            }
+		});
 	}
 
 	// HOOKS :: END -----------------------------------------------------------

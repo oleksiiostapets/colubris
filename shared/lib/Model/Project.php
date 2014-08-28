@@ -25,6 +25,7 @@ class Model_Project extends Model_Auditable {
 //        $this->addField('deleted_id')->refModel('Model_User');
 		$this->hasOne('User','deleted_id');
 
+        $this->addExpressions();
 		$this->addHooks();
 	}
 
@@ -130,4 +131,22 @@ class Model_Project extends Model_Auditable {
 
         return $par_ids;
     }
+
+    // ------------------------------------------------------------------------------
+    //
+    //                          Expressions
+    //
+    // ------------------------------------------------------------------------------
+
+    function addExpressions(){
+        $this->addExpression('spent_time')->set(function($m,$q){
+            $m_t = $this->add('Model_Task')
+                ->addCondition('project_id',$m->getField('id'))
+                ->fieldQuery('id');
+            $m_tt = $this->add('Model_TaskTime')
+                ->addCondition('task_id','in',$m_t);
+            return $m_tt->sum('spent_time');
+        });
+    }
+    // Expressions --------------------------------------------------------------
 }

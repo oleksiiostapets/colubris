@@ -40,6 +40,14 @@ app_module.controller(
                 Quote.clear( 'quotes.update' );
             };
 
+            // ESC key close requirement div
+            $(document).on('keydown', function(evt){
+                evt = evt || window.event;
+                if (evt.keyCode == 27) {
+                    $('#close-button').trigger('click');
+                }
+            });
+
             //avatar upload
             $scope.upload = function() {
                 var url = app_module.base_url + app_module.prefix  + 'api/client/' + 'addToFilestore' + app_module.postfix;
@@ -68,8 +76,10 @@ app_module.controller(
             $scope.$on( 'client.update', function( event, args ) {
                 $scope.client = args;
                 $scope.showAvatar = !$scope.client.id=='';
-                if($scope.client.avatar_thumb != '' && $scope.client.avatar_thumb != null){
+                if($scope.client.avatar_thumb != '' && $scope.client.avatar_thumb != null){//TODO: change image setter to ng directives
                     $("#avatar").html('<img src="http://' + document.domain + window.location.pathname + 'upload/' + $scope.client.avatar_thumb + '" alt="Avatar" />');
+                }else{
+                    $("#avatar").html('');
                 }
             });
             $scope.$on( 'clients.update', function( event ) {
