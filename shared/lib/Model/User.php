@@ -98,7 +98,7 @@ class Model_User extends Model_BaseTable {
 		return $this;
 	}
 	function deleted() {
-		$this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 		$this->addCondition('is_deleted',true);
 		return $this;
 	}
@@ -115,7 +115,7 @@ class Model_User extends Model_BaseTable {
 		return $this;
 	}
 	function getUsersOfOrganisation(){
-		$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
+		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 		return $this;
 	}
 	function getSystemUsers(){
@@ -190,7 +190,7 @@ class Model_User extends Model_BaseTable {
 				$jp = $jq->join('project.id','project_id','left','_pr');
 				$jp->addField('project_name','name');
 				$jp->addField('organisation_id','organisation_id');
-				$m->addCondition('organisation_id',$this['organisation_id']);
+				//$m->addCondition('organisation_id',$this['organisation_id']);
 
 				$m->addCondition('quote_status','IN',array('quotation_requested','estimate_needed','not_estimated','estimated'));
 				break;
@@ -201,7 +201,7 @@ class Model_User extends Model_BaseTable {
 				$jp = $jt->join('project.id','project_id','left','_pr');
 				$jp->addField('project_name','name');
 				$jp->addField('organisation_id','organisation_id');
-				$m->addCondition('organisation_id',$this['organisation_id']);
+				//$m->addCondition('organisation_id',$this['organisation_id']);
 				break;
 			default:
 				throw $this->exception('There is no such a type: '.$type);

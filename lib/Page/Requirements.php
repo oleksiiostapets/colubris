@@ -203,7 +203,7 @@ class Page_Requirements extends Page {
 
                 // Clearing email receivers and Sending email to managers
                 $this->api->mailer->receivers=array();
-                $this->api->mailer->addAllManagersReceivers($this->api->auth->model['organisation_id']);
+                $this->api->mailer->addAllManagersReceivers($this->app->currentUser()->get('organisation_id'));
                 $this->api->mailer->sendMail('quote_approved',array(
                     'quotename'=>$quote->get('name'),
                     'link'=>$this->api->siteURL().$this->api->url('quotes/'.$quote->get('id')),
@@ -266,9 +266,9 @@ class Page_Requirements extends Page {
         //$v=$this->add('View')->setClass('right');
         $page=explode('_',$this->api->page);
         if($page[count($page)-1]!='requirements'){
-        	if( !($this->api->auth->model['is_developer']) &&
+        	if( !($this->app->currentUser()->get('is_developer')) &&
                 ($quote->get('status')=='quotation_requested'
-        			|| ( $this->api->auth->model['is_client'] && $quote->get('status')=='not_estimated' ))
+        			|| ( $this->app->currentUser()->get('is_client') && $quote->get('status')=='not_estimated' ))
             ){
 		        $b=$v->add('Button')->set('Edit requirements');
 		        $b->js('click')->univ()->redirect($this->api->url('/'.$page[0].'/quotes/'.$quote->get('id')));
@@ -461,7 +461,7 @@ class Page_Requirements extends Page {
             $form->addSubmit('Save');
 
             if($form->isSubmitted()){
-            	$form->model->set('user_id',$this->api->auth->model['id']);
+            	$form->model->set('user_id',$this->app->currentUser()->get('id'));
             	$form->model->set('quote_id',$quote['id']);
             	$form->update();
 

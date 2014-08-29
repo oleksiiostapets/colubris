@@ -46,7 +46,7 @@ class Grid_Reqcomments extends Grid {
                 ).'">'.$this->current_row['task_name'].'</a>';
 
         // edit and delete buttons
-    	if($this->current_row['user_id']!=$this->api->auth->model['id']){
+    	if($this->current_row['user_id']!=$this->app->currentUser()->get('id')){
     		$this->current_row_html['edit']="";
     		$this->current_row_html['delete']="";
     	}

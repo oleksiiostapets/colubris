@@ -12,14 +12,14 @@ class Model_Log extends Model_Table {
 		$this->hasOne('User','user_id','email');
 //        $this->addField('organisation_id')->refModel('Model_Organisation');
         $this->hasOne('Organisation','organisation_id');
-        $this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+        //$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 
         $this->addHook('beforeInsert',function($m,$q){
             $q->set('created_at',$q->expr('now()'));
         });
 		
 		$this->addHook('beforeSave',function($m){
-		    $m['user_id']=$m->api->auth->model['id'];
+		    $m['user_id']=$this->app->currentUser()->get('id');
 		});
 		
 	}

@@ -29,7 +29,7 @@ class Controller_Mailer extends AbstractController {
                     )
                 ){
                     if(!in_array($u['email'],$this->receivers)){
-                        if ( (!$exclude_myself) || ($u['id']!=$this->api->auth->model['id']) ){
+                        if ( (!$exclude_myself) || ($u['id']!=$this->app->currentUser()->get('id')) ){
                             if($this->isEmail($u['email'])) $this->receivers[]=$u['email'];
                         }
                     }
@@ -42,7 +42,7 @@ class Controller_Mailer extends AbstractController {
      */
     function addAllManagersReceivers($organisation_id){
         $u=$this->add('Model_User');
-        $u->addCondition('organisation_id',$organisation_id);
+        //$u->addCondition('organisation_id',$organisation_id);
         $u->addCondition('is_manager',true);
         foreach ($u->getRows() as $user){
             if(!in_array($user['email'],$this->receivers)){

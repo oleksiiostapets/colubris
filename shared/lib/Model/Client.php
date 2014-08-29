@@ -55,7 +55,7 @@ class Model_Client extends Model_BaseTable {
 	}
 
 	function deleted() {
-		$this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 		$this->addCondition('is_deleted',true);
 		return $this;
 	}
@@ -64,7 +64,7 @@ class Model_Client extends Model_BaseTable {
 		return $this;
 	}
 	function getThisOrganisation() {
-		$this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 		return $this;
 	}
 

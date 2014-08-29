@@ -53,7 +53,7 @@ class Model_TaskTime extends Model_Table {
 		$j_req = $j_task->join('requirement','requirement_id','left','_req');
 		$j_req->addField('quote_id','quote_id');
 
-		$this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 
 		if( ($this->api->currentUser()->isDeveloper()) || $this->api->currentUser()->isClient() ){
 			$mp=$this->add('Model_Project')->notDeleted();

@@ -257,7 +257,7 @@ class Model_Quote extends Model_Auditable {
 	// Expressions --------------------------------------------------------------
 
 	function deleted() {
-		$this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 		$this->addCondition('is_deleted',true);
 		return $this;
 	}
@@ -272,11 +272,11 @@ class Model_Quote extends Model_Auditable {
 		$this->addCondition('is_archived',false);
 	}
 	function getThisOrganisation() {
-		$this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 		return $this;
 	}
 	function participated(){
-		$participated_in=$this->add('Model_Participant')->addCondition('user_id',$this->api->auth->model['id']);
+		$participated_in=$this->add('Model_Participant')->addCondition('user_id',$this->app->currentUser()->get('id'));
 		$projects_ids="";
 		foreach($participated_in as $p){
 			if($projects_ids=="") $projects_ids=$p['project_id'];

@@ -5,13 +5,13 @@ class Model_Project extends Model_Project_Base {
         $this->addCondition('is_deleted',false);
     }
     function forClient() {
-        $this->addCondition('client_id',$this->api->auth->model['client_id']);
+        $this->addCondition('client_id',$this->app->currentUser()->get('client_id'));
         return $this;
     }
 
     // TODO refactor this. Maybe join?
     function participateIn() {
-        $participated_in=$this->add('Model_Participant')->addCondition('user_id',$this->api->auth->model['id']);
+        $participated_in=$this->add('Model_Participant')->addCondition('user_id',$this->app->currentUser()->get('id'));
         $projects_ids="";
         foreach($participated_in->getRows() as $p){
             if($projects_ids=="") $projects_ids=$p['project_id'];

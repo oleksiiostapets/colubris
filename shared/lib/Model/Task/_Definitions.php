@@ -39,7 +39,7 @@ class Model_Task_Definitions extends Model_Auditable {
             /* Doesn't work with deleting tasks in CRUD
                         $j = $this->join('project.id','project_id','left','_p');
                         $j->addField('client_id','client_id');
-                        $this->addCondition('client_id',$this->api->auth->model['client_id']);
+                        $this->addCondition('client_id',$this->app->currentUser()->get('client_id'));
             */
             $mp=$this->add('Model_Project')->notDeleted();
             $mp->forClient();
@@ -72,7 +72,7 @@ class Model_Task_Definitions extends Model_Auditable {
 
 //        $this->addField('organisation_id')->refModel('Model_Organisation');
         $this->hasOne('Organisation','organisation_id');
-        $this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+        //$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 
         $this->addHook('beforeInsert', function($m,$q){
             $q->set('created_dts', $q->expr('now()'));

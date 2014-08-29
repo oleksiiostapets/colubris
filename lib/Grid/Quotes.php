@@ -77,7 +77,7 @@ class Grid_Quotes extends Grid {
 
                 // Clearing email receivers and Sending email to managers
                 $this->api->mailer->receivers=array();
-                $this->api->mailer->addAllManagersReceivers($this->api->auth->model['organisation_id']);
+                $this->api->mailer->addAllManagersReceivers($this->app->currentUser()->get('organisation_id'));
                 $this->api->mailer->sendMail('quote_approved',array(
                     'quotename'=>$quote->get('name'),
                     'link'=>$this->api->siteURL().$this->api->url('quotes/'.$quote->get('id')),

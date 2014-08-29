@@ -12,7 +12,7 @@ class View_RFQRequirement extends View {
         $form->addSubmit('Save');
 
         if($form->isSubmitted()){
-        	$form->model->set('user_id',$this->api->auth->model['id']);
+        	$form->model->set('user_id',$this->app->currentUser()->get('id'));
         	$form->model->set('quote_id',$_GET['quote_id']);
         	$form->update();
         	$this->api->redirect(null);

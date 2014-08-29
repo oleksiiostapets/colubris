@@ -62,7 +62,7 @@ class Model_Attach extends Model_Auditable {
 
 
 	function deleted() {
-		$this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 		$this->addCondition('is_deleted',true);
 		return $this;
 	}

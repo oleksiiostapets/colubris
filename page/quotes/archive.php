@@ -58,7 +58,7 @@ class page_quotes_archive extends Page{
 		if ($this->api->currentUser()->isClient()) {
 			// show only client's quotes
 			$pr->addField('pr_client_id','client_id');
-			$quote->addCondition('pr_client_id',$this->api->auth->model['client_id']);
+			$quote->addCondition('pr_client_id',$this->app->currentUser()->get('client_id'));
 		}
 		$pr->addField('project_name','name');
 		$quote->setOrder(array('project_name','status'));//->debug();

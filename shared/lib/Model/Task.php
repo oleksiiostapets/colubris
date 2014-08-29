@@ -48,7 +48,7 @@ class Model_Task extends Model_Auditable {
         $this->hasOne('User','deleted_id');
 
         $this->hasOne('Organisation','organisation_id');
-        $this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
+//        $this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 
         $this->setOrder('updated_dts',true);
 

@@ -42,7 +42,7 @@ class Model_Project extends Model_Auditable {
 	}
 
 	function deleted() {
-		$this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 		$this->addCondition('is_deleted',true);
 		return $this;
 	}
@@ -51,7 +51,7 @@ class Model_Project extends Model_Auditable {
 		return $this;
 	}
 	function getThisOrganisation() {
-		$this->addCondition('organisation_id',$this->api->auth->model['organisation_id']);
+		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 		return $this;
 	}
 
@@ -80,12 +80,12 @@ class Model_Project extends Model_Auditable {
         }
     }
     function forClient() {
-        $this->addCondition('client_id',$this->api->auth->model['client_id']);
+        $this->addCondition('client_id',$this->app->currentUser()->get('client_id'));
         return $this;
     }
     // TODO refactor this. Maybe join?
     function participateIn() {
-        $participated_in=$this->add('Model_Participant')->addCondition('user_id',$this->api->auth->model['id']);
+        $participated_in=$this->add('Model_Participant')->addCondition('user_id',$this->app->currentUser()->get('id'));
         $projects_ids="";
         foreach($participated_in->getRows() as $p){
             if($projects_ids=="") $projects_ids=$p['project_id'];

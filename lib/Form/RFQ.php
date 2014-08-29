@@ -31,7 +31,7 @@ class Form_RFQ extends Form {
     }
     function checkSubmited() {
         $js=array();
-        $this->model->set('user_id',$this->api->auth->model['id']);
+        $this->model->set('user_id',$this->app->currentUser()->get('id'));
         $this->model->set('status','quotation_requested');
         $this->model->set('currency','GBP');
         $this->update();
