@@ -2,20 +2,51 @@
 
 app_module.controller(
     'inlineCrud',
-            ['$scope','$document','$http','Project','$rootScope',
-    function ($scope,  $document,  $http,  Project,  $rootScope) {
+            ['$scope','$document','$http', '$rootScope', 'Project', 'Quote', 'Client',
+    function ($scope,  $document,  $http,  $rootScope,  Project, Quote, Client) {
 
+
+        $rootScope.filter_values = {};
         $rootScope.items_on_page = 30;
         $rootScope.current_page = 1;
         $rootScope.paginator_max_shift = 10;
 
+        //Project
+        $scope.project ={};
         $scope.Project = Project;
         $scope.projects = Project.projects;
         Project.getFromServer();
 
-        $scope.$on( 'projects.update', function( event, args ) {
-            //console.log(args);
+        //Quote
+        $scope.Quote = Quote;
+        $scope.quotes = Quote.quotes;
+
+        //Client
+        $scope.Client = Client;
+        $scope.clients = Client.clients;
+        Client.getFromServer();
+
+
+        //clear form
+        $scope.clearForm = function(){
+            Project.cancel();
+            Quote.clear();
+        };
+
+        // ESC key close requirement div
+        $(document).on('keydown', function(evt){
+            evt = evt || window.event;
+            if (evt.keyCode == 27) {
+                $('#close-button').trigger('click');
+            }
+        });
+
+        //events
+        $scope.$on( 'project.update', function( event, args ) {
             $scope.project = args;
+            if(!$scope.project.hasOwnProperty('id') && $scope.quotes.length){
+                Quote.clear();
+            }
         });
         $scope.$on( 'projects.update', function( event ) {
             $scope.projects = Project.projects;
@@ -37,6 +68,12 @@ app_module.controller(
             if ($rootScope.current_page > 1) $scope.prev_page = $rootScope.current_page - 1; else $scope.prev_page = $rootScope.current_page;
             if ($rootScope.current_page < total_pages) $scope.next_page = $rootScope.current_page + 1; else $scope.next_page = $rootScope.current_page;
             $scope.last_page = total_pages;
+        });
+        $scope.$on( 'quotes.update', function( event ) {
+            $scope.quotes = Quote.quotes;
+        });
+        $scope.$on( 'clients.update', function( event ) {
+            $scope.clients = Client.clients;
         });
 
     }]

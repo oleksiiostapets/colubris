@@ -1,0 +1,21 @@
+<h3>Quotes:</h3>
+<div class="atk-box-small" ng-repeat="quote in quotes track by $index">
+    <div class="atk-cells atk-push small">
+        <div class="atk-cell atk-valign-top">
+            <div class="atk-label atk-effect-info">{{$index}} (ID#{{quote.id}})</div>
+        </div>
+        <div class="atk-cell atk-jackscrew">
+            <div class="atk-label atk-effect-warning" style="white-space: pre-wrap">{{quote.name}}</div>
+        </div>
+    </div>
+    <div>Spent time: {{quote.spent_time}}</div>
+    <div>Estim. time: {{quote.estimated-time}}</div>
+    <div>Status: {{quote.status}}</div>
+    <div>User: {{quote.user}}</div>
+    <div>Gen. description: {{quote.general_description}}</div>
+    <div>Deadline: {{quote.deadline}}</div>
+    <div>Created on: {{quote.created_dts}}</div>
+    <div>Archived: {{quote.is_archived}}</div>
+    <div>Warranty end: {{quote.warranty_end}}</div>
+    <div>Show time to client: {{quote.show_time_to_client}}</div>
+</div>
