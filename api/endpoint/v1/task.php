@@ -7,7 +7,7 @@ class endpoint_v1_task extends Endpoint_v1_General {
         parent::init();
     }
 
-    function page_getStatuses(){
+    function get_getStatuses(){
         $data = array();
         foreach ($this->model->task_statuses as $status){
             $data[] = array('id' => $status, 'name' => $status);

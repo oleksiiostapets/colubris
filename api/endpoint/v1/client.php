@@ -6,7 +6,7 @@ class endpoint_v1_client extends Endpoint_v1_General {
     function init() {
         parent::init();
     }
-    public function page_getForClient(){
+    public function get_getForClient(){
 //        $client_id = $this->getClientId();
 //        $data = $this->model->addCondition('id',$client_id)->getRows();
         $data = $this->model->getRows();
