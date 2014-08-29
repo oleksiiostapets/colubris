@@ -43,6 +43,8 @@ class API extends App_REST {
             ->link('v1/project',array('method'))
             ->link('v1/user',array('method'))
             ->link('v1/task',array('method'))
+            ->link('v1/client')
+            ->link('v1/quote')
         ;
         $router->route();
     }

@@ -8,7 +8,7 @@ class endpoint_v1_project extends Endpoint_v1_General {
         $this->model->addCondition('is_deleted',false);
     }
 
-    function page_getParticipants() {
+    function get_getParticipants() {
         $id = $this->checkGetParameter('id');
         $mp = $this->add('Model_Participant');
         $mp->addCondition('project_id',$id);
