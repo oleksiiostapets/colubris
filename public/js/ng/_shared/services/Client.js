@@ -11,7 +11,7 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
 
         save: function ( client ) {
 
-            console.log(client);
+//            console.log(client);
 
             if (typeof client.id === 'undefined' ) {
                 service.clients.push( angular.copy( client)  );
@@ -50,11 +50,11 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
             var url = this.prepareUrl('saveAll',{quote_id: app_module.quote_id});//TODO
             $http.post(url,angular.toJson(service.clients))
                 .success(function(data) {
-                    console.log(data);
+//                    console.log(data);
                 })
                 .error(function(data, status) {
-                    console.log(data);
-                    console.log(status);
+//                    console.log(data);
+//                    console.log(status);
                 })
             ;
         },
@@ -89,7 +89,7 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
         backupClient: function(index) {
             current_index = index;
             service.clients[index].backup = angular.copy( service.clients[index]);
-            console.log(service.clients[current_index].backup);
+//            console.log(service.clients[current_index].backup);
         },
         resetBackupClient: function() {
             if (current_index) {
