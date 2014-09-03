@@ -144,6 +144,10 @@ class Model_User extends Model_BaseTable {
         return array('lhash' => $this->get('lhash'), 'lhash_exp' => $this->get('lhash_exp'));
     }
 
+    function getByLHash($lhash) {
+        return $this->tryLoadBy('lhash',$lhash);
+    }
+
     function checkUserByLHash($lhash){
         $this->addCondition('lhash_exp','>',date('Y-m-d G:i:s', time()));
         $this->tryLoadBy('lhash',$lhash);

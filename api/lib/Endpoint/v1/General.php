@@ -34,11 +34,23 @@ class Endpoint_v1_General extends Endpoint_REST {
         if (is_array($lhash)) {
             return $lhash;
         }
-        $current_user = $this->add('Model_User');
-        if(!$current_user->checkUserByLHash($lhash)) return [
+        $current_user = $this->add('Model_User')->getByLHash($lhash);
+        if (!$current_user->loaded()) {
+            return [
+                'result' => 'error',
+                'message' => 'User cannot be authorized'
+            ];
+        } else if (strtotime($current_user['']) >= strtotime(date('Y-m-d G:i:s', time()))) {
+            return [
+                'result'  => 'error',
+                'code'    => '5300', // :)
+                'message' => 'User exist but lhash is out of date, get a new one.'
+            ];
+        }
+        /*if(!$current_user->checkUserByLHash($lhash)) return [
             'result' => 'error',
             'message' => 'User cannot be authorized'
-        ];
+        ];*/
 
         $this->app->current_user = $current_user;
         return true;
