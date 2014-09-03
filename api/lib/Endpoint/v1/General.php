@@ -40,7 +40,7 @@ class Endpoint_v1_General extends Endpoint_REST {
                 'result' => 'error',
                 'message' => 'User cannot be authorized'
             ];
-        } else if (strtotime($current_user['']) >= strtotime(date('Y-m-d G:i:s', time()))) {
+        } else if (strtotime($current_user['']) <= strtotime(date('Y-m-d G:i:s', time()))) {
             return [
                 'result'  => 'error',
                 'code'    => '5300', // :)
