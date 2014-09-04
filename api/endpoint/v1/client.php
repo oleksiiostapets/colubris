@@ -9,6 +9,7 @@ class endpoint_v1_client extends Endpoint_v1_General {
     public function get_getForClient(){
 //        $client_id = $this->getClientId();
 //        $data = $this->model->addCondition('id',$client_id)->getRows();
+        $this->model->notDeleted();
         $data = $this->model->getRows();
         echo json_encode([
             'result' => 'success',

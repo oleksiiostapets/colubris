@@ -19,7 +19,7 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
                 // send new data to the server
             }
 
-            this.saveOnServer();
+            this.saveOnServer(client);
             $rootScope.$broadcast('client.update', {});
             $rootScope.$broadcast( 'clients.update' );
             $rootScope.$broadcast('form.to_regular_place');
@@ -27,8 +27,20 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
             this.resetBackupClient();
         },
         remove: function(index) {
+            API.removeOne(
+                'client',
+                null,
+                {'id' : service.clients[index].id},
+                function(obj) {
+                    if (obj.result === 'success') {
+//                    console.log(data);
+                    } else {
+//                    console.log(data);
+//                    console.log(status);
+                    }
+                }
+            );
             service.clients.splice(index, 1);
-            this.saveOnServer();
             $rootScope.$broadcast( 'clients.update' );
         },
         edit: function(index) {
@@ -46,17 +58,21 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
             $rootScope.$broadcast( 'clients.update' );
             $rootScope.$broadcast('form.to_regular_place');
         },
-        saveOnServer: function() {
-            var url = this.prepareUrl('saveAll',{quote_id: app_module.quote_id});//TODO
-            $http.post(url,angular.toJson(service.clients))
-                .success(function(data) {
+        saveOnServer: function(client) {
+            API.saveOne(
+                'client',
+                null,
+                {},
+                angular.toJson(client),
+                function(obj) {
+                    if (obj.result === 'success') {
 //                    console.log(data);
-                })
-                .error(function(data, status) {
+                    } else {
 //                    console.log(data);
 //                    console.log(status);
-                })
-            ;
+                    }
+                }
+            );
         },
         getFromServer: function() {
             API.getAll(
@@ -68,23 +84,6 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
                     $rootScope.$broadcast( 'clients.update' );
                 }
             );
-        },
-        prepareUrl: function(action,args) {
-            var url = app_module.base_url + app_module.prefix  + 'api/client/' + action + app_module.postfix;
-            if (url.indexOf('?') === false) {
-                url = url + '?';
-            } else {
-                url = url + '&';
-            }
-            var count = 1;
-            $.each(args,function(key,value) {
-                if (count > 1) {
-                    url = url + '&';
-                }
-                url = url + key + '=' + value;
-                count++;
-            });
-            return url;
         },
         backupClient: function(index) {
             current_index = index;
