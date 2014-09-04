@@ -96,12 +96,19 @@ class Model_User_Right extends Model_BaseTable{
     }
 
     function setRights($id = null, $rights = null){
-        if(!$id || !$rights){
+//        if(!$user_id){
+//            throw $this->exception('You didn\'t specified user_id for setRights() method');
+//        }
+        if(!$rights){
             throw $this->exception('You didn\'t specified necessary arguments for setRights() method');
         }
-        $this->tryLoad($id);
-        if(!$this->loaded()){
-            throw $this->exception('There is no such a record for this user yet.');
+
+        if($this->loaded()){
+            $this->unload();
+        }
+
+        if($id){
+            $this->tryLoad($id);
         }
 
         $new_arr= array();
@@ -112,7 +119,10 @@ class Model_User_Right extends Model_BaseTable{
         }
         $new_str = implode(',',$new_arr);
         $this->_set = true;
-        $this->set('right',$new_str)->save();
+        $this->set(array(
+            'right'   => $new_str,
+            'user_id' => $rights['user_id']
+        ))->save();
         $this->_set = false;
         return $this;
     }

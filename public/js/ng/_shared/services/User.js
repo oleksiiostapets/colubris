@@ -14,7 +14,7 @@ app_module.service( 'User', [ '$rootScope','$http','API', function( $rootScope, 
 
             API.getAll(
                 'user',
-                undefined,
+                'getUsers',
                 undefined,
                 function(obj) {
                     service.users = obj.data;

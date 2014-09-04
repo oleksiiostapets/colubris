@@ -49,18 +49,29 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
                 {field: 'user_id', value:user.id},
                 function(obj) {
                     var data;
-                    data = that.prepareArray(obj,all_rights);
+                    data = that.prepareArray(obj,all_rights,user.id);
                     service.rights = data;
                     $rootScope.$broadcast( broadcast_message );
                 }
             );
             console.log('-----> getForUser()---END');
         },
-        prepareArray: function(obj,all_rights){
+        prepareArray: function(obj,all_rights,user_id){
             console.log('-----> prepareArray()---START');
+            var object = {};
+            var rights_obj = {};
+            object.user_id = user_id;
+
+            //If no record in database at all
+            if(!obj.data[0]){
+                $.each(all_rights, function(index, value) {
+                    rights_obj[index] = [value,false];
+                });
+                object.data = rights_obj;
+                return object;
+            }
 
             var can_rights = obj.data[0].right.split(',');
-            var rights_obj = {};
             $.each(all_rights, function(index, value) {
                 if(can_rights.indexOf(value) === -1){
                     rights_obj[index] = [value,false];
@@ -68,9 +79,8 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
                     rights_obj[index] = [value,true];
                 }
             });
-            var object = {};
+
             object.id = obj.data[0].id;
-            object.user_id = obj.data[0].user_id;
             object.data = rights_obj;
             console.log('-----> prepareArray()---END');
             return object;
@@ -79,11 +89,12 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
 
             console.log('------>save()---START');
             var t = angular.copy(right);
-            if (typeof t.id === 'undefined' ) {
+            if (typeof t.user_id === 'undefined' ) {
                 service.rights.push( jQuery.extend({}, t)  );
             } else {
                 // send new data to the server
             }
+
             this.saveOnServer(t);
             $rootScope.$broadcast('right.update', {});
             $rootScope.$broadcast('rights.update' );
@@ -96,11 +107,12 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
             console.log('------>saveOnServer()---START');
             var that = this;
             var arr = that.mergeArray(right.data);
+            var user_id = right.user_id;
             API.saveOne(
                 'right',
                 'setRights',
                 {id: right.id},
-                angular.toJson({right:arr}),
+                angular.toJson({user_id:user_id,right:arr}),
                 function(obj) {
                     if (obj.result === 'success') {
                         alert('Saved.');

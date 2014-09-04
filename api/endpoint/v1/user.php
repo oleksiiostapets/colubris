@@ -6,6 +6,15 @@ class endpoint_v1_user extends Endpoint_v1_General {
     function init() {
         parent::init();
     }
+    public function get_getUsers(){
+        $this->model->notDeleted();
+        $data = $this->model->getRows();
+        echo json_encode([
+            'result' => 'success',
+            'data'   => $data,
+        ]);
+        exit();
+    }
 
     function post_login() {
         if(!$this->app->auth->verifyCredentials($_POST['u'],$_POST['p'])) return false; else {

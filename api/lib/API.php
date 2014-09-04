@@ -42,6 +42,7 @@ class API extends App_REST {
             ->link('v1/account',array('method'))
             ->link('v1/project',array('method'))
             ->link('v1/user',array('method'))
+            ->link('v1/right',array('method'))
             ->link('v1/task',array('method'))
             ->link('v1/client',array('method'))
             ->link('v1/quote')

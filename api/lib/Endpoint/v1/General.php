@@ -78,7 +78,7 @@ class Endpoint_v1_General extends Endpoint_REST {
                     $this->model->addCondition($field,$value);
                 }
             }
-            $this->model->setLimit($this->count,$this->offset);
+//            $this->model->setLimit($this->count,$this->offset);
             $data = $this->model->getRows();
             $this->model->setLimit(999999999,0);
             $total_rows = count($this->model->getRows());
@@ -185,13 +185,23 @@ class Endpoint_v1_General extends Endpoint_REST {
         exit;
     }
     function post_saveParams(){
-        $data = file_get_contents("php://input"); // TODO: not safe data
-        $data_arr = @json_decode($data,true);
+        $data_arr = $this->getFancyPost();
+
         if (is_array($data_arr)) {
             $all = array_merge($_REQUEST,$data_arr);
         } else {
             $all = $_REQUEST;
         }
+        $id = $this->getId();
+        $this->model->set($all);
+        $this->model->save();
+        echo json_encode([
+            'result' => 'success',
+            'data' => $this->model->get(),
+        ]);
+        exit;
+    }
+    protected function getId(){
         $id = $this->checkGetParameter('id',true);
         if ($id) {
             $this->model->tryLoad($id);
@@ -203,13 +213,12 @@ class Endpoint_v1_General extends Endpoint_REST {
                 exit();
             }
         }
-        $this->model->set($all);
-        $this->model->save();
-        echo json_encode([
-            'result' => 'success',
-            'data' => $this->model->get(),
-        ]);
-        exit;
+        return $id;
+    }
+    protected function getFancyPost() {
+        $data = file_get_contents("php://input"); // TODO: not safe data
+        $data_arr = @json_decode($data,true);
+        return $data_arr;
     }
 
 
