@@ -6,11 +6,15 @@
 class Controller_UserAccess extends AbstractController {
     public $auto_track_element = true;
     protected $user = false;
+    protected $user_rights = [];
     function init() {
         parent::init();
     }
     function setUser(Model $m) {
         $this->user = $m;
+    }
+    function setUserRights($r) {
+        $this->user_rights = explode(',',$r);
     }
 
 
@@ -76,7 +80,7 @@ class Controller_UserAccess extends AbstractController {
      *
      */
     function canSeeDashboard() {
-        return $this->checkRoleSimpleRights(array(true,true,true,true,true,true));
+        if(in_array('can_see_dashboard',$this->user_rights)) return true; else return false;
     }
     function getDashboardFormFields() {
         if ($this->user->isAdmin()) {
@@ -179,7 +183,7 @@ class Controller_UserAccess extends AbstractController {
         return $this->checkRoleSimpleRights(array(false,true,true,true,false));
     }
     function canSeeTaskList() {
-        return $this->checkRoleSimpleRights(array(false,true,true,true,false));
+        if(in_array('can_see_tasks',$this->user_rights)) return true; else return false;
     }
     function canSeeLogs() {
         return $this->checkRoleSimpleRights(array(true,false,false,false,false));

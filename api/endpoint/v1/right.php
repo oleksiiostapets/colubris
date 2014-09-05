@@ -39,4 +39,22 @@ class endpoint_v1_right extends Endpoint_v1_General {
             ];
         }
     }
+
+    function get_getCurrentUserRights(){
+        try{
+            $mr = $this->add('Model_User_Right');
+            $mr->addCondition('user_id', $this->app->currentUser()->get('id'));
+            $mr->tryLoadAny();
+
+            return [
+                'result' => 'success',
+                'data'   => $mr->get('right'),
+            ];
+        }catch(Exception $e){
+            return [
+                'result' => 'error',
+                'error_message'   => $e->getMessage(),
+            ];
+        }
+    }
 }

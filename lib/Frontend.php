@@ -1,6 +1,7 @@
 <?php
 class Frontend extends ApiFrontend {
     public $current_user;
+    public $model_user_rights;
 
     function getVer(){
         return 2.2;
@@ -82,6 +83,7 @@ class Frontend extends ApiFrontend {
         
     }
     protected function checkAuth(){
+        $this->model_user_rights = $this->add('Model_User_Right');
         if(isset($_COOKIE[$this->app->name.'_auth_token'])){
             $url = 'v1/auth/check&lhash='.$_COOKIE[$this->app->name.'_auth_token'];
             $res = json_decode($this->do_get_request($url));
@@ -90,6 +92,11 @@ class Frontend extends ApiFrontend {
             }else{
                 $this->current_user = $this->add('Model_User')->load($res->user->id);
                 $this->user_access->setUser($this->currentUser());
+                $url = 'v1/right/getCurrentUserRights&lhash='.$_COOKIE[$this->app->name.'_auth_token'];
+                $res = json_decode($this->do_get_request($url));
+                if($res->result == 'success'){
+                    $this->user_access->setUserRights($res->data);
+                }
             }
         }
     }
@@ -111,6 +118,9 @@ class Frontend extends ApiFrontend {
 
     function getCurrentUserRole(){
         return $this->layout->rm->getCurrentUserRole();
+    }
+    function getModelUserRights(){
+
     }
 
     function siteURL(){
