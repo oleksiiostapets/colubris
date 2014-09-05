@@ -79,9 +79,9 @@ class Endpoint_v1_General extends Endpoint_REST {
                 }
             }
 //            $this->model->setLimit($this->count,$this->offset);
-            $data = $this->model->getRows();
+            $data = $this->model->getRowsForCurrentUser();
             $this->model->setLimit(999999999,0);
-            $total_rows = count($this->model->getRows());
+            $total_rows = count($this->model->getRowsForCurrentUser());
 //            var_dump($data);exit;
             echo json_encode([
                 'result' => 'success',

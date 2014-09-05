@@ -20,4 +20,21 @@ class Model_BaseTable extends Model_Table {
 
         return $this;
     }
+    function getRowsForCurrentUser(){
+        $this->checkRights();
+        return $this->getRows();
+    }
+    private function checkRights(){
+        $mr = $this->add('Model_User_Right');
+        if (in_array('can_see_'.$this->table.'s', Model_User_Right::$available_rights)){
+            $mr->addCondition('user_id', $this->app->currentUser()->get('id'));
+            $mr->addCondition('right','LIKE','%can_see_'.$this->table.'s%');
+            $mr->tryLoadAny();
+            if(!$mr->loaded()){
+                $this->addCondition('id',0);
+            }
+        }
+
+        return $this;
+    }
 }
