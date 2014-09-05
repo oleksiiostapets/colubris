@@ -258,54 +258,58 @@ class Model_User_Right extends Model_BaseTable{
 
     }
     //task
-    public function canSeeTasks($id)             {return $this->getRight($id,'can_see_tasks');}
-    public function canAddTask($id)              {return $this->getRight($id,'can_add_task');}
-    public function canEditTask($id)             {return $this->getRight($id,'can_edit_task');}
-    public function canDeleteTask($id)           {return $this->getRight($id,'can_delete_task');}
-    public function canAddCommentToTask($id)        {return $this->getRight($id,'can_add_comment_to_task');}
+    public function canSeeTasks($id)                {return $this->can('can_see_tasks',$id);}
+    public function canAddTask($id)                 {return $this->can('can_add_task',$id);}
+    public function canEditTask($id)                {return $this->can('can_edit_task',$id);}
+    public function canDeleteTask($id)              {return $this->can('can_delete_task',$id);}
+    public function canAddCommentToTask($id)        {return $this->can('can_add_comment_to_task',$id);}
     //Project
-    public function canSeeProjects($id)             {return $this->getRight($id,'can_see_projects');}
-    public function canAddProjects($id)             {return $this->getRight($id,'can_add_projects');}
-    public function canEditProjects($id)            {return $this->getRight($id,'can_edit_projects');}
-    public function canDeleteProjects($id)          {return $this->getRight($id,'can_delete_projects');}
+    public function canSeeProjects($id)             {return $this->can('can_see_projects',$id);}
+    public function canAddProjects($id)             {return $this->can('can_add_projects',$id);}
+    public function canEditProjects($id)            {return $this->can('can_edit_projects',$id);}
+    public function canDeleteProjects($id)          {return $this->can('can_delete_projects',$id);}
     //Quote
-    public function canAddQuote($id)                {return $this->getRight($id,'can_add_quote');}//Request for quotation
-    public function canEditQuote($id)               {return $this->getRight($id,'can_edit_quote');}
-    public function canDeleteQuote($id)             {return $this->getRight($id,'can_delete_quote');}
-    public function canSubmitForQuotation($id)      {return $this->getRight($id,'can_submit_for_quotation');}
+    public function canAddQuote($id)                {return $this->can('can_add_quote',$id);}//Request for quotation
+    public function canEditQuote($id)               {return $this->can('can_edit_quote',$id);}
+    public function canDeleteQuote($id)             {return $this->can('can_delete_quote',$id);}
+    public function canSubmitForQuotation($id)      {return $this->can('can_submit_for_quotation',$id);}
     //Requirement
-    public function canAddRequirement($id)          {return $this->getRight($id,'can_add_requirement');}
-    public function canEditRequirement($id)         {return $this->getRight($id,'can_edit_requirement');}
-    public function canDeleteRequirement($id)       {return $this->getRight($id,'can_delete_requirement');}
-    public function canAddCommentToRequirement($id) {return $this->getRight($id,'can_add_comment_to_requirement');}
+    public function canAddRequirement($id)          {return $this->can('can_add_requirement',$id);}
+    public function canEditRequirement($id)         {return $this->can('can_edit_requirement',$id);}
+    public function canDeleteRequirement($id)       {return $this->can('can_delete_requirement',$id);}
+    public function canAddCommentToRequirement($id) {return $this->can('can_add_comment_to_requirement',$id);}
     //Setting
-    public function canSeeSettings($id)             {return $this->getRight($id,'can_see_settings');}
-    public function canEditSettings($id)            {return $this->getRight($id,'can_edit_settings');}
+    public function canSeeSettings($id)             {return $this->can('can_see_settings',$id);}
+    public function canEditSettings($id)            {return $this->can('can_edit_settings',$id);}
     //User
-    public function canSeeUsers($id)                {return $this->getRight($id,'can_see_users');}
-    public function canManageUsers($id)             {return $this->getRight($id,'can_manage_users');}
+    public function canSeeUsers($id)                {return $this->can('can_see_users',$id);}
+    public function canManageUsers($id)             {return $this->can('can_manage_users',$id);}
     //Rates
-    public function canSeeRates($id)                {return $this->getRight($id,'can_see_rates');}
-    public function canManageRates($id)             {return $this->getRight($id,'can_manage_rates');}
+    public function canSeeRates($id)                {return $this->can('can_see_rates',$id);}
+    public function canManageRates($id)             {return $this->can('can_manage_rates',$id);}
     //Developers
-    public function canSeeDevelopers($id)           {return $this->getRight($id,'can_see_developers');}
-    public function canManageDevelopers($id)        {return $this->getRight($id,'can_manage_developers');}
+    public function canSeeDevelopers($id)           {return $this->can('can_see_developers',$id);}
+    public function canManageDevelopers($id)        {return $this->can('can_manage_developers',$id);}
     //Clients
-    public function canSeeClients($id)              {return $this->getRight($id,'can_see_clients');}
-    public function canManageClients($id)           {return $this->getRight($id,'can_manage_clients');}
+    public function canSeeClients($id)              {return $this->can('can_see_clients',$id);}
+    public function canManageClients($id)           {return $this->can('can_manage_clients',$id);}
     //Reports
-    public function canSeeReports($id)              {return $this->getRight($id,'can_see_reports');}
+    public function canSeeReports($id)              {return $this->can('can_see_reports',$id);}
     //Deleted Items
-    public function canSeeDeleted($id)              {return $this->getRight($id,'can_see_deleted');}
-    public function canRestoreDeleted($id)          {return $this->getRight($id,'can_restore_deleted');}
+    public function canSeeDeleted($id)              {return $this->can('can_see_deleted',$id);}
+    public function canRestoreDeleted($id)          {return $this->can('can_restore_deleted',$id);}
     //Logs
-    public function canSeeLogs($id)                 {return $this->getRight($id,'can_see_logs');}
+    public function canSeeLogs($id)                 {return $this->can('can_see_logs',$id);}
     //Mics
-    public function canSeeDashboard($id)            {return $this->getRight($id,'can_see_dashboard');}
-    public function canMoveToFromArchive($id)       {return $this->getRight($id,'can_move_to_from_archive');}
-    public function canTrackTime($id)               {return $this->getRight($id,'can_track_time');}
-    public function canLoginAsAnyUser($id)          {return $this->getRight($id,'can_login_as_any_user');}
+    public function canSeeDashboard($id)            {return $this->can('can_see_dashboard',$id);}
+    public function canMoveToFromArchive($id)       {return $this->can('can_move_to_from_archive',$id);}
+    public function canTrackTime($id)               {return $this->can('can_track_time',$id);}
+    public function canLoginAsAnyUser($id)          {return $this->can('can_login_as_any_user',$id);}
 
+    private function can($right,$id=null){
+        if (!$id) $id = $this->app->currentUser()->id;
+        return $this->getRight($id,$right);
+    }
     /////////////////
     //Toggle rights//
     /////////////////
