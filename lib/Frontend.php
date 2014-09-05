@@ -244,7 +244,7 @@ class Frontend extends ApiFrontend {
 
     // NET functions
     function do_post_request($url, $data, $optional_headers = null) {
-        $url = $this->getConfig('api_base_url').$url;
+        $url = $this->getConfig('php_api_base_url').$url;
         $data = http_build_query($data);
         $params = array('http' => array(
             'method' => 'POST',
@@ -267,7 +267,7 @@ class Frontend extends ApiFrontend {
         return $response;
     }
     function do_get_request($url, $optional_headers = null) {
-        $url = $this->getConfig('api_base_url').$url;
+        $url = $this->getConfig('php_api_base_url').$url;
         $params = array('http' => array(
             'method' => 'GET'
         ));
