@@ -115,9 +115,9 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
                 angular.toJson({user_id:user_id,right:arr}),
                 function(obj) {
                     if (obj.result === 'success') {
-                        alert('Saved.');
+                        $rootScope.showSystemMsg('Saved successfully');
                     } else {
-                        alert('Error! No success message received.');
+                        $rootScope.showSystemMsg('Error! No success message received');
                     }
                 }
             );

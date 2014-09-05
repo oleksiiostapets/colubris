@@ -52,5 +52,15 @@ app_module.controller(
                 if ($rootScope.current_page < total_pages) $scope.next_page = $rootScope.current_page + 1; else $scope.next_page = $rootScope.current_page;
                 $scope.last_page = total_pages;
             });
+            $rootScope.showSystemMsg = function(msg) {
+                $("#msg").html(msg);
+                $("#msg").show();
+                $rootScope. hideTag("#msg", 3000);
+            };
+            $rootScope.hideTag = function(tag_id,time) {
+                setTimeout(function(){
+                    $(tag_id).hide();
+                }, time);
+            };
         }]
 );
