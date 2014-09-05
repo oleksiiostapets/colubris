@@ -19,7 +19,7 @@ class page_account extends Page {
             $this->app->url('/'),
             $this->app->getConfig('url_prefix'),
             $this->app->getConfig('url_postfix'),
-            $this->app->url($this->app->getConfig('api_base_url')),
+            $this->app->url($this->app->getConfig('js_api_base_url')),
             $this->app->currentUser()->get('lhash')
         );
     }
