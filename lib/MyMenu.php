@@ -3,17 +3,17 @@ class MyMenu extends Menu_Basic {
     function init() {
         parent::init();
         if($this->app->currentUser()) {
-            if ($this->app->user_access->canSeeDashboard()) $this->addMenuItem('dashboard','Dashboard');
-            if ($this->app->user_access->canSeeTaskList()) $this->addMenuItem('tasks','Tasks');
-            if ($this->app->user_access->canSeeQuotesList()) $this->addMenuItem('quotes','Quotes');
-            if ($this->app->user_access->canUserMenageClients()) $this->addMenuItem('clients','Clients');
-            if ($this->app->user_access->canSeeProjectList()) $this->addMenuItem('projects','Projects');
-            if ($this->app->user_access->canSeeReportList()) $this->addMenuItem('reports','Reports');
-            if ($this->app->user_access->canSeeUserList()) $this->addMenuItem('users','Users');
-            if ($this->app->user_access->canSeeDevList()) $this->addMenuItem('developers','Developers');
-            if ($this->app->user_access->canSeeDeleted()) $this->addMenuItem('deleted','Deleted');
-            if ($this->app->user_access->canSeeLogs()) $this->addMenuItem('logs','Logs');
-            if ($this->app->currentUser()->canSeeFinance()) $this->addMenuItem('rates','Rates');
+            if ($this->app->model_user_rights->canSeeDashboard()) $this->addMenuItem('dashboard','Dashboard');
+            if ($this->app->model_user_rights->canSeeTasks()) $this->addMenuItem('tasks','Tasks');
+            if ($this->app->model_user_rights->canSeeQuotes()) $this->addMenuItem('quotes','Quotes');
+            if ($this->app->model_user_rights->canManageClients()) $this->addMenuItem('clients','Clients');
+            if ($this->app->model_user_rights->canSeeProjects()) $this->addMenuItem('projects','Projects');
+            if ($this->app->model_user_rights->canSeeReports()) $this->addMenuItem('reports','Reports');
+            if ($this->app->model_user_rights->canSeeUsers()) $this->addMenuItem('users','Users');
+            //if ($this->app->model_user_rights->canSeeDevs()) $this->addMenuItem('developers','Developers');
+            if ($this->app->model_user_rights->canSeeDeleted()) $this->addMenuItem('deleted','Deleted');
+            if ($this->app->model_user_rights->canSeeLogs()) $this->addMenuItem('logs','Logs');
+            //if ($this->app->model_user_rights->canSeeFinance()) $this->addMenuItem('rates','Rates');
 
             if ($this->app->currentUser()->isSystem()) {
                 $this->addMenuItem('system/users','Users');

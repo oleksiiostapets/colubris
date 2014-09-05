@@ -74,10 +74,10 @@ class Model_User_Right extends Model_BaseTable{
         'can_track_time',
         'can_login_as_any_user',
     );
-    private $developer_pattern = 'can_see_tasks,can_add_task,can_edit_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_reports,can_see_dashboard,can_move_to_from_archive,can_track_time';
-    private $client_pattern = 'can_see_tasks,can_add_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_add_projects,can_add_quote,can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_dashboard';
-    private $sales_manager_pattern = 'can_add_quote,can_add_requirement,can_see_settings,can_edit_settings,can_see_dashboard,can_move_to_from_archive';
-    private $manager_pattern = 'can_see_tasks,can_add_task,can_edit_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_add_projects,can_edit_projects,can_delete_projects,can_add_quote,can_edit_quote,can_delete_quote,can_submit_for_quotation,can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_rates,can_manage_rates,can_see_clients,can_manage_clients,can_see_reports,can_see_deleted,can_restore_deleted,can_see_dashboard,can_move_to_from_archive,can_track_time';
+    private $developer_pattern = 'can_see_tasks,can_add_task,can_edit_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_see_quotes,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_reports,can_see_dashboard,can_move_to_from_archive,can_track_time';
+    private $client_pattern = 'can_see_tasks,can_add_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_see_quotes,can_add_projects,can_add_quote,can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_dashboard';
+    private $sales_manager_pattern = 'can_see_quotes,can_add_quote,can_add_requirement,can_see_settings,can_edit_settings,can_see_dashboard,can_move_to_from_archive';
+    private $manager_pattern = 'can_see_tasks,can_add_task,can_edit_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_see_quotes,can_add_projects,can_edit_projects,can_delete_projects,can_add_quote,can_edit_quote,can_delete_quote,can_submit_for_quotation,can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_rates,can_manage_rates,can_see_clients,can_manage_clients,can_see_reports,can_see_deleted,can_restore_deleted,can_see_dashboard,can_move_to_from_archive,can_track_time';
     private $admin_pattern = 'can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_users,can_manage_users,can_see_rates,can_manage_rates,can_see_developers,can_manage_developers,can_see_logs,can_see_dashboard,can_login_as_any_user';
 
     function init(){
@@ -259,53 +259,54 @@ class Model_User_Right extends Model_BaseTable{
 
     }
     //task
-    public function canSeeTasks($id)                {return $this->can('can_see_tasks',$id);}
-    public function canAddTask($id)                 {return $this->can('can_add_task',$id);}
-    public function canEditTask($id)                {return $this->can('can_edit_task',$id);}
-    public function canDeleteTask($id)              {return $this->can('can_delete_task',$id);}
-    public function canAddCommentToTask($id)        {return $this->can('can_add_comment_to_task',$id);}
+    public function canSeeTasks($id=null)                {return $this->can('can_see_tasks',$id);}
+    public function canAddTask($id=null)                 {return $this->can('can_add_task',$id);}
+    public function canEditTask($id=null)                {return $this->can('can_edit_task',$id);}
+    public function canDeleteTask($id=null)              {return $this->can('can_delete_task',$id);}
+    public function canAddCommentToTask($id=null)        {return $this->can('can_add_comment_to_task',$id);}
     //Project
-    public function canSeeProjects($id)             {return $this->can('can_see_projects',$id);}
-    public function canAddProjects($id)             {return $this->can('can_add_projects',$id);}
-    public function canEditProjects($id)            {return $this->can('can_edit_projects',$id);}
-    public function canDeleteProjects($id)          {return $this->can('can_delete_projects',$id);}
+    public function canSeeProjects($id=null)             {return $this->can('can_see_projects',$id);}
+    public function canAddProjects($id=null)             {return $this->can('can_add_projects',$id);}
+    public function canEditProjects($id=null)            {return $this->can('can_edit_projects',$id);}
+    public function canDeleteProjects($id=null)          {return $this->can('can_delete_projects',$id);}
     //Quote
-    public function canAddQuote($id)                {return $this->can('can_add_quote',$id);}//Request for quotation
-    public function canEditQuote($id)               {return $this->can('can_edit_quote',$id);}
-    public function canDeleteQuote($id)             {return $this->can('can_delete_quote',$id);}
-    public function canSubmitForQuotation($id)      {return $this->can('can_submit_for_quotation',$id);}
+    public function canSeeQuotes($id=null)               {return $this->can('can_see_quotes',$id);}
+    public function canAddQuote($id=null)                {return $this->can('can_add_quote',$id);}//Request for quotation
+    public function canEditQuote($id=null)               {return $this->can('can_edit_quote',$id);}
+    public function canDeleteQuote($id=null)             {return $this->can('can_delete_quote',$id);}
+    public function canSubmitForQuotation($id=null)      {return $this->can('can_submit_for_quotation',$id);}
     //Requirement
-    public function canAddRequirement($id)          {return $this->can('can_add_requirement',$id);}
-    public function canEditRequirement($id)         {return $this->can('can_edit_requirement',$id);}
-    public function canDeleteRequirement($id)       {return $this->can('can_delete_requirement',$id);}
-    public function canAddCommentToRequirement($id) {return $this->can('can_add_comment_to_requirement',$id);}
+    public function canAddRequirement($id=null)          {return $this->can('can_add_requirement',$id);}
+    public function canEditRequirement($id=null)         {return $this->can('can_edit_requirement',$id);}
+    public function canDeleteRequirement($id=null)       {return $this->can('can_delete_requirement',$id);}
+    public function canAddCommentToRequirement($id=null) {return $this->can('can_add_comment_to_requirement',$id);}
     //Setting
-    public function canSeeSettings($id)             {return $this->can('can_see_settings',$id);}
-    public function canEditSettings($id)            {return $this->can('can_edit_settings',$id);}
+    public function canSeeSettings($id=null)             {return $this->can('can_see_settings',$id);}
+    public function canEditSettings($id=null)            {return $this->can('can_edit_settings',$id);}
     //User
-    public function canSeeUsers($id)                {return $this->can('can_see_users',$id);}
-    public function canManageUsers($id)             {return $this->can('can_manage_users',$id);}
+    public function canSeeUsers($id=null)                {return $this->can('can_see_users',$id);}
+    public function canManageUsers($id=null)             {return $this->can('can_manage_users',$id);}
     //Rates
-    public function canSeeRates($id)                {return $this->can('can_see_rates',$id);}
-    public function canManageRates($id)             {return $this->can('can_manage_rates',$id);}
+    public function canSeeRates($id=null)                {return $this->can('can_see_rates',$id);}
+    public function canManageRates($id=null)             {return $this->can('can_manage_rates',$id);}
     //Developers
-    public function canSeeDevelopers($id)           {return $this->can('can_see_developers',$id);}
-    public function canManageDevelopers($id)        {return $this->can('can_manage_developers',$id);}
+    public function canSeeDevelopers($id=null)           {return $this->can('can_see_developers',$id);}
+    public function canManageDevelopers($id=null)        {return $this->can('can_manage_developers',$id);}
     //Clients
-    public function canSeeClients($id)              {return $this->can('can_see_clients',$id);}
-    public function canManageClients($id)           {return $this->can('can_manage_clients',$id);}
+    public function canSeeClients($id=null)              {return $this->can('can_see_clients',$id);}
+    public function canManageClients($id=null)           {return $this->can('can_manage_clients',$id);}
     //Reports
-    public function canSeeReports($id)              {return $this->can('can_see_reports',$id);}
+    public function canSeeReports($id=null)              {return $this->can('can_see_reports',$id);}
     //Deleted Items
-    public function canSeeDeleted($id)              {return $this->can('can_see_deleted',$id);}
-    public function canRestoreDeleted($id)          {return $this->can('can_restore_deleted',$id);}
+    public function canSeeDeleted($id=null)              {return $this->can('can_see_deleted',$id);}
+    public function canRestoreDeleted($id=null)          {return $this->can('can_restore_deleted',$id);}
     //Logs
-    public function canSeeLogs($id)                 {return $this->can('can_see_logs',$id);}
+    public function canSeeLogs($id=null)                 {return $this->can('can_see_logs',$id);}
     //Mics
-    public function canSeeDashboard($id)            {return $this->can('can_see_dashboard',$id);}
-    public function canMoveToFromArchive($id)       {return $this->can('can_move_to_from_archive',$id);}
-    public function canTrackTime($id)               {return $this->can('can_track_time',$id);}
-    public function canLoginAsAnyUser($id)          {return $this->can('can_login_as_any_user',$id);}
+    public function canSeeDashboard($id=null)            {return $this->can('can_see_dashboard',$id);}
+    public function canMoveToFromArchive($id=null)       {return $this->can('can_move_to_from_archive',$id);}
+    public function canTrackTime($id=null)               {return $this->can('can_track_time',$id);}
+    public function canLoginAsAnyUser($id=null)          {return $this->can('can_login_as_any_user',$id);}
 
     private function can($right_name,$id=null){
         if (!$id) $id = $this->app->currentUser()->id;
