@@ -22,7 +22,8 @@ class page_quotes_one extends Page {
         $this->app->jquery->addStaticInclude('ng/quotes/one/directives/inlineCrud');
         $this->app->jquery->addStaticInclude('ng/quotes/one/directives/requirementForm');
         $this->app->jquery->addStaticInclude('ng/quotes/one/directives/isIncluded');
-        $this->app->jquery->addStaticInclude('ng/quotes/one/services/Quote');
+//        $this->app->jquery->addStaticInclude('ng/quotes/one/services/Quote');
+        $this->app->jquery->addStaticInclude('ng/_shared/services/Quote');
         $this->app->jquery->addStaticInclude('ng/quotes/one/services/Comment');
         $this->app->jquery->addStaticInclude('ng/quotes/one/services/Task');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Requirement');
@@ -32,7 +33,9 @@ class page_quotes_one extends Page {
             $this->id,
             $this->app->url('/'),
             $this->app->getConfig('url_prefix'),
-            $this->app->getConfig('url_postfix')
+            $this->app->getConfig('url_postfix'),
+            $this->app->url($this->app->getConfig('api_base_url')),
+            $this->app->currentUser()->get('lhash')
         );
     }
     function defaultTemplate() {

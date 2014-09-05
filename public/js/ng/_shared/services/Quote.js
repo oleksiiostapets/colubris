@@ -31,6 +31,18 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
                     $rootScope.$broadcast( 'quotes.update' );
                 }
             );
+        },
+        getOneFromServer: function(quote_id){
+            var field_val = (quote_id)? {id: quote_id} : {};
+            API.getOne(
+                'quote',
+                undefined,
+                field_val,
+                function(obj) {
+                    service.quotes = obj.data;
+                    $rootScope.$broadcast( 'quote.update' );
+                }
+            );
         }
     }
     return service;

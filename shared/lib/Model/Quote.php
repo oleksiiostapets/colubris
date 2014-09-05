@@ -3,6 +3,7 @@ class Model_Quote extends Model_Auditable {
 	public $table="quote";
 	function init(){
 		parent::init(); //$this->debug();
+/*TODO: check by API. Temporary commented till fix
 		if ($this->api->currentUser()->isClient()){
 			$mp = $this->add('Model_Project')->notDeleted()->forClient();
 			$this->hasOne($mp)->display(array('form'=>'Form_Field_AutoEmpty'))->mandatory('required');
@@ -13,6 +14,11 @@ class Model_Quote extends Model_Auditable {
 			$mp = $this->add('Model_Project')->notDeleted();
 			$this->hasOne($mp)->display(array('form'=>'Form_Field_AutoEmpty'))->mandatory('required');
 		}
+*/
+        //-----TEMPORARY----------TODO:
+        $mp = $this->add('Model_Project')->notDeleted();
+        $this->hasOne($mp)->display(array('form'=>'Form_Field_AutoEmpty'))->mandatory('required');
+        //TEMPORARY----------
 
 		//$this->addField('project_id')->refModel('Model_Project');
 		//->display(array('form'=>'autocomplete/basic'));

@@ -6,5 +6,4 @@ class endpoint_v1_quote extends Endpoint_v1_General {
     function init() {
         parent::init();
     }
-
 }
