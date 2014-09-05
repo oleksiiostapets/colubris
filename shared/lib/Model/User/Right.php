@@ -306,13 +306,14 @@ class Model_User_Right extends Model_BaseTable{
     public function canTrackTime($id)               {return $this->can('can_track_time',$id);}
     public function canLoginAsAnyUser($id)          {return $this->can('can_login_as_any_user',$id);}
 
-    private function can($right,$id=null){
+    private function can($right_name,$id=null){
         if (!$id) $id = $this->app->currentUser()->id;
-        try {
-            $right_m = $this->getRight($id,$right);
-            return true;
-        } catch (Exception_UserNasNoRight $e) {
-            return false;
+        if(!$this->checkRight($right_name)) throw $this->exception('There is no such an access right defined');
+        $this->tryLoadBy('user_id',$id);
+        if($this->loaded()){
+            return $this->fetchRights($this['right'],$right_name);
+        }else{
+            throw $this->exception('This user has no rights being setup. User ID is "'.$id.'"','Exception_UserNasNoRight');
         }
     }
     /////////////////
