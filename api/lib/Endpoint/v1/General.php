@@ -83,18 +83,16 @@ class Endpoint_v1_General extends Endpoint_REST {
             $this->model->setLimit(999999999,0);
             $total_rows = count($this->model->getRowsForCurrentUser());
 //            var_dump($data);exit;
-            echo json_encode([
+            return [
                 'result' => 'success',
                 'data'   => $data,
                 'total_rows' => $total_rows,
-            ]);
-            exit();
+            ];
         }catch(Exception $e){
-            echo json_encode([
+            return[
                 'result' => 'error',
                 'error_message'   => $e->getMessage(),
-            ]);
-            exit();
+            ];
         }
     }
     /**
@@ -121,18 +119,16 @@ class Endpoint_v1_General extends Endpoint_REST {
             $this->model->setLimit(999999999,0);
             $total_rows = count($this->model->getRows());
 
-            echo json_encode([
+            return [
                 'result' => 'success',
                 'data'   => $data,
                 'total_rows' => $total_rows,
-            ]);
-            exit();
+            ];
         }catch(Exception $e){
-            echo json_encode([
+            return [
                 'result' => 'error',
                 'error_message'   => $e->getMessage(),
-            ]);
-            exit();
+            ];
         }
     }
     function get_getById() {
@@ -145,16 +141,14 @@ class Endpoint_v1_General extends Endpoint_REST {
         $id = $this->checkGetParameter('id');
         try{
             $this->model->delete($id);
-            echo json_encode([
+            return [
                 'result' => 'success',
-            ]);
-            exit();
+            ];
         }catch(Exception $e){
-            echo json_encode([
+            return [
                 'result' => 'error',
                 'error_message'   => $e->getMessage(),
-            ]);
-            exit();
+            ];
         }
     }
     function get_saveParams(){
@@ -169,20 +163,18 @@ class Endpoint_v1_General extends Endpoint_REST {
         if ($id) {
             $this->model->tryLoad($id);
             if(!$this->model->loaded()){
-                echo json_encode([
+                return [
                     'result' => 'error',
                     'error_message' => 'Record with the id '.$id.' was not found',
-                ]);
-                exit();
+                ];
             }
         }
         $this->model->set($all);
         $this->model->save();
-        echo json_encode([
+        return [
             'result' => 'success',
             'data' => $this->model->get(),
-        ]);
-        exit;
+        ];
     }
     function post_saveParams(){
         $data_arr = $this->getFancyPost();
@@ -195,18 +187,17 @@ class Endpoint_v1_General extends Endpoint_REST {
         $id = $this->getId();
         $this->model->set($all);
         $this->model->save();
-        echo json_encode([
+        return [
             'result' => 'success',
             'data' => $this->model->get(),
-        ]);
-        exit;
+        ];
     }
     protected function getId(){
         $id = $this->checkGetParameter('id',true);
         if ($id) {
             $this->model->tryLoad($id);
             if(!$this->model->loaded()){
-                echo json_encode([
+                echo json_encode([//TODO I left it here intentionally, Kostya
                     'result' => 'error',
                     'error_message' => 'Record with the id '.$id.' was not found',
                 ]);
