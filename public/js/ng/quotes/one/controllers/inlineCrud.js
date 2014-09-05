@@ -10,7 +10,7 @@ app_module.controller(
     function ($scope,  $document,  $http,  Requirement,  Comment,  Task, Quote) {
 
    // quote info
-    Quote.getFromServer();
+    Quote.getOneFromServer(app_module.quote_id);
 
     $scope.calc = {};
 
@@ -32,7 +32,7 @@ app_module.controller(
     Requirement.getFromServer();
 
     $scope.$on( 'quote.update', function( event) {
-        $scope.quote = Quote.quote;
+        $scope.quote = Quote.quotes;
     });
     $scope.$on( 'reqv.update', function( event, args ) {
         $scope.reqv = args;

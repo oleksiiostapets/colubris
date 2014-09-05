@@ -3,6 +3,10 @@ class Page_index extends Page {
     function init(){
         parent::init();
 
+        if($this->app->currentUser()){
+            $this->js(true)->redirect('dashboard');
+        }
+
         $this->template->trySet('guest_quotation_link',$this->app->url('/quotation'));
 
         $form=$this->add('Frame')->setTitle('Client Log-in')->add('Form');
