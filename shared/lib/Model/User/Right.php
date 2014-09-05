@@ -254,7 +254,7 @@ class Model_User_Right extends Model_BaseTable{
             $right = $this->fetchRights($rights_array[0]['right'],$right_name);
             return $right;
         }else{
-            throw $this->exception('This user has no rights being setup. User ID is "'.$id.'"');
+            throw $this->exception('This user has no rights being setup. User ID is "'.$id.'"','Exception_UserNasNoRight');
         }
 
     }
@@ -309,7 +309,12 @@ class Model_User_Right extends Model_BaseTable{
 
     private function can($right,$id=null){
         if (!$id) $id = $this->app->currentUser()->id;
-        return $this->getRight($id,$right);
+        try {
+            $right_m = $this->getRight($id,$right);
+            return true;
+        } catch (Exception_UserNasNoRight $e) {
+            return false;
+        }
     }
     /////////////////
     //Toggle rights//
