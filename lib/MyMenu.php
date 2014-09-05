@@ -3,7 +3,7 @@ class MyMenu extends Menu_Basic {
     function init() {
         parent::init();
         if($this->app->currentUser()) {
-            if ($this->app->model_user_rights->canSeeDashboard()) $this->addMenuItem('dashboard','Dashboard');
+            if ($this->app->user_access->canSeeDashboard()) $this->addMenuItem('dashboard','Dashboard');
             if ($this->app->user_access->canSeeTaskList()) $this->addMenuItem('tasks','Tasks');
             if ($this->app->user_access->canSeeQuotesList()) $this->addMenuItem('quotes','Quotes');
             if ($this->app->user_access->canUserMenageClients()) $this->addMenuItem('clients','Clients');

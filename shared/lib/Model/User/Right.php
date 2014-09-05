@@ -35,6 +35,7 @@ class Model_User_Right extends Model_BaseTable{
         'can_edit_projects',
         'can_delete_projects',
         //Quote
+        'can_see_quotes',
         'can_add_quote',
         //Request for quotation
         'can_edit_quote',
