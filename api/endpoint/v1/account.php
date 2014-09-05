@@ -10,11 +10,10 @@ class endpoint_v1_account extends Endpoint_v1_General {
         $id = $this->checkGetParameter('id');
         $this->model->tryLoad($id);
         if(!$this->model->loaded()){
-            echo json_encode([
+            return [
                 'result' => 'error',
                 'error_message' => 'Record with the id was not found',
-            ]);
-            exit();
+            ];
         }
         // Validations
         $old_password = $this->getParameter('old_password');
@@ -33,31 +32,28 @@ class endpoint_v1_account extends Endpoint_v1_General {
         if(!$this->app->auth->verifyCredentials($this->model->get('email'),$old_password)) $validation_errors[] = array('old_password' => 'incorrect');
 
         if (count($validation_errors) > 0){
-            echo json_encode([
+            return [
                 'result' => 'validation_error',
                 'errors' => $validation_errors,
-            ]);
-            exit();
+            ];
         }
 
         $this->model->set('password',$new_password);
         $this->model->save();
-        echo json_encode([
+        return [
             'result' => 'success',
             'data' => $this->model->get(),
-        ]);
-        exit;
+        ];
     }
 
     function page_addToFilestore(){
         $id = $this->checkPostParameter('id');
         $this->model->tryLoad($id);
         if(!$this->model->loaded()){
-            echo json_encode([
+            return [
                 'result' => 'error',
                 'error_message' => 'Record with the id was not found',
-            ]);
-            exit();
+            ];
         }
         if($_FILES['file']){
             require_once('./lib/External/MimeReader.php');
@@ -83,17 +79,15 @@ class endpoint_v1_account extends Endpoint_v1_General {
             $this->model->set('avatar_id',$up_model->get('id'));
             $this->model->save();
 
-            echo json_encode([
+            return [
                 'result' => 'success',
                 'data' => $up_model->get(),
-            ]);
-            exit;
+            ];
         }else{
-            echo json_encode([
+            return [
                 'result' => 'error',
                 'error_message' => 'File not found',
-            ]);
-            exit();
+            ];
         }
     }
 

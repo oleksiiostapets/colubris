@@ -14,17 +14,15 @@ class endpoint_v1_requirement extends Endpoint_v1_General {
     function get_getForQuote() {
         $quote_id = $this->getQuoteId();
         $data = $this->model->addCondition('quote_id',$quote_id)->getRows();
-        echo json_encode([
+        return[
             'result' => 'success',
             'data'   => $data,
-        ]);
-        exit();
+        ];
 
     }
     function get_saveAll() {
         $quote_id = $this->getQuoteId();
-        echo $quote_id;
-        exit();
+        return $quote_id;
     }
     private function getQuoteId() {
         $quote_id = $this->checkGetParameter('quote_id'); // method from trait

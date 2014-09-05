@@ -17,11 +17,10 @@ class endpoint_v1_project extends Endpoint_v1_General {
             $mp->addCondition('user','LIKE',$name.'%');
         }
         $data = $mp->getRows();
-        echo json_encode([
+        return [
             'result' => 'success',
             'data'   => $data,
-        ]);
-        exit();
+        ];
     }
 
 }

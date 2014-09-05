@@ -10,17 +10,15 @@ class endpoint_v1_right extends Endpoint_v1_General {
     function get_getAvailableRights(){
         try{
 
-            echo json_encode([
+            return [
                 'result' => 'success',
                 'data'   => Model_User_Right::$available_rights,
-            ]);
-            exit();
+            ];
         }catch(Exception $e){
-            echo json_encode([
+            return [
                 'result' => 'error',
                 'error_message'   => $e->getMessage(),
-            ]);
-            exit();
+            ];
         }
     }
 
@@ -30,17 +28,15 @@ class endpoint_v1_right extends Endpoint_v1_General {
             $data_arr = $this->getFancyPost();
             $id = $this->getId();
             $this->model->setRights($id,$data_arr);
-            echo json_encode([
+            return [
                 'result' => 'success',
                 'data' => $this->model->get(),
-            ]);
-            exit();
+            ];
         }catch(Exception $e){
-            echo json_encode([
+            return [
                 'result' => 'error',
                 'error_message'   => $e->getMessage(),
-            ]);
-            exit();
+            ];
         }
     }
 }

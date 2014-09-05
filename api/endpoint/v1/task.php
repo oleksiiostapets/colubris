@@ -12,10 +12,9 @@ class endpoint_v1_task extends Endpoint_v1_General {
         foreach ($this->model->task_statuses as $status){
             $data[] = array('id' => $status, 'name' => $status);
         }
-        echo json_encode([
+        return[
             'result' => 'success',
             'data'   => $data
-        ]);
-        exit();
+        ];
     }
 }

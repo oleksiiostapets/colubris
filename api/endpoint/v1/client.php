@@ -11,11 +11,10 @@ class endpoint_v1_client extends Endpoint_v1_General {
 //        $data = $this->model->addCondition('id',$client_id)->getRows();
         $this->model->notDeleted();
         $data = $this->model->getRows();
-        echo json_encode([
+        return [
             'result' => 'success',
             'data'   => $data,
-        ]);
-        exit();
+        ];
     }
     private function getClientId() {
         $client_id = $this->checkGetParameter('client_id'); // method from trait

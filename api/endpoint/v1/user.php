@@ -9,11 +9,10 @@ class endpoint_v1_user extends Endpoint_v1_General {
     public function get_getUsers(){
         $this->model->notDeleted();
         $data = $this->model->getRows();
-        echo json_encode([
+        return [
             'result' => 'success',
             'data'   => $data,
-        ]);
-        exit();
+        ];
     }
 
     function post_login() {
