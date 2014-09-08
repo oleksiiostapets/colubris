@@ -13,16 +13,13 @@ class MyMenu extends Menu_Basic {
             //if ($this->app->model_user_rights->canSeeDevs()) $this->addMenuItem('developers','Developers');
             if ($this->app->model_user_rights->canSeeDeleted()) $this->addMenuItem('deleted','Deleted');
             if ($this->app->model_user_rights->canSeeLogs()) $this->addMenuItem('logs','Logs');
+            if ($this->app->model_user_rights->canSeeSettings()) $this->addMenuItem('account','Settings');
             //if ($this->app->model_user_rights->canSeeFinance()) $this->addMenuItem('rates','Rates');
 
             if ($this->app->currentUser()->isSystem()) {
                 $this->addMenuItem('system/users','Users');
                 $this->addMenuItem('system/system','System');
                 $this->addMenuItem('system/organisation','Organisation');
-            }
-
-            if(!$this->app->currentUser()->canBeSystem()) {
-                $this->addMenuItem('account','Settings');
             }
         }
 

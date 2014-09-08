@@ -8,7 +8,7 @@
  * You can:
  * - check right:
  *     - canSeeTasks() or;
- *     - getRight($right_name).
+ *     - getRights($user_id).
  * - set rights for new user:
  *     - saveNewUserAsDeveloper() as a pattern or;
  *     - setRight(<right_name>,[true||false]) for individual right.
@@ -238,26 +238,6 @@ class Model_User_Right extends Model_BaseTable{
     //////////////
     //Get rights//
     //////////////
-    private function fetchRights($rights_string,$right_name){
-        $rights_array = explode(',',$rights_string);
-        if(in_array($right_name,$rights_array,true)){
-            return true;
-        }
-        return false;
-    }
-    public function getRight($id, $right_name){
-        if(!$this->checkRight($right_name)) throw $this->exception('There is no such an access right defined');
-        $this->tryLoadBy('user_id',$id);
-        if($this->loaded()){
-            $rights_array = $this->getRows();
-            if(!$rights_array[0]['right']) throw $this->exception('User rights setup as NULL. User ID is "'.$id.'"');
-            $right = $this->fetchRights($rights_array[0]['right'],$right_name);
-            return $right;
-        }else{
-            throw $this->exception('This user has no rights being setup. User ID is "'.$id.'"','Exception_UserNasNoRight');
-        }
-
-    }
     //task
     public function canSeeTasks($id=null)                {return $this->can('can_see_tasks',$id);}
     public function canAddTask($id=null)                 {return $this->can('can_add_task',$id);}
@@ -308,15 +288,30 @@ class Model_User_Right extends Model_BaseTable{
     public function canTrackTime($id=null)               {return $this->can('can_track_time',$id);}
     public function canLoginAsAnyUser($id=null)          {return $this->can('can_login_as_any_user',$id);}
 
+    private function fetchRights($rights_string,$right_name){
+        $rights_array = explode(',',$rights_string);
+        if(in_array($right_name,$rights_array,true)){
+            return true;
+        }
+        return false;
+    }
+    public function getRights($id=null){
+        if (!$id) $id = $this->app->currentUser()->id;
+        $this->tryLoadBy('user_id',$id);
+        if($this->loaded()){
+            return explode(',',$this->get('right'));
+        }else{
+            return '';
+        }
+
+    }
     private function can($right_name,$id=null){
         if (!$id) $id = $this->app->currentUser()->id;
         if(!$this->checkRight($right_name)) throw $this->exception('There is no such an access right defined');
-        $this->tryLoadBy('user_id',$id);
-        if($this->loaded()){
-            return $this->fetchRights($this['right'],$right_name);
-        }else{
-            throw $this->exception('This user has no rights being setup. User ID is "'.$id.'"','Exception_UserNasNoRight');
+        if(in_array($right_name,$this->getRights(),true)){
+            return true;
         }
+        return false;
     }
     /////////////////
     //Toggle rights//
