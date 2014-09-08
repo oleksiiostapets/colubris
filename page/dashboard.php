@@ -4,7 +4,7 @@ class page_dashboard extends Page {
     function page_index(){
 
         // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->api->user_access->canSeeDashboard() ){
+        if( !$this->app->model_user_rights->canSeeDashboard() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
 

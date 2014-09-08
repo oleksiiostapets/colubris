@@ -4,15 +4,6 @@ class View_Dashboard extends View {
     function init(){
         parent::init();
 
-        // admin and sys have no dash
-        if ( $this->app->currentUser()->isAdmin() || $this->app->currentUser()->isSystem() ) {
-            $this->template->del('delete_dash');
-            return;
-        }
-
-        $this->addClientActionBlock();
-        $this->addQuoteComments();
-        $this->addTaskComments();
         $this->addTasks();
     }
     function defaultTemplate() {
@@ -41,20 +32,6 @@ class View_Dashboard extends View {
     }
 
     /* ************************************************************************************
-     *  Block with comments on quotes requirements which user have access to
-     */
-    protected function addQuoteComments() {
-        $this->add('View_Dashboard_QuoteComments',null,'crud_com_quote');
-    }
-
-    /* ************************************************************************************
-     *  Block with comments on requirements tasks which user have access to
-     */
-    protected function addTaskComments() {
-        $this->add('View_Dashboard_TaskComments',null,'crud_comm_tasks');
-    }
-
-    /* ************************************************************************************
      *  Block with tasks which user have access to
      */
     protected function addTasks() {
@@ -67,9 +44,7 @@ class View_Dashboard extends View {
         ),'crud_active_tasks');
 
         $cr->setModel(
-            $this->add('Model_Task')->addDashCondition(),
-            $this->app->user_access->getDashboardFormFields(),
-            $this->app->user_access->getDashboardGridFields()
+            $this->add('Model_Task')->addDashCondition()
         );
         $cr->configure();
     }

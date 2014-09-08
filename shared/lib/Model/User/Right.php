@@ -73,6 +73,7 @@ class Model_User_Right extends Model_BaseTable{
         'can_move_to_from_archive',
         'can_track_time',
         'can_login_as_any_user',
+        'can_see_time',
     );
     private $developer_pattern = 'can_see_tasks,can_add_task,can_edit_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_see_quotes,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_reports,can_see_dashboard,can_move_to_from_archive,can_track_time';
     private $client_pattern = 'can_see_tasks,can_add_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_see_quotes,can_add_projects,can_add_quote,can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_dashboard';
@@ -165,7 +166,7 @@ class Model_User_Right extends Model_BaseTable{
         }
         return false;
     }
-    
+
     /*
      * Set rights for new user
      */
@@ -232,9 +233,9 @@ class Model_User_Right extends Model_BaseTable{
     public function makeExistingUserAsAadmin($id){
         $this->setPatternForExisting($id, $this->admin_pattern);
     }
-    
-    
-    
+
+
+
     //////////////
     //Get rights//
     //////////////
@@ -287,6 +288,7 @@ class Model_User_Right extends Model_BaseTable{
     public function canMoveToFromArchive($id=null)       {return $this->can('can_move_to_from_archive',$id);}
     public function canTrackTime($id=null)               {return $this->can('can_track_time',$id);}
     public function canLoginAsAnyUser($id=null)          {return $this->can('can_login_as_any_user',$id);}
+    public function canSeeTime($id=null)                 {return $this->can('can_see_time',$id);}
 
     private function fetchRights($rights_string,$right_name){
         $rights_array = explode(',',$rights_string);

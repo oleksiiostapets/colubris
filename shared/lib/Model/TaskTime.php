@@ -1,16 +1,13 @@
 <?php
 class Model_TaskTime extends Model_Table {
-//class Model_TaskTime extends Model_Auditable {
     public $table='task_time';
 
     function init(){
         parent::init();
 
-//        $this->addField('task_id')->refModel('Model_Task')->mandatory(true);
         $this->hasOne('Task','task_id');
         $this->getField('task_id')->mandatory(true);
 
-//        $this->addField('user_id')->refModel('Model_User')->mandatory(true);
         $this->hasOne('User','user_id');
         $this->getField('user_id')->mandatory(true);
 
@@ -55,17 +52,13 @@ class Model_TaskTime extends Model_Table {
 
 		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 
-		if( ($this->api->currentUser()->isDeveloper()) || $this->api->currentUser()->isClient() ){
-			$mp=$this->add('Model_Project')->notDeleted();
-			if($this->api->currentUser()->isDeveloper()) $projects=$mp->forDeveloper();
-			if($this->api->currentUser()->isClient()) $projects=$mp->forClient();
-			$projects_ids="";
-			foreach($projects->getRows() as $p){
-				if($projects_ids=="") $projects_ids=$p['id'];
-				else $projects_ids=$projects_ids.','.$p['id'];
-			}
-			$this->addCondition('project_id','in',$projects_ids);
-		}
+        $projects=$this->add('Model_Project')->notDeleted();
+        $projects_ids="";
+        foreach($projects->getRows() as $p){
+            if($projects_ids=="") $projects_ids=$p['id'];
+            else $projects_ids=$projects_ids.','.$p['id'];
+        }
+        $this->addCondition('project_id','in',$projects_ids);
 
 		$this->addGetConditions();
 	}

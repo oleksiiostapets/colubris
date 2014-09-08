@@ -57,9 +57,7 @@ class Frontend extends ApiFrontend {
         $view_header = $this->layout->add('View',null,'Header_Content',array('view/header'));
 
         if($this->currentUser()){
-            $this->layout->rm = $view_header->add('RoleMenu', 'SubMenu','SubMenu');
             $view_header->add('MyMenu',null,'Main_Menu');
-            //$this->add('MySubMenu', 'SubMenu', 'SubMenu');
 
             // show current user name
             $view_header->template->set('name',$this->currentUser()->get('name')?$this->currentUser()->get('name'):'Guest' . ' @ ' .'Colubris Team Manager, ver.'.$this->getVer());
@@ -91,12 +89,8 @@ class Frontend extends ApiFrontend {
                 $this->current_user = false;
             }else{
                 $this->current_user = $this->add('Model_User')->load($res->user->id);
-                $this->user_access->setUser($this->currentUser());
                 $url = 'v1/right/getCurrentUserRights&lhash='.$_COOKIE[$this->app->name.'_auth_token'];
                 $res = json_decode($this->do_get_request($url));
-                if($res->result == 'success'){
-                    $this->user_access->setUserRights($res->data);
-                }
             }
         }
     }
@@ -105,22 +99,6 @@ class Frontend extends ApiFrontend {
         $this->formatter   = $this->add('Controller_Formatter');
         $this->mailer      = $this->add('Controller_Mailer');
         $this->hg_cookie   = $this->add('Controller_MyCookie');
-        $this->user_access = $this->add('Controller_UserAccess');
-    }
-    function getUserType(){
-    	if ($this->currentUser()->canBeManager()) return 'manager';
-        if ($this->currentUser()->canBeSales()) return 'sales';
-    	if ($this->currentUser()->canBeDeveloper()) return 'team';
-    	if ($this->currentUser()->canBeClient()) return 'client';
-    	if ($this->currentUser()->canBeAdmin()) return 'admin';
-    	//if ($this->auth->model['is_system']) return 'system';
-    }
-
-    function getCurrentUserRole(){
-        return $this->layout->rm->getCurrentUserRole();
-    }
-    function getModelUserRights(){
-
     }
 
     function siteURL(){
@@ -136,7 +114,7 @@ class Frontend extends ApiFrontend {
     function defineAllowedPages() {
         // Allowed pages for guest
         $this->addAllowedPages(array(
-            'index', 'intro', 'denied','logout','test','api','testapi'
+            'index', 'intro', 'denied','logout','test','api','testapi','about'
         ));
 
         // For Guests
@@ -148,36 +126,18 @@ class Frontend extends ApiFrontend {
                 $this->redirect('index');
             }
         } else {
-            if (!$this->currentUser()->canBeSystem()) {
-                // Access for all non-system roles
-                $this->addAllowedPages(array(
-                    'quotation','quotation2','account', 'about', 'home', 'quotes','clients','projects','tasks','tasks2','deleted','developers','users','dashboard','trace','task'
-                ));
-                // Grant access for non-client users
-                if($this->user_access->canSeeReportList()){
-                    $this->addAllowedPages(array(
-                        'reports'
-                    ));
-                }
-                // Grant access for Financial Manager
-                if($this->currentUser()->canSeeFinance()){
-                    $this->addAllowedPages(array(
-                        'rates'
-                    ));
-                }
-            } else {
-                $this->addAllowedPages(array(
-                    'home','system','about','dashboard'
-                ));
-            }
-            if($this->user_access->canSeeLogs()) {
-                $this->addAllowedPages(array(
-                    'logs'
-                ));
-            }
-            $this->addAllowedPages(array(
-                'api','clients2','settings'
-            ));
+            if ($this->model_user_rights->canSeeDashboard())    $this->addAllowedPages(array('dashboard'));
+            if ($this->model_user_rights->canSeeTasks())        $this->addAllowedPages(array('tasks'));
+            if ($this->model_user_rights->canSeeQuotes())       $this->addAllowedPages(array('quotes'));
+            if ($this->model_user_rights->canSeeProjects())     $this->addAllowedPages(array('projects'));
+            if ($this->model_user_rights->canSeeClients())      $this->addAllowedPages(array('clients'));
+            if ($this->model_user_rights->canSeeReports())   $this->addAllowedPages(array('reports'));
+            if ($this->model_user_rights->canSeeDevelopers())   $this->addAllowedPages(array('developers'));
+            if ($this->model_user_rights->canSeeDeleted())   $this->addAllowedPages(array('deleted'));
+            if ($this->model_user_rights->canSeeUsers())        $this->addAllowedPages(array('users'));
+            if ($this->model_user_rights->canSeeLogs())   $this->addAllowedPages(array('logs'));
+            if ($this->model_user_rights->canSeeRates())        $this->addAllowedPages(array('rates'));
+            if ($this->model_user_rights->canSeeSettings())     $this->addAllowedPages(array('account'));
         }
     }
     private $allowed_pages=array();
