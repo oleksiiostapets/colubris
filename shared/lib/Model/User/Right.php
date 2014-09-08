@@ -90,6 +90,9 @@ class Model_User_Right extends Model_BaseTable{
 
     private $_set = false;
     function set($name,$value=UNDEFINED) {
+        if( !$this->canManageUsers() ){
+            throw $this->exception('You cannot edit users\' rights');
+        }
         if ($this->_set) {
             parent::set($name,$value);
             return $this;
