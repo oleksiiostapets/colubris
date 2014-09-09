@@ -306,7 +306,7 @@ class Model_User_Right extends Model_BaseTable{
         if($this->loaded()){
             return explode(',',$this->get('right'));
         }else{
-            return '';
+            return [];
         }
 
     }
