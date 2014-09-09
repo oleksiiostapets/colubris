@@ -17,12 +17,12 @@ class Form_Filter_Base extends Form {
         $this->addProject();
         $this->addQuote();
         $this->addRequirement();
-        $this->addStatus();
+//        $this->addStatus();
         $this->addAssigned();
     }
     function addProject(){
         $project_model = $this->add('Model_Project')->notDeleted();
-        $project_model->forRole($this->app->getCurrentUserRole());
+//        $project_model->forRole($this->app->getCurrentUserRole());
 
         $projects = $project_model->getRows();
         $p_arr['0'] = 'all';

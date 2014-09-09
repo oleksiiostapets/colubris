@@ -3,7 +3,7 @@ class page_developers extends Page {
 	function init(){
 		parent::init();
         // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->api->currentUser()->canSeeDevList() ){
+        if( !$this->app->model_user_rights->canSeeDevelopers() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
 

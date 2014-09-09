@@ -5,7 +5,7 @@ class page_rates extends Page {
         parent::init();
 
         // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->api->currentUser()->canSeeFinance() ){
+        if( !$this->app->model_user_rights->canSeeRates() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
     }

@@ -75,33 +75,4 @@ class Model_Reqcomment extends Model_Auditable {
 		$this->addCondition('is_deleted',false);
 		return $this;
 	}
-	function getClients(){
-		$participated_in=$this->add('Model_Project')->notDeleted()->forClient();
-		$projects_ids=array(0);
-		foreach($participated_in as $p){
-			$projects_ids[]=$p['id'];
-		}
-		$jr = $this->join('requirement.id','requirement_id','left','_req');
-
-		$jq = $jr->join('quote.id','quote_id','left','_quote');
-		$jq->addField('project_id','project_id');
-
-		$this->addCondition('project_id','IN',$projects_ids);
-		return $this;
-	}
-	function getDevelopers(){
-		$participated_in=$this->add('Model_Project')->notDeleted()->forDeveloper();
-		$projects_ids=array(0);
-		foreach($participated_in as $p){
-			$projects_ids[]=$p['id'];
-		}
-		$jr = $this->join('requirement.id','requirement_id','left','_req');
-
-		$jq = $jr->join('quote.id','quote_id','left','_quote');
-		$jq->addField('project_id','project_id');
-
-		$this->addCondition('project_id','IN',$projects_ids);
-		return $this;
-	}
-
 }

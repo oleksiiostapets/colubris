@@ -4,9 +4,9 @@ class page_reports extends Page_Functional {
     function page_index(){
 
         // Checking client's read permission to this quote and redirect to denied if required
-        //if( !$this->api->user_access->canUserMenageClients() ){
-        //    throw $this->exception('You cannot see this page','Exception_Denied');
-        //}
+        if( !$this->app->model_user_rights->canSeeReports() ){
+            throw $this->exception('You cannot see this page','Exception_Denied');
+        }
 
 	    $this->m=$this->add('Model_TaskTime');
 	    $this->m->forReportsGrid();
@@ -16,9 +16,9 @@ class page_reports extends Page_Functional {
 	    $this->addBC();
 
 	    //Add XLS button
-	    $v=$this->add('View');
-	    $v->setClass('atk-move-right');
-	    $this->addXSLButton($v);
+//	    $v=$this->add('View');
+//	    $v->setClass('atk-move-right');
+//	    $this->addXSLButton($v);
 
 
 	    //Total spent time
@@ -100,15 +100,7 @@ class page_reports extends Page_Functional {
 		))->set('Export to XLS');
 	}
     function getGridFields() {
-        if ($this->api->currentUser()->canBeClient()) {
-            return array('project_name','task_name','status','type','spent_time','date');
-        }
-        if ($this->api->currentUser()->canBeDeveloper()) {
-            return array('project_name','task_name','status','type','spent_time','date','user');
-        }
-        if ($this->api->currentUser()->canBeManager()) {
-            return array('project_name','task_name','status','type','spent_time','date','user');
-        }
+        return array('project_name','task_name','status','type','spent_time','date','user');
     }
     function getExportFields() {
         return [

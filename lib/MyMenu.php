@@ -6,21 +6,15 @@ class MyMenu extends Menu_Basic {
             if ($this->app->model_user_rights->canSeeDashboard()) $this->addMenuItem('dashboard','Dashboard');
             if ($this->app->model_user_rights->canSeeTasks()) $this->addMenuItem('tasks','Tasks');
             if ($this->app->model_user_rights->canSeeQuotes()) $this->addMenuItem('quotes','Quotes');
-            if ($this->app->model_user_rights->canManageClients()) $this->addMenuItem('clients','Clients');
             if ($this->app->model_user_rights->canSeeProjects()) $this->addMenuItem('projects','Projects');
+            if ($this->app->model_user_rights->canManageClients()) $this->addMenuItem('clients','Clients');
             if ($this->app->model_user_rights->canSeeReports()) $this->addMenuItem('reports','Reports');
-            if ($this->app->model_user_rights->canSeeUsers()) $this->addMenuItem('users','Users');
-            //if ($this->app->model_user_rights->canSeeDevs()) $this->addMenuItem('developers','Developers');
+            if ($this->app->model_user_rights->canSeeDevelopers()) $this->addMenuItem('developers','Developers');
             if ($this->app->model_user_rights->canSeeDeleted()) $this->addMenuItem('deleted','Deleted');
+            if ($this->app->model_user_rights->canSeeUsers()) $this->addMenuItem('users','Users');
             if ($this->app->model_user_rights->canSeeLogs()) $this->addMenuItem('logs','Logs');
+            if ($this->app->model_user_rights->canSeeRates()) $this->addMenuItem('rates','Rates');
             if ($this->app->model_user_rights->canSeeSettings()) $this->addMenuItem('account','Settings');
-            //if ($this->app->model_user_rights->canSeeFinance()) $this->addMenuItem('rates','Rates');
-
-            if ($this->app->currentUser()->isSystem()) {
-                $this->addMenuItem('system/users','Users');
-                $this->addMenuItem('system/system','System');
-                $this->addMenuItem('system/organisation','Organisation');
-            }
         }
 
         $this->addMenuItem('about','About');
@@ -37,7 +31,7 @@ class MyMenu extends Menu_Basic {
             }
         //}
     }
-	function isCurrent($href){
+	/*function isCurrent($href){//GET RID
 		// returns true if item being added is current
 		if(!is_object($href))$href=str_replace('/','_',$href);
 
@@ -56,5 +50,5 @@ class MyMenu extends Menu_Basic {
         if ( (substr($href,0,10)=='developers' && substr($this->app->page,0,10)=='developers') ) { return true; }
 
         return $href==$this->app->page||$href==';'.$this->app->page||$href.$this->app->getConfig('url_postfix','')==$this->app->page;
-	}
+	}*/
 }

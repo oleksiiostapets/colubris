@@ -127,12 +127,6 @@ class Grid_Tasks extends Grid_Advanced {
        	}
     }
     private function removeColumnsIfNeeded() {
-        if (
-            in_array('estimate',$this->app->user_access->whatTaskFieldsUserCanSee($this->quote)) &&
-            in_array('spent_time',$this->app->user_access->whatTaskFieldsUserCanSee($this->quote))
-        ) {
-            $this->removeColumn('estimate');
-        }
 		$this->removeColumn('quote_id');
         $this->removeColumn('project');
         $this->removeColumn('quote');

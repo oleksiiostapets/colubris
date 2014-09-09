@@ -55,34 +55,6 @@ class Model_Project extends Model_Auditable {
 		return $this;
 	}
 
-
-    function forRole($role) {
-        switch ($role) {
-            case 'system':
-                break;
-            case 'admin':
-                break;
-            case 'admin':
-                break;
-            case 'manager':
-                return $this->forManager();
-                break;
-            case 'sales':
-                break;
-            case 'developer':
-                return $this->forDeveloper();
-                break;
-            case 'client':
-                return $this->forClient();
-                break;
-            default:
-                throw $this->exception('Wrong role');
-        }
-    }
-    function forClient() {
-        $this->addCondition('client_id',$this->app->currentUser()->get('client_id'));
-        return $this;
-    }
     // TODO refactor this. Maybe join?
     function participateIn() {
         $participated_in=$this->add('Model_Participant')->addCondition('user_id',$this->app->currentUser()->get('id'));
@@ -94,12 +66,7 @@ class Model_Project extends Model_Auditable {
         $this->addCondition('id','in',$projects_ids);
         return $this;
     }
-    function forDeveloper() {
-        return $this->participateIn();
-    }
-    function forManager(){
-        return $this;
-    }
+
     function getAllParticipants($project_id){
         if ($project_id>0){
             $this->tryLoad($project_id);

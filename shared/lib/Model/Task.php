@@ -136,7 +136,6 @@ class Model_Task extends Model_Auditable {
         $this->Base();
 	    $this->addQuoteId();
         $this->addQuoteName();
-        $this->addRoleCondition();
         $this->addGetConditions();
         $this->notDeleted();
 	    //$this->debug();
@@ -152,7 +151,6 @@ class Model_Task extends Model_Auditable {
                 ->where('assigned_id',$this->app->currentUser()->get('id'))
         );
         $this->notDeleted();
-        $this->addRoleCondition();
         return $this;
     }
 	public function forTaskForm(){
@@ -187,32 +185,6 @@ class Model_Task extends Model_Auditable {
     function notDeleted() {
         $this->addCondition('is_deleted',false);
         return $this;
-    }
-    function addRoleCondition() {
-        if($this->app->currentUser()->isClient()){
-            /* Doesn't work with deleting tasks in CRUD
-                        $j = $this->join('project.id','project_id','left','_p');
-                        $j->addField('client_id','client_id');
-                        $this->addCondition('client_id',$this->app->auth->model['client_id']);
-            */
-            $mp = $this->add('Model_Project')->notDeleted();
-            $mp->forClient();
-            $projects_ids = "0";
-            foreach($mp->getRows() as $p){
-                $projects_ids = $projects_ids.','.$p['id'];
-            }
-            $this->addCondition('project_id','in',$projects_ids);
-        }
-        if($this->app->currentUser()->isDeveloper()){
-            $mp = $this->add('Model_Project')->notDeleted();
-            $mp->forDeveloper();
-            $projects_ids = "0";
-            foreach($mp->getRows() as $p){
-                $projects_ids = $projects_ids.','.$p['id'];
-            }
-            $this->addCondition('project_id','in',$projects_ids);
-        }
-
     }
     // Model_Task_Base
     function Base() {
