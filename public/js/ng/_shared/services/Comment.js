@@ -64,6 +64,7 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
                 {field:'requirement_id',value:reqv_id},
                 function(obj) {
                     service.comments = obj.data;
+                    console.log(service.comments);
                     $rootScope.$broadcast( 'comments.update' );
                 }
             );

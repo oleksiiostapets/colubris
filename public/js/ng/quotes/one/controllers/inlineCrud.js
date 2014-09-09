@@ -70,6 +70,11 @@ app_module.controller(
                         $scope.comments[key][key2] = 'http://' + document.domain + window.location.pathname + 'upload/' + value2;
                     }
                 }
+                if(key2 == 'file_thumb'){
+                    if(value2 != null){
+                        $scope.comments[key][key2] = 'http://' + document.domain + window.location.pathname + value2;
+                    }
+                }
             });
         });
     });
