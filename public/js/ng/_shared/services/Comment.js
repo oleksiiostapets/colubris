@@ -57,33 +57,16 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
                 })
             ;
         },
-        getFromServer: function(requirement_id) {
+        getFromServer: function(reqv_id) {
             API.getAll(
                 'reqcomment',
-                undefined,
-                {field:'requirement_id',value:requirement_id},
+                'getByField',
+                {field:'requirement_id',value:reqv_id},
                 function(obj) {
                     service.comments = obj.data;
                     $rootScope.$broadcast( 'comments.update' );
                 }
             );
-        },
-        prepareUrl: function(action,args) {
-            var url = app_module.base_url + app_module.prefix  + 'api/reqcomment/' + action + app_module.postfix;
-            if (url.indexOf('?') === false) {
-                url = url + '?';
-            } else {
-                url = url + '&';
-            }
-            var count = 1;
-            $.each(args,function(key,value) {
-                if (count > 1) {
-                    url = url + '&';
-                }
-                url = url + key + '=' + value;
-                count++;
-            });
-            return url;
         },
         backupComm: function(index) {
             current_index = index;

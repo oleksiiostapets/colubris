@@ -547,6 +547,8 @@ class Model_Quote extends Model_Auditable {
     }
 
     function whatQuoteFieldsUserCanSee($user) {
+        return array('id','project','user','name','estimated','spent_time','durdead','status','warranty_end','updated_dts','expires_dts');
+
         if ($user->isAdmin()) {
             return array();
         } else if ($user->isManager()) {
@@ -562,6 +564,8 @@ class Model_Quote extends Model_Auditable {
     }
 
     function whatQuoteFieldsUserCanEdit($user) {
+        return array('name','project_id','general_description','duration','deadline','status','warranty_end','expires_dts');
+
         if ($user->isAdmin()) {
             return array();
         } else if ($user->isFinancial()) {

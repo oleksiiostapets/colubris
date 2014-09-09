@@ -24,8 +24,8 @@ class page_quotes_one extends Page {
         $this->app->jquery->addStaticInclude('ng/quotes/one/directives/isIncluded');
 //        $this->app->jquery->addStaticInclude('ng/quotes/one/services/Quote');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Quote');
-        $this->app->jquery->addStaticInclude('ng/quotes/one/services/Comment');
-        $this->app->jquery->addStaticInclude('ng/quotes/one/services/Task');
+        $this->app->jquery->addStaticInclude('ng/_shared/services/Comment');
+        $this->app->jquery->addStaticInclude('ng/_shared/services/Task');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Requirement');
         $this->app->jquery->addStaticInclude('ng/_shared/services/API');
 

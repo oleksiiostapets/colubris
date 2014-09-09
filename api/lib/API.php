@@ -36,6 +36,7 @@ class API extends App_REST {
     protected function addRouter() {
         $router = $this->add('Controller_PatternRouter');
         $router
+            ->link('v1/reqcomment',array('method'))
             ->link('v1/taskcomment',array('method','field_name','field_value'))
             ->link('v1/requirement',array('method','field_name','field_value'))
             ->link('v1/auth',array('method'))

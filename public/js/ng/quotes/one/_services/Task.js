@@ -81,6 +81,7 @@ app_module.service( 'Task', [ '$rootScope','$http', function( $rootScope, $http 
         },
         prepareUrl: function(action,args) {
             var url = app_module.base_url + app_module.prefix  + 'api/task/' + action + app_module.postfix;
+            console.log(url);
             if (url.indexOf('?') === false) {
                 url = url + '?';
             } else {
