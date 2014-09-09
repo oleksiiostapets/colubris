@@ -136,7 +136,7 @@ class Endpoint_v1_General extends Endpoint_REST {
         $id = $this->checkGetParameter('id');
         $_GET['field'] = 'id';
         $_GET['value'] = $id;
-        $this->get_getByField();
+        return $this->get_getByField();
     }
     function get_deleteById() {
         $id = $this->checkGetParameter('id');
