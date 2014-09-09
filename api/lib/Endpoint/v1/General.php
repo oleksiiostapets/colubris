@@ -38,6 +38,7 @@ class Endpoint_v1_General extends Endpoint_REST {
         if (!$current_user->loaded()) {
             return [
                 'result' => 'error',
+                'code'    => '5301', // :)
                 'message' => 'User cannot be authorized'
             ];
         } else if (strtotime($current_user['lhash_exp']) <= strtotime(date('Y-m-d G:i:s', time()))) {
