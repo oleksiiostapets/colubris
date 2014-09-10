@@ -24,7 +24,7 @@ class page_quotes_archive extends Page{
 		$tabs->addTabUrl('./estimate_needed','Estimate Needed ('.$this->getModelEstimateNeeded()->count().')');
 		$tabs->addTabUrl('./not_estimated','Not Estimated ('.$this->getModelNotEstimated()->count().')');
 		$tabs->addTabUrl('./estimated','Estimated ('.$this->getModelEstimated()->count().')');
-		if(!$this->api->currentUser()->isSales()){
+		if(!$this->app->model_user_rights->canSubmitForQuotation()){
 			$tabs->addTabUrl('./estimation_approved','Estimation Approved ('.$this->getModelEstimationApproved()->count().')');
 			$tabs->addTabUrl('./finished','Finished ('.$this->getModelFinished()->count().')');
 		}
@@ -147,7 +147,7 @@ class page_quotes_archive extends Page{
 	}
 
 	function addRequestForQuotationButton($view) {
-		if ($this->app->user_access->canSendRequestForQuotation()) {
+		if ($this->app->model_user_rights->canAddQuote()) {
 			$b = $view->add('Button')->set('Request For Quotation');
 			$b->addStyle('margin-bottom','10px');
 			$b->js('click', array(
@@ -156,7 +156,7 @@ class page_quotes_archive extends Page{
 		}
 	}
 	function addActiveButton($view){
-		if(!$this->api->currentUser()->isSales()){
+		if(!$this->app->model_user_rights->canSubmitForQuotation()){
 			$b = $view->add('Button')->set('See Active');
 			$b->js('click', array(
 				$b->js()->univ()->redirect($this->app->url('quotes'))

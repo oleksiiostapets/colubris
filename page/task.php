@@ -73,7 +73,7 @@ class page_task extends Page {
 	}
     protected function checkUserRights() {
         // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->app->user_access->canSeeTaskList() ){
+        if( !$this->app->model_user_rights->canSeeTasks() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
     }
