@@ -24,7 +24,7 @@ class Endpoint_v1_General extends Endpoint_REST {
             exit;
         }
 
-        $this->getParameter('count') ? $this->count = $this->getParameter('count') : $this->count = 999999999999;
+        $this->getParameter('count') ? $this->count = $this->getParameter('count') : $this->count = 9999999999;
         $this->getParameter('offset') ? $this->offset = $this->getParameter('offset') : $this->offset = 0;
         $this->getParameter('method') ? $this->method = $this->getParameter('method') : $this->method = false;
     }
@@ -81,9 +81,8 @@ class Endpoint_v1_General extends Endpoint_REST {
             }
             $this->model->setLimit($this->count,$this->offset);
             $data = $this->model->getRowsForCurrentUser();
-            $this->model->setLimit(999999999,0);
+            $this->model->setLimit(9999999,0);
             $total_rows = count($this->model->getRowsForCurrentUser());
-//            var_dump($data);exit;
             return [
                 'result' => 'success',
                 'data'   => $data,
