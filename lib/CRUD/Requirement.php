@@ -71,9 +71,7 @@ class CRUD_Requirement extends CRUD{
 		}
 
 		$cr->setModel(
-			$this->tasks,
-			$this->app->user_access->whatTaskFieldsUserCanEdit(),
-			$this->app->user_access->whatTaskFieldsUserCanSee($this->quote)
+			$this->tasks
 		);
 	}
 	protected function addComments($v){

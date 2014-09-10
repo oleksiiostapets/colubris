@@ -3,9 +3,8 @@ class page_quotes extends Page {
     public $active_tab=0;
     function init() {
         parent::init();
-
         // Checking client's read permission to this quote and redirect to denied if required
-        if( !$this->app->user_access->canSeeQuotesList() ){
+        if( !$this->app->model_user_rights->canSeeQuotes() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
         $this->title = 'Quotes';
@@ -27,7 +26,7 @@ class page_quotes extends Page {
         $tabs->addTabUrl('./estimate_needed','Estimate Needed ('.$this->getModelEstimateNeeded()->count().')');
         $tabs->addTabUrl('./not_estimated','Not Estimated ('.$this->getModelNotEstimated()->count().')');
         $tabs->addTabUrl('./estimated','Estimated ('.$this->getModelEstimated()->count().')');
-        if(!$this->api->currentUser()->isSales()){
+        if(!$this->app->model_user_rights->canSubmitForQuotation()){
             $tabs->addTabUrl('./estimation_approved','Estimation Approved ('.$this->getModelEstimationApproved()->count().')');
             $tabs->addTabUrl('./finished','Finished ('.$this->getModelFinished()->count().')');
         }
@@ -38,11 +37,7 @@ class page_quotes extends Page {
 
     }
     function getBaseModel(){
-        if ($this->api->currentUser()->isDeveloper()) {
-            $quote = $this->add('Model_Quote')->notDeleted()->getThisOrganisation()->participated();
-        }else{
-            $quote = $this->add('Model_Quote')->notDeleted()->getThisOrganisation();
-        }
+        $quote = $this->add('Model_Quote')->notDeleted()->getThisOrganisation();
         if($this->api->recall('q_project_id')>0){
             $quote->addCondition('project_id',$this->api->recall('q_project_id'));
         }
@@ -58,11 +53,11 @@ class page_quotes extends Page {
         }
         $pr = $quote->join('project','project_id','left','_pr');
         $pr->addField('pr_name','name');
-        if ($this->api->currentUser()->isClient()) {
+        /*if ($this->api->currentUser()->isClient()) {
             // show only client's quotes
             $pr->addField('pr_client_id','client_id');
             $quote->addCondition('pr_client_id',$this->app->currentUser()->get('client_id'));
-        }
+        }*/
         $pr->addField('project_name','name');
         $quote->setOrder(array('project_name','status'));//->debug();
 
@@ -150,7 +145,7 @@ class page_quotes extends Page {
     }
 
     function addRequestForQuotationButton($view) {
-        if ($this->app->user_access->canSendRequestForQuotation()) {
+        if ($this->app->model_user_rights->canAddQuote()) {
             $b = $view->add('Button')->set('Request For Quotation');
             $b->addStyle('margin-bottom','10px');
             $b->js('click', array(
@@ -159,7 +154,7 @@ class page_quotes extends Page {
         }
     }
 	function addArchiveButton($view){
-		if(!$this->api->currentUser()->isSales()){
+		if(!$this->api->model_user_rights->canSubmitForQuotation()){
 			$b = $view->add('Button')->set('See Archive');
 			$b->js('click', array(
 				$b->js()->univ()->redirect($this->app->url('quotes/archive'))
@@ -168,24 +163,21 @@ class page_quotes extends Page {
 	}
 
     function addQuotesCRUD($view,$quote,$mode) {
-        $user = $this->api->currentUser();
         $cr = $view->add('CRUD', array(
             'form_class'      => 'Form_EditQuote',
             'grid_class'      => 'Grid_Quotes',
             'allow_add'       => false,
-            'allow_edit'      => $quote->canUserEditQuote($user),
-            'allow_del'       => $quote->canUserDeleteQuote($user),
-            'allowed_actions' => $quote->userAllowedActions($user,$mode),
+            'allow_edit'      => $this->app->model_user_rights->canEditQuote(),
+            'allow_del'       => $this->app->model_user_rights->canDeleteQuote(),
+            'allowed_actions' => array('requirements','estimation','send_to_client','approve'),
         ))->addClass('atk-box');
 
         $cr->setModel(
-            $quote,
-            $quote->whatQuoteFieldsUserCanEdit($user),
-            $quote->whatQuoteFieldsUserCanSee($user)
+            $quote
         );
 
         if($cr->grid){
-            if ($quote->userAllowedArchive($user)){
+            if ($this->app->model_user_rights->canMoveToFromArchive()){
                 if($_GET['in_archive']){
                     $mq=$this->add('Model_Quote')->notDeleted()->getThisOrganisation()->load($_GET['in_archive']);
                     $mq->in_archive();
@@ -216,8 +208,8 @@ class page_quotes extends Page {
 
     }
     function defaultTemplate() {
-        $tab=$this->api->recall('active_tab');
-        $this->api->forget('active_tab');
+        $tab=$this->app->recall('active_tab');
+//        $this->app->forget('active_tab');
         return array('page/quotes/base'.$tab);
     }
 }

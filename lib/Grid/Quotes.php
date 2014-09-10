@@ -141,7 +141,7 @@ class Grid_Quotes extends Grid {
         $this->removeColumn('spent_time');
         $this->removeColumn('estimated');
         $this->removeColumn('status');
-        if ($this->api->currentUser()->isClient()){
+        if (!$this->app->model_user_rights->canSeeTime()){
             $this->removeColumn('show_time_to_client');
         }
         // add columns after model columns
@@ -163,7 +163,7 @@ class Grid_Quotes extends Grid {
                 ).'">'.$this->current_row['name'].'</a></div>'.
                 '<div class="quote_project"><span>Project:</span>'.$this->current_row['project'].'</div>'
         ;
-        if (!$this->api->currentUser()->isClient()){
+        if (!$this->app->model_user_rights->canSeeTime()){
             $this->current_row_html['quotation'] .=
                     '<div class="quote_client"><span>User:</span>'.$this->current_row['user'].'</div>'
             ;
@@ -203,7 +203,7 @@ class Grid_Quotes extends Grid {
             $this->current_row['estimpay'] = '-';
         }
 
-        if ($this->api->currentUser()->isClient() && !$this->current_row['show_time_to_client']){
+        if ($this->app->model_user_rights->canSeeTime() && !$this->current_row['show_time_to_client']){
             $this->current_row_html['estimate_info'] =
                     '<div class="quote_estimpay"><span>Est.pay:</span>'.$this->current_row['estimpay'].'</div>'
             ;
