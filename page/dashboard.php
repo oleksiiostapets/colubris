@@ -8,6 +8,7 @@ class page_dashboard extends Page {
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
 
+        $this->title = 'Dashboard';
         $this->addBC();
         $this->add('View_Dashboard');
         $this->addSystemDash();

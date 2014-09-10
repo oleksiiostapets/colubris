@@ -10,6 +10,7 @@ class page_developers extends Page {
 	}
     function page_index() {
 
+        $this->title = 'Developers';
 
         $this->add('x_bread_crumb/View_BC',array(
             'routes' => array(

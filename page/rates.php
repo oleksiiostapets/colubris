@@ -8,6 +8,19 @@ class page_rates extends Page {
         if( !$this->app->model_user_rights->canSeeRates() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
+        $this->title = 'Rates';
+
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Rates',
+                    'url' => 'rates',
+                ),
+            )
+        ),'bread_crumb');
     }
 
     function page_index() {
@@ -17,5 +30,8 @@ class page_rates extends Page {
         $cr->setModel($model,
             array('from','to','value')
         );
+    }
+    function defaultTemplate() {
+        return array('page/page');
     }
 }
