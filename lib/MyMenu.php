@@ -15,6 +15,7 @@ class MyMenu extends Menu_Basic {
             if ($this->app->model_user_rights->canSeeLogs()) $this->addMenuItem('logs','Logs');
             if ($this->app->model_user_rights->canSeeRates()) $this->addMenuItem('rates','Rates');
             if ($this->app->model_user_rights->canSeeSettings()) $this->addMenuItem('account','Settings');
+            if ($this->app->model_user_rights->canSeeManager()) $this->addMenuItem('manager','Manager');
         }
 
         $this->addMenuItem('about','About');

@@ -8,6 +8,20 @@ class page_clients extends Page {
     function init() {
         parent::init();
         $this->addNgJs();
+
+        $this->title = 'Clients';
+
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Clients',
+                    'url' => 'clients',
+                ),
+            )
+        ),'bread_crumb');
     }
     protected function addNgJs() {
         $this->app->jquery->addStaticInclude('ng/vendor/angularjs');

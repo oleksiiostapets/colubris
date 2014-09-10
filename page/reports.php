@@ -8,6 +8,8 @@ class page_reports extends Page_Functional {
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
 
+        $this->title = 'Reports';
+
 	    $this->m=$this->add('Model_TaskTime');
 	    $this->m->forReportsGrid();
 

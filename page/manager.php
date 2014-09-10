@@ -1,6 +1,21 @@
 <?php
 
 class page_manager extends Page {
+    function init(){
+        parent::init();
+        $this->title = 'Manager';
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Manager',
+                    'url' => 'manager',
+                ),
+            )
+        ),'bread_crumb');
+    }
 
     function page_index() {
 
@@ -122,6 +137,9 @@ class page_manager extends Page {
         $t->addTab('Delete')
                 ->add('FormDelete')->setModel('Report', array(''))->loadData($_GET['id']);
         ;
+    }
+    function defaultTemplate() {
+        return array('page/page');
     }
 
     /*

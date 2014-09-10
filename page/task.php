@@ -4,6 +4,7 @@ class page_task extends Page {
     function page_index(){
 
         $this->checkUserRights();
+        $this->title = 'Task';
 	    $this->addBC();
 
         $this->task = $this->add('Model_Task')->restrictedUsers();//->debug();

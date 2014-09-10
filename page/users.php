@@ -4,6 +4,18 @@ class page_users extends Page {
     function init() {
         parent::init();
         $this->addNgJs();
+        $this->title = 'Users';
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Users',
+                    'url' => 'users',
+                ),
+            )
+        ),'bread_crumb');
     }
     protected function addNgJs() {
         $this->app->jquery->addStaticInclude('ng/vendor/angularjs');

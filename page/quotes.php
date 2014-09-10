@@ -8,6 +8,7 @@ class page_quotes extends Page {
         if( !$this->app->user_access->canSeeQuotesList() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
+        $this->title = 'Quotes';
     }
 
     function page_index() {

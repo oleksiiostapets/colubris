@@ -8,6 +8,19 @@ class page_logs extends Page {
         if( !$this->app->model_user_rights->canSeeLogs() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
+        $this->title = 'Logs';
+
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Logs',
+                    'url' => 'logs',
+                ),
+            )
+        ),'bread_crumb');
     }
 
     function page_index() {
@@ -22,5 +35,8 @@ class page_logs extends Page {
         $grid->addClass('zebra bordered');
         $grid->addQuickSearch(array('new_data','class'));
         $grid->addPaginator(5);
+    }
+    function defaultTemplate() {
+        return array('page/page');
     }
 }

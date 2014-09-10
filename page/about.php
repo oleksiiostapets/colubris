@@ -3,6 +3,8 @@ class page_about extends Page {
     function init(){
         parent::init();
 
+        $this->title = 'About';
+
         $t=$this->add('Tabs');
 
         $t->addTabURL('./concept','What is Budget?');

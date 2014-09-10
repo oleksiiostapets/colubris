@@ -8,6 +8,19 @@ class page_deleted extends Page {
         if( !$this->app->model_user_rights->canSeeDeleted() ){
             throw $this->exception('You cannot see this page','Exception_Denied');
         }
+
+        $this->title = 'Deleted';
+        $this->add('x_bread_crumb/View_BC',array(
+            'routes' => array(
+                0 => array(
+                    'name' => 'Home',
+                ),
+                1 => array(
+                    'name' => 'Deleted',
+                    'url' => 'deleted',
+                ),
+            )
+        ),'bread_crumb');
     }
 
     function page_index() {
@@ -151,5 +164,8 @@ class page_deleted extends Page {
                 $cr->grid->js('reload')->reload()->execute();
             }
         }
+    }
+    function defaultTemplate() {
+        return array('page/page');
     }
 }
