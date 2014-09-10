@@ -79,7 +79,7 @@ class Endpoint_v1_General extends Endpoint_REST {
                     $this->model->addCondition($field,$value);
                 }
             }
-//            $this->model->setLimit($this->count,$this->offset);
+            $this->model->setLimit($this->count,$this->offset);
             $data = $this->model->getRowsForCurrentUser();
             $this->model->setLimit(999999999,0);
             $total_rows = count($this->model->getRowsForCurrentUser());

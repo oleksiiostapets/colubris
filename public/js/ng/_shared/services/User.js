@@ -22,6 +22,18 @@ app_module.service( 'User', [ '$rootScope','$http','API', function( $rootScope, 
                 }
             );
         },
+        getFromServerByProject: function(project) {
+            if(!project)return;
+            API.getAll(
+                'user',
+                'getUsersByProject',
+                {project_id:project.id},
+                function(obj) {
+                    service.users = obj.data;
+                    $rootScope.$broadcast( 'assigneds.update' );
+                }
+            );
+        },
         save: function ( user ) {
 
             if (typeof user.id === 'undefined' ) {

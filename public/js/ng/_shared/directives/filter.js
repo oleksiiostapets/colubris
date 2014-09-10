@@ -14,7 +14,7 @@ app_module.directive('filter', function factory($q,$http, $templateCache,$compil
         //------------------------------------------------
 
         var ProjectField = function(scope,$compile,element) {
-            var html = '<span>Project:</span><select ng-model="project" ng-change="Quote.getFromServerByProject(project);Requirement.clear();Task.filter(\'project_id\',project)" ng-options="project.name for project in projects"></select>';
+            var html = '<span>Project:</span><select ng-model="project" ng-change="Quote.getFromServerByProject(project);Requirement.clear();Task.filter(\'project_id\',project);User.getFromServerByProject(project);" ng-options="project.name for project in projects"></select>';
             var template = angular.element(html);
             var linkFn = $compile(template);
             scope.filter.inputs = linkFn(scope);

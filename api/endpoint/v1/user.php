@@ -14,6 +14,20 @@ class endpoint_v1_user extends Endpoint_v1_General {
             'data'   => $data,
         ];
     }
+    public function get_getUsersByProject(){
+        $this->model->notDeleted();
+        $project_id = $this->getParameter('project_id');
+        if($project_id){
+            $r=$this->model->leftJoin('participant.user_id','id','left','_r');
+            $r->addField('project_id','project_id');
+            $this->model->addCondition('project_id',$project_id);
+        }
+        $data = $this->model->getRows();
+        return [
+            'result' => 'success',
+            'data'   => $data,
+        ];
+    }
 
     function post_login() {
         if(!$this->app->auth->verifyCredentials($_POST['u'],$_POST['p'])) return false; else {
