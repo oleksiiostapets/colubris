@@ -7,14 +7,14 @@ class Grid_Logs extends Grid {
         // Data of head field
         $d=json_decode($this->current_row[$field]);
         $new_val='<table class="logs">';
+
         foreach($d as $k=>$v){
             // Checking if field was changed
             $style="";
             foreach($dc as $kc=>$vc){
                 if($kc==$k) $style='font-weight:bold;';
             }
-
-            $new_val.='<tr style="'.$style.'"><td>'.$k.'</td><td style="white-space:wrap;">'.$v.'</td></tr>';
+            if (!is_a($v,'stdClass')) $new_val.='<tr style="'.$style.'"><td>'.$k.'</td><td style="white-space:wrap;">'.$v.'</td></tr>';
         }
         $new_val.='</table>';
 
