@@ -30,6 +30,9 @@ app_module.controller(
             $scope.$on( 'user.update', function( event, args ) {
                 $scope.user = args;
             });
+            $scope.$on( 'users.need_update', function( event, args ) {
+                User.getFromServer('users.update');
+            });
             $scope.$on( 'users.update', function( event ) {
                 $scope.users = User.users;
 
@@ -62,5 +65,22 @@ app_module.controller(
                     $(tag_id).hide();
                 }, time);
             };
+
+
+            $rootScope.hideTag = function(tag_id,time) {
+                setTimeout(function(){
+                    $(tag_id).hide();
+                }, time);
+            }
+            $rootScope.removeTag = function(tag_id,time) {
+                setTimeout(function(){
+                    $(tag_id).remove();
+                }, time);
+            }
+            $rootScope.showSystemMsg = function(msg) {
+                $("#msg").html(msg);
+                $("#msg").show();
+                $rootScope. hideTag("#msg", 3000);
+            }
         }]
 );

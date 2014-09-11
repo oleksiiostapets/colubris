@@ -20,6 +20,7 @@ class page_users extends Page {
     protected function addNgJs() {
         $this->app->jquery->addStaticInclude('ng/vendor/angularjs');
         $this->app->jquery->addStaticInclude('ng/users/app');
+        $this->app->jquery->addStaticInclude('ng/_shared/directives/ngConfirmClick');
         $this->app->jquery->addStaticInclude('ng/users/controllers/inlineCrud');
         $this->app->jquery->addStaticInclude('ng/users/directives/inlineCrud');
         $this->app->jquery->addStaticInclude('ng/users/directives/userForm');

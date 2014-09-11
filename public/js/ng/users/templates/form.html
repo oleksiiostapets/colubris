@@ -14,20 +14,19 @@
                         <div class="atk-push-small">
                             <label><strong>Name:</strong></label>
                         </div>
-                        <input type="text" class="atk-jackscrew" ng-model="user.name" />
+                        <input id="user_name" type="text" class="atk-jackscrew" ng-model="user.name" />
                     </div>
 
                     <div class="atk-push-small">
                         <div class="atk-push-small">
                             <label><strong>Email:</strong></label>
                         </div>
-                        <input type="text" class="atk-jackscrew" ng-model="user.email" />
+                        <input id="user_email" type="text" class="atk-jackscrew" ng-model="user.email" />
                     </div>
 
                     <div class="atk-actions">
                         <button ng-click="User.save(user)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
-                        <button ng-click="User.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
-                        <button ng-click="User.delete()" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
+                        <button ng-click="User.delete(user.id)" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
                     </div>
                 </form>
             </div>

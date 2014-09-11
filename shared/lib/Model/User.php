@@ -137,6 +137,11 @@ class Model_User extends Model_BaseTable {
         $this->save();
         return array('lhash' => $this->get('lhash'), 'lhash_exp' => $this->get('lhash_exp'));
     }
+    function prolongLHash(){
+        $this->set('lhash_exp',date('Y-m-d G:i:s', time() + $this->app->getConfig('api_login_expire_minutes', 60) * 60));
+        $this->save();
+        return array('lhash' => $this->get('lhash'), 'lhash_exp' => $this->get('lhash_exp'));
+    }
 
     function getByLHash($lhash) {
         return $this->tryLoadBy('lhash',$lhash);

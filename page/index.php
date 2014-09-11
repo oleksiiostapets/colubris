@@ -23,7 +23,7 @@ class Page_index extends Page {
             $url = 'v1/auth/login/';
             $data = array('u'=>$l,'p'=>$p);
             $res = json_decode($this->app->do_post_request($url,$data));
-
+            
             if($res->result == 'success') {
                 if($form->get('memorize') == true) $expire_days = 365; else $expire_days = 1;
                 setcookie($this->app->name."_auth_token", $res->hash->lhash, time()+60*60*24*$expire_days);
