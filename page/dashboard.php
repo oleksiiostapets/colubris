@@ -10,7 +10,7 @@ class page_dashboard extends Page {
 
         $this->title = 'Dashboard';
         $this->addBC();
-        $this->add('View_Dashboard');
+        //$this->add('View_Dashboard');
         $this->addSystemDash();
 
     }
