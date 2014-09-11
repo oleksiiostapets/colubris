@@ -1,6 +1,8 @@
 <?php
 class endpoint_v1_auth extends Endpoint_REST {
 
+    use Helper_Url;
+
     function init() {
         parent::init();
     }
@@ -15,7 +17,16 @@ class endpoint_v1_auth extends Endpoint_REST {
         } else {
             $u = $this->add('Model_User')->tryLoadBy('email',$_POST['u']);
             if($u->loaded()){
-                $res = $u->setLHash();
+                $h_check = null;
+                if($u->get('lhash') != null) {
+                    $h_check = $this->add('Model_User')->checkUserByLHash($u->get('lhash'));
+                }
+                if($h_check){
+                    $res = $u->prolongLHash();
+                }else{
+                    $res = $u->setLHash();
+                }
+
                 return [
                     'result' => 'success',
                     'hash'   => $res,
@@ -33,6 +44,18 @@ class endpoint_v1_auth extends Endpoint_REST {
                 'message'   => 'Unexpected error'
             ];
         }
+    }
+
+    function post_logout(){
+        $lhash = $this->checkPostParameter('lhash');
+        $u = $this->add('Model_User')->tryLoadBy('lhash', $lhash);
+        if ($u->loaded()){
+            $u->set('lhash',null);
+            $u->save();
+        }
+        return [
+            'result' => 'success'
+        ];
     }
 
     function get_check(){

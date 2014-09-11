@@ -43,6 +43,10 @@ class Frontend extends ApiFrontend {
         $this->addControllers();
 
         if ($this->page=='logout') {
+            $url = 'v1/auth/logout/';
+            $data = array('lhash'=>$this->hg_cookie->getLoginHash());
+            $res = json_decode($this->do_post_request($url,$data));
+
             $this->hg_cookie->forgetLoginHash();
             $this->redirect('index');
 //        	setcookie("colubris_auth_useremail", "", time()-3600);
