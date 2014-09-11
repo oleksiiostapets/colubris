@@ -46,4 +46,33 @@ class endpoint_v1_user extends Endpoint_v1_General {
 
         return $res;
     }
+
+    function post_saveUser(){
+        $all = $_REQUEST;
+        unset($all['lhash']);
+        $id = $this->checkGetParameter('id',true);
+        if ($id) {
+            $this->model->tryLoad($id);
+            if(!$this->model->loaded()){
+                return [
+                    'result' => 'error',
+                    'error_message' => 'Record with the id '.$id.' was not found',
+                ];
+            }
+        }else{
+            $this->model->tryLoadBy('email',$_REQUEST['email']);
+            if($this->model->loaded()){
+                return [
+                    'result' => 'validation_error',
+                    'message' => 'User with this email already exists',
+                ];
+            }
+        }
+        $this->model->set($all);
+        $this->model->save();
+        return [
+            'result' => 'success',
+            'data' => $this->model->get(),
+        ];
+    }
 }
