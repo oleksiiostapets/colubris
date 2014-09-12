@@ -26,7 +26,7 @@ class Frontend extends ApiFrontend {
                 'addons/cms/templates/default/css',
             ),
 //            'js'=>array(
-//                '../addons/cms/templates/js',
+//                './addons/autocomplete/js',
 //            ),
             //'template'=>'atk4-addons/misc/templates',
         ))->setBasePath('.');
