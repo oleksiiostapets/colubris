@@ -42,6 +42,9 @@ app_module.controller(
         });
 
         //events
+        $scope.$on( 'projects.need_update', function( event, args ) {
+            Project.getFromServer();
+        });
         $scope.$on( 'project.update', function( event, args ) {
             $scope.project = args;
             if(!$scope.project.hasOwnProperty('id') && $scope.quotes.length){

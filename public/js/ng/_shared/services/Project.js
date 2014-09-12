@@ -88,8 +88,7 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
                 {id : project.id},
                 angular.toJson(project),
                 function(obj) {
-                    $rootScope.$broadcast('project.update', {});
-                    $rootScope.$broadcast( 'projects.update' );
+                    $rootScope.$broadcast('projects.need_update' );
                     $rootScope.$broadcast('form.to_regular_place');
                 }
             );

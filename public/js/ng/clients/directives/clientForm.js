@@ -21,6 +21,7 @@ app_module.directive('clientForm', function factory($q,$http, $templateCache, $c
             if(project) {
                 scope.Quote.getFromServerByProject(project);
             }
+            scope.quote_url = app_module.base_url + app_module.prefix + 'quotes';
         });
         scope.$on( 'form.to_regular_place', function( event ) {
             console.log('form.to_fixed_position');

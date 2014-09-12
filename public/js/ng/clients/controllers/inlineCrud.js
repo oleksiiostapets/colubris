@@ -48,6 +48,9 @@ app_module.controller(
                 }
             });
 
+            $scope.$on( 'clients.need_update', function( event, args ) {
+                Client.getFromServer();
+            });
             //avatar upload
             $scope.upload = function() {
                 var url = app_module.base_url + app_module.prefix  + 'api/client/' + 'addToFilestore' + app_module.postfix;

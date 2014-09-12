@@ -14,6 +14,7 @@ app_module.directive('projectForm', function factory($q,$http, $templateCache, $
 
             scope.Quote.getFromServerByProject(project);
 
+            scope.quote_url = app_module.base_url + app_module.prefix + 'quotes';
             //select current client
             $("#client option").removeAttr("selected");
             $("#client option[value="+project.client_id+"]").attr("selected","selected");

@@ -66,6 +66,7 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
                 angular.toJson(client),
                 function(obj) {
                     if (obj.result === 'success') {
+                        $rootScope.$broadcast('clients.need_update' );
 //                    console.log(data);
                     } else {
 //                    console.log(data);
