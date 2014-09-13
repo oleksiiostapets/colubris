@@ -27,6 +27,7 @@ class page_clients extends Page {
         $this->app->jquery->addStaticInclude('ng/vendor/angularjs');
         $this->app->jquery->addStaticInclude('ng/clients/app');
         $this->app->jquery->addStaticInclude('ng/clients/controllers/inlineCrud');
+        $this->app->jquery->addStaticInclude('ng/_shared/directives/ngConfirmClick');
         $this->app->jquery->addStaticInclude('ng/clients/directives/inlineCrud');
         $this->app->jquery->addStaticInclude('ng/clients/directives/clientForm');
         $this->app->jquery->addStaticInclude('ng/_shared/services/API');

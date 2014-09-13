@@ -16,7 +16,7 @@
                 <td>{{client.email}}</td>
                 <td class="atk-text-nowrap">
                     <button class="atk-button" ng-click="Client.edit($index)">Edit</button>
-                    <button class="atk-button atk-effect-danger" ng-click="Client.remove($index)">Delete</button>
+                    <button class="atk-button atk-effect-danger" ng-confirm-click="Are you sure?" confirmed-click="Client.remove($index)">Delete</button>
                 </td>
             </tr>
             </tbody>
