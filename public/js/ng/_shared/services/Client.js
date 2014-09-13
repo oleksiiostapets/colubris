@@ -62,7 +62,7 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
             API.saveOne(
                 'client',
                 null,
-                {},
+                {id : client.id},
                 angular.toJson(client),
                 function(obj) {
                     if (obj.result === 'success') {
