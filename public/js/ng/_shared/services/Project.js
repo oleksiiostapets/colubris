@@ -28,7 +28,21 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
                 alert('Error! No data received.');
             }
         },
-
+        delete: function(id) {
+            API.removeOne(
+                'project',
+                null,
+                {'id' : id},
+                function(obj) {
+                    if (obj.result === 'success') {
+                        $rootScope.$broadcast('project.update', {});
+                        $rootScope.$broadcast('form.to_regular_place');
+                        $rootScope.$broadcast( 'projects.need_update' );
+                    } else {
+                    }
+                }
+            );
+        },
         clear: function(){
             service.projects = [];
             $rootScope.$broadcast( 'projects.update' );
@@ -36,7 +50,9 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
 
         save: function ( project) {
 
-            console.log(project);
+//            console.log(project);
+            if(!API.validateForm(project, ['name','client'], 'project_')) return false;
+
             if (typeof project.id === 'undefined' ) {
                 service.projects.push( angular.copy(project));
             } else {

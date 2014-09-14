@@ -9,9 +9,10 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
     var service = {
         clients: [],
 
+
         save: function ( client ) {
 
-//            console.log(client);
+            if(!API.validateForm(client, ['name','email'], 'client_')) return false;
 
             if (typeof client.id === 'undefined' ) {
                 service.clients.push( angular.copy( client)  );
@@ -42,6 +43,21 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
             );
             service.clients.splice(index, 1);
             $rootScope.$broadcast( 'clients.update' );
+        },
+        delete: function(id) {
+            API.removeOne(
+                'client',
+                null,
+                {'id' : id},
+                function(obj) {
+                    if (obj.result === 'success') {
+                        $rootScope.$broadcast('client.update', {});
+                        $rootScope.$broadcast('form.to_regular_place');
+                        $rootScope.$broadcast( 'clients.need_update' );
+                    } else {
+                    }
+                }
+            );
         },
         edit: function(index) {
             console.log('------> edit');

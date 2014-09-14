@@ -168,6 +168,89 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
             // Token from cookie
             url = url + 'lhash=' + app_module.lhash;
             return url;
+        },
+        /**
+         * Form validation
+         * @param obj object
+         * @param field string/array
+         * @param prefix string - owner's prefix of field's ID
+         * @param message string    // default 'required'
+         * @param time int - duration of showing message, in seconds    //default 3000
+         * @returns {boolean} false if validation failed
+         */
+        validateForm: function(obj,field,prefix,message,time){
+            var passed = true;
+            $(".validation_error").remove();
+            if (!angular.isDefined(obj)){
+                service.addFieldMessage(field,prefix,message,time);
+                passed = false;
+            } else {
+                if(angular.isArray(field)){
+                    for(var key in field){
+                        var el = field[key];
+
+                        debugger;
+                        if(!obj[el]){
+                            service.addFieldMessage(el,prefix,message,time);
+                            passed = false;
+                        }else if(el.indexOf('email')>-1){
+                            if(!service.validateEmail(obj[el])){
+                                service.addFieldMessage(el,prefix,'incorrect e-mail',time);
+                                passed = false;
+                            }
+                        }
+                    }
+                }else{
+                    if(!obj.field){
+                        service.addFieldMessage(field,prefix,message,time);
+                        passed = false;
+                    }else if(field.indexOf('email')>-1){
+                        if(!service.validateEmail(obj[field])){
+                            service.addFieldMessage(field,prefix,'incorrect e-mail',time);
+                            passed = false;
+                        }
+                    }
+                }
+            }
+            return passed;
+        },
+        addFieldMessage: function(field, prefix, message, time){
+
+            //defaults
+            if(!angular.isDefined(message)) {
+                message = 'required';
+            }
+            if(!prefix){
+                prefix='';
+            }
+            if(!angular.isDefined(time)) {
+                time = 3000;
+            }
+
+            if(angular.isArray(field)){
+                for(var key in field){
+                    var el = field[key];
+                    if(angular.isString(el) && (el)){
+                        $( "#"+prefix+el).parent().after( '<span id="val_error_'+prefix+el+'" class="validation_error">'+message+'<br /></span>' );
+                        service.removeTag("#val_error_"+prefix+el,time);
+                    }
+                }
+            }else if(angular.isString(field) && (field)){
+                $( "#"+prefix+field).parent().after( '<span id="val_error_'+prefix+field+'" class="validation_error">'+message+'<br /></span>' );
+                service.removeTag("#val_error_"+prefix+field,time);
+            }
+        },
+
+        removeTag: function(tag_id,time) {
+            setTimeout(function(){
+                $(tag_id).remove();
+            }, time);
+        },
+        validateEmail: function(email) {
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+                return (true);
+            }
+            return (false);
         }
 
 //////////////////////

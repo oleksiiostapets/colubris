@@ -13,23 +13,29 @@
                     </div>
                     <div class="atk-push-small">
                         <div class="atk-push-small">
-                            <label><strong>Name:</strong></label>
+                            <div class="atk-push-small">
+                                <label><strong>Name:</strong></label>
+                            </div>
+                            <input type="text" id="project_name" class="atk-jackscrew" ng-model="project.name" />
                         </div>
-                        <input type="text" class="atk-jackscrew" ng-model="project.name" />
                         <div class="atk-push-small">
-                            <label><strong>Client:</strong></label>
+                            <div class="atk-push-small">
+                                <label><strong>Client:</strong></label>
+                            </div>
+                            <select id="project_client" ng-model="client"  ng-options="client.name  for client in clients track by client.id"  ></select>
                         </div>
-                        <select id="client" ng-model="client"  ng-options="client.name  for client in clients track by client.id"  ></select>
                         <div class="atk-push-small">
-                            <label><strong>Description:</strong></label>
+                            <div class="atk-push-small">
+                                <label><strong>Description:</strong></label>
+                            </div>
+                            <textarea class="atk-jackscrew" rows="7" resize="none" ng-model="project.descr" />
                         </div>
-                        <textarea class="atk-jackscrew" rows="7" resize="none" ng-model="project.descr" />
                     </div>
 
                     <div class="atk-actions">
                         <button ng-click="save(project,client)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
                         <button ng-click="Project.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
-                        <button ng-click="Project.delete()" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
+                        <button ng-confirm-click="Are you sure?" confirmed-click="Project.delete(project.id)" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
                     </div>
                 </form>
             </div>

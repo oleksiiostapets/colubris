@@ -20,20 +20,20 @@
                         <div class="atk-push-small">
                             <label><strong>Name:</strong></label>
                         </div>
-                        <input type="text" class="atk-jackscrew" ng-model="client.name" />
+                        <input type="text" id="client_name" class="atk-jackscrew" ng-model="client.name" />
                     </div>
 
                     <div class="atk-push-small">
                         <div class="atk-push-small">
                             <label><strong>Email:</strong></label>
                         </div>
-                        <input type="text" class="atk-jackscrew" ng-model="client.email" />
+                        <input type="text" id="client_email" class="atk-jackscrew" ng-model="client.email" />
                     </div>
 
                     <div class="atk-actions">
                         <button ng-click="Client.save(client)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
                         <button ng-click="Client.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
-                        <button ng-click="Client.delete()" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
+                        <button ng-confirm-click="Are you sure?" confirmed-click="Client.delete(client.id)" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
                     </div>
                 </form>
             </div>
