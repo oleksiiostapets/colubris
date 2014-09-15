@@ -10,8 +10,6 @@ app_module.service( 'User', [ '$rootScope','$http','API', function( $rootScope, 
         users: [],
 
         getFromServer: function(broadcast_message) {
-
-
             API.getAll(
                 'user',
                 'getUsers',
@@ -35,8 +33,7 @@ app_module.service( 'User', [ '$rootScope','$http','API', function( $rootScope, 
             );
         },
         save: function ( user ) {
-
-            if(this.validateForm(user)==true){
+            if(!API.validateForm(user, ['name','email'], 'user_')) return false;
                 if (typeof user.id === 'undefined' ) {
                     service.users.push( jQuery.extend({}, user)  );
                 }
@@ -46,34 +43,6 @@ app_module.service( 'User', [ '$rootScope','$http','API', function( $rootScope, 
                 $rootScope.$broadcast('users.update' );
                 $rootScope.$broadcast('form.to_regular_place');
                 this.resetBackupUser();
-            }
-        },
-        validateForm: function(user){
-            $(".validation_error").remove();
-            if (typeof user === 'undefined'){
-                $( "#user_name").parent().after( '<span id="val_error_user_name" class="validation_error">required<br /></span>' );
-                $rootScope.removeTag("#val_error_user_name", 3000);
-                $( "#user_email").parent().after( '<span id="val_error_user_email" class="validation_error">required<br /></span>' );
-                $rootScope.removeTag("#val_error_user_email", 3000);
-                return false;
-            } else {
-                if (typeof user.name === 'undefined' || user.name == ''){
-                    $( "#user_name").parent().after( '<span id="val_error_user_name" class="validation_error">required<br /></span>' );
-                    $rootScope.removeTag("#val_error_user_name", 3000);
-                    return false;
-                }
-                if (typeof user.email === 'undefined' || user.email == ''){
-                    $( "#user_email").parent().after( '<span id="val_error_user_email" class="validation_error">required<br /></span>' );
-                    $rootScope.removeTag("#val_error_user_email", 3000);
-                    return false;
-                }
-                if (!this.validatecontactEmail(user.email)){
-                    $( "#user_email").parent().after( '<span id="val_error_user_email" class="validation_error">wrong email<br /></span>' );
-                    $rootScope.removeTag("#val_error_user_email", 3000);
-                    return false;
-                }
-            }
-            return true;
         },
         saveOnServer: function(user) {
             API.saveOne(
@@ -157,12 +126,6 @@ app_module.service( 'User', [ '$rootScope','$http','API', function( $rootScope, 
                 ) {
                 service.users[current_index] = service.users[current_index].backup;
             }
-        },
-        validatecontactEmail: function(email) {
-            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
-                return (true);
-            }
-            return (false);
         }
     }
 

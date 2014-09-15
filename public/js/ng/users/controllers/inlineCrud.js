@@ -72,11 +72,6 @@ app_module.controller(
                     $(tag_id).hide();
                 }, time);
             }
-            $rootScope.removeTag = function(tag_id,time) {
-                setTimeout(function(){
-                    $(tag_id).remove();
-                }, time);
-            }
             $rootScope.showSystemMsg = function(msg) {
                 $("#msg").html(msg);
                 $("#msg").show();
