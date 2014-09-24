@@ -23,7 +23,16 @@ class Model_TaskTime extends Model_Table {
         	if($m['date']=='') $q->set('date', $q->expr('now()'));
         	$q->set('user_id', $q->api->auth->model['id']);
         });
-        
+
+        $task_join = $this->join('task.id','task_id','left','_task');
+        $task_join->addField('requirement_id','requirement_id');
+
+        $req_join = $task_join->join('requirement.id','requirement_id','left','_req');
+        $req_join->addField('requirement_name','name');
+
+        $quote_join = $req_join->join('quote.id','quote_id','left','_quote');
+        $quote_join->addField('quote_name','name');
+
        	$this->setOrder('date',true);
 
 	}

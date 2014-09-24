@@ -102,7 +102,7 @@ class page_reports extends Page_Functional {
 		))->set('Export to XLS');
 	}
     function getGridFields() {
-        return array('project_name','task_name','status','type','spent_time','date','user');
+        return array('project_name','quote_name','requirement_name','task_name','status','type','spent_time','date','user');
     }
     function getExportFields() {
         return [
