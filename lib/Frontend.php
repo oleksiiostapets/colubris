@@ -119,7 +119,6 @@ class Frontend extends ApiFrontend {
         // Allowed pages for guest
         $this->addAllowedPages(array(
             'index', 'intro', 'denied','logout','test','api','testapi','about',
-            'admin_content','admin_content_edit' // TODO add right to see this page
         ));
 
         // For Guests
@@ -144,6 +143,7 @@ class Frontend extends ApiFrontend {
             if ($this->model_user_rights->canSeeRates())        $this->addAllowedPages(array('rates'));
             if ($this->model_user_rights->canSeeSettings())     $this->addAllowedPages(array('account'));
             if ($this->model_user_rights->canSeeManager())     $this->addAllowedPages(array('manager'));
+            $this->addAllowedPages(array('content','content_edit'));
         }
     }
     private $allowed_pages=array();
