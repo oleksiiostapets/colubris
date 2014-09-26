@@ -6,7 +6,7 @@
 
 app_module.controller(
     'inlineCrud',
-    ['$scope','$document','$http','User','$rootScope', 'Right',
+    ['$scope','$document','$http', '$rootScope', 'User', 'Right',
         function ($scope,  $document,  $http,  User,  $rootScope, Right) {
 
             $rootScope.rows_on_page = 10;
@@ -65,17 +65,6 @@ app_module.controller(
                     $(tag_id).hide();
                 }, time);
             };
-
-
-            $rootScope.hideTag = function(tag_id,time) {
-                setTimeout(function(){
-                    $(tag_id).hide();
-                }, time);
-            }
-            $rootScope.showSystemMsg = function(msg) {
-                $("#msg").html(msg);
-                $("#msg").show();
-                $rootScope. hideTag("#msg", 3000);
-            }
-        }]
+        }
+    ]
 );

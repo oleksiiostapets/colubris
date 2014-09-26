@@ -43,7 +43,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             }
 
             if (typeof args.id === 'undefined' ) {
-                service.requirements.push( angular.copy(reqv)  );
+//                service.requirements.push( angular.copy(reqv)  );//Moved to API.saveOne()
             } else {
                 $.each(service.requirements,function(i,e){
                     if (e.id == args.id) {
@@ -58,11 +58,12 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                 {id : args.id},
                 angular.toJson(args),
                 function(obj) {
-                    /*if (obj.result === 'success') {
-                        $rootScope.showSystemMsg('saved');
+                    if (obj.result === 'success') {
+                        service.requirements.push( angular.copy(obj.data)  );
+//                        $rootScope.showSystemMsg('Saved successfully');
                     } else {
-                        alert('Error! No success message received.');
-                    }*/
+//                        $rootScope.showSystemMsg('Error! No success message received');
+                    }
                     //$rootScope.$broadcast('reqv.update', {});
                     $rootScope.$broadcast( 'requirements.update' );
                     $rootScope.$broadcast( 'checkbox.update.'+args.id,reqv);
