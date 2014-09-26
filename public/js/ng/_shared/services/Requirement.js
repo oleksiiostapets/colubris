@@ -5,8 +5,9 @@
 'use strict';
 
 app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $rootScope, $http, API ) {
-    var current_index = null;
+//    var current_index = null;
     var service = {
+        current_index: null,
         requirements: [],
 
         clear: function(){
@@ -102,22 +103,22 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             );
         },
         backupReqv: function(index) {
-            current_index = index;
+            this.current_index = index;
             service.requirements[index].backup = angular.copy(service.requirements[index]);
-            console.log(service.requirements[current_index].backup);
+            console.log(service.requirements[this.current_index].backup);
         },
         resetBackupReqv: function() {
-            if (current_index) {
-                service.requirements[current_index].backup = {};
-                current_index = null;
+            if (this.current_index) {
+                service.requirements[this.current_index].backup = {};
+                this.current_index = null;
             }
         },
         restoreReqv: function() {
             if (
-                typeof service.requirements[current_index] !== 'undefined' &&
-                typeof service.requirements[current_index].backup !== 'undefined'
+                typeof service.requirements[this.current_index] !== 'undefined' &&
+                typeof service.requirements[this.current_index].backup !== 'undefined'
             ) {
-                service.requirements[current_index] = service.requirements[current_index].backup;
+                service.requirements[this.current_index] = service.requirements[this.current_index].backup;
             }
         }
     }

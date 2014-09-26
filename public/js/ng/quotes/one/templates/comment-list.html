@@ -18,11 +18,12 @@
 <div class="atk-box-small">
     <form class="atk-form">
         <input type="hidden" ng-model="comm.id" />
+        <input type="hidden" ng-model="comm.user_id" />
         <div class="atk-push-small">
             <textarea type="text" class="atk-jackscrew" ng-model="comm.text"></textarea>
         </div>
         <div class="atk-actions">
-            <button ng-click="Comment.save(comm)" class="atk-swatch-green atk-button-small atk-button" >Add</button>
+            <button ng-click="Comment.save(comm,reqv.id)" class="atk-swatch-green atk-button-small atk-button" >Add</button>
         </div>
 
     </form>

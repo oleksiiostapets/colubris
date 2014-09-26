@@ -9,23 +9,23 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
     var service = {
         comments: [],
 
-        save: function ( comm ) {
+        save: function ( comm, reqv_id ) {
 
             console.log('save() comm');
             console.log(comm);
 
-            if (typeof comm.id === 'undefined' ) {
-                service.comments.push( angular.clone(comm) );
-            } else {
-                // send new data to the server
-                service.comments.push( angular.clone(comm) );
-            }
+//            if (typeof comm.id === 'undefined' ) {
+//                service.comments.push( angular.clone(comm) );
+//            } else {
+//                // send new data to the server
+//                service.comments.push( angular.clone(comm) );
+//            }
 
-            this.saveOnServer(comm);
-            $rootScope.$broadcast('comm.update', {});
-            $rootScope.$broadcast( 'comments.update' );
-
-            this.resetBackupComm();
+            this.saveOnServer(comm,reqv_id);
+//            $rootScope.$broadcast('comm.update', {});
+//            $rootScope.$broadcast( 'comments.update' );
+//
+//            this.resetBackupComm();
         },
         remove: function(index) {
             service.comments.splice(index, 1);
@@ -45,17 +45,16 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
             $rootScope.$broadcast('comm.update', {});
             $rootScope.$broadcast( 'comments.update' );
         },
-        saveOnServer: function(comm) {
-            var url = this.prepareUrl('saveParams',{id: comm.id});
-            $http.post(url,comm)
-                .success(function(data) {
-                    console.log(data);
-                })
-                .error(function(data, status) {
-                    console.log(data);
-                    console.log(status);
-                })
-            ;
+        saveOnServer: function(comm,reqv_id) {
+            API.saveOne(
+                'reqcomment',
+                null,
+                {id : comm.id, requirement_id : reqv_id},
+                angular.toJson(comm),
+                function(obj) {
+                    $rootScope.$broadcast('comments.need_update' );
+                }
+            );
         },
         getFromServer: function(reqv_id) {
             API.getAll(

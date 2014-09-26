@@ -38,32 +38,32 @@ class Model_Reqcomment extends Model_Auditable {
 	// ------------------------------------------------------------------------------
 
 	function addHooks() {
-		$this->addHook('beforeDelete', function($m){
-			$m['deleted_id']=$m->api->currentUser()->get('id');
-		});
+//		$this->addHook('beforeDelete', function($m){
+//			$m['deleted_id']=$m->api->currentUser()->get('id');
+//		});
 
-		$this->addHook('beforeInsert',function($m,$q){
-			$q->set('user_id',$q->api->auth->model['id']);
-			$q->set('created_dts', $q->expr('now()'));
-		});
+//		$this->addHook('beforeInsert',function($m,$q){
+//			$q->set('user_id',$q->api->auth->model['id']);
+//			$q->set('created_dts', $q->expr('now()'));
+//		});
 
-		$this->addHook('beforeSave',function($m){
-			if($m['user_id']>0){
-				if($m->api->auth->model['id']!=$m['user_id']){
-					throw $m
-						->exception('You have no permissions to do this','ValidityCheck')
-						->setField('text');
-				}
-			}
-		});
-		$this->addHook('beforeDelete',function($m){
-			if($m['user_id']>0){
-				if($m->api->auth->model['id']!=$m['user_id']){
-					throw $m
-						->exception('You have no permissions to do this','ValidityCheck');
-				}
-			}
-		});
+//		$this->addHook('beforeSave',function($m){
+//			if($m['user_id']>0){
+//				if($m->api->auth->model['id']!=$m['user_id']){
+//					throw $m
+//						->exception('You have no permissions to do this','ValidityCheck')
+//						->setField('text');
+//				}
+//			}
+//		});
+//		$this->addHook('beforeDelete',function($m){
+//			if($m['user_id']>0){
+//				if($m->api->auth->model['id']!=$m['user_id']){
+//					throw $m
+//						->exception('You have no permissions to do this','ValidityCheck');
+//				}
+//			}
+//		});
 	}
 
 	function deleted() {

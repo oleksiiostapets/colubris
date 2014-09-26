@@ -31,6 +31,9 @@ app_module.controller(
 
     Requirement.getFromServer();
 
+    $scope.$on( 'comments.need_update', function( event, args ) {
+        Comment.getFromServer($scope.Requirement.requirements[$scope.Requirement.current_index].id);
+    });
     $scope.$on( 'quote.update', function( event) {
         $scope.quote = Quote.quotes;
     });
