@@ -72,9 +72,34 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             this.resetBackupReqv();
         },
         remove: function(index) {
+            API.removeOne(
+                'requirement',
+                null,
+                {'id' : service.requirements[index].id},
+                function(obj) {
+                    if (obj.result === 'success') {
+//                    console.log(data);
+                    } else {
+//                    console.log(data);
+//                    console.log(status);
+                    }
+                }
+            );
             service.requirements.splice(index, 1);
-            this.saveOnServer();
+//            this.saveOnServer();
             $rootScope.$broadcast( 'requirements.update' );
+        },
+        saveOnServer: function(reqv) {
+            var url = this.prepareUrl('saveParams',{id: reqv.id});
+            $http.post(url,reqv)
+                .success(function(data) {
+                    console.log(data);
+                })
+                .error(function(data, status) {
+                    console.log(data);
+                    console.log(status);
+                })
+            ;
         },
         edit: function(index) {
             console.log('------> edit');
