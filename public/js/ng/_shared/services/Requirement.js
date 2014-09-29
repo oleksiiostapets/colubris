@@ -133,7 +133,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
         backupReqv: function(index) {
             this.current_index = index;
             service.requirements[index].backup = angular.copy(service.requirements[index]);
-            console.log(service.requirements[this.current_index].backup);
+            //console.log(service.requirements[this.current_index].backup);
         },
         resetBackupReqv: function() {
             if (this.current_index) {

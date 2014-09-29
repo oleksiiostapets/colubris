@@ -49,6 +49,20 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
                 }
             );
         },
+        getFromServerByReqvId: function(reqv_id) {
+            var params = {"field":"requirement_id","value":reqv_id};
+
+            API.getAll(
+                'task',
+                'getByField',
+                params,
+                function(obj) {
+                    service.tasks = obj.data;
+                    service.total_rows = obj.total_rows;
+                    $rootScope.$broadcast( 'reqv_tasks.update',service.tasks );
+                }
+            );
+        },
         paginate: function(page){
             $rootScope.current_page = page;
             this.getFromServerByFields();

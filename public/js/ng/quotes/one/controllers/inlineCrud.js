@@ -37,6 +37,9 @@ app_module.controller(
     $scope.$on( 'quote.update', function( event) {
         $scope.quote = Quote.quotes;
     });
+    $scope.$on( 'reqv_tasks.update', function( event, args ) {
+        $scope.tasks = args;
+    });
     $scope.$on( 'reqv.update', function( event, args ) {
         $scope.reqv = args;
     });
@@ -81,9 +84,9 @@ app_module.controller(
             });
         });
     });
-    $scope.$on( 'tasks.update', function( event ) {
-        $scope.tasks = Task.tasks;
-    });
+//    $scope.$on( 'tasks.update', function( event ) {
+//        $scope.tasks = Task.tasks;
+//    });
 
     // ESC key close requirement div
     $(document).on('keydown', function(evt){
