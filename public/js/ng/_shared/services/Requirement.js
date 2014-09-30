@@ -73,6 +73,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                 }
             );
             this.resetBackupReqv();
+            $rootScope.$broadcast('reqv.update', {});
         },
         remove: function(index) {
             API.removeOne(

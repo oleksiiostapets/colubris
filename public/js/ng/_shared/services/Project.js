@@ -64,6 +64,7 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
             }
             this.saveOnServer(project);
             this.resetbackupProject();
+            $rootScope.$broadcast('project.update', {});
         },
 
         edit: function(index) {
