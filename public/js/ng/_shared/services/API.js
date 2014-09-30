@@ -189,7 +189,6 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
                     for(var key in field){
                         var el = field[key];
 
-                        debugger;
                         if(!obj[el]){
                             service.addFieldMessage(el,prefix,message,time);
                             passed = false;
