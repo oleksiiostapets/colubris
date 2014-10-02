@@ -28,7 +28,7 @@ class API extends App_REST {
     protected function addPathfinder() {
         $this->pathfinder->addLocation(array(
             'addons'=>array('atk4-addons','addons','vendor'),
-            'php'=>array('shared','shared/lib'),
+            'php'=>array('shared','shared/lib','../lib'),
             'mail'=>array('templates/mail'),
         ))->setBasePath('..');
 

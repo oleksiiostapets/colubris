@@ -46,7 +46,7 @@ class endpoint_v1_account extends Endpoint_v1_General {
         ];
     }
 
-    function page_addToFilestore(){
+    function post_addToFilestore(){
         $id = $this->checkPostParameter('id');
         $this->model->tryLoad($id);
         if(!$this->model->loaded()){
@@ -56,11 +56,14 @@ class endpoint_v1_account extends Endpoint_v1_General {
             ];
         }
         if($_FILES['file']){
-            require_once('./lib/External/MimeReader.php');
+            $url = $this->app->pathfinder->base_location->getPath().'/../lib/External/MimeReader.php';
+            require_once($url);
 
             $tmp_name = $_FILES["file"]["tmp_name"];
             $name = $_FILES["file"]["name"];
-            $img_url = $_SERVER["DOCUMENT_ROOT"] . $this->app->getBaseUrl() . "upload/" . $name;
+//            $img_url = $_SERVER["DOCUMENT_ROOT"] . $this->app->getBaseUrl() . "upload/" . $name;
+            $img_url = $this->app->pathfinder->base_location->getPath().'/../upload/' . $name;
+//            var_dump($img_url);exit;
             move_uploaded_file($tmp_name, $img_url);
 
             $mime = new MimeReader($img_url);
@@ -81,7 +84,8 @@ class endpoint_v1_account extends Endpoint_v1_General {
 
             return [
                 'result' => 'success',
-                'data' => $up_model->get(),
+//                'data' => $up_model->get(),
+                'data' => 'adnfbdv',
             ];
         }else{
             return [

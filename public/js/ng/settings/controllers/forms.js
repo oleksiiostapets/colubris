@@ -20,7 +20,8 @@ app_module.controller(
         $scope.settings = Setting.settings;
 
         $scope.upload = function() {
-            var url = app_module.base_url + app_module.prefix  + 'api/account/' + 'addToFilestore' + app_module.postfix;
+            var url = app_module.api_base_url + 'v1/account/addToFilestore' + app_module.postfix;
+            url = url + '&lhash=' + app_module.lhash;
             var fd = new FormData();
             fd.append('file',document.getElementById('file').files[0]);
             fd.append('id',$scope.account.id);
