@@ -141,6 +141,14 @@ class Grid_Quotes extends Grid {
         $this->removeColumn('spent_time');
         $this->removeColumn('estimated');
         $this->removeColumn('status');
+        $this->removeColumn('html');
+        $this->removeColumn('deleted');
+        $this->removeColumn('organisation');
+        $this->removeColumn('updated_dts');
+        $this->removeColumn('client_id');
+        $this->removeColumn('rate');
+        $this->removeColumn('pr_name');
+        $this->removeColumn('project_name');
         if (!$this->app->model_user_rights->canSeeTime()){
             $this->removeColumn('show_time_to_client');
         }
