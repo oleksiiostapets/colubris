@@ -141,6 +141,12 @@ class Grid_Quotes extends Grid {
         $this->removeColumn('spent_time');
         $this->removeColumn('estimated');
         $this->removeColumn('status');
+        $this->removeColumn('client_email');
+        $this->removeColumn('calc_rate');
+        $this->removeColumn('duration');
+        $this->removeColumn('durdead');
+        $this->removeColumn('issued');
+        $this->removeColumn('amount');
         $this->removeColumn('html');
         $this->removeColumn('deleted');
         $this->removeColumn('organisation');
