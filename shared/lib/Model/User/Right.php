@@ -19,7 +19,7 @@
  *     - toggle_right($right_name).
  * You CANNOT use set()
  */
-class Model_User_Right extends Model_BaseTable{
+class Model_User_Right extends SQL_Model{
     public $table = 'right';
     private $user;
     static $available_rights = array(
@@ -92,7 +92,7 @@ class Model_User_Right extends Model_BaseTable{
 
     private $_set = false;
     function set($name,$value=UNDEFINED) {
-        if( !$this->canManageUsers() ){
+        if( !isset($this->app->is_test_app) && !$this->canManageUsers() ){
             throw $this->exception('You cannot edit users\' rights');
         }
         if ($this->_set) {
@@ -147,7 +147,7 @@ class Model_User_Right extends Model_BaseTable{
                 if (!$already_exist) {
                     $arr[] = $what;
                 }
-                $new_curr = implode(',',$curr_arr);
+                $curr_arr[] = $what;
             } else {
                 $new_arr = array();
                 foreach ($curr_arr as $k=>$v) {
@@ -155,10 +155,10 @@ class Model_User_Right extends Model_BaseTable{
                         $new_arr[] = $v;
                     }
                 }
-                $new_curr = implode(',',$new_arr);
+                $curr_arr = implode(',',$new_arr);
             }
             $this->_set = true;
-            $this->set('right',$new_curr)->saveLater();
+            $this->set('right',trim(implode(',',$curr_arr),','))->saveLater();
             $this->_set = false;
             return $this;
         }else{
@@ -235,7 +235,7 @@ class Model_User_Right extends Model_BaseTable{
     public function makeExistingUserAsManager($id){
         $this->setPatternForExisting($id, $this->manager_pattern);
     }
-    public function makeExistingUserAsAadmin($id){
+    public function makeExistingUserAsAdmin($id){
         $this->setPatternForExisting($id, $this->admin_pattern);
     }
 
@@ -261,6 +261,8 @@ class Model_User_Right extends Model_BaseTable{
     public function canEditQuote($id=null)               {return $this->can('can_edit_quote',$id);}
     public function canDeleteQuote($id=null)             {return $this->can('can_delete_quote',$id);}
     public function canSubmitForQuotation($id=null)      {return $this->can('can_submit_for_quotation',$id);}
+    public function canMoveToFromArchive($id=null)       {return $this->can('can_move_to_from_archive',$id);}
+    public function canSeeFinance($id=null)              {return $this->can('can_see_finance',$id);}
     //Requirement
     public function canAddRequirement($id=null)          {return $this->can('can_add_requirement',$id);}
     public function canEditRequirement($id=null)         {return $this->can('can_edit_requirement',$id);}
@@ -272,6 +274,8 @@ class Model_User_Right extends Model_BaseTable{
     //User
     public function canSeeUsers($id=null)                {return $this->can('can_see_users',$id);}
     public function canManageUsers($id=null)             {return $this->can('can_manage_users',$id);}
+    public function canTrackTime($id=null)               {return $this->can('can_track_time',$id);}
+    public function canSeeTime($id=null)                 {return $this->can('can_see_time',$id);}
     //Rates
     public function canSeeRates($id=null)                {return $this->can('can_see_rates',$id);}
     public function canManageRates($id=null)             {return $this->can('can_manage_rates',$id);}
@@ -290,11 +294,7 @@ class Model_User_Right extends Model_BaseTable{
     public function canSeeLogs($id=null)                 {return $this->can('can_see_logs',$id);}
     //Mics
     public function canSeeDashboard($id=null)            {return $this->can('can_see_dashboard',$id);}
-    public function canMoveToFromArchive($id=null)       {return $this->can('can_move_to_from_archive',$id);}
-    public function canTrackTime($id=null)               {return $this->can('can_track_time',$id);}
     public function canLoginAsAnyUser($id=null)          {return $this->can('can_login_as_any_user',$id);}
-    public function canSeeTime($id=null)                 {return $this->can('can_see_time',$id);}
-    public function canSeeFinance($id=null)              {return $this->can('can_see_finance',$id);}
     public function canSeeManager($id=null)              {return $this->can('can_see_manager',$id);}
 
     private function fetchRights($rights_string,$right_name){
@@ -317,7 +317,7 @@ class Model_User_Right extends Model_BaseTable{
     private function can($right_name,$id=null){
         if (!$id) $id = $this->app->currentUser()->id;
         if(!$this->checkRight($right_name)) throw $this->exception('There is no such an access right defined');
-        if(in_array($right_name,$this->getRights(),true)){
+        if(in_array($right_name,$this->getRights($id),true)){
             return true;
         }
         return false;
@@ -332,7 +332,10 @@ class Model_User_Right extends Model_BaseTable{
         }else{
             $this->$right = true;
         }
+
+        $this->_set = true;
         $this->set($right,$this->$right)->save();
+        $this->_set = false;
         return $this;
     }
 }

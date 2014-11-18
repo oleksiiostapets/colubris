@@ -61,9 +61,6 @@ class Model_Quote extends Model_Auditable {
 
 		$this->addField('is_deleted')->type('boolean')->defaultValue('0');
 		$this->hasOne('User','deleted_id');
-		$this->addHook('beforeDelete', function($m){
-			$m['deleted_id']=$m->api->currentUser()->get('id');
-		});
 
 //        $this->addField('organisation_id')->refModel('Model_Organisation');
 		$this->hasOne('Organisation','organisation_id');
@@ -100,6 +97,9 @@ class Model_Quote extends Model_Auditable {
 			$m['updated_dts']=date('Y-m-d G:i:s', time());
 			if($m['status']=='finished') $m['warranty_end']=date('Y-m-d G:i:s', time()+60*60*24*30);
 		});
+        $this->addHook('beforeDelete', function($m){
+            if( !isset($this->app->is_test_app)) $m['deleted_id']=$m->api->currentUser()->get('id');
+        });
 	}
 	// HOOKS --------------------------------------------------------------------------
 
@@ -398,6 +398,83 @@ class Model_Quote extends Model_Auditable {
             }
         }
         return false;
+    }
+
+    // API methods
+    function prepareForSelect(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canSeeQuotes($u['id'])){
+            $fields = array('id','name','user_id','general_description','issued','duration','deadline','durdead','html','status','is_deleted','deleted_id','organisation_id','created_dts','updated_dts','expires_dts','is_archived','warranty_end','show_time_to_client','client_id','client_name','client_email','estimated','spent_time');
+
+            if($r->canSeeFinance($u['id'])){
+                $fin_fields = array('amount','rate','currency','calc_rate','estimpay');
+                $fields = array_merge($fields, $fin_fields);
+            }
+        }
+
+        $this->setActualFields($fields);
+        return $this;
+    }
+    function prepareForInsert(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canAddQuote($u['id'])){
+            $fields = array('id','name','user_id','general_description','issued','duration','deadline','durdead','html','status','is_deleted','deleted_id','organisation_id','created_dts','updated_dts','expires_dts','is_archived','warranty_end','show_time_to_client','client_id','client_name','client_email','estimated','spent_time');
+
+            if($r->canSeeFinance($u['id'])){
+                $fin_fields = array('amount','rate','currency','calc_rate','estimpay');
+                $fields = array_merge($fields, $fin_fields);
+            }
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForUpdate(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canEditQuote($u['id'])){
+            $fields = array('id','name','user_id','general_description','issued','duration','deadline','durdead','html','status','is_deleted','deleted_id','organisation_id','created_dts','updated_dts','expires_dts','is_archived','warranty_end','show_time_to_client','client_id','client_name','client_email','estimated','spent_time');
+
+            if($r->canSeeFinance($u['id'])){
+                $fin_fields = array('amount','rate','currency','calc_rate','estimpay');
+                $fields = array_merge($fields, $fin_fields);
+            }
+        }
+
+        $this->setActualFields($fields);
+        return $this;
+    }
+    function prepareForDelete(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canSeeQuotes($u['id'])){
+            $fields = array('id','name','user_id','general_description','issued','duration','deadline','durdead','html','status','is_deleted','deleted_id','organisation_id','created_dts','updated_dts','expires_dts','is_archived','warranty_end','show_time_to_client','client_id','client_name','client_email','estimated','spent_time');
+
+            if($r->canSeeFinance($u['id'])){
+                $fin_fields = array('rate','currency','calc_rate','estimpay');
+                $fields = array_merge($fields, $fin_fields);
+            }
+        }
+
+        $this->setActualFields($fields);
+        return $this;
     }
 
 }

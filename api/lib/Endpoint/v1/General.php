@@ -64,6 +64,8 @@ class Endpoint_v1_General extends Endpoint_REST {
      * count - count rows (optional)
      * offset - offset for query (optional)
      * method - for defining type of search. If empty - strong search, 'rlike', llike', 'alike'
+     *
+     * SELECT
      */
     function get_getByField() {
         try{
@@ -104,6 +106,8 @@ class Endpoint_v1_General extends Endpoint_REST {
      * value5 - value for the field (optional)
      * count - count rows (optional)
      * offset - offset for query (optional)
+     *
+     * SELECT
      */
     function get_getByFields() {
         try{
@@ -131,12 +135,14 @@ class Endpoint_v1_General extends Endpoint_REST {
             ];
         }
     }
+    // SELECT
     function get_getById() {
         $id = $this->checkGetParameter('id');
         $_GET['field'] = 'id';
         $_GET['value'] = $id;
         return $this->get_getByField();
     }
+    // DELETE
     function get_deleteById() {
         $id = $this->checkGetParameter('id');
         try{
@@ -151,31 +157,7 @@ class Endpoint_v1_General extends Endpoint_REST {
             ];
         }
     }
-    function get_saveParams(){
-        $data = file_get_contents("php://input"); // TODO: not safe data
-        $data_arr = @json_decode($data,true);
-        if (is_array($data_arr)) {
-            $all = array_merge($_REQUEST,$data_arr);
-        } else {
-            $all = $_REQUEST;
-        }
-        $id = $this->checkGetParameter('id',true);
-        if ($id) {
-            $this->model->tryLoad($id);
-            if(!$this->model->loaded()){
-                return [
-                    'result' => 'error',
-                    'error_message' => 'Record with the id '.$id.' was not found',
-                ];
-            }
-        }
-        $this->model->set($all);
-        $this->model->save();
-        return [
-            'result' => 'success',
-            'data' => $this->model->get(),
-        ];
-    }
+    // INSERT, UPDATE
     function post_saveParams(){
         $data_arr = $this->getFancyPost();
 
@@ -185,6 +167,15 @@ class Endpoint_v1_General extends Endpoint_REST {
             $all = $_REQUEST;
         }
         $id = $this->getId();
+        if ($id) {
+            $this->model->tryLoad($id);
+            if(!$this->model->loaded()){
+                return [
+                    'result' => 'error',
+                    'error_message' => 'Record with the id '.$id.' was not found',
+                ];
+            }
+        }
         $this->model->set($all);
         $this->model->save();
         return [

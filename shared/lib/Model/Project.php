@@ -37,7 +37,7 @@ class Model_Project extends Model_Auditable {
 
 	function addHooks() {
 		$this->addHook('beforeDelete', function($m){
-			$m['deleted_id']=$m->api->currentUser()->get('id');
+            if( !isset($this->app->is_test_app)) $m['deleted_id']=$m->api->currentUser()->get('id');
 		});
 	}
 

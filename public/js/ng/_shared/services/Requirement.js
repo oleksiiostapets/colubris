@@ -93,18 +93,6 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
 //            this.saveOnServer();
             $rootScope.$broadcast( 'requirements.update' );
         },
-        saveOnServer: function(reqv) {
-            var url = this.prepareUrl('saveParams',{id: reqv.id});
-            $http.post(url,reqv)
-                .success(function(data) {
-                    console.log(data);
-                })
-                .error(function(data, status) {
-                    console.log(data);
-                    console.log(status);
-                })
-            ;
-        },
         edit: function(index) {
             console.log('------> edit');
             this.backupReqv(index);

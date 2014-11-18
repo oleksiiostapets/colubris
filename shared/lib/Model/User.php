@@ -19,9 +19,6 @@ class Model_User extends Model_BaseTable {
 		$this->addField('is_deleted')->type('boolean')->defaultValue('0');
         $this->addField('avatar_id');
 		$this->hasOne('User','deleted_id');
-		$this->addHook('beforeDelete', function($m){
-			$m['deleted_id']=$m->app->currentUser()->get('id');
-		});
 
 		$this->addField('is_system')->defaultValue('0')->type('boolean');
 		$this->hasOne('Client');
@@ -81,6 +78,10 @@ class Model_User extends Model_BaseTable {
 				->exception('Do not change email for existing user','ValidityCheck')
 				->setField('email');
 		});
+
+        $this->addHook('beforeDelete', function($m){
+            $m['deleted_id']=$m->app->currentUser()->get('id');
+        });
 	}
 
 	// HOOKS :: END -----------------------------------------------------------

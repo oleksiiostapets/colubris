@@ -19,7 +19,7 @@ class Model_Log extends Model_Table {
         });
 		
 		$this->addHook('beforeSave',function($m){
-		    $m['user_id']=$this->app->currentUser()->get('id');
+            if( !isset($this->app->is_test_app)) $m['user_id']=$this->app->currentUser()->get('id');
 		});
 		
 	}
