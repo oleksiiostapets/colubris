@@ -456,25 +456,22 @@ class Model_Quote extends Model_Auditable {
             }
         }
 
-        $this->setActualFields($fields);
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
         return $this;
     }
     function prepareForDelete(Model_User $u){
         $r = $this->add('Model_User_Right');
 
-        $fields = ['id'];
+        if($r->canDeleteQuote($u['id'])) return $this;
 
-        if($r->canSeeQuotes($u['id'])){
-            $fields = array('id','name','user_id','general_description','issued','duration','deadline','durdead','html','status','is_deleted','deleted_id','organisation_id','created_dts','updated_dts','expires_dts','is_archived','warranty_end','show_time_to_client','client_id','client_name','client_email','estimated','spent_time');
-
-            if($r->canSeeFinance($u['id'])){
-                $fin_fields = array('rate','currency','calc_rate','estimpay');
-                $fields = array_merge($fields, $fin_fields);
-            }
-        }
-
-        $this->setActualFields($fields);
-        return $this;
+        throw $this->exception('This user has no permissions for deleting','API_CannotDelete');
     }
 
 }

@@ -257,7 +257,7 @@ class Model_User_Right extends SQL_Model{
     public function canDeleteProjects($id=null)          {return $this->can('can_delete_projects',$id);}
     //Quote
     public function canSeeQuotes($id=null)               {return $this->can('can_see_quotes',$id);}
-    public function canAddQuote($id=null)                {return $this->can('can_add_quote',$id);}//Request for quotation
+    public function canAddQuote($id=null)                {return $this->can('can_add_quote',$id);}
     public function canEditQuote($id=null)               {return $this->can('can_edit_quote',$id);}
     public function canDeleteQuote($id=null)             {return $this->can('can_delete_quote',$id);}
     public function canSubmitForQuotation($id=null)      {return $this->can('can_submit_for_quotation',$id);}

@@ -81,10 +81,11 @@ class Endpoint_v1_General extends Endpoint_REST {
                     $this->model->addCondition($field,$value);
                 }
             }
+
+            $this->model->dsql()->calcFoundRows();
             $this->model->setLimit($this->count,$this->offset);
             $data = $this->model->getRowsForCurrentUser();
-            $this->model->setLimit(9999999,0);
-            $total_rows = count($this->model->getRowsForCurrentUser());
+            $total_rows = $this->model->dsql()->foundRows();
             return [
                 'result' => 'success',
                 'data'   => $data,
@@ -118,10 +119,10 @@ class Endpoint_v1_General extends Endpoint_REST {
                     $this->model->addCondition($field,$value);
                 }
             }
+            $this->model->dsql()->calcFoundRows();
             $this->model->setLimit($this->count,$this->offset);
             $data = $this->model->getRows();
-            $this->model->setLimit(999999999,0);
-            $total_rows = count($this->model->getRows());
+            $total_rows = $this->model->dsql()->foundRows();
 
             return [
                 'result' => 'success',

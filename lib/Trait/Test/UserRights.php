@@ -8,6 +8,9 @@
 
 trait Trait_Test_UserRights {
 
+    /**
+     * QUOTES PERMISSIONS
+     */
     private function atk4_test_can_see_money_true() {
         /**
          * 1. Добавляем юзера
@@ -215,7 +218,146 @@ trait Trait_Test_UserRights {
             throw $e;
         }
     }
+    private function atk4_test_can_delete_quote_true() {
+
+        $u = $this->add('Model_Mock_User');
+        $u->set('name','TestUser_'.time());
+        $u->save();
+
+        $r = $this->add('Model_User_Right');
+        $r->saveNewUserAsEmpty($u['id']);
+        $r->setRight('can_delete_quote',true);
+        $r->save();
+
+        $p = $this->add('Model_Project');
+        $p->set('name','TestProject'.time());
+        $p->save();
+
+        $q = $this->add('Model_Quote');
+        $q->set('project_id',$p['id']);
+        $q->set('name','TestQuote'.time());
+        $q->save();
+
+        $q->prepareForDelete($u);
+
+        try {
+            $q->forceDelete();
+            $p->forceDelete();
+            $r->delete();
+            $u->forceDelete();
+
+        }catch(Exception $e){
+            $q->forceDelete();
+            $p->forceDelete();
+            $r->delete();
+            $u->forceDelete();
+
+            $this->fails('User cannot delete quote');
+            throw $e;
+        }
+    }
+
     /**
-     *
+     * REQUIREMENTS PERMISSIONS
      */
+    private function atk4_test_can_see_requirement_true() {
+        $u = $this->add('Model_Mock_User');
+        $u->set('name','TestUser_'.time());
+        $u->save();
+
+        $r = $this->add('Model_User_Right');
+        $r->saveNewUserAsEmpty($u['id']);
+        $r->setRight('can_see_quotes',true);
+        $r->save();
+
+        $p = $this->add('Model_Project');
+        $p->set('name','TestProject'.time());
+        $p->save();
+
+        $q = $this->add('Model_Quote');
+        $q->set('project_id',$p['id']);
+        $q->set('name','TestQuote'.time());
+        $q->save();
+
+        $req = $this->add('Model_Requirement');
+        $req->set('name','TestRequirement'.time());
+        $req->set('user_id',$u['id']);
+        $req->set('quote_id',$q['id']);
+        $req->save();
+
+        $req2 = $this->add('Model_Requirement');
+        $req2->prepareForSelect($u);
+        $req2->load($req['id']);
+
+        $data = $req2->get();
+
+        try {
+            $this->assertTrue(isset($data['name']), 'User cannot see requirement\'s name!');
+
+            $req->forceDelete();
+            $q->forceDelete();
+            $p->forceDelete();
+            $r->delete();
+            $u->forceDelete();
+
+        }catch(Exception $e){
+            $req->forceDelete();
+            $q->forceDelete();
+            $p->forceDelete();
+            $r->delete();
+            $u->forceDelete();
+
+            throw $e;
+        }
+
+    }
+    private function atk4_test_can_see_requirement_false() {
+        $u = $this->add('Model_Mock_User');
+        $u->set('name','TestUser_'.time());
+        $u->save();
+
+        $r = $this->add('Model_User_Right');
+        $r->saveNewUserAsEmpty($u['id']);
+        $r->save();
+
+        $p = $this->add('Model_Project');
+        $p->set('name','TestProject'.time());
+        $p->save();
+
+        $q = $this->add('Model_Quote');
+        $q->set('project_id',$p['id']);
+        $q->set('name','TestQuote'.time());
+        $q->save();
+
+        $req = $this->add('Model_Requirement');
+        $req->set('name','TestRequirement'.time());
+        $req->set('user_id',$u['id']);
+        $req->set('quote_id',$q['id']);
+        $req->save();
+
+        $req2 = $this->add('Model_Requirement');
+        $req2->prepareForSelect($u);
+        $req2->load($req['id']);
+
+        $data = $req2->get();
+
+        try {
+            $this->assertFalse(isset($data['name']), 'User is able see requirement\'s name!');
+
+            $req->forceDelete();
+            $q->forceDelete();
+            $p->forceDelete();
+            $r->delete();
+            $u->forceDelete();
+
+        }catch(Exception $e){
+            $req->forceDelete();
+            $q->forceDelete();
+            $p->forceDelete();
+            $r->delete();
+            $u->forceDelete();
+
+            throw $e;
+        }
+    }
 }

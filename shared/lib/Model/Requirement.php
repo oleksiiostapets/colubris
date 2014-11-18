@@ -33,7 +33,7 @@ class Model_Requirement extends Model_Auditable {
 
 	function addHooks() {
 		$this->addHook('beforeDelete', function($m){
-			$m['deleted_id']=$m->api->currentUser()->get('id');
+            if( !isset($this->app->is_test_app)) $m['deleted_id']=$m->api->currentUser()->get('id');
 		});
 	}
 
@@ -86,4 +86,63 @@ class Model_Requirement extends Model_Auditable {
 		return $this;
 	}
 
+
+    // API methods
+    function prepareForSelect(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+//var_dump($this->getActualFields());
+        if($r->canSeeQuotes($u['id'])){
+            $fields = array('id','quote_id','quote','user_id','user','name','descr','estimate','is_included','file_id','file','is_deleted','deleted_id','deleted','project_id','project_name','spent_time','count_comments');
+        }
+
+        $this->setActualFields($fields);
+        return $this;
+    }
+    function prepareForInsert(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canAddRequirement($u['id'])){
+            $fields = array('id','quote_id','quote','user_id','user','name','descr','estimate','is_included','file_id','file','is_deleted','deleted_id','deleted','project_id','project_name','spent_time','count_comments');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForUpdate(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canEditRequirement($u['id'])){
+            $fields = array('id','quote_id','quote','user_id','user','name','descr','estimate','is_included','file_id','file','is_deleted','deleted_id','deleted','project_id','project_name','spent_time','count_comments');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForDelete(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        if($r->canDeleteRequirement($u['id'])) return $this;
+
+        throw $this->exception('This user has no permissions for deleting','API_CannotDelete');
+    }
 }

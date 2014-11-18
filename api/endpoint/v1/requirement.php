@@ -13,6 +13,7 @@ class endpoint_v1_requirement extends Endpoint_v1_General {
 
     function get_getForQuote() {
         $quote_id = $this->getQuoteId();
+        $this->model->prepareForSelect($this->app->current_user);
         $data = $this->model->addCondition('quote_id',$quote_id)->addCondition('is_deleted',false)->getRows();
         return[
             'result' => 'success',
