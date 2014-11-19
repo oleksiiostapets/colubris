@@ -116,4 +116,74 @@ class Model_Project extends Model_Auditable {
         });
     }
     // Expressions --------------------------------------------------------------
+
+
+    /**
+     *
+     * API methods
+     *
+     */
+    function prepareForSelect(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canSeeProjects($u['id'])){
+            $fields = array('id','name','descr','client_id','demo_url','prod_url','repository','organisation_id','is_deleted','is_deleted','deleted_id','spent_time');
+        }else{
+            throw $this->exception('This User cannot see projects','API_CannotSee');
+        }
+
+        $this->setActualFields($fields);
+        return $this;
+    }
+    function prepareForInsert(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canAddProjects($u['id'])){
+            $fields = array('id','name','descr','client_id','demo_url','prod_url','repository','organisation_id','is_deleted','is_deleted','deleted_id','spent_time');
+        }else{
+            throw $this->exception('This User cannot add projects','API_CannotAdd');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForUpdate(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canEditProjects($u['id'])){
+            $fields = array('id','name','user_id','general_description','issued','duration','deadline','durdead','html','status','is_deleted','deleted_id','organisation_id','created_dts','updated_dts','expires_dts','is_archived','warranty_end','show_time_to_client','client_id','client_name','client_email','estimated','spent_time');
+        }else{
+            throw $this->exception('This User cannon edit quotes','API_CannotEdit');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForDelete(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        if($r->canDeleteProjects($u['id'])) return $this;
+
+        throw $this->exception('This user has no permissions for deleting','API_CannotDelete');
+    }
 }
