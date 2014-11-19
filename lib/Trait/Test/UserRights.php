@@ -360,4 +360,37 @@ trait Trait_Test_UserRights {
             throw $e;
         }
     }
+
+    /**
+     * USERS PERMISSIONS
+     */
+    private function atk4_test_can_see_user_true() {
+        $u = $this->add('Model_Mock_User');
+        $u->set('name','TestUser_'.time());
+        $u->save();
+
+        $r = $this->add('Model_User_Right');
+        $r->saveNewUserAsEmpty($u['id']);
+        $r->setRight('can_see_users',true);
+        $r->save();
+
+        $u2 = $this->add('Model_User');
+        $u2->prepareForSelect($u);
+        $u2->load($u['id']);
+
+        $data = $u2->get();
+
+        try {
+            $this->assertTrue(isset($data['name']), 'User cannot see user\'s name!');
+
+            $u->forceDelete();
+
+        }catch(Exception $e){
+            $u->forceDelete();
+
+            throw $e;
+        }
+
+    }
+
 }
