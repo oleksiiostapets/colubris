@@ -15,5 +15,5 @@ upload
 nbproject
 /.idea/workspace.xml
 /.idea
-test.php
+page/test.php
 logs

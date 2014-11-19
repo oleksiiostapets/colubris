@@ -11,7 +11,8 @@ class Tests extends App_TestCLI {
 
     //use Trait_AddAuth;
     use Trait_AddPathfinder;
-    use Trait_Test_UserRights;
+//    use Trait_Test_UserRights;
+    use Trait_Test_Quote;
 
     function init() {
         parent::init();
