@@ -14,7 +14,119 @@ trait Trait_Test_Quote {
     /**
      * QUOTES PERMISSIONS
      */
-    /*private function atk4_test_cannot_add_quote() {
+    private function atk4_test_cannot_delete_quote() {
+        $this->addTestUser();
+
+        $r = $this->add('Model_User_Right');
+        $r->saveNewUserAsEmpty($this->test_user['id']);
+
+        $this->addTestProject();
+        $this->addTestQuote();
+
+        try{
+            $this->assertThrowException('Exception_API_CannotDelete', $this->test_quote, 'prepareForDelete', $args=array($this->test_user));
+
+            $this->test_quote->forceDelete();
+            $this->test_project->forceDelete();
+            $r->delete();
+            $this->test_user->forceDelete();
+        }catch (Exception $e){
+            $this->test_quote->forceDelete();
+            $this->test_project->forceDelete();
+            $r->delete();
+            $this->test_user->forceDelete();
+            throw $this->exception('User CAN delete quote but not allowed');
+        }
+    }
+    private function atk4_test_can_delete_quote() {
+        $this->addTestUser();
+
+        $r = $this->add('Model_User_Right');
+        $r->saveNewUserAsEmpty($this->test_user['id']);
+        $r->setRight('can_delete_quote',true);
+        $r->save();
+
+        $this->addTestProject();
+        $this->addTestQuote();
+
+        $q2 = $this->add('Model_Quote');
+        $q2->prepareForDelete($this->test_user);
+        $q2->load($this->test_quote['id']);
+
+        try{
+            $q2->delete();
+
+            $q2->load($this->test_quote['id']);
+            $q2->forceDelete();
+            $this->test_project->forceDelete();
+            $r->delete();
+            $this->test_user->forceDelete();
+        }catch (Exception $e){
+            $q2->forceDelete();
+            $this->test_project->forceDelete();
+            $r->delete();
+            $this->test_user->forceDelete();
+
+            throw $e;
+        }
+    }
+    private function atk4_test_cannot_edit_quote() {
+        $this->addTestUser();
+
+        $r = $this->add('Model_User_Right');
+        $r->saveNewUserAsEmpty($this->test_user['id']);
+        $r->save();
+
+        $this->addTestProject();
+        $this->addTestQuote();
+
+        try{
+            $this->assertThrowException('Exception_API_CannotEdit', $this->test_quote, 'prepareForUpdate', $args=array($this->test_user));
+
+            $this->test_quote->forceDelete();
+            $this->test_project->forceDelete();
+            $r->delete();
+            $this->test_user->forceDelete();
+        }catch (Exception $e){
+            $this->test_quote->forceDelete();
+            $this->test_project->forceDelete();
+            $r->delete();
+            $this->test_user->forceDelete();
+            throw $this->exception('User CAN edit quote but not allowed');
+        }
+    }
+    private function atk4_test_can_edit_quote() {
+        $this->addTestUser();
+
+        $r = $this->add('Model_User_Right');
+        $r->saveNewUserAsEmpty($this->test_user['id']);
+        $r->setRight('can_edit_quote',true);
+        $r->save();
+
+        $this->addTestProject();
+        $this->addTestQuote();
+
+        $q2 = $this->add('Model_Quote');
+        $q2->prepareForUpdate($this->test_user);
+        $q2->load($this->test_quote['id']);
+
+        try{
+            $q2->set('name','updated')->save();
+
+            $q2->forceDelete();
+            $this->test_project->forceDelete();
+            $r->delete();
+            $this->test_user->forceDelete();
+        }catch (Exception $e){
+            $q2->forceDelete();
+            $this->test_project->forceDelete();
+            $r->delete();
+            $this->test_user->forceDelete();
+
+            throw $e;
+        }
+    }
+    private function atk4_test_cannot_add_quote() {
         $this->addTestUser();
 
         $r = $this->add('Model_User_Right');
@@ -34,8 +146,8 @@ trait Trait_Test_Quote {
             throw $this->exception('User CAN add quote but not allowed');
         }
 
-    }*/
-    /*private function atk4_test_can_add_quote() {
+    }
+    private function atk4_test_can_add_quote() {
         $this->addTestUser();
 
         $r = $this->add('Model_User_Right');
@@ -69,19 +181,18 @@ trait Trait_Test_Quote {
 
             throw $e;
         }
-    }*/
+    }
     private function atk4_test_cannot_see_quote() {
         $this->addTestUser();
 
         $r = $this->add('Model_User_Right');
         $r->saveNewUserAsEmpty($this->test_user['id']);
-        $r->setRight('can_see_quotes',true);
         $r->save();
 
         $q2 = $this->add('Model_Quote');
 
         try{
-            $this->assertThrowException('Exception_API_CannotAdd', $q2, 'prepareForSelect', $args=array($this->test_user));
+            $this->assertThrowException('Exception_API_CannotSee', $q2, 'prepareForSelect', $args=array($this->test_user));
 
             $r->delete();
             $this->test_user->forceDelete();
@@ -91,7 +202,7 @@ trait Trait_Test_Quote {
             throw $this->exception('User CAN add quote but not allowed');
         }
     }
-    /*private function atk4_test_can_see_quote() {
+    private function atk4_test_can_see_quote() {
         $this->addTestUser();
 
         $r = $this->add('Model_User_Right');
@@ -146,7 +257,7 @@ trait Trait_Test_Quote {
 
             throw $e;
         }
-    }*/
+    }
     private function addTestUser(){
         $this->test_user = $this->add('Model_Mock_User');
         $this->test_user->set('name','TestUser_'.time());
