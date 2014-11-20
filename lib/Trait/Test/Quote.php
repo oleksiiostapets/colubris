@@ -199,7 +199,7 @@ trait Trait_Test_Quote {
         }catch (Exception $e){
             $r->delete();
             $this->test_user->forceDelete();
-            throw $this->exception('User CAN add quote but not allowed');
+            throw $this->exception('User CAN see quote but not allowed');
         }
     }
     private function atk4_test_can_see_quote() {

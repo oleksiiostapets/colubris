@@ -92,9 +92,11 @@ class Model_Requirement extends Model_Auditable {
         $r = $this->add('Model_User_Right');
 
         $fields = ['id'];
-//var_dump($this->getActualFields());
+
         if($r->canSeeQuotes($u['id'])){
             $fields = array('id','quote_id','quote','user_id','user','name','descr','estimate','is_included','file_id','file','is_deleted','deleted_id','deleted','project_id','project_name','spent_time','count_comments');
+        }else{
+            throw $this->exception('This User cannot see projects','API_CannotSee');
         }
 
         $this->setActualFields($fields);
@@ -107,6 +109,8 @@ class Model_Requirement extends Model_Auditable {
 
         if($r->canAddRequirement($u['id'])){
             $fields = array('id','quote_id','quote','user_id','user','name','descr','estimate','is_included','file_id','file','is_deleted','deleted_id','deleted','project_id','project_name','spent_time','count_comments');
+        }else{
+            throw $this->exception('This User cannot add projects','API_CannotAdd');
         }
 
         foreach ($this->getActualFields() as $f){
@@ -126,6 +130,8 @@ class Model_Requirement extends Model_Auditable {
 
         if($r->canEditRequirement($u['id'])){
             $fields = array('id','quote_id','quote','user_id','user','name','descr','estimate','is_included','file_id','file','is_deleted','deleted_id','deleted','project_id','project_name','spent_time','count_comments');
+        }else{
+            throw $this->exception('This User cannot edit quotes','API_CannotEdit');
         }
 
         foreach ($this->getActualFields() as $f){
