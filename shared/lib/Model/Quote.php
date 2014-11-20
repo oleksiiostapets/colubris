@@ -413,6 +413,8 @@ class Model_Quote extends Model_Auditable {
                 $fin_fields = array('amount','rate','currency','calc_rate','estimpay');
                 $fields = array_merge($fields, $fin_fields);
             }
+        }else{
+            throw $this->exception('This User cannot see quotes','API_CannotSee');
         }
 
         $this->setActualFields($fields);
@@ -431,7 +433,7 @@ class Model_Quote extends Model_Auditable {
                 $fields = array_merge($fields, $fin_fields);
             }
         }else{
-            throw $this->exception('This User cannon add quotes','API_CannotAdd');
+            throw $this->exception('This User cannot add quotes','API_CannotAdd');
         }
 
         foreach ($this->getActualFields() as $f){
@@ -457,7 +459,7 @@ class Model_Quote extends Model_Auditable {
                 $fields = array_merge($fields, $fin_fields);
             }
         }else{
-            throw $this->exception('This User cannon add quotes','API_CannotEdit');
+            throw $this->exception('This User cannot edit quotes','API_CannotEdit');
         }
 
         foreach ($this->getActualFields() as $f){
