@@ -255,4 +255,74 @@ class Model_Task extends Model_Auditable {
 
     // EXPRESSIONS :: END -----------------------------------------------------------
 
+    // API methods
+    function prepareForSelect(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canSeeTasks($u['id'])){
+            $fields = array('id','name','priority','status','type','descr_original','estimate','estimate','project_id',
+                'requirement_id','requester_id','assigned_id','created_dts','updated_dts','is_deleted','deleted_id',
+                'organisation_id','spent_time','quote_id','quote_name');
+        }else{
+            throw $this->exception('This User cannot see tasks','API_CannotSee');
+        }
+
+        $this->setActualFields($fields);
+        return $this;
+    }
+    function prepareForInsert(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canAddTask($u['id'])){
+            $fields = array('id','name','priority','status','type','descr_original','estimate','estimate','project_id',
+                'requirement_id','requester_id','assigned_id','created_dts','updated_dts','is_deleted','deleted_id',
+                'organisation_id','spent_time','quote_id','quote_name');
+        }else{
+            throw $this->exception('This User cannot add tasks','API_CannotAdd');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForUpdate(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canEditTask($u['id'])){
+            $fields = array('id','name','priority','status','type','descr_original','estimate','estimate','project_id',
+                'requirement_id','requester_id','assigned_id','created_dts','updated_dts','is_deleted','deleted_id',
+                'organisation_id','spent_time','quote_id','quote_name');
+        }else{
+            throw $this->exception('This User cannot edit tasks','API_CannotEdit');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForDelete(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        if($r->canDeleteTask($u['id'])) return $this;
+
+        throw $this->exception('This user has no permissions for deleting','API_CannotDelete');
+    }
 }

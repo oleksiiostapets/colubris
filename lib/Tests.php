@@ -15,6 +15,7 @@ class Tests extends App_TestCLI {
     use Trait_Test_Quote;
     use Trait_Test_Project;
     use Trait_Test_Requirement;
+    use Trait_Test_Task;
 
     function init() {
         parent::init();
