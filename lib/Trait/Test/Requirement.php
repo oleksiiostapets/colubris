@@ -26,10 +26,14 @@ trait Trait_Test_Requirement {
             $this->assertThrowException('Exception_API_CannotDelete', $this->test_requirement, 'prepareForDelete', $args=array($this->test_user));
 
             $this->test_requirement->forceDelete();
+            $this->test_quote->forceDelete();
+            $this->test_project->forceDelete();
             $r->delete();
             $this->test_user->forceDelete();
         }catch (Exception $e){
             $this->test_requirement->forceDelete();
+            $this->test_quote->forceDelete();
+            $this->test_project->forceDelete();
             $r->delete();
             $this->test_user->forceDelete();
             throw $this->exception('User CAN delete requirement but not allowed');
