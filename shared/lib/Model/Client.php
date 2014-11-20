@@ -50,7 +50,7 @@ class Model_Client extends Model_BaseTable {
 
 	function addHooks() {
 		$this->addHook('beforeDelete', function($m){
-			$m['deleted_id']=$m->api->currentUser()->get('id');
+            if( !isset($this->app->is_test_app)) $m['deleted_id']=$m->api->currentUser()->get('id');
 		});
 	}
 
@@ -97,4 +97,64 @@ class Model_Client extends Model_BaseTable {
         $this->addCondition('id','in',$ids);
         return $this;
     }
+
+    // API methods
+    function prepareForSelect(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canSeeClients($u['id'])){
+            $fields = array('id','email','name','phone','is_archive','avatar_id','is_deleted','deleted_id','deleted','organisation_id','organisation','avatar','avatar_thumb');
+        }
+
+        $this->setActualFields($fields);
+        return $this;
+    }
+    function prepareForInsert(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        if($r->canManageClients($u['id'])){
+            $fields = array('id','email','name','phone','is_archive','avatar_id','is_deleted','deleted_id','deleted','organisation_id','organisation','avatar','avatar_thumb');
+        }else{
+            throw $this->exception('This User cannon add record','API_CannotAdd');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForUpdate(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        if($r->canManageClients($u['id'])){
+            $fields = array('id','email','name','phone','is_archive','avatar_id','is_deleted','deleted_id','deleted','organisation_id','organisation','avatar','avatar_thumb');
+        }else{
+            throw $this->exception('This User cannon edit record','API_CannotAdd');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForDelete(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        if($r->canManageClients($u['id'])) return $this;
+
+        throw $this->exception('This user has no permissions for deleting','API_CannotDelete');
+    }
+
 }

@@ -383,9 +383,11 @@ trait Trait_Test_UserRights {
         try {
             $this->assertTrue(isset($data['name']), 'User cannot see user\'s name!');
 
+            $r->delete();
             $u->forceDelete();
 
         }catch(Exception $e){
+            $r->delete();
             $u->forceDelete();
 
             throw $e;
@@ -393,4 +395,85 @@ trait Trait_Test_UserRights {
 
     }
 
+    /**
+     * CLIENTS PERMISSIONS
+     */
+    private function atk4_test_can_see_clients_true() {
+        $u = $this->add('Model_Mock_User');
+        $u->set('name','TestUser_'.time());
+        $u->save();
+
+        $r = $this->add('Model_User_Right');
+        $r->saveNewUserAsEmpty($u['id']);
+        $r->setRight('can_see_clients',true);
+        $r->save();
+
+        $c = $this->add('Model_Client');
+        $c->set('name','TestClient_'.time());
+        $c->set('email','email_'.time().'@test.com');
+        $c->save();
+
+        $c2 = $this->add('Model_Client');
+        $c2->prepareForSelect($u);
+        $c2->load($c['id']);
+
+        $data = $c->get();
+
+        try {
+            $this->assertTrue(isset($data['name']), 'User cannot see client\'s name!');
+
+            $r->delete();
+            $c->forceDelete();
+            $u->forceDelete();
+
+        }catch(Exception $e){
+            $r->delete();
+            $c->forceDelete();
+            $u->forceDelete();
+
+            throw $e;
+        }
+
+    }
+
+    /**
+     * DEVELOPER PERMISSIONS
+     */
+    private function atk4_test_can_see_developers_true() {
+        $u = $this->add('Model_Mock_User');
+        $u->set('name','TestUser_'.time());
+        $u->save();
+
+        $r = $this->add('Model_User_Right');
+        $r->saveNewUserAsEmpty($u['id']);
+        $r->setRight('can_see_developers',true);
+        $r->save();
+
+        $d = $this->add('Model_Developer');
+        $d->set('name','TestDeveloper_'.time());
+        $d->set('email','email_'.time().'@test.com');
+        $d->save();
+
+        $d2 = $this->add('Model_Developer');
+        $d2->prepareForSelect($u);
+        $d2->load($d['id']);
+
+        $data = $d2->get();
+
+        try {
+            $this->assertTrue(isset($data['name']), 'User cannot see developer\'s name!');
+
+            $r->delete();
+            $d->forceDelete();
+            $u->forceDelete();
+
+        }catch(Exception $e){
+            $r->delete();
+            $d->forceDelete();
+            $u->forceDelete();
+
+            throw $e;
+        }
+
+    }
 }

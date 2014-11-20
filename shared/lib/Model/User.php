@@ -80,7 +80,7 @@ class Model_User extends Model_BaseTable {
 		});
 
         $this->addHook('beforeDelete', function($m){
-            $m['deleted_id']=$m->app->currentUser()->get('id');
+            if( !isset($this->app->is_test_app)) $m['deleted_id']=$m->app->currentUser()->get('id');
         });
 	}
 
@@ -173,6 +173,8 @@ class Model_User extends Model_BaseTable {
 
         if($r->canManageUsers($u['id'])){
             $fields = array('id','email','name','password','is_admin','is_manager','is_financial','is_developer','is_sales','hash','mail_task_changes','is_deleted','deleted_id','avatar_id','deleted','is_system','client_id','client','chash','organisation_id','organisation','lhash','lhash_exp','is_client','avatar','avatar_thumb');
+        }else{
+            throw $this->exception('This User cannon add record','API_CannotAdd');
         }
 
         foreach ($this->getActualFields() as $f){
@@ -192,6 +194,8 @@ class Model_User extends Model_BaseTable {
 
         if($r->canManageUsers($u['id'])){
             $fields = array('id','email','name','password','is_admin','is_manager','is_financial','is_developer','is_sales','hash','mail_task_changes','is_deleted','deleted_id','avatar_id','deleted','is_system','client_id','client','chash','organisation_id','organisation','lhash','lhash_exp','is_client','avatar','avatar_thumb');
+        }else{
+            throw $this->exception('This User cannon edit record','API_CannotAdd');
         }
 
         foreach ($this->getActualFields() as $f){

@@ -47,4 +47,63 @@ class Model_Developer extends Model_User {
                         ->select()
                         .')/60,2)';
     }
+
+    // API methods
+    function prepareForSelect(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canSeeDevelopers($u['id'])){
+            $fields = array('id','email','name','password','is_admin','is_manager','is_financial','is_developer','is_sales','hash','mail_task_changes','is_deleted','deleted_id','avatar_id','deleted','is_system','client_id','client','chash','organisation_id','organisation','lhash','lhash_exp','is_client','avatar','avatar_thumb');
+        }
+
+        $this->setActualFields($fields);
+        return $this;
+    }
+    function prepareForInsert(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        if($r->canManageDevelopers($u['id'])){
+            $fields = array('id','email','name','password','is_admin','is_manager','is_financial','is_developer','is_sales','hash','mail_task_changes','is_deleted','deleted_id','avatar_id','deleted','is_system','client_id','client','chash','organisation_id','organisation','lhash','lhash_exp','is_client','avatar','avatar_thumb');
+        }else{
+            throw $this->exception('This User cannon add record','API_CannotAdd');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForUpdate(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        if($r->canManageDevelopers($u['id'])){
+            $fields = array('id','email','name','password','is_admin','is_manager','is_financial','is_developer','is_sales','hash','mail_task_changes','is_deleted','deleted_id','avatar_id','deleted','is_system','client_id','client','chash','organisation_id','organisation','lhash','lhash_exp','is_client','avatar','avatar_thumb');
+        }else{
+            throw $this->exception('This User cannon edit record','API_CannotAdd');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForDelete(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        if($r->canManageDevelopers($u['id'])) return $this;
+
+        throw $this->exception('This user has no permissions for deleting','API_CannotDelete');
+    }
 }
