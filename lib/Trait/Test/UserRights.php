@@ -336,28 +336,22 @@ trait Trait_Test_UserRights {
         $req->save();
 
         $req2 = $this->add('Model_Requirement');
-        $req2->prepareForSelect($u);
-        $req2->load($req['id']);
 
-        $data = $req2->get();
-
-        try {
-            $this->assertFalse(isset($data['name']), 'User is able see requirement\'s name!');
+        try{
+            $this->assertThrowException('Exception_API_CannotSee', $req2, 'prepareForSelect', $args=array($u));
 
             $req->forceDelete();
             $q->forceDelete();
             $p->forceDelete();
             $r->delete();
             $u->forceDelete();
-
-        }catch(Exception $e){
+        }catch (Exception $e){
             $req->forceDelete();
             $q->forceDelete();
             $p->forceDelete();
             $r->delete();
             $u->forceDelete();
-
-            throw $e;
+            throw $this->exception('User CAN see requirement but not allowed');
         }
     }
 
