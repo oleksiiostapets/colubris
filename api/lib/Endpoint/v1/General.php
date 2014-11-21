@@ -84,7 +84,9 @@ class Endpoint_v1_General extends Endpoint_REST {
 
             $this->model->dsql()->calcFoundRows();
             $this->model->setLimit($this->count,$this->offset);
-            $data = $this->model->getRowsForCurrentUser();
+//            $data = $this->model->getRowsForCurrentUser();
+            $data = $this->model->prepareForSelect($this->app->current_user)->getRows();
+//            var_dump($data);
             $total_rows = $this->model->dsql()->foundRows();
             return [
                 'result' => 'success',
@@ -121,7 +123,8 @@ class Endpoint_v1_General extends Endpoint_REST {
             }
             $this->model->dsql()->calcFoundRows();
             $this->model->setLimit($this->count,$this->offset);
-            $data = $this->model->getRows();
+            $data = $this->model->prepareForSelect($this->app->current_user)->getRows();
+//            $data = $this->model->getRows();
             $total_rows = $this->model->dsql()->foundRows();
 
             return [
@@ -147,6 +150,7 @@ class Endpoint_v1_General extends Endpoint_REST {
     function get_deleteById() {
         $id = $this->checkGetParameter('id');
         try{
+            $this->model->prepareForDelete($this->app->current_user);
             $this->model->delete($id);
             return [
                 'result' => 'success',
@@ -177,6 +181,7 @@ class Endpoint_v1_General extends Endpoint_REST {
                 ];
             }
         }
+        $this->model->prepareForInsert($this->app->current_user);
         $this->model->set($all);
         $this->model->save();
         return [

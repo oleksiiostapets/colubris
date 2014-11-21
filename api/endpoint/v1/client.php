@@ -10,7 +10,8 @@ class endpoint_v1_client extends Endpoint_v1_General {
 //        $client_id = $this->getClientId();
 //        $data = $this->model->addCondition('id',$client_id)->getRows();
         $this->model->notDeleted();
-        $data = $this->model->getRows();
+        $data = $this->model->prepareForSelect($this->app->current_user)->getRows();
+//        $data = $this->model->getRows();
         return [
             'result' => 'success',
             'data'   => $data,
