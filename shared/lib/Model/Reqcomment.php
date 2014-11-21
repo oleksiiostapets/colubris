@@ -75,4 +75,78 @@ class Model_Reqcomment extends Model_Auditable {
 		$this->addCondition('is_deleted',false);
 		return $this;
 	}
+
+    // API methods
+    function prepareForSelect(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canAddCommentToRequirement($u['id'])){
+            $fields = array('id','requirement_id','user_id','text','file_id','created_dts','is_deleted','deleted_id',
+                'user_avatar_thumb');
+        }else{
+            throw $this->exception('This User cannot see comments','API_CannotSee');
+        }
+
+        $this->setActualFields($fields);
+        return $this;
+    }
+    function prepareForInsert(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canAddCommentToRequirement($u['id'])){
+            $fields = array('id','requirement_id','user_id','text','file_id','created_dts','is_deleted','deleted_id',
+                'user_avatar_thumb');
+        }else{
+            throw $this->exception('This User cannot add comments','API_CannotAdd');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForUpdate(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canAddCommentToRequirement($u['id'])){
+            $fields = array('id','requirement_id','user_id','text','file_id','created_dts','is_deleted','deleted_id',
+                'user_avatar_thumb');
+        }elseif($u['id'] !=$this['user_id']){
+            throw $this->exception('Users are not allowed to edit another\'s comments','API_CannotEdit');
+        }else{
+            throw $this->exception('This User cannot edit comments','API_CannotEdit');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForDelete(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        if($r->canAddCommentToRequirement($u['id'])){
+            return $this;
+        }elseif($u['id'] !=$this['user_id']){
+            throw $this->exception('Users are not allowed to delete another\'s comments','API_CannotDelete');
+        }else{
+            throw $this->exception('This user has no permissions for deleting','API_CannotDelete');
+        }
+    }
 }
