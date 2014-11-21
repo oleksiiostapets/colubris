@@ -407,7 +407,7 @@ class Model_Quote extends Model_Auditable {
         $fields = ['id'];
 
         if($r->canSeeQuotes($u['id'])){
-            $fields = array('id','name','user_id','general_description','issued','duration','deadline','durdead','html','status','is_deleted','deleted_id','organisation_id','created_dts','updated_dts','expires_dts','is_archived','warranty_end','show_time_to_client','client_id','client_name','client_email','estimated','spent_time');
+            $fields = array('id','name','project_id','project','user_id','user','general_description','issued','duration','deadline','durdead','html','status','is_deleted','deleted_id','organisation_id','organisation','created_dts','updated_dts','expires_dts','is_archived','warranty_end','show_time_to_client','client_id','client_name','client_email','estimated','spent_time');
 
             if($r->canSeeFinance($u['id'])){
                 $fin_fields = array('amount','rate','currency','calc_rate','estimpay');

@@ -8,7 +8,8 @@ class endpoint_v1_user extends Endpoint_v1_General {
     }
     public function get_getUsers(){
         $this->model->notDeleted();
-        $data = $this->model->getRows();
+        $data = $this->model->prepareForSelect($this->app->current_user)->getRows();
+        //$data = $this->model->getRows();
         return [
             'result' => 'success',
             'data'   => $data,
