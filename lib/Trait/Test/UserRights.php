@@ -470,4 +470,44 @@ trait Trait_Test_UserRights {
         }
 
     }
+
+    /**
+     * LOG PERMISSIONS
+     */
+    private function atk4_test_can_see_logs_true() {
+        $u = $this->add('Model_Mock_User');
+        $u->set('name','TestUser_'.time());
+        $u->save();
+
+        $r = $this->add('Model_User_Right');
+        $r->saveNewUserAsEmpty($u['id']);
+        $r->setRight('can_see_logs',true);
+        $r->save();
+
+        $l = $this->add('Model_Log');
+        $l->set('new_data','TestData_'.time());
+        $l->save();
+
+        $l2 = $this->add('Model_Log');
+        $l2->prepareForSelect($u);
+        $l2->load($l['id']);
+
+        $data = $l2->get();
+
+        try {
+            $this->assertTrue(isset($data['new_data']), 'User cannot see log!');
+
+            $r->delete();
+            $l->delete();
+            $u->forceDelete();
+
+        }catch(Exception $e){
+            $r->delete();
+            $l->delete();
+            $u->forceDelete();
+
+            throw $e;
+        }
+
+    }
 }

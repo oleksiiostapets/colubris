@@ -24,4 +24,20 @@ class Model_Log extends Model_Table {
 		
 	}
 
+    // API methods
+    function prepareForSelect(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canSeeLogs($u['id'])){
+            $fields = array('id','new_data','changed_fields','class','rec_id','created_at','user_id','user','organisation_id','organisation');
+        }else{
+            throw $this->exception('This User cannot see logs','API_CannotSee');
+        }
+
+        $this->setActualFields($fields);
+        return $this;
+    }
+
 }
