@@ -180,8 +180,10 @@ class Endpoint_v1_General extends Endpoint_REST {
                     'error_message' => 'Record with the id '.$id.' was not found',
                 ];
             }
+            $this->model->prepareForUpdate($this->app->current_user);
+        }else{
+            $this->model->prepareForInsert($this->app->current_user);
         }
-        $this->model->prepareForInsert($this->app->current_user);
         $this->model->set($all);
         $this->model->save();
         return [
