@@ -6,6 +6,7 @@
     "repositories": [
     ],
     "require": {
-        "atk4/atk4": "4.3.*@dev"
+        "atk4/atk4": "4.3.*@dev",
+        "phpunit/phpunit": "4.3.*"
     }
 }
