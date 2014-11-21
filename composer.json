@@ -8,5 +8,19 @@
     "require": {
         "atk4/atk4": "4.3.*@dev",
         "phpunit/phpunit": "4.3.*"
+    },
+    "scripts": {
+        "pre-install-cmd": [
+        ],
+        "post-install-cmd": [
+            "ln -sf vendor/phpunit/phpunit/phpunit"
+        ],
+        "pre-update-cmd": [
+        ],
+        "post-update-cmd": [
+            "ln -sf vendor/phpunit/phpunit/phpunit"
+        ],
+        "post-create-project-cmd": [
+        ]
     }
 }
