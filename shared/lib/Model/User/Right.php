@@ -315,7 +315,6 @@ class Model_User_Right extends SQL_Model{
 
     }
     private function can($right_name,$id=null){
-        if (!$id) $id = $this->app->currentUser()->id;
         if(!$this->checkRight($right_name)) throw $this->exception('There is no such an access right defined');
         if(in_array($right_name,$this->getRights($id),true)){
             return true;
