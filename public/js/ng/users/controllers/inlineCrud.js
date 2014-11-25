@@ -7,7 +7,7 @@
 app_module.controller(
     'inlineCrud',
     ['$scope','$document','$http', '$rootScope', 'User', 'Right',
-        function ($scope,  $document,  $http,  User,  $rootScope, Right) {
+        function ($scope,  $document,  $http, $rootScope, User, Right) {
 
             $rootScope.rows_on_page = 10;
             $rootScope.current_page = 1;
