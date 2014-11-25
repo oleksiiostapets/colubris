@@ -16,6 +16,8 @@ class API extends App_REST {
     function init(){
         parent::init();
 
+        $this->logger->web_output = false;
+
         $this->dbConnect();
         $this->addPathfinder();
         $this->addRouter();

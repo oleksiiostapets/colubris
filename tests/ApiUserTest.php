@@ -50,21 +50,12 @@ class ApiUserTest extends PHPUnit_Framework_TestCase {
         $this->app = $app;
         $this->user = $user;
 
-        try{
-            $m = $app->add('Model_Mock_User_Right');
-            $m->_set = true;
-            $m
-                ->set('user_id',$this->user['id'])
-                ->set('right','can_see_users,can_manage_users')
-                ->save()
-            ;
-        } catch (Exception $e) {
-            echo $e->getMessage()."\n";
-            echo $e->getFile()."\n";
-            echo $e->getLine()."\n";
-            echo $e->getTraceAsString();
-
-        }
+        $m = $app->add('Model_Mock_User_Right');
+        $m
+            ->set('user_id',$this->user['id'])
+            ->set('right','can_see_users,can_manage_users')
+            ->save()
+        ;
         return $m;
     }
 
@@ -93,8 +84,41 @@ class ApiUserTest extends PHPUnit_Framework_TestCase {
     public function testApiCreateUser(App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res)
     {
         $this->app = $app;
-        $url = 'v1/user/saveUser&lhash='.$login_res->hash->lhash;
-        $data = array('name'=>'TestUser2_'.time(),'email'=>'email_'.time().'@test.com','p'=>'123123');
+        $url = 'v1/user/saveParams&lhash='.$login_res->hash->lhash;
+        $data = array('name'=>'TestUser2_'.time(),'email'=>'email2_'.time().'@test.com','p'=>'123123');
+        $res = json_decode($this->do_post_request($url,$data));
+
+        return $res;
+    }
+
+    /**
+     * @depends testAddApp
+     * @depends testCreateUser
+     * @depends testCreatePermissions
+     */
+    public function testRemovePermissions(App_CLI $app, Model_User $user, Model_Mock_User_Right $r)
+    {
+        $this->app = $app;
+        $this->user = $user;
+
+        $r
+            ->set('right','')
+            ->save()
+        ;
+        return $r;
+    }
+
+    /**
+     * @depends testAddApp
+     * @depends testCreateUser
+     * @depends testCreatePermissions
+     * @depends testApiLogin
+     */
+    public function testApiCreateUserWithoutPermissions(App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res)
+    {
+        $this->app = $app;
+        $url = 'v1/user/saveParams&lhash='.$login_res->hash->lhash;
+        $data = array('name'=>'TestUser3_'.time(),'email'=>'email3_'.time().'@test.com','p'=>'123123');
         $res = json_decode($this->do_post_request($url,$data));
 
         return $res;
@@ -106,18 +130,23 @@ class ApiUserTest extends PHPUnit_Framework_TestCase {
      * @depends testCreatePermissions
      * @depends testApiLogin
      * @depends testApiCreateUser
+     * @depends testRemovePermissions
+     * @depends testApiCreateUserWithoutPermissions
      *
      * @ expectedException PHPUnit_Framework_ExpectationFailedException
      */
     public function testAssumptions(
         App_CLI $app, Model_User $user, Model_User_Right $rights,
-        $res_success, $res_create
+        $res_success, $res_create,
+        Model_User_Right $no_rights,
+        $res_failure
     ) {
         try {
             $this->cleanDB($user, $rights, $res_create->data->id);
 
             $this->assertEquals($res_success->result,'success');
             $this->assertEquals($res_create->result,'success');
+            $this->assertEquals($res_failure,NULL);
 
         } catch (Exception $e) {
             echo $e->getMessage()."\n";

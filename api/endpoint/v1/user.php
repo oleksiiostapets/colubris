@@ -76,4 +76,18 @@ class endpoint_v1_user extends Endpoint_v1_General {
             'data' => $this->model->get(),
         ];
     }
+    function post_saveParams(){
+        unset($_REQUEST['lhash']);
+        $id = $this->checkGetParameter('id',true);
+        if (!$id) {
+            $this->model->tryLoadBy('email',$_REQUEST['email']);
+            if($this->model->loaded()){
+                return [
+                    'result' => 'validation_error',
+                    'message' => 'User with this email already exists',
+                ];
+            }
+        }
+        return parent::post_saveParams();
+    }
 }
