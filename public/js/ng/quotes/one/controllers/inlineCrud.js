@@ -58,6 +58,7 @@ app_module.controller(
         $scope.calc.subtotal = $scope.calc.net;
         $scope.calc.pm = Math.ceil($scope.calc.subtotal/5);
         $scope.calc.total = $scope.calc.subtotal + $scope.calc.pm;
+        $scope.calc.spent = Math.ceil($scope.calc.spent);
         if($scope.calc.spent > $scope.calc.total){
             $scope.calc.color = 'atk-effect-danger';
         }else{

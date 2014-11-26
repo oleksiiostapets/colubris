@@ -19,7 +19,7 @@ app_module.directive('filter', function factory($q,$http, $templateCache,$compil
             var linkFn = $compile(template);
             scope.filter.inputs = linkFn(scope);
             element.append(scope.filter.inputs);
-        }
+        };
         ProjectField(scope,$compile,element);
 
         var QuoteField = function(scope,$compile,element) {
@@ -28,7 +28,7 @@ app_module.directive('filter', function factory($q,$http, $templateCache,$compil
             var linkFn = $compile(template);
             scope.filter.inputs = linkFn(scope);
             element.append(scope.filter.inputs);
-        }
+        };
         QuoteField(scope,$compile,element);
 
         var RequirementField = function(scope,$compile,element) {
@@ -37,7 +37,7 @@ app_module.directive('filter', function factory($q,$http, $templateCache,$compil
             var linkFn = $compile(template);
             scope.filter.inputs = linkFn(scope);
             element.append(scope.filter.inputs);
-        }
+        };
         RequirementField(scope,$compile,element);
 
         var StatusField = function(scope,$compile,element) {
@@ -46,7 +46,7 @@ app_module.directive('filter', function factory($q,$http, $templateCache,$compil
             var linkFn = $compile(template);
             scope.filter.inputs = linkFn(scope);
             element.append(scope.filter.inputs);
-        }
+        };
         StatusField(scope,$compile,element);
 
         var AssignedField = function(scope,$compile,element) {
@@ -55,11 +55,8 @@ app_module.directive('filter', function factory($q,$http, $templateCache,$compil
             var linkFn = $compile(template);
             scope.filter.inputs = linkFn(scope);
             element.append(scope.filter.inputs);
-        }
+        };
         AssignedField(scope,$compile,element);
-
-
-
     }
 })
 ;
