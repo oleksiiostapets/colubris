@@ -49,7 +49,7 @@ class Controller_Filter extends AbstractController {
                 }
                 $this->app->stickyGet($k);
             }
-            $this->resetPaginators();
+            //$this->resetPaginators();
             $js = $this->getReloadJs();
             $js[] = 'if (typeof(history.pushState) != "undefined") {window.history.pushState("filtered.html", "Filter reloaded page", "'.$this->app->url().'");};';
             $this->app->js(null,$js)->execute();

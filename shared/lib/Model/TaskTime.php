@@ -86,8 +86,12 @@ class Model_TaskTime extends Model_Table {
 			$this->addCondition('quote_id',$_GET['quote']);
 		}
 
-		if($_GET['performer_id']>0){
-			$this->addCondition('user_id',$_GET['performer_id']);
+        if ($_GET['requirement']>0) {
+            $this->addCondition('requirement_id',$_GET['requirement']);
+        }
+
+        if($_GET['assigned']>0){
+			$this->addCondition('user_id',$_GET['assigned']);
 		}
 
 		if($_GET['date_from']!=''){

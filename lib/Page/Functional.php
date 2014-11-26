@@ -15,6 +15,8 @@ class Page_Functional extends Page {
         $this->app->stickyGet('requirement');
         $this->app->stickyGet('status');
         $this->app->stickyGet('assigned');
+        $this->app->stickyGet('date_from');
+        $this->app->stickyGet('date_to');
     }
 
     protected function addFilter() {

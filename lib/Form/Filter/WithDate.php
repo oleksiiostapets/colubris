@@ -20,13 +20,21 @@ class Form_Filter_WithDate extends Form_Filter_Base {
 			$this->date_from->set($g);
 		}
 		// reload on change
-		$this->date_from->selectnemu_options = array(
-			'change' => $this->js(null,'
-                function() {'.
-					$this->js()->colubris()->reloadForm($this->name,'date_from')
-					.'}'
-				)
-		);
+        if ($_GET['project'] == null) $_GET['project'] = 0;
+        if ($_GET['quote'] == null) $_GET['quote'] = 0;
+        if ($_GET['requirement'] == null) $_GET['requirement'] = 0;
+        if ($_GET['assigned'] == null) $_GET['assigned'] = 0;
+        if ($_GET['date_to'] == null) $_GET['date_to'] = '';
+        $js_arr=array(
+            $this->app->url(),
+            'project'=>$_GET['project'],
+            'quote'=>$_GET['quote'],
+            'requirement'=>$_GET['requirement'],
+            'assigned'=>$_GET['assigned'],
+            'date_from'=>$this->date_from->js()->val(),
+            'date_to'=>$_GET['date_to']
+        );
+        $this->date_from->js('change')->univ()->location($js_arr);
 	}
 	function addDateTo(){
 		$this->date_to = $this->addField('DatePicker','date_to');
@@ -36,12 +44,20 @@ class Form_Filter_WithDate extends Form_Filter_Base {
 			$this->date_to->set($g);
 		}
 		// reload on change
-		$this->date_to->select_options = array(
-			'change' => $this->js(null,'
-                function() {'.
-					$this->js()->colubris()->reloadForm($this->name,'date_to')
-					.'}'
-				)
-		);
+        if ($_GET['project'] == null) $_GET['project'] = 0;
+        if ($_GET['quote'] == null) $_GET['quote'] = 0;
+        if ($_GET['requirement'] == null) $_GET['requirement'] = 0;
+        if ($_GET['assigned'] == null) $_GET['assigned'] = 0;
+        if ($_GET['date_from'] == null) $_GET['date_from'] = '';
+        $js_arr=array(
+            $this->app->url(),
+            'project'=>$_GET['project'],
+            'quote'=>$_GET['quote'],
+            'requirement'=>$_GET['requirement'],
+            'assigned'=>$_GET['assigned'],
+            'date_from'=>$_GET['date_from'],
+            'date_to'=>$this->date_to->js()->val()
+        );
+        $this->date_to->js('change')->univ()->location($js_arr);
 	}
 }
