@@ -28,7 +28,7 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
                 {field:'project_id',value:project.id},
                 function(obj) {
                     service.quotes = obj.data;
-                    $rootScope.$broadcast( 'quotes.update' );
+                    $rootScope.$broadcast( 'quotes.update', project );
                 }
             );
         },

@@ -129,7 +129,7 @@ class Model_Project extends Model_Auditable {
         $fields = ['id'];
 
         if($r->canSeeProjects($u['id'])){
-            $fields = array('id','name','descr','client_id','demo_url','prod_url','repository','organisation_id','is_deleted','is_deleted','deleted_id','spent_time');
+            $fields = array('id','name','descr','client_id','client','demo_url','prod_url','repository','organisation_id','is_deleted','is_deleted','deleted_id','spent_time');
         }else{
             throw $this->exception('This User cannot see projects','API_CannotSee');
         }
