@@ -27,7 +27,7 @@ app_module.directive('projectForm', function factory($q,$http, $templateCache, $
             element.removeClass('fixed');
 
             //clear client
-            $("#client option").removeAttr("selected");
+            $("#project_client option").removeAttr("selected");
         });
 
         //save data
