@@ -31,6 +31,8 @@
                 <td>{{task.requester}}</td>
                 <td>{{task.assigned}}</td>
                 <td class="atk-text-nowrap">
+                    <button class="atk-button" ng-click="Task.edit($index)">Edit</button>
+                    <button class="atk-button atk-effect-danger" ng-confirm-click="Are you sure?" confirmed-click="Task.remove($index)">Delete</button>
                 </td>
             </tr>
             </tbody>
