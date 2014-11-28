@@ -27,22 +27,57 @@ app_module.controller(
         $scope.requirements = Requirement.requirements;
 
         $scope.User = User;
+        $scope.requesters = User.users;
+        User.getFromServer('requesters.update');
         $scope.assigneds = User.users;
         User.getFromServer('assigneds.update');
 
         $scope.task = {};
         $scope.Task = Task;
         $scope.tasks = Task.task;
+
+        $scope.priorities = [
+            {name:'low'},
+            {name:'normal'},
+            {name:'high'}
+        ];
+        $scope.priority = $scope.priorities;
+
+        $scope.types = [
+            {name:'project'},
+            {name:'change request'},
+            {name:'bug'},
+            {name:'support'},
+            {name:'drop'}
+        ];
+        $scope.type = $scope.types;
+
+        $scope.statuses = [
+            {name:'unstarted'},
+            {name:'started'},
+            {name:'finished'},
+            {name:'tested'},
+            {name:'rejected'},
+            {name:'accepted'}
+        ];
+        $scope.status = $scope.statuses;
+
         $scope.task_statuses = Task.task_statuses;
 
         Task.getFromServer($rootScope.current_page);
         Task.getStatusesFromServer();
+
+        //clear form
+        $scope.clearForm = function(){
+            Task.cancel();
+        };
 
         $scope.$on( 'task.update', function( event, args ) {
             $scope.task = args;
         });
         $scope.$on( 'tasks.update', function( event ) {
             $scope.tasks = Task.tasks;
+            //console.log(Task.tasks);
 
             // Paginator
             var total_rows = Task.total_rows;
@@ -87,6 +122,11 @@ app_module.controller(
         $scope.$on( 'assigneds.update', function( event ) {
             $scope.assigneds = User.users;
             $scope.assigneds.unshift({id:"",email:'all'})
+        });
+
+        $scope.$on( 'requesters.update', function( event ) {
+            $scope.requesters = User.users;
+            $scope.requesters.unshift({id:"",email:'all'})
         });
 
         $scope.combined = function(user){

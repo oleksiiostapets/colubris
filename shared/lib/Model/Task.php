@@ -263,7 +263,7 @@ class Model_Task extends Model_Auditable {
 
         if($r->canSeeTasks($u['id'])){
             $fields = array('id','name','priority','status','type','descr_original','estimate','estimate','project_id',
-                'requirement_id','requester_id','assigned_id','created_dts','updated_dts','is_deleted','deleted_id',
+                'project','requirement_id','requirement','requester_id','requester','assigned_id','assigned','created_dts','updated_dts','is_deleted','deleted_id',
                 'organisation_id','spent_time','quote_id','quote_name');
         }else{
             throw $this->exception('This User cannot see tasks','API_CannotSee');

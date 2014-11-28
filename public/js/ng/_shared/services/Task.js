@@ -5,6 +5,7 @@
 'use strict';
 
 app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope, $http, API ) {
+    var current_index = null;
     var service = {
         tasks: [],
         task_statuses: [],
@@ -78,8 +79,62 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
                     $rootScope.$broadcast( 'tasks.update' );
                 }
             );
+        },
+
+        edit: function(index) {
+            console.log('------> Task edit');
+            this.backupTask(index);
+            $rootScope.$broadcast('task.update', service.tasks[index]);
+            $rootScope.$broadcast('form.to_fixed_position',service.tasks[index]);
+        },
+        delete: function(id) {
+            API.removeOne(
+                'task',
+                null,
+                {'id' : id},
+                function(obj) {
+                    if (obj.result === 'success') {
+                        $rootScope.$broadcast('task.update', {});
+                        $rootScope.$broadcast('form.to_regular_place');
+                        $rootScope.$broadcast( 'task.need_update' );
+                    } else {
+                    }
+                }
+            );
+        },
+
+        cancel: function() {
+            console.log('------> cancel');
+            this.restoreTask();
+            this.resetbackupTask();
+            $rootScope.$broadcast('task.update', {});
+            $rootScope.$broadcast('tasks.update' );
+            $rootScope.$broadcast('form.to_regular_place');
+        },
+
+        backupTask: function(index) {
+            current_index = index;
+            service.tasks[index].backup = angular.copy( service.tasks[index]);
+            //console.log(service.tasks[current_index].backup);
+        },
+
+        resetbackupTask: function() {
+            if (current_index) {
+                service.tasks[current_index].backup = {};
+                current_index = null;
+            }
+        },
+
+        restoreTask: function() {
+            if (
+                current_index &&
+                angular.isDefined(service.tasks[current_index]) &&
+                angular.isDefined(service.tasks[current_index].backup)
+            ) {
+                service.tasks[current_index] = service.tasks[current_index].backup;
+            }
         }
-    }
+    };
 
   return service;
 }]);

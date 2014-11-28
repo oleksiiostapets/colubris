@@ -1,18 +1,15 @@
 <?php
-class Page_test extends Page {
+class page_test extends Page {
     function init(){
         parent::init();
 
         $user = $this->app->currentUser();
 
 
-        $l=$user->get('email');
-        $p=$user->get('password');
+        $m = $this->add('Model_Task')->prepareForSelect($user)->load(1634);
 
-        $url = 'v1/auth/login/';
-        $data = array('u'=>$l,'p'=>$p);
-        $res = json_decode($this->app->do_post_request($url,$data));
-        var_dump($res);
+        var_dump($m->get());
+        $this->add('View')->set($m->get());
 
     }
     /*function defaultTemplate(){
