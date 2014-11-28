@@ -82,6 +82,7 @@ class Endpoint_v1_General extends Endpoint_REST {
                 }
             }
 
+            $this->model->addCondition('is_deleted',false);
             $this->model->dsql()->calcFoundRows();
             $this->model->setLimit($this->count,$this->offset);
 //            $data = $this->model->getRowsForCurrentUser();

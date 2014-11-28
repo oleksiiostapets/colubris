@@ -28,9 +28,23 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
 //            this.resetBackupComm();
         },
         remove: function(index) {
+            console.log(index);
             service.comments.splice(index, 1);
             this.saveOnServer();
             $rootScope.$broadcast( 'comments.update' );
+        },
+        delete: function(id) {
+            API.removeOne(
+                'reqcomment',
+                null,
+                {'id' : id},
+                function(obj) {
+                    if (obj.result === 'success') {
+                        $rootScope.$broadcast( 'comments.need_update' );
+                    } else {
+                    }
+                }
+            );
         },
         edit: function(index) {
             console.log('------> edit');
@@ -62,6 +76,10 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
                 'getByField',
                 {field:'requirement_id',value:reqv_id},
                 function(obj) {
+                    // Delete button
+                    $.each(obj.data, function(index, value) {
+                        if(obj.data[index].user_id != app_module.user_id) obj.data[index].html_style = "display:none;"; else obj.data[index].html_style = "";
+                    });
                     service.comments = obj.data;
                     console.log(service.comments);
                     $rootScope.$broadcast( 'comments.update' );
