@@ -6,8 +6,8 @@
 
 app_module.controller(
     'inlineCrud',
-            ['$scope','$document','$http','Task','User','Project','Quote','Requirement','$rootScope',
-    function ($scope,  $document,  $http,  Task,  User,  Project,  Quote,  Requirement,  $rootScope) {
+            ['$scope','$document','$http','Task','User','Project','Quote','Requirement', 'Time','$rootScope',
+    function ($scope,  $document,  $http,  Task,  User,  Project,  Quote,  Requirement,   Time,  $rootScope) {
 
         $rootScope.filter_values = {};
         $rootScope.tasks_on_page = 30;
@@ -22,6 +22,9 @@ app_module.controller(
 
         $scope.Quote = Quote;
         $scope.quotes = Quote.quotes;
+
+        $scope.Time = Time;
+        $scope.times = Time.times;
 
         $scope.Requirement = Requirement;
         $scope.requirements = Requirement.requirements;
@@ -111,6 +114,11 @@ app_module.controller(
         $scope.$on( 'quotes.update', function( event ) {
             $scope.quotes = Quote.quotes;
             $scope.quotes.unshift({id:"",name:'all'})
+        });
+
+        $scope.$on( 'times.update', function( event ) {
+            $scope.times = Time.times;
+            //$scope.times.unshift({id:"",name:'all'})
         });
 
         $scope.$on( 'requirements.update', function( event ) {

@@ -1,5 +1,5 @@
 <?php
-class Model_TaskTime extends Model_Table {
+class Model_TaskTime extends Model_Auditable {
     public $table='task_time';
 
     function init(){
@@ -18,6 +18,7 @@ class Model_TaskTime extends Model_Table {
         $this->addField('date')->dataType('date');
 
         $this->addField('remove_billing')->type('boolean')->defaultValue('0')->caption('Remove from billing');
+        $this->addField('is_deleted')->type('boolean')->defaultValue('0');
 
         $this->addHook('beforeInsert', function($m,$q){
         	if($m['date']=='') $q->set('date', $q->expr('now()'));
@@ -105,4 +106,21 @@ class Model_TaskTime extends Model_Table {
 
 		return $this;
 	}
+
+
+    // API methods
+    function prepareForSelect(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canSeeTime($u['id'])){
+            $fields = array('id','task_id','task','user_id','user','spent_time','comment','date','remove_billing');
+        }else{
+            throw $this->exception('This User cannot see Times','API_CannotSee');
+        }
+
+        $this->setActualFields($fields);
+        return $this;
+    }
 }

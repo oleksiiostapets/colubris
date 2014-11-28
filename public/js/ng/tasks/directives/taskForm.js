@@ -10,7 +10,7 @@ app_module.directive('taskForm', function factory($q,$http, $templateCache, $com
         scope.$on( 'form.to_fixed_position', function( event, task) {
             element.addClass('fixed');
 
-            //scope.Quote.getFromServerByProject(project);
+            scope.Time.getFromServerByTask(task);
 
             scope.task_url = app_module.base_url + app_module.prefix + 'tasks';
         });

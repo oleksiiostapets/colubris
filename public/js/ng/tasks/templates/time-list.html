@@ -1,0 +1,14 @@
+<h3>Time:</h3>
+<div class="atk-box-small" ng-repeat="time in times track by $index">
+    <div class="atk-cells atk-push small">
+        <div class="atk-cell atk-valign-top">
+            <div class="atk-label atk-effect-info">{{$index+1}} (ID#{{time.id}})</div>
+        </div>
+        <div class="atk-cell atk-jackscrew">
+            <div class="atk-label atk-effect-warning">{{time.comment}}</div>
+        </div>
+    </div>
+    <div>Spent time: {{time.spent_time}}</div>
+    <div>User: {{time.user}}</div>
+    <div>Date: {{time.date}}</div>
+</div>

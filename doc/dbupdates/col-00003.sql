@@ -1,0 +1,1 @@
+ALTER TABLE `task_time` ADD  COLUMN `is_deleted` tinyint(1) DEFAULT '0';

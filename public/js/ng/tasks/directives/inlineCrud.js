@@ -9,7 +9,7 @@ app_module.directive('inlineCrud', function factory($q,$http, $templateCache,$co
 
         scope.form = app_module.base_url + 'js/ng/tasks/templates/form.html';
         scope.crud = app_module.base_url + 'js/ng/tasks/templates/crud.html';
-//        scope.comment_list = app_module.base_url + 'js/ng/quotes/one/templates/comment-list.html';
+        scope.time_list = app_module.base_url + 'js/ng/tasks/templates/time-list.html';
     }
 })
 ;
