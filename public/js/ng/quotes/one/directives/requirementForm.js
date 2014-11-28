@@ -8,6 +8,10 @@ app_module.directive('requirementForm', function factory($q,$http, $templateCach
     return function(scope,element,attrs) {
 
 
+        scope.$on( 'comments.update', function( event ) {
+            console.log('comments.update');
+            $('#comments-view textarea').val('');
+        });
 
         scope.$on( 'form.to_fixed_position', function( event, reqv ) {
             console.log('form.to_fixed_position');
