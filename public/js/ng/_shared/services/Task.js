@@ -81,6 +81,47 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
             );
         },
 
+        save: function ( task ) {
+
+            //console.log(task);
+            console.log('------> Save');
+            //if(!API.validateForm(task, ['name','client'], 'project_')) return false;
+
+            if (typeof task.id === 'undefined' ) {
+                service.tasks.push( angular.copy(task));
+            } else {
+                // refresh crud data on the client
+                if(current_index){
+                    service.tasks[current_index]=task;
+                }
+                // send new data to the server
+            }
+            this.saveOnServer(task);
+            this.resetbackupTask();
+            $rootScope.$broadcast('task.update', {});
+        },
+
+        saveOnServer: function(task) {
+            API.saveOne(
+                'task',
+                null,
+                {id : task.id},
+                angular.toJson(task),
+                function(obj) {
+                    if (obj.result === 'success') {
+//                        $rootScope.showSystemMsg('Saved successfully');
+                        if (typeof task.id === 'undefined' ) {
+                            service.tasks.push( angular.copy(obj.data)  );
+                        }
+                    } else {
+//                        $rootScope.showSystemMsg('Error! No success message received');
+                    }
+                    $rootScope.$broadcast('tasks.update' );
+                    $rootScope.$broadcast('form.to_regular_place');
+                }
+            );
+        },
+
         edit: function(index) {
             console.log('------> Task edit');
             this.backupTask(index);

@@ -10,11 +10,11 @@ class Model_Task extends Model_Auditable {
         'accepted'=>'accepted',
     );
     public static $task_types = array(
-        'project'=>'project',
-        'change request'=>'change request',
-        'bug'=>'bug',
-        'support'=>'support',
-        'drop'=>'drop',
+        'project'=>'Project',
+        'change_request'=>'Change request',
+        'bug'=>'Bug',
+        'support'=>'Support',
+        'drop'=>'Drop',
     );
     public static $task_priority = array(
         'low'=>'low',
@@ -98,7 +98,8 @@ class Model_Task extends Model_Auditable {
         $this->addHook('beforeSave', function($m){
             $m['updated_dts']=date('Y-m-d G:i:s', time());
         });
-        $this->addHook('afterSave', function($m){
+        //TODO I commented it because saving of the task doesn't work with it. Kostya
+        /*$this->addHook('afterSave', function($m){
             $m->app->mailer->task_status=$m['status'];
             $m->app->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
             $m->app->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
@@ -107,7 +108,7 @@ class Model_Task extends Model_Auditable {
                 'subject'=>'Task "'.substr($m->get('name'),0,25).'" has changes',
                 'changer_part'=>$m->app->currentUser()->get('name').' has made changes in task "'.$m->get('name').'".',
             ));
-        });
+        });*/
         $this->addHook('beforeDelete', function($m){
             $m->app->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
             $m->app->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');

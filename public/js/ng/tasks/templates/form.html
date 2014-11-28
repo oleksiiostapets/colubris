@@ -28,21 +28,21 @@
                             <div class="atk-push-small">
                                 <label for="task_priority"><strong>Priority:</strong></label>
                             </div>
-                            <select id="task_priority" ng-model="task" ng-options="priority.name for priority in priorities track by priority.name"></select>
+                            <select id="task_priority" ng-model="priority" ng-options="priority.name for priority in priorities track by priority.name"></select>
                         </div>
 
                         <div class="atk-push-small">
                             <div class="atk-push-small">
                                 <label for="task_type"><strong>Type:</strong></label>
                             </div>
-                            <select id="task_type" ng-model="task"  ng-options="type.name for type in types track by type.name"></select>
+                            <select id="task_type" ng-model="type"  ng-options="type.name for type in types track by type.value"></select>
                         </div>
 
                         <div class="atk-push-small">
                             <div class="atk-push-small">
                                 <label for="task_status"><strong>Status:</strong></label>
                             </div>
-                            <select id="task_status" ng-model="task"  ng-options="status.name for status in statuses track by status.name"></select>
+                            <select id="task_status" ng-model="status"  ng-options="status.name for status in statuses track by status.name"></select>
                         </div>
 
                         <div class="atk-push-small">
@@ -63,13 +63,13 @@
                             <div class="atk-push-small">
                                 <label for="task_assigned"><strong>Assigned:</strong></label>
                             </div>
-                            <select id="task_assigned" ng-model="requester"  ng-options="assigned.name  for assigned in assigneds track by assigned.id" ng-init="assigned = task.assigned_id"  ></select>
+                            <select id="task_assigned" ng-model="assigned"  ng-options="assigned.name  for assigned in assigneds track by assigned.id" ng-init="assigned = task.assigned_id"  ></select>
                         </div>
 
                     </div>
 
                     <div class="atk-actions">
-                        <button ng-click="save(task)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
+                        <button ng-click="save(task,priority,type,status,requester,assigned)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
                         <button ng-click="Task.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
                         <button ng-confirm-click="Are you sure?" confirmed-click="Task.delete(task.id)" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
                     </div>

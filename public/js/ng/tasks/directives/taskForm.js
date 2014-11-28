@@ -32,6 +32,28 @@ app_module.directive('taskForm', function factory($q,$http, $templateCache, $com
             //console.log('form.to_regular_place');
             element.removeClass('fixed');
         });
+
+        //save data
+        scope.save = function(task,priority,type,status,requester,assigned){
+            if(angular.isDefined(priority.name)){
+                task.priority = priority.name;
+            }
+            if(angular.isDefined(type.value)){
+                task.type = type.value;
+            }
+            if(angular.isDefined(status.name)){
+                task.status = status.name;
+            }
+            if(angular.isDefined(requester)){
+                task.requester_id = requester.id;
+                task.requester = requester.name ;
+            }
+            if(angular.isDefined(assigned)){
+                task.assigned_id = assigned.id;
+                task.assigned = assigned.name ;
+            }
+            scope.Task.save(task);
+        };
     }
 })
 ;

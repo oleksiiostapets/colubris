@@ -44,11 +44,11 @@ app_module.controller(
         $scope.priority = $scope.priorities;
 
         $scope.types = [
-            {name:'project'},
-            {name:'change request'},
-            {name:'bug'},
-            {name:'support'},
-            {name:'drop'}
+            {name:'Project',        value:'project'},
+            {name:'Change request', value:'change_request'},
+            {name:'Bug',            value:'bug'},
+            {name:'Support',        value:'support'},
+            {name:'Drop',           value:'drop'}
         ];
         $scope.type = $scope.types;
 
