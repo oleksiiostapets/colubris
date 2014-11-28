@@ -28,7 +28,7 @@ class Model_Task extends Model_Auditable {
         $this->addField('priority')->setValueList(Model_Task::$task_priority)->defaultValue('normal');
 
         $this->addField('status')->setValueList($this->task_statuses)->defaultValue('unstarted')->sortable(true);
-        $this->addField('type')->setValueList(Model_Task::$task_types)->defaultValue('change request')->sortable(true);
+        $this->addField('type')->setValueList(Model_Task::$task_types)->defaultValue('change_request')->sortable(true);
 
         $this->addField('descr_original')->dataType('text');
 
@@ -109,14 +109,14 @@ class Model_Task extends Model_Auditable {
                 'changer_part'=>$m->app->currentUser()->get('name').' has made changes in task "'.$m->get('name').'".',
             ));
         });*/
-        $this->addHook('beforeDelete', function($m){
+        /*$this->addHook('beforeDelete', function($m){
             $m->app->mailer->addReceiverByUserId($m->get('requester_id'),'mail_task_changes');
             $m->app->mailer->addReceiverByUserId($m->get('assigned_id'),'mail_task_changes');
             $m->app->mailer->sendMail('task_delete',array(
                 'subject'=>'Task "'.substr($m->get('name'),0,25).'" deleted',
                 'changer_part'=>$m->app->currentUser()->get('name').' has deleted task "'.$m->get('name').'".',
             ));
-        });
+        });*/
         $this->addHook('beforeDelete', function($m){
             $m['deleted_id']=$m->app->currentUser()->get('id');
         });

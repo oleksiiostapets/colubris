@@ -75,6 +75,9 @@ app_module.controller(
         $scope.$on( 'task.update', function( event, args ) {
             $scope.task = args;
         });
+        $scope.$on( 'tasks.need_update', function( event, args ) {
+            Task.getFromServer();
+        });
         $scope.$on( 'tasks.update', function( event ) {
             $scope.tasks = Task.tasks;
             //console.log(Task.tasks);

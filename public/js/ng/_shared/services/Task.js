@@ -83,7 +83,7 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
 
         save: function ( task ) {
 
-            //console.log(task);
+            //console.log(angular.copy(task));
             console.log('------> Save');
             //if(!API.validateForm(task, ['name','client'], 'project_')) return false;
 
@@ -108,15 +108,7 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
                 {id : task.id},
                 angular.toJson(task),
                 function(obj) {
-                    if (obj.result === 'success') {
-//                        $rootScope.showSystemMsg('Saved successfully');
-                        if (typeof task.id === 'undefined' ) {
-                            service.tasks.push( angular.copy(obj.data)  );
-                        }
-                    } else {
-//                        $rootScope.showSystemMsg('Error! No success message received');
-                    }
-                    $rootScope.$broadcast('tasks.update' );
+                    $rootScope.$broadcast('tasks.need_update' );
                     $rootScope.$broadcast('form.to_regular_place');
                 }
             );
@@ -128,6 +120,27 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
             $rootScope.$broadcast('task.update', service.tasks[index]);
             $rootScope.$broadcast('form.to_fixed_position',service.tasks[index]);
         },
+
+        remove: function(index) {
+            try {
+                API.removeOne(
+                    'task',
+                    'deleteById',
+                    {id:service.tasks[index].id},
+                    function(obj) {
+                        if (obj.result === 'success') {
+                            service.tasks.splice(index, 1);
+                            $rootScope.$broadcast( 'tasks.update' );
+                        } else {
+                            alert('Error! No success message received.');
+                        }
+                    }
+                );
+            } catch (e) {
+                alert('Error! No data received.');
+            }
+        },
+
         delete: function(id) {
             API.removeOne(
                 'task',
@@ -137,7 +150,7 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
                     if (obj.result === 'success') {
                         $rootScope.$broadcast('task.update', {});
                         $rootScope.$broadcast('form.to_regular_place');
-                        $rootScope.$broadcast( 'task.need_update' );
+                        $rootScope.$broadcast( 'tasks.update' );
                     } else {
                     }
                 }
