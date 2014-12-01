@@ -57,6 +57,7 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
             console.log('-----> getForUser()---END');
         },
         prepareArray: function(obj,all_rights,user_id){
+            console.log(obj);
             console.log('-----> prepareArray()---START');
             var object = {};
             var rights_obj = {};

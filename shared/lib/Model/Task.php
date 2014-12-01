@@ -262,7 +262,7 @@ class Model_Task extends Model_Auditable {
 
         $fields = ['id'];
 
-        if($r->canSeeTasks($u['id'])){
+        if($r->canSeeTasks($u['id']) && $r->canSeeProjects($u['id']) && $r->canSeeQuotes($u['id'])){
             $fields = array('id','name','priority','status','type','descr_original','estimate','estimate','project_id',
                 'project','requirement_id','requirement','requester_id','requester','assigned_id','assigned','created_dts','updated_dts','is_deleted','deleted_id',
                 'organisation_id','spent_time','quote_id','quote_name');

@@ -26,8 +26,7 @@ class endpoint_v1_right extends Endpoint_v1_General {
 
         try{
             $data_arr = $this->getFancyPost();
-            $id = $this->getId();
-            $this->model->setRights($id,$data_arr);
+            $this->model->setRights($data_arr['user_id'], $data_arr['right']);
             return [
                 'result' => 'success',
                 'data' => $this->model->get(),

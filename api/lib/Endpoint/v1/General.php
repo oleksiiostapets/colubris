@@ -82,11 +82,17 @@ class Endpoint_v1_General extends Endpoint_REST {
                 }
             }
 
-            $this->model->addCondition('is_deleted',false);
+            if ($this->model->hasElement('is_deleted')){
+                $this->model->addCondition('is_deleted',false);
+            }
             $this->model->dsql()->calcFoundRows();
             $this->model->setLimit($this->count,$this->offset);
 //            $data = $this->model->getRowsForCurrentUser();
-            $data = $this->model->prepareForSelect($this->app->current_user)->getRows();
+            if(method_exists($this->model,'prepareForSelect')){
+                $data = $this->model->prepareForSelect($this->app->current_user)->getRows();
+            }else{
+                $data = $this->model->getRows();
+            }
 //            var_dump($data);
             $total_rows = $this->model->dsql()->foundRows();
             return [

@@ -92,9 +92,9 @@ class Model_User_Right extends SQL_Model{
 
     private $_set = false;
     function set($name,$value=UNDEFINED) {
-        if( !isset($this->app->is_test_app) && !$this->canManageUsers() ){
-            throw $this->exception('You cannot edit users\' rights');
-        }
+//        if( !isset($this->app->is_test_app) && !$this->app->canManageUsers() ){
+//            throw $this->exception('You cannot edit users\' rights');
+//        }
         if ($this->_set) {
             parent::set($name,$value);
             return $this;
@@ -102,34 +102,36 @@ class Model_User_Right extends SQL_Model{
         throw $this->exception('This method is private in this model');
     }
 
-    function setRights($id = null, $rights = null){
-//        if(!$user_id){
-//            throw $this->exception('You didn\'t specified user_id for setRights() method');
-//        }
+    function setRights($user_id = null, $rights = null){
+//        if(!$user_i){
+//            throw $this->exception('You didn\'t specified user_id for setRights() method//;
+//      //}
         if(!$rights){
             throw $this->exception('You didn\'t specified necessary arguments for setRights() method');
         }
-
         if($this->loaded()){
             $this->unload();
         }
-
-        if($id){
-            $this->tryLoad($id);
+        if($user_id){
+            $this->tryLoadBy('user_id', $user_id);
         }
-
         $new_arr= array();
-        foreach($rights['right'] as $right){
-            if ($this->checkRight($right)) {
+        foreach($rights as $right){
+            if ($this->checkRight($right)){
                 $new_arr[] = $right;
             }
         }
+
         $new_str = implode(',',$new_arr);
         $this->_set = true;
-        $this->set(array(
-            'right'   => $new_str,
-            'user_id' => $rights['user_id']
-        ))->save();
+        $this->set('right', $new_str);
+        $this->set('user_id', $user_id);
+        $this->save();
+        return $this->get();
+//        $this->set(arr//(
+//            'right'   => $new_s//,
+//            'user_id' => $rights['user_i//]
+//        ))->save//;
         $this->_set = false;
         return $this;
     }
