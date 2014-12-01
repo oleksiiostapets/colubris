@@ -9,24 +9,17 @@ app_module.service( 'Time', [ '$rootScope','$http', 'API', function( $rootScope,
     var service = {
         Times: [],
 
-        getFromServer: function() {
-            API.getAll(
-                'time',
-                'getByField',
-                null,
-                function(obj) {
-                    service.times = obj.data;
-                    service.total_rows = obj.total_rows;
-                    $rootScope.$broadcast( 'times.update' );
-                }
-            );
-        },
         getFromServerByTask: function(task) {
             API.getAll(
                 'time',
                 undefined,
                 {field:'task_id',value:task.id},
                 function(obj) {
+                    $.each(obj.data,function(key,value) {
+                        if(value.user_id != app_module.user_id) {
+                            obj.data[key]['allow_del_css'] = 'display: none;';
+                        }
+                    });
                     service.times = obj.data;
                     $rootScope.$broadcast( 'times.update', task );
                 }
@@ -37,15 +30,9 @@ app_module.service( 'Time', [ '$rootScope','$http', 'API', function( $rootScope,
             $rootScope.$broadcast( 'times.update' );
         },
         save: function ( time, task ) {
-            console.log('--->Save1');
-            console.log(angular.toJson(time));
-            console.log('--->Save1');
             this.saveOnServer(time,task);
         },
         saveOnServer: function(time,task) {
-            console.log('--->Save2');
-            console.log(angular.toJson(time));
-            console.log('--->Save2');
             API.saveOne(
                 'time',
                 null,

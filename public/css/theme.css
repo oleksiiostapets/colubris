@@ -7276,7 +7276,8 @@ table .requirement {
 .floating-form {
   position: relative;
 }
-.floating-form .close {
+.floating-form .close,
+.floating-form .close-time {
   display: none;
 }
 .floating-form .comments {
@@ -7332,8 +7333,17 @@ table .requirement {
   cursor: pointer;
   z-index: 10;
 }
-.floating-form.fixed .close:hover {
+.floating-form.fixed .close:hover,
+.floating-form.fixed .close-time:hover {
   color: red;
+}
+.floating-form.fixed .close-time {
+  position: absolute;
+  right: 10px;
+  display: block;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10;
 }
 .floating-form.fixed .comments {
   display: block;
