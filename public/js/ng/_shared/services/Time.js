@@ -32,14 +32,20 @@ app_module.service( 'Time', [ '$rootScope','$http', 'API', function( $rootScope,
                 }
             );
         },
-        save: function ( time, task ) {
-            this.saveOnServer(time,task);
-        },
         clear: function(){
             service.times = [];
             $rootScope.$broadcast( 'times.update' );
         },
+        save: function ( time, task ) {
+            console.log('--->Save1');
+            console.log(angular.toJson(time));
+            console.log('--->Save1');
+            this.saveOnServer(time,task);
+        },
         saveOnServer: function(time,task) {
+            console.log('--->Save2');
+            console.log(angular.toJson(time));
+            console.log('--->Save2');
             API.saveOne(
                 'time',
                 null,

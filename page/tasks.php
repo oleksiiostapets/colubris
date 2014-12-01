@@ -23,6 +23,7 @@ class page_tasks extends Page {
     }
     protected function addNgJs() {
         $this->app->jquery->addStaticInclude('ng/vendor/angularjs');
+        $this->app->jquery->addStaticInclude('ng/vendor/angular-xeditable/js/xeditable.min');
         $this->app->jquery->addStaticInclude('ng/tasks/app');
         $this->app->jquery->addStaticInclude('ng/tasks/controllers/inlineCrud');
         $this->app->jquery->addStaticInclude('ng/tasks/directives/inlineCrud');
