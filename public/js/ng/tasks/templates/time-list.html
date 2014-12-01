@@ -5,12 +5,12 @@
             <div class="atk-label atk-effect-info">{{$index+1}} (ID#{{time.id}})</div>
         </div>
         <div class="atk-cell atk-jackscrew">
-            <div class="atk-label atk-effect-warning">{{time.comment}}</div>
+            <div class="atk-label atk-effect-warning" editable-textarea="time.comment" onaftersave="Time.save(time, task)">{{time.comment}}</div>
         </div>
     </div>
-    <div>Spent time: {{time.spent_time}}</div>
+    <div><span>Spent time: </span><span editable-text="time.spent_time" onaftersave="Time.save(time, task)">{{time.spent_time}}</span></div>
     <div>User: {{time.user}}</div>
-    <div>Date: {{time.date}}</div>
+    <div><span>Date: </span><span editable-bsdate="time.date" e-datepicker-popup="yyyy-mm-dd" onaftersave="Time.save(time, task)">{{time.date}}</span></div>
 </div>
 
 <div class="atk-box-small" id="time_view">
