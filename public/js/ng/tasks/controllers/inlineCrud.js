@@ -31,9 +31,9 @@ app_module.controller(
 
         $scope.User = User;
         $scope.requesters = User.users;
-        User.getFromServer('requesters.update');
+        User.getFromServer('requesters.update','getAllUsers');
         $scope.assigneds = User.users;
-        User.getFromServer('assigneds.update');
+        User.getFromServer('assigneds.update','getAllUsers');
 
         $scope.task = {};
         $scope.Task = Task;

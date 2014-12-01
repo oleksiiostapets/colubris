@@ -15,6 +15,14 @@ class endpoint_v1_user extends Endpoint_v1_General {
             'data'   => $data,
         ];
     }
+    public function get_getAllUsers(){
+        $this->model->notDeleted();
+        $data = $this->model->getRows();
+        return [
+            'result' => 'success',
+            'data'   => $data,
+        ];
+    }
     public function get_getUsersByProject(){
         $this->model->notDeleted();
         $project_id = $this->getParameter('project_id');

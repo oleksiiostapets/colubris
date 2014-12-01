@@ -9,10 +9,11 @@ app_module.service( 'User', [ '$rootScope','$http','API', function( $rootScope, 
     var service = {
         users: [],
 
-        getFromServer: function(broadcast_message) {
+        getFromServer: function(broadcast_message, fn) {
+            if (!fn) fn = 'getUsers';
             API.getAll(
                 'user',
-                'getUsers',
+                fn,
                 undefined,
                 function(obj) {
                     service.users = obj.data;
