@@ -7282,6 +7282,9 @@ table .requirement {
 .floating-form .comments {
   display: none;
 }
+.floating-form .time {
+  display: none;
+}
 .floating-form .full-height-box {
   position: relative;
   height: 500px;
@@ -7333,6 +7336,11 @@ table .requirement {
   color: red;
 }
 .floating-form.fixed .comments {
+  display: block;
+  background-position: center;
+  background-size: cover;
+}
+.floating-form.fixed .time {
   display: block;
   background-position: center;
   background-size: cover;

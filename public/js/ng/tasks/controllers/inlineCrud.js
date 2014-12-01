@@ -118,7 +118,11 @@ app_module.controller(
 
         $scope.$on( 'times.update', function( event ) {
             $scope.times = Time.times;
-            //$scope.times.unshift({id:"",name:'all'})
+            $('#time_view textarea, #time_view input').val('');
+            $('#time_view input[type=checkbox]').attr('checked',false);
+        });
+        $scope.$on( 'times.need_update', function( event, args ) {
+            Time.getFromServerByTask(args);
         });
 
         $scope.$on( 'requirements.update', function( event ) {

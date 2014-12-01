@@ -12,3 +12,44 @@
     <div>User: {{time.user}}</div>
     <div>Date: {{time.date}}</div>
 </div>
+
+<div class="atk-box-small" id="time_view">
+    <form class="atk-form">
+        <input type="hidden" ng-model="task.id" />
+        <input type="hidden" ng-model="task.user_id" />
+
+        <div class="atk-push-small">
+            <div class="atk-push-small">
+                <label for="spent_time"><strong>Spent Time:</strong></label>
+            </div>
+            <input type="text" id="spent_time" class="atk-jackscrew" ng-model="time.spent_time" />
+        </div>
+
+        <div class="atk-push-small">
+            <div class="atk-push-small">
+                <label for="time_date"><strong>Date:</strong></label>
+            </div>
+            <input type="text" id="time_date" class="atk-jackscrew" ng-model="time.date" />
+        </div>
+
+        <div class="atk-push-small">
+            <div class="atk-push-small">
+                <label for="time_comment"><strong>Comment:</strong></label>
+            </div>
+            <textarea id="time_comment" type="text" class="atk-jackscrew" ng-model="time.comment"></textarea>
+        </div>
+
+        <div class="atk-push-small">
+            <label for="remove_billing"><strong>Remove from billing:</strong></label>
+            <input type="checkbox" id="remove_billing" ng-model="time.remove_billing" />
+        </div>
+
+        <div class="atk-actions">
+            <button ng-click="Time.save(time,task)" class="atk-swatch-green atk-button-small atk-button" >Add</button>
+        </div>
+
+    </form>
+</div>
+<script type="text/javascript">
+    $('#time_date').datepicker({ dateFormat: "yy-mm-dd" });
+</script>

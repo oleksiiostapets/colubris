@@ -13,16 +13,16 @@ class Model_TaskTime extends Model_Auditable {
 
         $this->addField('spent_time')->mandatory(true);
 
-        $this->addField('comment')->dataType('text');
+        $this->addField('comment')->type('text');
 
-        $this->addField('date')->dataType('date');
+        $this->addField('date')->type('date');
 
         $this->addField('remove_billing')->type('boolean')->defaultValue('0')->caption('Remove from billing');
         $this->addField('is_deleted')->type('boolean')->defaultValue('0');
 
         $this->addHook('beforeInsert', function($m,$q){
         	if($m['date']=='') $q->set('date', $q->expr('now()'));
-        	$q->set('user_id', $q->api->auth->model['id']);
+        	$q->set('user_id', $q->app->currentUser()->get('id'));
         });
 
         $task_join = $this->join('task.id','task_id','left','_task');
@@ -31,7 +31,7 @@ class Model_TaskTime extends Model_Auditable {
         $req_join = $task_join->join('requirement.id','requirement_id','left','_req');
         $req_join->addField('requirement_name','name');
 
-        $quote_join = $req_join->join('quote.id','quote_id','left','_quote');
+        $quote_join = $req_join->leftJoin('quote.id','quote_id','left','_quote');
         $quote_join->addField('quote_name','name');
 
        	$this->setOrder('date',true);
@@ -122,5 +122,54 @@ class Model_TaskTime extends Model_Auditable {
 
         $this->setActualFields($fields);
         return $this;
+    }
+    function prepareForInsert(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canTrackTime($u['id'])){
+            $fields = array('id','task_id','user_id','spent_time','comment','date','remove_billing');
+        }else{
+            throw $this->exception('This User cannon add record','API_CannotAdd');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForUpdate(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        $fields = ['id'];
+
+        if($r->canTrackTime($u['id'])){
+            $fields = array('id','task_id','user_id','spent_time','comment','date','remove_billing');
+        }else{
+            throw $this->exception('This User cannon edit record','API_CannotAdd');
+        }
+
+        foreach ($this->getActualFields() as $f){
+            $fo = $this->hasElement($f);
+            if(in_array($f, $fields)){
+                if($fo) $fo->editable = true;
+            }else{
+                if($fo) $fo->editable = false;
+            }
+        }
+        return $this;
+    }
+    function prepareForDelete(Model_User $u){
+        $r = $this->add('Model_User_Right');
+
+        if($r->canTrackTime($u['id'])) return $this;
+
+        throw $this->exception('This user has no permissions for deleting','API_CannotDelete');
     }
 }

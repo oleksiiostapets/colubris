@@ -23,7 +23,7 @@ app_module.directive('requirementForm', function factory($q,$http, $templateCach
             //console.log(scope.comments);
         });
         scope.$on( 'form.to_regular_place', function( event ) {
-            console.log('form.to_fixed_position');
+            console.log('form.to_regular_place');
             element.removeClass('fixed');
         });
 

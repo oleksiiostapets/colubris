@@ -29,7 +29,7 @@ app_module.directive('taskForm', function factory($q,$http, $templateCache, $com
             $("#task_assigned option[value="+task.assigned_id+"]").attr("selected","selected");
         });
         scope.$on( 'form.to_regular_place', function( event ) {
-            //console.log('form.to_regular_place');
+            console.log('form.to_regular_place');
             element.removeClass('fixed');
         });
 

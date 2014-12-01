@@ -138,6 +138,6 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                 service.requirements[this.current_index] = service.requirements[this.current_index].backup;
             }
         }
-    }
+    };
     return service;
 }]);
