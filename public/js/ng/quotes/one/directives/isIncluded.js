@@ -38,7 +38,6 @@ app_module.directive('isIncluded',
 
         scope.$on( 'checkbox.update.'+scope.rreqv.id, function( event, args ) {
             update();
-
         });
     }
     return {

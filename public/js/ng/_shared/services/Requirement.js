@@ -13,6 +13,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
         clear: function(){
             service.requirements = [];
             $rootScope.$broadcast( 'requirements.update' );
+            $rootScope.$broadcast('task.clear');
         },
         getFromServerByQuote: function(quote) {
             // Clearing previous requirement parameters to exclude it from crud results
@@ -51,7 +52,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                     }
                 });
             }
-
+            console.log(angular.toJson(args));
             API.saveOne(
                 'requirement',
                 null,
@@ -61,19 +62,17 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                     if (obj.result === 'success') {
 //                        $rootScope.showSystemMsg('Saved successfully');
                         if (typeof args.id === 'undefined' ) {
-                            service.requirements.push( angular.copy(obj.data)  );
+                            //service.requirements.push( angular.copy(obj.data)  );
                         }
                     } else {
 //                        $rootScope.showSystemMsg('Error! No success message received');
                     }
-                    //$rootScope.$broadcast('reqv.update', {});
                     $rootScope.$broadcast( 'requirements.update' );
                     $rootScope.$broadcast( 'checkbox.update.'+args.id,reqv);
-                    $rootScope.$broadcast('form.to_regular_place');
+
                 }
             );
             this.resetBackupReqv();
-            $rootScope.$broadcast('reqv.update', {});
         },
         remove: function(index) {
             API.removeOne(
@@ -100,6 +99,10 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             $rootScope.$broadcast('form.to_fixed_position',service.requirements[index]);
             $rootScope.$broadcast( 'requirements.update' );
         },
+        showForm: function(index) {
+            console.log('------> Show');
+            $rootScope.$broadcast('form.to_fixed_position',service.requirements[index]);
+        },
         cancel: function() {
             console.log('------> cencel');
             this.restoreReqv();
@@ -107,6 +110,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             $rootScope.$broadcast('reqv.update', {});
             $rootScope.$broadcast( 'requirements.update' );
             $rootScope.$broadcast('form.to_regular_place');
+            $rootScope.$broadcast('task.clear');
         },
         getFromServer: function() {
             API.getAll(

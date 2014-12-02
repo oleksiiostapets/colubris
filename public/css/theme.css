@@ -7274,6 +7274,7 @@ table .requirement {
   color: #5b5b5b;
 }
 .floating-form {
+  display: none;
   position: relative;
 }
 .floating-form .close,
@@ -7301,6 +7302,7 @@ table .requirement {
   overflow: auto;
 }
 .floating-form.fixed {
+  display: block;
   position: fixed;
   top: 0;
   bottom: 0;

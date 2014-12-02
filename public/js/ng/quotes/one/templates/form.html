@@ -27,12 +27,12 @@
 
                 <div class="atk-push-small">
                     <label><strong>Is included:</strong></label>
-                    <span editable-checkbox="reqv.is_included"  onaftersave="Requirement.save(reqv)">{{reqv.is_included}}</span>
+                    <span editable-checkbox="reqv.is_included"  onaftersave="Requirement.save(reqv)">{{ reqv.is_included && "Yes" || "No" }}</span>
                     <!--<input type="checkbox" id="remove_billing" ng-model="time.remove_billing" />-->
                 </div>
                 <div class="atk-push-small">
                     <label><strong>Is deleted:</strong></label>
-                    <span editable-checkbox="reqv.is_deleted"  onaftersave="Requirement.save(reqv)">{{reqv.is_deleted}}</span>
+                    <span editable-checkbox="reqv.is_deleted"  onaftersave="Requirement.save(reqv)">{{ reqv.is_deleted && "Yes" || "No" }}</span>
                 </div>
 
 

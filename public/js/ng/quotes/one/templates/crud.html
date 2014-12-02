@@ -1,19 +1,22 @@
 <div class="atk-box atk-push ">
+    <div class="atk-push-small">
+        <button class="atk-button atk-effect-success" ng-click="Requirement.showForm()">Add Requirement</button>
+    </div>
     <div class="atk-table atk-table-bordered">
         <table>
             <thead>
             <tr class="atk-swatch-blue">
-                <th></th>
+                <th>#</th>
                 <th></th>
                 <th>Info</th>
                 <th>Estimate</th>
-                <th>Deleted</th>
-                <th></th>
+                <!--<th>Deleted</th>-->
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="rreqv in requirements track by $index"  is-included class=" {{rreqv.css.is_active}}">
-                <td>{{$index}}</td>
+                <td>{{$index+1}}</td>
                 <td>
                     <div class="toggle_is_included {{rreqv.css.is_active}} {{rreqv.css.can_toggle}}" ng-click="toggleIsIncluded(rreqv)">
                         {{rreqv.css.is_included}}
@@ -35,7 +38,7 @@
                     </div>
                 </td>
                 <td>{{rreqv.estimate}}</td>
-                <td>{{rreqv.is_deleted}}</td>
+                <!--<td>{{rreqv.is_deleted}}</td>-->
                 <td class="atk-text-nowrap">
                     <button class="atk-button" ng-click="Requirement.edit($index)">Edit</button>
                     <button class="atk-button atk-effect-danger" ng-click="Requirement.remove($index)">Delete</button>

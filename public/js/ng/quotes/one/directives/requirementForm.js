@@ -16,7 +16,7 @@ app_module.directive('requirementForm', function factory($q,$http, $templateCach
         scope.$on( 'form.to_fixed_position', function( event, reqv ) {
             console.log('form.to_fixed_position');
             element.addClass('fixed');
-            console.log(reqv);
+            //console.log(reqv);
 
             scope.Comment.getFromServer(reqv.id);
             scope.Task.getFromServerByReqvId(reqv.id);
@@ -27,25 +27,29 @@ app_module.directive('requirementForm', function factory($q,$http, $templateCach
             element.removeClass('fixed');
         });
 
-        //------------------------------------------------
-        //
-        //                 PANNEL
-        //
-        //------------------------------------------------
-//        var addForm = function(scope,$compile,element) {
-//            var html = '<form>' +
-//                    'Id<input type="text" ng-model="reqv.id" />' +
-//                    'Name<input type="text" ng-model="reqv.name" />' +
-//                    '<button ng-click="Requirement.add(reqv)" class="atk-button-small atk-button" value="Add">Add</button>' +
-//                    '</form>';
-//            var template = angular.element(html);
-//            var linkFn = $compile(template);
-//            scope.actionButtonSet.button_get_data = linkFn(scope);
-//            element.append(scope.actionButtonSet.button_get_data);
-//        }
-//        addForm(scope,$compile,element);
-        // PANNEL ----------------------------------------
-
+        //save data
+        scope.save = function(task,reqv){
+            if(angular.isDefined(task.priority)){
+                task.priority = task.priority.name;
+            }
+            if(angular.isDefined(task.type)){
+                task.type = task.type.value;
+            }
+            if(angular.isDefined(task.status)){
+                task.status = task.status.name;
+            }
+            if(angular.isDefined(task.requester)){
+                task.requester_id = task.requester.id;
+                task.requester = task.requester.name ;
+            }
+            if(angular.isDefined(task.assigned)){
+                task.assigned_id = task.assigned.id;
+                task.assigned = task.assigned.name ;
+            }
+            task.requirement_id = reqv.id ;
+            task.project_id = reqv.project_id ;
+            scope.Task.save(task);
+        };
     }
 })
 ;

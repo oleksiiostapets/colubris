@@ -83,8 +83,6 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
 
         save: function ( task ) {
 
-            //console.log(angular.copy(task));
-            console.log('------> Save');
             //if(!API.validateForm(task, ['name','client'], 'project_')) return false;
 
             if (typeof task.id === 'undefined' ) {
@@ -99,6 +97,7 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
             this.saveOnServer(task);
             this.resetbackupTask();
             $rootScope.$broadcast('task.update', {});
+            $rootScope.$broadcast('task.clear');
         },
 
         saveOnServer: function(task) {
@@ -109,7 +108,7 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
                 angular.toJson(task),
                 function(obj) {
                     $rootScope.$broadcast('tasks.need_update' );
-                    $rootScope.$broadcast('form.to_regular_place');
+                    //$rootScope.$broadcast('form.to_regular_place');
                 }
             );
         },
@@ -164,6 +163,11 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
             $rootScope.$broadcast('task.update', {});
             $rootScope.$broadcast('tasks.update' );
             $rootScope.$broadcast('form.to_regular_place');
+        },
+
+        showForm: function(index) {
+            console.log('------> Show');
+            $rootScope.$broadcast('form.to_fixed_position',service.tasks[index]);
         },
 
         backupTask: function(index) {
