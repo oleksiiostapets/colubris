@@ -22,7 +22,8 @@ class page_tasks extends Page {
         ),'bread_crumb');
     }
     protected function addNgJs() {
-        $this->app->jquery->addStaticInclude('ng/vendor/angularjs');
+        $this->app->jquery->addStaticInclude('ng/vendor/angular.min');
+        $this->app->jquery->addStaticInclude('ng/vendor/angular-route.min');
         $this->app->jquery->addStaticInclude('ng/vendor/angular-xeditable/js/xeditable.min');
         $this->app->jquery->addStaticInclude('ng/tasks/app');
         $this->app->jquery->addStaticInclude('ng/tasks/controllers/inlineCrud');

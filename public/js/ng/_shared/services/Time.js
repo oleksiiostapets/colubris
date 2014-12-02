@@ -18,9 +18,13 @@ app_module.service( 'Time', [ '$rootScope','$http', 'API', function( $rootScope,
                     $.each(obj.data,function(key,value) {
                         if(value.user_id != app_module.user_id) {
                             obj.data[key]['allow_del_css'] = 'display: none;';
+                            //obj.data[key]['spent_time_template'] = 'spent_time_field';//TODO
+                        }else{
+                            //obj.data[key]['spent_time_template'] = 'spent_time_field_editable';
                         }
                     });
                     service.times = obj.data;
+                    //console.log(obj.data);
                     $rootScope.$broadcast( 'times.update', task );
                 }
             );
@@ -31,6 +35,26 @@ app_module.service( 'Time', [ '$rootScope','$http', 'API', function( $rootScope,
         },
         save: function ( time, task ) {
             this.saveOnServer(time,task);
+        },
+        remove: function(id) {
+            try {
+                API.removeOne(
+                    'time',
+                    'deleteById',
+                    {id:id},
+                    function(obj) {
+                        if (obj.result === 'success') {
+                            $rootScope.$broadcast( 'times.update' );
+                        } else {
+                            console.log(obj);
+                            alert('Error! No success message received.');
+                        }
+                    }
+                );
+            } catch (e) {
+                console.log(e);
+                alert('Error! No data received.');
+            }
         },
         saveOnServer: function(time,task) {
             API.saveOne(

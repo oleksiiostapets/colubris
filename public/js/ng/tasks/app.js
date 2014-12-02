@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var app_module = angular.module('tasks.app',['xeditable']);
+var app_module = angular.module('tasks.app',['xeditable','ngRoute']);
 
 
 //  inline editing
