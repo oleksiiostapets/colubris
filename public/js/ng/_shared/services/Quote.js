@@ -44,6 +44,6 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
                 }
             );
         }
-    }
+    };
     return service;
 }]);
