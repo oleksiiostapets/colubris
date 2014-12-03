@@ -111,6 +111,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             $rootScope.$broadcast( 'requirements.update' );
             $rootScope.$broadcast('form.to_regular_place');
             $rootScope.$broadcast('task.clear');
+            $rootScope.$broadcast('comm.clear');
         },
         getFromServer: function() {
             API.getAll(

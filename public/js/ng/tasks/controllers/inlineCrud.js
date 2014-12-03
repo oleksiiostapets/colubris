@@ -74,6 +74,10 @@ app_module.controller(
             $scope.clearForm = function(){
                 Task.cancel();
             };
+            $scope.$on( 'time.clear', function( event ) {
+                $scope.times = {};
+                $('#time_view textarea, #time_view input').val('');
+            });
 
             $scope.$on( 'task.update', function( event, args ) {
                 $scope.task = args;

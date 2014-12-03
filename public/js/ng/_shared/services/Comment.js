@@ -11,8 +11,8 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
 
         save: function ( comm, reqv_id ) {
 
-            console.log('save() comm');
-            console.log(comm);
+            //console.log('save() comm');
+            //console.log(comm);
 
 //            if (typeof comm.id === 'undefined' ) {
 //                service.comments.push( angular.clone(comm) );

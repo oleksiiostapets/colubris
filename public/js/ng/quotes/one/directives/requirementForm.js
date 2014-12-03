@@ -16,10 +16,11 @@ app_module.directive('requirementForm', function factory($q,$http, $templateCach
         scope.$on( 'form.to_fixed_position', function( event, reqv ) {
             console.log('form.to_fixed_position');
             element.addClass('fixed');
-            //console.log(reqv);
 
-            scope.Comment.getFromServer(reqv.id);
-            scope.Task.getFromServerByReqvId(reqv.id);
+            if(reqv){
+                scope.Comment.getFromServer(reqv.id);
+                scope.Task.getFromServerByReqvId(reqv.id);
+            }
             //console.log(scope.comments);
         });
         scope.$on( 'form.to_regular_place', function( event ) {

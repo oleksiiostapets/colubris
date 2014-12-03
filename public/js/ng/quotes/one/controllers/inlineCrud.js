@@ -76,8 +76,12 @@ app_module.controller(
                 Comment.getFromServer($scope.Requirement.requirements[$scope.Requirement.current_index].id);
             });
             $scope.$on( 'task.clear', function( event ) {
-                $scope.tasks = Task.tasks;
+                $scope.tasks = {};
                 $('#task_view textarea, #task_view input').val('');
+            });
+            $scope.$on( 'comm.clear', function( event ) {
+                $scope.comments = {};
+                $('#comment_view textarea, #comment_view input').val('');
             });
             $scope.$on( 'tasks.need_update', function( event, args ) {
                 Task.getFromServerByReqvId($scope.Requirement.requirements[$scope.Requirement.current_index].id);
