@@ -67,6 +67,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                     } else {
 //                        $rootScope.showSystemMsg('Error! No success message received');
                     }
+                    $rootScope.$broadcast( 'requirements.reload');
                     $rootScope.$broadcast( 'requirements.update' );
                     $rootScope.$broadcast( 'checkbox.update.'+args.id,reqv);
 

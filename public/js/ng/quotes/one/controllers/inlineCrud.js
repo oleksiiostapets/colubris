@@ -95,6 +95,10 @@ app_module.controller(
             $scope.$on( 'reqv.update', function( event, args ) {
                 $scope.reqv = args;
             });
+            $scope.$on( 'requirements.reload', function( event ) {
+                $scope.requirements = Requirement.requirements;
+                Requirement.getFromServer();
+            });
             $scope.$on( 'requirements.update', function( event ) {
                 console.log('requirements.update - start');
                 $scope.requirements = Requirement.requirements;

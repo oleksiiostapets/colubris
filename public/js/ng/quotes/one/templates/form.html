@@ -3,6 +3,39 @@
     <div class="atk-row full-height-box atk-padding-small">
         <div class="atk-col-4">
             <div class="atk-box">
+                <form class="atk-form">
+                    <input type="hidden" ng-model="reqv.id" />
+
+                    <div class="atk-push-small">
+                        <div class="atk-push-small">
+                            <label><strong>Name:</strong></label>
+                        </div>
+                        <input type="text" class="atk-jackscrew" ng-model="reqv.name" />
+                    </div>
+
+                    <div class="atk-push-small">
+                        <div class="atk-push-small">
+                            <label><strong>Descr:</strong></label>
+                        </div>
+                        <textarea type="text" rows="12" ng-model="reqv.descr"></textarea>
+                    </div>
+
+                    <div class="atk-push-small">
+                        <div class="atk-push-small">
+                            <label><strong>Estimate:</strong></label>
+                        </div>
+                        <input type="text" class="atk-jackscrew" ng-model="reqv.estimate" />
+                    </div>
+                    <div class="atk-actions">
+                        <button ng-click="Requirement.save(reqv)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
+                        <button ng-click="Requirement.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
+                        <button ng-click="Requirement.delete()" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--<div class="atk-col-4"> TODO it's for inline editing. Commented for future
+            <div class="atk-box">
                 <div class="atk-cells atk-push small">
                     <div class="atk-cell atk-valign-top">
                         <div class="atk-label atk-effect-info">Req#{{reqv.id}}</div>
@@ -22,21 +55,6 @@
                     <span editable-text="reqv.estimate" onaftersave="Requirement.save(reqv)">{{reqv.estimate}}</span>
                     <span> hr</span>
                 </div>
-
-
-
-                <div class="atk-push-small">
-                    <label><strong>Is included:</strong></label>
-                    <span editable-checkbox="reqv.is_included"  onaftersave="Requirement.save(reqv)">{{ reqv.is_included && "Yes" || "No" }}</span>
-                    <!--<input type="checkbox" id="remove_billing" ng-model="time.remove_billing" />-->
-                </div>
-                <div class="atk-push-small">
-                    <label><strong>Is deleted:</strong></label>
-                    <span editable-checkbox="reqv.is_deleted"  onaftersave="Requirement.save(reqv)">{{ reqv.is_deleted && "Yes" || "No" }}</span>
-                </div>
-
-
-
                 <div class="atk-push-small">
                     <div class="atk-push-small">
                         <strong>Created by: </strong><span>{{reqv.user}}</span>
@@ -54,7 +72,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <div class="atk-col-4 comments" requirement-comm-task>
             <div class="atk-box">
