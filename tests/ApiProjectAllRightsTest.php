@@ -1,5 +1,5 @@
 <?php
-class ApiProjectTest extends PHPUnit_Framework_TestCase {
+class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Post;
     use Trait_Temp_Proxy;
@@ -172,8 +172,9 @@ class ApiProjectTest extends PHPUnit_Framework_TestCase {
     }
 
     private function cleanDB(Model_User $user, $project_res, Model_Mock_User_Right $right) {
+        $project_id = $project_res->data[0]->id;
         try {
-            $this->app->add('Model_Project')->load($project_res->data[0]->id)->forceDelete();
+            $this->app->add('Model_Project')->load($project_id)->forceDelete();
             $user->forceDelete();
             $right->delete();
         } catch (Exception $e) {
