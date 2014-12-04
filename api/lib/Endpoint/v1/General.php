@@ -112,7 +112,7 @@ class Endpoint_v1_General extends Endpoint_REST {
             return[
                 'result'  => 'error',
                 'code'    => '5399',
-                'error_message'   => $e->getMessage(),
+                'message'   => $e->getMessage(),
             ];
         }
     }
@@ -152,7 +152,7 @@ class Endpoint_v1_General extends Endpoint_REST {
             return [
                 'result'  => 'error',
                 'code'    => '5399',
-                'error_message'   => $e->getMessage(),
+                'message'   => $e->getMessage(),
             ];
         }
     }
@@ -177,13 +177,13 @@ class Endpoint_v1_General extends Endpoint_REST {
             return [
                 'result'  => 'error',
                 'code'    => '5313',
-                'error_message'   => $e->getMessage(),
+                'message'   => $e->getMessage(),
             ];
         } catch (Exception $e) {
             return [
                 'result' => 'error',
                 'code'    => '5399',
-                'error_message'   => $e->getMessage(),
+                'message'   => $e->getMessage(),
             ];
         }
     }
@@ -201,15 +201,16 @@ class Endpoint_v1_General extends Endpoint_REST {
             $this->model->tryLoad($id);
             if(!$this->model->loaded()){
                 return [
-                    'result' => 'error',
-                    'error_message' => 'Record with the id '.$id.' was not found',
+                    'result'  => 'error',
+                    'code'    => '5320',
+                    'message' => 'Record with the id '.$id.' was not found',
                 ];
             }
             try {
                 $this->model->prepareForUpdate($this->app->current_user);
             } catch (Exception_API_CannotEdit $e) {
                 return [
-                    'result' => 'error',
+                    'result'  => 'error',
                     'code'    => '5312',
                     'message' => 'User has ho right to update '.$this->model_class.' with ID='.$id,
                 ];
@@ -219,7 +220,7 @@ class Endpoint_v1_General extends Endpoint_REST {
                 $this->model->prepareForInsert($this->app->current_user);
             } catch (Exception_API_CannotAdd $e) {
                 return [
-                    'result' => 'error',
+                    'result'  => 'error',
                     'code'    => '5311',
                     'message' => 'User has ho right to add '.$this->model_class,
                 ];
@@ -239,8 +240,9 @@ class Endpoint_v1_General extends Endpoint_REST {
             $this->model->tryLoad($id);
             if(!$this->model->loaded()){
                 echo json_encode([//TODO I left it here intentionally, Kostya
-                    'result' => 'error',
-                    'error_message' => 'Record with the id '.$id.' was not found',
+                    'result'  => 'error',
+                    'code'    => '5320',
+                    'message' => 'Record with the id '.$id.' was not found',
                 ]);
                 exit();
             }

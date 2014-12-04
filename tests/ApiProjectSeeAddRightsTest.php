@@ -1,5 +1,5 @@
 <?php
-class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
+class ApiProjectSeeAddRightsTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Post;
     use Trait_Temp_Proxy;
@@ -61,7 +61,7 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
         //$m->set = true;
         $m
             ->set('user_id',$user['id'])
-            ->set('right','can_see_projects,can_add_projects,can_edit_projects,can_delete_projects')
+            ->set('right','can_see_projects,can_add_projects')
             ->save()
         ;
 
@@ -186,19 +186,18 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
         $obj = json_decode($this->do_post_request($url,$data));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a project');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a project with no rights to update');
         $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of updating a project is not successful');
+        $this->assertEquals($obj->result,'error','We updated the project while we have no rights to do this');
 
-        // obj :: data
-        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after updating a project');
-        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on updating a project');
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No error code is returned form API after updating a Project');
+        $this->assertTrue(is_string($obj->code),'Error code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5312','Result of request has unexpected error "code" value');
 
-        // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'Returned data form API doesn\'t have ID');
-        // obj :: data :: name
-        $this->assertObjectHasAttribute('name',$obj->data,'Returned data form API doesn\'t have name field');
-        $this->assertTrue( ($obj->data->name==$new_name) ,'Name returned by API doesn\'t match setting name');
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No error message is returned form API after updating a Project');
+        $this->assertTrue(is_string($obj->message),'Error message was converted not to string by json_encode()');
 
         return $obj;
     }
@@ -220,12 +219,21 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
         $obj = json_decode($this->do_get_request($url));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after deleting a project with no rights to delete');
         $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of creating a project is not successful');
+        $this->assertEquals($obj->result,'error','We deleted the project while we have no rights to do this');
+
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No error code is returned form API after deleting a Project');
+        $this->assertTrue(is_string($obj->code),'Error code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5313','Result of request has unexpected error "code" value');
+
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No error message is returned form API after deleting a Project');
+        $this->assertTrue(is_string($obj->message),'Error message was converted not to string by json_encode()');
 
         // obj :: deleted_record_id
-        $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a project');
+        $this->assertFalse(isset($obj->deleted_record_id),'Property deleted_record_id was returned form API after deleting a project with no rights to delete');
 
         return $obj;
     }
