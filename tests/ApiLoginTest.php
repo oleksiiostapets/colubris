@@ -104,15 +104,7 @@ class ApiLoginTest extends PHPUnit_Framework_TestCase {
     }
 
     private function cleanDB(Model_User $user) {
-        try {
-            $user->forceDelete();
-        } catch (Exception $e) {
-            echo $e->getMessage()."\n";
-            echo $e->getFile()."\n";
-            echo $e->getLine()."\n";
-            echo $e->getTraceAsString();
-
-        }
+        $user->forceDelete();
     }
 
 }

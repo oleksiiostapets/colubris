@@ -49,21 +49,14 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->app = $app;
         $this->user = $user;
 
-        try{
-            $m = $app->add('Model_Mock_User_Right');
-            $m->_set = true;
-            $m
-                ->set('user_id',$this->user['id'])
-                ->set('right','can_see_projects,can_add_projects,can_edit_projects,can_delete_projects')
-                ->save()
-            ;
-        } catch (Exception $e) {
-            echo $e->getMessage()."\n";
-            echo $e->getFile()."\n";
-            echo $e->getLine()."\n";
-            echo $e->getTraceAsString();
+        $m = $app->add('Model_Mock_User_Right');
+        $m->_set = true;
+        $m
+            ->set('user_id',$this->user['id'])
+            ->set('right','can_see_projects,can_add_projects,can_edit_projects,can_delete_projects')
+            ->save()
+        ;
 
-        }
         return $m;
     }
 
@@ -173,17 +166,10 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
 
     private function cleanDB(Model_User $user, $project_res, Model_Mock_User_Right $right) {
         $project_id = $project_res->data[0]->id;
-        try {
-            $this->app->add('Model_Project')->load($project_id)->forceDelete();
-            $user->forceDelete();
-            $right->delete();
-        } catch (Exception $e) {
-            echo $e->getMessage()."\n";
-            echo $e->getFile()."\n";
-            echo $e->getLine()."\n";
-            echo $e->getTraceAsString();
 
-        }
+        $this->app->add('Model_Project')->load($project_id)->forceDelete();
+        $user->forceDelete();
+        $right->delete();
     }
 
 }

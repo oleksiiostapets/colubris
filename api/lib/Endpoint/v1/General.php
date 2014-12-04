@@ -38,13 +38,13 @@ class Endpoint_v1_General extends Endpoint_REST {
         if (!$current_user->loaded()) {
             return [
                 'result' => 'error',
-                'code'    => '5301', // :)
+                'code'    => '5300', // :)
                 'message' => 'User cannot be authorized'
             ];
         } else if (strtotime($current_user['lhash_exp']) <= strtotime(date('Y-m-d G:i:s', time()))) {
             return [
                 'result'  => 'error',
-                'code'    => '5300', // :)
+                'code'    => '5301', // :)
                 'message' => 'User exist but lhash is out of date, get a new one.'
             ];
         }
@@ -187,12 +187,29 @@ class Endpoint_v1_General extends Endpoint_REST {
                     'error_message' => 'Record with the id '.$id.' was not found',
                 ];
             }
-            $this->model->prepareForUpdate($this->app->current_user);
+            try {
+                $this->model->prepareForUpdate($this->app->current_user);
+            } catch (Exception_API_CannotEdit $e) {
+                return [
+                    'result' => 'error',
+                    'code'    => '5312',
+                    'message' => 'User has ho right to update '.$this->model_class.' with ID='.$id,
+                ];
+            }
         }else{
-            $this->model->prepareForInsert($this->app->current_user);
+            try {
+                $this->model->prepareForInsert($this->app->current_user);
+            } catch (Exception_API_CannotAdd $e) {
+                return [
+                    'result' => 'error',
+                    'code'    => '5311',
+                    'message' => 'User has ho right to add '.$this->model_class,
+                ];
+            }
         }
         $this->model->set($all);
         $this->model->save();
+
         return [
             'result' => 'success',
             'data' => $this->model->get(),

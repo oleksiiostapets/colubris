@@ -141,34 +141,21 @@ class ApiUserTest extends PHPUnit_Framework_TestCase {
         Model_User_Right $no_rights,
         $res_failure
     ) {
-        try {
-            $this->cleanDB($user, $rights, $res_create->data->id);
+        $this->cleanDB($user, $rights, $res_create);
 
-            $this->assertEquals($res_success->result,'success');
-            $this->assertEquals($res_create->result,'success');
-            $this->assertEquals($res_failure,NULL);
-
-        } catch (Exception $e) {
-            echo $e->getMessage()."\n";
-            echo $e->getFile()."\n";
-            echo $e->getLine()."\n";
-            echo $e->getTraceAsString();
-
-        }
+        $this->assertObjectHasAttribute('result',$res_success);
+        $this->assertEquals($res_success->result,'success');
+        $this->assertObjectHasAttribute('result',$res_create);
+        $this->assertEquals($res_create->result,'success');
+        $this->assertEquals($res_failure,NULL);
     }
 
-    private function cleanDB(Model_User $user, Model_User_Right $rights, $created_user_id) {
-        try {
-            $rights->delete();
+    private function cleanDB(Model_User $user, Model_User_Right $rights, $res_create) {
+        $rights->delete();
+        $user->forceDelete();
+        if (is_object($res_create)) {
+            $user->load($res_create->data->id);
             $user->forceDelete();
-            $user->load($created_user_id);
-            $user->forceDelete();
-        } catch (Exception $e) {
-            echo $e->getMessage()."\n";
-            echo $e->getFile()."\n";
-            echo $e->getLine()."\n";
-            echo $e->getTraceAsString();
-
         }
     }
 
