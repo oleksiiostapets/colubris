@@ -89,7 +89,15 @@ class Endpoint_v1_General extends Endpoint_REST {
             $this->model->setLimit($this->count,$this->offset);
 //            $data = $this->model->getRowsForCurrentUser();
             if(method_exists($this->model,'prepareForSelect')){
-                $data = $this->model->prepareForSelect($this->app->current_user)->getRows();
+                try {
+                    $data = $this->model->prepareForSelect($this->app->current_user)->getRows();
+                } catch (Exception_API_CannotSee $e) {
+                    return [
+                        'result' => 'error',
+                        'code'    => '5310',
+                        'message' => 'User has ho right to update '.$this->model_class.' with ID='.$id,
+                    ];
+                }
             }else{
                 $data = $this->model->getRows();
             }
