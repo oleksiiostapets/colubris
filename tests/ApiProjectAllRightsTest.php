@@ -182,71 +182,78 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->app = $app;
 
         $hash = time();
+        $new_name = 'TestProject_'.$hash.'_Updated';
         $url = 'v1/project/saveParams&id='.$project_create_res->data[0]->id.'&lhash='.$user_login_res->hash->lhash;
-        $data = ['name' => 'TestProject_'.$hash.'_Updated'];
+        $data = ['name' => $new_name];
         $obj = json_decode($this->do_post_request($url,$data));
 
-        var_dump($obj);
+        // obj :: result
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'success','Result of creating a project is not successful');
+
+        // obj :: data
+        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after creating a project');
+        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on creating a project');
+
+        // obj :: data :: id
+        $this->assertObjectHasAttribute('id',$obj->data,'Returned data form API doesn\'t have ID');
+        // obj :: data :: name
+        $this->assertObjectHasAttribute('name',$obj->data,'Returned data form API doesn\'t have name field');
+        $this->assertTrue( ($obj->data->name==$new_name) ,'Name returned by API doesn\'t match setting name');
 
         return $obj;
     }
 
-//    /**
-//     * @depends testAddApp
-//     * @depends testCreateUser
-//     * @depends testCreatePermissions
-//     * @depends testApiLogin
-//     * @depends testGetProject
-//     */
-//    public function testDeleteProject(
-//        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_res, $project_res
-//    ) {
-//        $this->app = $app;
-//
-//        $url = 'v1/project/deleteById&id='.$project_res->data[0]->id.'&lhash='.$user_res->hash->lhash;
-//        $res = json_decode($this->do_get_request($url));
-//        return $res;
-//    }
-//
-//    /**
-//     * @depends testAddApp
-//     * @depends testCreateUser
-//     * @depends testGetProject
-//     * @depends testUpdateProject
-//     * @depends testDeleteProject
-//     * @depends testCreatePermissions
-//     */
-//    public function testAssumptions(
-//        App_CLI $app, Model_User $user, $project_get_res, $project_update_res, $project_del_res, Model_Mock_User_Right $right
-//    ) {
-//        $this->app = $app;
-//        $this->cleanDB($user,$project_get_res, $right);
-//
-//        $this->assertEquals($project_get_res->result,'success');
-//        $this->assertEquals($project_update_res->result,'success');
-//        $this->assertEquals($project_del_res->result,'success');
-//    }
+    /**
+     * @depends testAddApp
+     * @depends testCreateUser
+     * @depends testCreatePermissions
+     * @depends testApiLogin
+     * @depends testGetProject
+     * @depends testUpdateProject
+     */
+    public function testDeleteProject(
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $project_create_res, $project_update_res
+    ) {
+        $this->app = $app;
 
-//    /**
-//     * @depends testAddApp
-//     * @depends testCreateUser
-//     * @depends testCreatePermissions
-//     * @depends testApiLogin
-//     * @depends testCreateProject
-//     * @depends testGetProject
-//     * @depends testUpdateProject
-//     * @depends testDeleteProject
-//     */
-//    public function testCleanDB(
-//        App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res_obj,
-//        $create_project_res_obj, $get_project_res_obj, $update_project_res_obj, $delete_project_res_obj
-//    ) {
-//        $project_id = $project_res->data[0]->id;
-//
-//        $this->app->add('Model_Project')->load($project_id)->forceDelete();
-//        $user->forceDelete();
-//        $right->delete();
-//    }
+        $url = 'v1/project/deleteById&id='.$project_create_res->data[0]->id.'&lhash='.$user_login_res->hash->lhash;
+        $obj = json_decode($this->do_get_request($url));
+
+        // obj :: result
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'success','Result of creating a project is not successful');
+
+        // obj :: deleted_record_id
+        $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a project');
+
+        return $obj;
+    }
+
+    /**
+     * @depends testAddApp
+     * @depends testCreateUser
+     * @depends testCreatePermissions
+     * @ depends testApiLogin
+     * @depends testCreateProject
+     * @ depends testGetProject
+     * @ depends testUpdateProject
+     * @ depends testDeleteProject
+     */
+    public function testCleanDB(
+        App_CLI $app, Model_User $user, Model_User_Right $rights, /*$login_res,*/
+        $create_project_res/*, $get_project_res, $update_project_res, $delete_project_res*/
+    ) {
+        $this->app = $app;
+
+        $project_id = $create_project_res->data->id;
+
+        $this->app->add('Model_Project')->load($project_id)->forceDelete();
+        $user->forceDelete();
+        $rights->delete();
+    }
 
 }
 

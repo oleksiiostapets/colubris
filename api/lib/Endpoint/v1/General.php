@@ -110,7 +110,8 @@ class Endpoint_v1_General extends Endpoint_REST {
             ];
         }catch(Exception $e){
             return[
-                'result' => 'error',
+                'result'  => 'error',
+                'code'    => '5399',
                 'error_message'   => $e->getMessage(),
             ];
         }
@@ -149,7 +150,8 @@ class Endpoint_v1_General extends Endpoint_REST {
             ];
         }catch(Exception $e){
             return [
-                'result' => 'error',
+                'result'  => 'error',
+                'code'    => '5399',
                 'error_message'   => $e->getMessage(),
             ];
         }
@@ -168,11 +170,19 @@ class Endpoint_v1_General extends Endpoint_REST {
             $this->model->prepareForDelete($this->app->current_user);
             $this->model->delete($id);
             return [
-                'result' => 'success',
+                'result'            => 'success',
+                'deleted_record_id' => $id,
             ];
-        }catch(Exception $e){
+        } catch (Exception_API_CannotDelete $e) {
+            return [
+                'result'  => 'error',
+                'code'    => '5313',
+                'error_message'   => $e->getMessage(),
+            ];
+        } catch (Exception $e) {
             return [
                 'result' => 'error',
+                'code'    => '5399',
                 'error_message'   => $e->getMessage(),
             ];
         }
