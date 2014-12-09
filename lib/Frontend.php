@@ -8,6 +8,7 @@ class Frontend extends ApiFrontend {
     }
     function init() {
         parent::init();
+
         $this->checkCookies();
 
         if(strtolower($this->page)=='logout'){
@@ -60,6 +61,9 @@ class Frontend extends ApiFrontend {
 
         $view_header = $this->layout->add('View',null,'Header_Content',array('view/header'));
 
+        if($this->getConfig('live_database')){
+            $this->layout->add('View_Warning')->set('Colubris is working on live database. Be careful. Some functions may not work. If you get any error please send it to konstantin@agile55.com');
+        }
         if($this->currentUser()){
             $view_header->add('MyMenu',null,'Main_Menu');
 
