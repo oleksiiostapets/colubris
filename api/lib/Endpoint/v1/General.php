@@ -95,7 +95,7 @@ class Endpoint_v1_General extends Endpoint_REST {
                     return [
                         'result' => 'error',
                         'code'    => '5310',
-                        'message' => 'User has ho right to update '.$this->model_class.' with ID='.$id,
+                        'message' => 'User has ho right to see '.$this->model_class,
                     ];
                 }
             }else{
