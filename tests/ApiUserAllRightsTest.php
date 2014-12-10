@@ -120,37 +120,70 @@ class ApiUserAllRightsTest extends PHPUnit_Framework_TestCase {
         return $obj;
     }
 
+    /**
+     * @depends testAddApp
+     * @depends testApiLogin
+     * @depends testApiCreateUser
+     */
+    public function testGetUser(
+        App_CLI $app, $user_login_res, $create_object_res
+    ) {
+        $this->app = $app;
 
-//    /**
-//     * @depends testAddApp
-//     * @depends testCreateUser
-//     * @depends testCreatePermissions
-//     * @depends testApiLogin
-//     * @depends testApiCreateUser
-//     */
-//    public function testDeleteUser(
-//        App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res_success, $user_create_success
-//    ) {
-//        $this->app = $app;
-//
-//        $url = 'v1/project/deleteById&id='.$user_create_success->data[0]->id.'&lhash='.$login_res_success->hash->lhash;
-//        $obj = json_decode($this->do_get_request($url));
-//
-//        // obj :: result
-//        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
-//        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
-//        $this->assertEquals($obj->result,'success','Result of deleting a project is not successful');
-//
-//        // obj :: deleted_record_id
-//        $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a project');
-//
-//
-//        // try if project was SOFT deleted
-//        $pr = $this->app->add('Model_Project')->load($user_create_success->data[0]->id);
-//        $this->assertTrue($pr['is_deleted']==1,'Project SOFT delete not working properly');
-//
-//        return $obj;
-//    }
+        $url = 'v1/user/getById&id='.$create_object_res->data->id.'&lhash='.$user_login_res->hash->lhash;
+        $obj = json_decode($this->do_get_request($url));
+
+        // obj :: result
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after getting a user');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'success','Result of getting a user is not successful');
+
+        // obj :: data
+        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after getting a user');
+        $this->assertTrue(is_array($obj->data),'Data is not an array after convertation of API respond on getting a user');
+
+        // obj :: data[0]
+        $this->assertTrue(isset($obj->data[0]),'Data do not contain user');
+        $this->assertTrue( (count($obj->data)==1),'There is more then one user in API respond on getting a user by ID');
+        $this->assertTrue(is_a($obj->data[0],'stdClass'),'Data[0] is not an object of class stdClass after convertation of API respond on getting a user by ID');
+
+        // obj :: data :: id
+        $this->assertObjectHasAttribute('id',$obj->data[0],'Returned data form API doesn\'t have ID');
+
+        return $obj;
+    }
+
+
+    /**
+     * @depends testAddApp
+     * @depends testCreateUser
+     * @depends testCreatePermissions
+     * @depends testApiLogin
+     * @depends testGetUser
+     */
+    public function testDeleteUser(
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res_success, $user_get_success
+    ) {
+        $this->app = $app;
+
+        $url = 'v1/user/deleteById&id='.$user_get_success->data[0]->id.'&lhash='.$login_res_success->hash->lhash;
+        $obj = json_decode($this->do_get_request($url));
+
+        // obj :: result
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'success','Result of deleting a project is not successful');
+
+        // obj :: deleted_record_id
+        $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a project');
+
+
+        // try if project was SOFT deleted
+        $us = $this->app->add('Model_User')->load($user_get_success->data[0]->id);
+        $this->assertTrue($us['is_deleted']==1,'User SOFT delete not working properly');
+
+        return $obj;
+    }
 
     /**
      * @depends testAddApp
@@ -158,11 +191,11 @@ class ApiUserAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testCreatePermissions
      * @depends testApiLogin
      * @depends testApiCreateUser
-     * @ depends testDeleteUser
+     * @depends testDeleteUser
      */
     public function testCleanDB(
         App_CLI $app, Model_User $user, Model_User_Right $rights,
-        $res_success, $res_create/*, $res_delete*/
+        $res_success, $res_create, $res_delete
     ) {
 
         $this->app = $app;
