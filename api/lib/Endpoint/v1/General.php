@@ -39,7 +39,7 @@ class Endpoint_v1_General extends Endpoint_REST {
             echo json_encode( [
                 'result' => 'error',
                 'code'    => '5399',
-                'error_message'   => $e->getTraceAsString(),
+                'error_message'   => $e->getMessage(),
             ]);exit;
         }
         return $m;
