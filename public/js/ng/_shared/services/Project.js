@@ -72,6 +72,7 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
             this.backupProject(index);
             $rootScope.$broadcast('project.update', service.projects[index]);
             $rootScope.$broadcast('form.to_fixed_position',service.projects[index]);
+            console.log('------> edit');
         },
 
         cancel: function() {
@@ -81,6 +82,7 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
             $rootScope.$broadcast('project.update', {});
             $rootScope.$broadcast( 'projects.update' );
             $rootScope.$broadcast('form.to_regular_place');
+            console.log('------> cancel');
         },
 
         getFromServer: function(field,value) {
@@ -119,7 +121,6 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
         backupProject: function(index) {
             current_index = index;
             service.projects[index].backup = angular.copy( service.projects[index]);
-            console.log(service.projects[current_index].backup);
         },
 
         resetbackupProject: function() {

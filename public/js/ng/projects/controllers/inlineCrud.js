@@ -45,10 +45,12 @@ app_module.controller(
                 Project.getFromServer();
             });
             $scope.$on( 'project.update', function( event, args ) {
+                console.log('---->project.update');
                 $scope.project = args;
                 if(!$scope.project.hasOwnProperty('id') && $scope.quotes.length){
                     Quote.clear();
                 }
+                console.log('---->project.update');
             });
             $scope.$on( 'projects.update', function( event ) {
                 $scope.projects = Project.projects;
