@@ -1,5 +1,5 @@
 <?php
-class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
+class ApiQuoteSeeRightTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Post;
     use Trait_Temp_Proxy;
@@ -61,7 +61,7 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
         //$m->set = true;
         $m
             ->set('user_id',$user['id'])
-            ->set('right','can_see_quotes,can_add_quote,can_edit_quote,can_delete_quote,can_submit_for_quotation')
+            ->set('right','can_see_quotes')
             ->save()
         ;
 
@@ -147,16 +147,18 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
         $obj = json_decode($this->do_post_request($url,$data));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a quote');
         $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of creating a project is not successful');
+        $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
 
-        // obj :: data
-        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after creating a project');
-        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on creating a project');
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after creating a quote');
+        $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5311','Result of request has unexpected "code" value');
 
-        // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'Returned data form API doesn\'t have ID');
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after creating a quote');
+        $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
 
         return $obj;
     }
@@ -164,14 +166,25 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
     /**
      * @depends testAddApp
      * @depends testApiLogin
-     * @depends testCreateQuote
+     * @depends testCreateProject
      */
     public function testGetQuote(
-        App_CLI $app, $user_login_res, $create_object_res
+        App_CLI $app, $user_login_res, $project
     ) {
         $this->app = $app;
 
-        $url = 'v1/quote/getById&id='.$create_object_res->data->id.'&lhash='.$user_login_res->hash->lhash;
+        // create quote
+        $hash = time();
+        $q = $app->add('Model_Quote');
+        $q
+            ->set('name','TestQuote_ApiQuoteAllRightsTest_'.$hash)
+            ->set('project_id',$project->id)
+            ->save()
+        ;
+        $this->assertObjectHasAttribute('id',$q,'Saved Quote doesn\'t have ID');
+        $this->assertTrue(!is_null($q->id),'Saved Quote doesn\'t have ID');
+
+        $url = 'v1/quote/getById&id='.$q->id.'&lhash='.$user_login_res->hash->lhash;
         $obj = json_decode($this->do_get_request($url));
 
         // obj :: result
@@ -191,7 +204,7 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
         // obj :: data :: id
         $this->assertObjectHasAttribute('id',$obj->data[0],'Returned data form API doesn\'t have ID');
 
-        return $obj;
+        return $q;
     }
 
     /**
@@ -202,30 +215,29 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testGetQuote
      */
     public function testUpdateQuote(
-        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $quote_create_res
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $quote
     ) {
         $this->app = $app;
 
         $hash = time();
         $new_name = 'TestQuote_'.$hash.'_Updated_'.$hash;
-        $url = 'v1/quote/saveParams&id='.$quote_create_res->data[0]->id.'&lhash='.$user_login_res->hash->lhash;
+        $url = 'v1/quote/saveParams&id='.$quote->id.'&lhash='.$user_login_res->hash->lhash;
         $data = ['name' => $new_name];
         $obj = json_decode($this->do_post_request($url,$data));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a project');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a quote');
         $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of updating a project is not successful');
+        $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
 
-        // obj :: data
-        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after updating a project');
-        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on updating a project');
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after updating a quote');
+        $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5312','Result of request has unexpected "code" value');
 
-        // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'Returned data form API doesn\'t have ID');
-        // obj :: data :: name
-        $this->assertObjectHasAttribute('name',$obj->data,'Returned data form API doesn\'t have name field');
-        $this->assertTrue( ($obj->data->name==$new_name) ,'Name returned by API doesn\'t match setting name');
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after updating a quote');
+        $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
 
         return $obj;
     }
@@ -239,25 +251,26 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testUpdateQuote
      */
     public function testDeleteQuote(
-        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $quote_create_res, $quote_update_res
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $quote, $quote_update_res
     ) {
         $this->app = $app;
 
-        $url = 'v1/quote/deleteById&id='.$quote_create_res->data[0]->id.'&lhash='.$user_login_res->hash->lhash;
+        $url = 'v1/quote/deleteById&id='.$quote->id.'&lhash='.$user_login_res->hash->lhash;
         $obj = json_decode($this->do_get_request($url));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after deleting a quote');
         $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of deleting a project is not successful');
+        $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
 
-        // obj :: deleted_record_id
-        $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a project');
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after deleting a quote');
+        $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5313','Result of request has unexpected "code" value');
 
-
-        // try if project was SOFT deleted
-        $pr = $this->app->add('Model_Quote')->load($quote_create_res->data[0]->id);
-        $this->assertTrue($pr['is_deleted']==1,'Project SOFT delete not working properly');
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after deleting a quote');
+        $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
 
         return $obj;
     }
@@ -269,20 +282,18 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
      * @ depends testApiLogin
      * @depends testCreateProject
      * @depends testCreateQuote
-     * @ depends testGetProject
-     * @ depends testUpdateProject
+     * @depends testGetQuote
+     * @depends testUpdateQuote
      * @depends testDeleteQuote
      */
     public function testCleanDB(
         App_CLI $app, Model_User $user, Model_User_Right $rights, /*$login_res,*/
-        $test_project,$create_quote_res/*, $get_project_res, $update_project_res*/, $del_quote_res
+        $test_project,$create_quote_res, $quote, $update_res, $delete_res
     ) {
 
         $this->app = $app;
 
-        $quote_id = $create_quote_res->data->id;
-
-        $this->app->add('Model_Quote')->load($quote_id)->forceDelete();
+        $quote->forceDelete();
         $test_project->forceDelete();
         $user->forceDelete();
         $rights->delete();
