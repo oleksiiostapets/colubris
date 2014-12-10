@@ -39,7 +39,7 @@ class Endpoint_v1_General extends Endpoint_REST {
             echo json_encode( [
                 'result' => 'error',
                 'code'    => '5399',
-                'error_message'   => $e->getMessage(),
+                'error_message'   => $e->getTraceAsString(),
             ]);exit;
         }
         return $m;
@@ -197,9 +197,9 @@ class Endpoint_v1_General extends Endpoint_REST {
             ];
         } catch (Exception $e) {
             return [
-                'result' => 'error',
+                'result'  => 'error',
                 'code'    => '5399',
-                'message'   => $e->getMessage(),
+                'message' => 'deleteById '.$e->getMessage(),
             ];
         }
     }

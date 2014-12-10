@@ -222,7 +222,7 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
         // obj :: result
         $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
         $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of creating a project is not successful');
+        $this->assertEquals($obj->result,'success','Result of deleting a project is not successful');
 
         // obj :: deleted_record_id
         $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a project');
@@ -238,12 +238,13 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testCreateProject
      * @ depends testGetProject
      * @ depends testUpdateProject
-     * @ depends testDeleteProject
+     * @depends testDeleteProject
      */
     public function testCleanDB(
         App_CLI $app, Model_User $user, Model_User_Right $rights, /*$login_res,*/
-        $create_project_res/*, $get_project_res, $update_project_res, $delete_project_res*/
+        $create_project_res/*, $get_project_res, $update_project_res*/, $delete_project_res
     ) {
+
         $this->app = $app;
 
         $project_id = $create_project_res->data->id;

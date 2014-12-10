@@ -5,7 +5,7 @@ class Model_BaseTable extends Model_Table {
         if(!$this->loaded())throw $this->exception('Unable to determine which record to delete');
 
 //        $this->hook('beforeDelete',array($this->_dsql()));
-        $this->set('is_deleted',1)->save();
+        $this->set('is_deleted',1)->saveAndUnload();
 //        $this->hook('afterDelete');
 
         return $this;
