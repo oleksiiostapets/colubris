@@ -121,16 +121,48 @@ class ApiUserAllRightsTest extends PHPUnit_Framework_TestCase {
     }
 
 
+//    /**
+//     * @depends testAddApp
+//     * @depends testCreateUser
+//     * @depends testCreatePermissions
+//     * @depends testApiLogin
+//     * @depends testApiCreateUser
+//     */
+//    public function testDeleteUser(
+//        App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res_success, $user_create_success
+//    ) {
+//        $this->app = $app;
+//
+//        $url = 'v1/project/deleteById&id='.$user_create_success->data[0]->id.'&lhash='.$login_res_success->hash->lhash;
+//        $obj = json_decode($this->do_get_request($url));
+//
+//        // obj :: result
+//        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
+//        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+//        $this->assertEquals($obj->result,'success','Result of deleting a project is not successful');
+//
+//        // obj :: deleted_record_id
+//        $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a project');
+//
+//
+//        // try if project was SOFT deleted
+//        $pr = $this->app->add('Model_Project')->load($user_create_success->data[0]->id);
+//        $this->assertTrue($pr['is_deleted']==1,'Project SOFT delete not working properly');
+//
+//        return $obj;
+//    }
+
     /**
      * @depends testAddApp
      * @depends testCreateUser
      * @depends testCreatePermissions
      * @depends testApiLogin
      * @depends testApiCreateUser
+     * @ depends testDeleteUser
      */
     public function testCleanDB(
         App_CLI $app, Model_User $user, Model_User_Right $rights,
-        $res_success, $res_create
+        $res_success, $res_create/*, $res_delete*/
     ) {
 
         $this->app = $app;

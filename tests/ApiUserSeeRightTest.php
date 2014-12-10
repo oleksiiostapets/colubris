@@ -123,6 +123,9 @@ class ApiUserSeeRightTest extends PHPUnit_Framework_TestCase {
     }
 
 
+    // TODO test for deleting user with no rights to delete
+
+
     /**
      * @depends testAddApp
      * @depends testCreateUser
