@@ -66,7 +66,7 @@ table {
 .floating-form {
     display: none;
     position: relative;
-    .close, .close-time {
+    .close, .close-time, .delete-comment {
         display: none;
     }
     .comments {
@@ -146,10 +146,10 @@ table {
         cursor: pointer;
         z-index: 10;
     }
-    .close:hover, .close-time:hover {
+    .close:hover, .close-time:hover, .delete-comment:hover {
         color:red;
     }
-    .close-time{
+    .close-time, .delete-comment{
         position: absolute;
         right: 10px;
         display: block;

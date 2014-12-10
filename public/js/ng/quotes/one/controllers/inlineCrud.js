@@ -158,7 +158,7 @@ app_module.controller(
             $scope.toggle = function(show,hide) {
                 $('#'+show).removeClass('ui-helper-hidden');
                 $('#'+hide).addClass('ui-helper-hidden');
-            }
+            };
 
             $scope.toggleIsIncluded = function(args){
                 var reqv = angular.copy(args);

@@ -23,6 +23,7 @@ class page_quotes_one extends Page {
         $this->app->jquery->addStaticInclude('ng/quotes/one/directives/requirementForm');
         $this->app->jquery->addStaticInclude('ng/quotes/one/directives/isIncluded');
 //        $this->app->jquery->addStaticInclude('ng/quotes/one/services/Quote');
+        $this->app->jquery->addStaticInclude('ng/_shared/directives/ngConfirmClick');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Quote');
         $this->app->jquery->addStaticInclude('ng/_shared/services/User');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Comment');

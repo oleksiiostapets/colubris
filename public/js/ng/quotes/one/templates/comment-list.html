@@ -1,8 +1,8 @@
 <h4>Comments:</h4>
-<div class="atk-box-small" ng-repeat="comm in comments track by $index">
+<div class="atk-box-small" ng-repeat="comm in comments track by $index" style="position: relative">
+    <div id="delete-comment-button" class="icon-cancel-circled delete-comment" ng-click="Comment.delete(comm.id)" style="{{comm.allow_del_css}}"></div>
     <div class="atk-push-small">
-        <span style="{{comm.html_style}}"><button ng-click="Comment.delete(comm.id)" class="atk-swatch-green atk-button-small atk-button" >Delete</button></span>
-        <span class="atk-label atk-effect-info">{{$index}} (#{{comm.id}})</span>
+        <span class="atk-label atk-effect-info">{{$index+1}} (#{{comm.id}})</span>
         <span class="atk-label">
             <img src="{{comm.user_avatar_thumb}}" class="requirement-avatar" alt="Avatar" />
         </span>

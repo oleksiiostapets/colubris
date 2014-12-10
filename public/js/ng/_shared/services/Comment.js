@@ -78,7 +78,9 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
                 function(obj) {
                     // Delete button
                     $.each(obj.data, function(index, value) {
-                        if(obj.data[index].user_id != app_module.user_id) obj.data[index].html_style = "display:none;"; else obj.data[index].html_style = "";
+                        if(value.user_id != app_module.user_id) {
+                            obj.data[index]['allow_del_css'] = 'display: none;';
+                        }
                     });
                     service.comments = obj.data;
                     console.log(service.comments);

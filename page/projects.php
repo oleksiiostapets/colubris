@@ -18,12 +18,14 @@ class page_projects extends Page {
         ),'bread_crumb');
     }
     protected function addNgJs() {
-        $this->app->jquery->addStaticInclude('ng/vendor/angularjs');
+        $this->app->jquery->addStaticInclude('ng/vendor/angular.min');
+        $this->app->jquery->addStaticInclude('ng/vendor/angular-route.min');
+        $this->app->jquery->addStaticInclude('ng/vendor/angular-xeditable/js/xeditable.min');
         $this->app->jquery->addStaticInclude('ng/projects/app');
         $this->app->jquery->addStaticInclude('ng/projects/controllers/inlineCrud');
-        $this->app->jquery->addStaticInclude('ng/_shared/directives/ngConfirmClick');
         $this->app->jquery->addStaticInclude('ng/projects/directives/inlineCrud');
         $this->app->jquery->addStaticInclude('ng/projects/directives/projectForm');
+        $this->app->jquery->addStaticInclude('ng/_shared/directives/ngConfirmClick');
         $this->app->jquery->addStaticInclude('ng/_shared/services/API');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Project');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Quote');
