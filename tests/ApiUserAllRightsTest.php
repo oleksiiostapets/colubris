@@ -1,5 +1,5 @@
 <?php
-class ApiUserTest extends PHPUnit_Framework_TestCase {
+class ApiUserAllRightsTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Post;
     use Trait_Temp_Proxy;
@@ -70,9 +70,26 @@ class ApiUserTest extends PHPUnit_Framework_TestCase {
 
         $url = 'v1/auth/login/';
         $data = array('u'=>$user['email'],'p'=>'123123');
-        $res = json_decode($this->do_post_request($url,$data));
+        $obj = json_decode($this->do_post_request($url,$data));
 
-        return $res;
+        // obj :: result
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after login');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'success','Result of login is not successful');
+
+        // obj :: hash
+        $this->assertObjectHasAttribute('hash',$obj,'');
+        $this->assertTrue(is_a($obj->hash,'stdClass'),'Hash is not an object of class stdClass after convertation of API respond on user login');
+
+        // obj :: hash :: lhash
+        $this->assertObjectHasAttribute('lhash',$obj->hash,'No lhash is returned form API after login');
+        $this->assertTrue(is_string($obj->hash->lhash),'lhash was converted not to string by json_encode()');
+
+        // obj :: hash :: lhash_exp
+        $this->assertObjectHasAttribute('lhash_exp',$obj->hash,'No lhash_exp is returned form API after login');
+        $this->assertTrue(is_string($obj->hash->lhash_exp),'lhash_exp was converted not to string by json_encode()');
+
+        return $obj;
     }
 
     /**
@@ -81,48 +98,28 @@ class ApiUserTest extends PHPUnit_Framework_TestCase {
      * @depends testCreatePermissions
      * @depends testApiLogin
      */
-    public function testApiCreateUser(App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res)
+    public function testApiCreateUser(App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res_success)
     {
         $this->app = $app;
-        $url = 'v1/user/saveParams&lhash='.$login_res->hash->lhash;
+        $url = 'v1/user/saveParams&lhash='.$login_res_success->hash->lhash;
         $data = array('name'=>'TestUser2_'.time(),'email'=>'email2_'.time().'@test.com','p'=>'123123');
-        $res = json_decode($this->do_post_request($url,$data));
+        $obj = json_decode($this->do_post_request($url,$data));
 
-        return $res;
+        // obj :: result
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a user');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'success','Result of creating a user is not successful');
+
+        // obj :: data
+        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after creating a user');
+        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on creating a user');
+
+        // obj :: data :: id
+        $this->assertObjectHasAttribute('id',$obj->data,'Returned data form API doesn\'t have ID');
+
+        return $obj;
     }
 
-    /**
-     * @depends testAddApp
-     * @depends testCreateUser
-     * @depends testCreatePermissions
-     */
-    public function testRemovePermissions(App_CLI $app, Model_User $user, Model_Mock_User_Right $r)
-    {
-        $this->app = $app;
-        $this->user = $user;
-
-        $r
-            ->set('right','')
-            ->save()
-        ;
-        return $r;
-    }
-
-    /**
-     * @depends testAddApp
-     * @depends testCreateUser
-     * @depends testCreatePermissions
-     * @depends testApiLogin
-     */
-    public function testApiCreateUserWithoutPermissions(App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res)
-    {
-        $this->app = $app;
-        $url = 'v1/user/saveParams&lhash='.$login_res->hash->lhash;
-        $data = array('name'=>'TestUser3_'.time(),'email'=>'email3_'.time().'@test.com','p'=>'123123');
-        $res = json_decode($this->do_post_request($url,$data));
-
-        return $res;
-    }
 
     /**
      * @depends testAddApp
@@ -130,27 +127,14 @@ class ApiUserTest extends PHPUnit_Framework_TestCase {
      * @depends testCreatePermissions
      * @depends testApiLogin
      * @depends testApiCreateUser
-     * @depends testRemovePermissions
-     * @depends testApiCreateUserWithoutPermissions
-     *
-     * @ expectedException PHPUnit_Framework_ExpectationFailedException
      */
-    public function testAssumptions(
+    public function testCleanDB(
         App_CLI $app, Model_User $user, Model_User_Right $rights,
-        $res_success, $res_create,
-        Model_User_Right $no_rights,
-        $res_failure
+        $res_success, $res_create
     ) {
-        $this->cleanDB($user, $rights, $res_create);
 
-        $this->assertObjectHasAttribute('result',$res_success);
-        $this->assertEquals($res_success->result,'success');
-        $this->assertObjectHasAttribute('result',$res_create);
-        $this->assertEquals($res_create->result,'success');
-        $this->assertEquals($res_failure,NULL);
-    }
+        $this->app = $app;
 
-    private function cleanDB(Model_User $user, Model_User_Right $rights, $res_create) {
         $rights->delete();
         $user->forceDelete();
         if (is_object($res_create)) {
