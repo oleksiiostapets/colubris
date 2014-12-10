@@ -41,7 +41,7 @@
                 <!--<td>{{rreqv.is_deleted}}</td>-->
                 <td class="atk-text-nowrap">
                     <button class="atk-button" ng-click="Requirement.edit($index)">Edit</button>
-                    <button class="atk-button atk-effect-danger" ng-click="Requirement.remove($index)">Delete</button>
+                    <button class="atk-button atk-effect-danger" ng-confirm-click="Are you sure?" confirmed-click="Requirement.remove($index)">Delete</button>
                 </td>
             </tr>
             </tbody>

@@ -83,7 +83,7 @@ class Model_Reqcomment extends Model_Auditable {
         $fields = ['id'];
 
         if($r->canAddCommentToRequirement($u['id'])){
-            $fields = array('id','requirement_id','user_id','text','file_id','created_dts','is_deleted','deleted_id',
+            $fields = array('id','requirement_id','user_id','user','text','file_id','created_dts','is_deleted','deleted_id',
                 'user_avatar_thumb');
         }else{
             throw $this->exception('This User cannot see comments','API_CannotSee');
