@@ -1,6 +1,6 @@
 <h3>Time:</h3>
 <div class="atk-box-small" ng-repeat="time in times track by $index" style="position: relative">
-    <div id="close-time-button" class="icon-cancel-circled close-time" ng-click="Time.remove(time.id)" style="{{time.allow_del_css}}"></div>
+    <div id="close-time-button" class="icon-cancel-circled close-time" ng-click="Time.remove(time.id,task)" style="{{time.allow_del_css}}"></div>
     <div class="atk-cells atk-push small">
         <div class="atk-cell atk-valign-top">
             <div class="atk-label atk-effect-info">{{$index+1}} (ID#{{time.id}})</div>

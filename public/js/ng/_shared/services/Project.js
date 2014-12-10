@@ -111,6 +111,11 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
             );
         },
 
+        showForm: function(index) {
+            console.log('------> Show');
+            $rootScope.$broadcast('form.to_fixed_position',service.projects[index]);
+        },
+
         backupProject: function(index) {
             current_index = index;
             service.projects[index].backup = angular.copy( service.projects[index]);

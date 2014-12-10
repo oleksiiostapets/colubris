@@ -36,7 +36,7 @@ app_module.service( 'Time', [ '$rootScope','$http', 'API', function( $rootScope,
         save: function ( time, task ) {
             this.saveOnServer(time,task);
         },
-        remove: function(id) {
+        remove: function(id,task) {
             try {
                 API.removeOne(
                     'time',
@@ -44,7 +44,8 @@ app_module.service( 'Time', [ '$rootScope','$http', 'API', function( $rootScope,
                     {id:id},
                     function(obj) {
                         if (obj.result === 'success') {
-                            $rootScope.$broadcast( 'times.update' );
+                            $rootScope.$broadcast( 'times.update');
+                            $rootScope.$broadcast('times.need_update', task );
                         } else {
                             console.log(obj);
                             alert('Error! No success message received.');

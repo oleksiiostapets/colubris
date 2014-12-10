@@ -13,11 +13,13 @@ app_module.directive('clientForm', function factory($q,$http, $templateCache, $c
         scope.$on( 'form.to_fixed_position', function( event, client, project ) {
             console.log('form.to_fixed_position');
             element.addClass('fixed');
-            console.log(client);
-            console.log('===========' + project);//TODO undefined
+            //console.log(client);
+            //console.log('===========' + project);//TODO undefined
 
-            scope.Client.getFromServer(client.id);
-            scope.Project.getFromServer('client_id',client.id);
+            if(client){
+                scope.Client.getFromServer(client.id);
+                scope.Project.getFromServer('client_id',client.id);
+            }
             if(project) {
                 scope.Quote.getFromServerByProject(project);
             }

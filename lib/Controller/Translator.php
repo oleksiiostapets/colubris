@@ -1,6 +1,7 @@
 <?php
 class Controller_Translator extends Controller {
     function __($string) {
+        if(gettype($string) != 'string' || gettype($string) != 'integer') return $string;
         if (array_key_exists($string,$this->translations)) {
             $string = $this->translations[$string];
         }

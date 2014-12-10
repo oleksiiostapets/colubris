@@ -29,6 +29,23 @@ class Endpoint_v1_General extends Endpoint_REST {
         $this->getParameter('method') ? $this->method = $this->getParameter('method') : $this->method = false;
     }
 
+    protected function _model()
+    {
+
+        try{
+            $m  = parent::_model();
+        }catch (Exception $e){
+            $this->app->logger->logCaughtException($e);
+            echo json_encode( [
+                'result' => 'error',
+                'code'    => '5399',
+                'error_message'   => $e->getMessage(),
+            ]);exit;
+        }
+        return $m;
+
+    }
+
     protected function checkAuth() {
         $lhash = $this->checkGetParameter('lhash');
         if (is_array($lhash)) {
@@ -95,13 +112,12 @@ class Endpoint_v1_General extends Endpoint_REST {
                     return [
                         'result' => 'error',
                         'code'    => '5310',
-                        'message' => 'User has ho right to see '.$this->model_class,
+                        'message' => 'User has no right to see '.$this->model_class,
                     ];
                 }
             }else{
                 $data = $this->model->getRows();
             }
-//            var_dump($data);
             $total_rows = $this->model->dsql()->foundRows();
             return [
                 'result' => 'success',

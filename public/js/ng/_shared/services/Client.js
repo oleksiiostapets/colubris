@@ -102,6 +102,10 @@ app_module.service( 'Client', [ '$rootScope','$http','API', function( $rootScope
                 }
             );
         },
+        showForm: function(index) {
+            console.log('------> Show');
+            $rootScope.$broadcast('form.to_fixed_position',service.clients[index]);
+        },
         backupClient: function(index) {
             current_index = index;
             service.clients[index].backup = angular.copy( service.clients[index]);

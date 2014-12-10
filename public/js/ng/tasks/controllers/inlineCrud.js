@@ -121,12 +121,13 @@ app_module.controller(
             });
 
             $scope.$on( 'times.update', function( event ) {
+                console.log('--->times.update');
                 $scope.times = Time.times;
                 $('#time_view textarea, #time_view input').val('');
                 $('#time_view input[type=checkbox]').attr('checked',false);
             });
-            $scope.$on( 'times.need_update', function( event, args ) {
-                Time.getFromServerByTask(args);
+            $scope.$on( 'times.need_update', function( event, task ) {
+                Time.getFromServerByTask(task);
             });
 
             $scope.$on( 'requirements.update', function( event ) {
