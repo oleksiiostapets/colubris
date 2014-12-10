@@ -227,6 +227,11 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
         // obj :: deleted_record_id
         $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a project');
 
+
+        // try if project was SOFT deleted
+        $pr = $this->app->add('Model_Project')->load($project_create_res->data[0]->id);
+        $this->assertTrue($pr['is_deleted']==1,'Project SOFT delete not working properly');
+
         return $obj;
     }
 
