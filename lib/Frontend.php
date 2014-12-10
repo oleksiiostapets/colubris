@@ -61,7 +61,8 @@ class Frontend extends ApiFrontend {
 
         $view_header = $this->layout->add('View',null,'Header_Content',array('view/header'));
 
-        if($this->getConfig('live_database')){
+        if($this->getConfig('live_database',false)){
+            $this->layout->add('View_Info')->setHtml('We are presenting new version of Colubris! If you are not satisfied please visit <a href="http://colubris.old.agile55.com/" title="Colubris" target="_blank">old version</a>');
             $this->layout->add('View_Warning')->set('Colubris is working on live database. Be careful. Some functions may not work. If you get any error please send it to konstantin@agile55.com');
         }
         if($this->currentUser()){
