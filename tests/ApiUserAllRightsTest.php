@@ -170,15 +170,15 @@ class ApiUserAllRightsTest extends PHPUnit_Framework_TestCase {
         $obj = json_decode($this->do_get_request($url));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a user');
         $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of deleting a project is not successful');
+        $this->assertEquals($obj->result,'success','Result of deleting a user is not successful');
 
         // obj :: deleted_record_id
-        $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a project');
+        $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a user');
 
 
-        // try if project was SOFT deleted
+        // try if user was SOFT deleted
         $us = $this->app->add('Model_User')->load($user_get_success->data[0]->id);
         $this->assertTrue($us['is_deleted']==1,'User SOFT delete not working properly');
 

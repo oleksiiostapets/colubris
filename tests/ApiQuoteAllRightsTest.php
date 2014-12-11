@@ -48,7 +48,7 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Add newly created user all permission for projects.
+     * Add newly created user all permission for quotes.
      *
      * @depends testAddApp
      * @depends testCreateUser
@@ -147,16 +147,16 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
         $obj = json_decode($this->do_post_request($url,$data));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
-        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of creating a project is not successful');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a quote');
+        $this->assertTrue(is_string($obj->result),'Quote. Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'success','Result of creating a quote is not successful');
 
         // obj :: data
-        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after creating a project');
-        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on creating a project');
+        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after creating a quote');
+        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on creating a quote');
 
         // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'Returned data form API doesn\'t have ID');
+        $this->assertObjectHasAttribute('id',$obj->data,'Quote. Returned data form API doesn\'t have ID');
 
         return $obj;
     }
@@ -175,21 +175,21 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
         $obj = json_decode($this->do_get_request($url));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after getting a project');
-        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of getting a project is not successful');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after getting a quote');
+        $this->assertTrue(is_string($obj->result),'Quote. Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'success','Result of getting a quote is not successful');
 
         // obj :: data
-        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after getting a project');
-        $this->assertTrue(is_array($obj->data),'Data is not an array after convertation of API respond on getting a project');
+        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after getting a quote');
+        $this->assertTrue(is_array($obj->data),'Data is not an array after convertation of API respond on getting a quote');
 
         // obj :: data[0]
-        $this->assertTrue(isset($obj->data[0]),'Data do not contain project');
-        $this->assertTrue( (count($obj->data)==1),'There is more then one project in API respond on getting a project by ID');
-        $this->assertTrue(is_a($obj->data[0],'stdClass'),'Data[0] is not an object of class stdClass after convertation of API respond on getting a project by ID');
+        $this->assertTrue(isset($obj->data[0]),'Data do not contain quote');
+        $this->assertTrue( (count($obj->data)==1),'There is more then one quote in API respond on getting a quote by ID');
+        $this->assertTrue(is_a($obj->data[0],'stdClass'),'Data[0] is not an object of class stdClass after convertation of API respond on getting a quote by ID');
 
         // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data[0],'Returned data form API doesn\'t have ID');
+        $this->assertObjectHasAttribute('id',$obj->data[0],'Quote. Returned data form API doesn\'t have ID');
 
         return $obj;
     }
@@ -213,19 +213,19 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
         $obj = json_decode($this->do_post_request($url,$data));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a project');
-        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of updating a project is not successful');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a quote');
+        $this->assertTrue(is_string($obj->result),'Quote. Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'success','Result of updating a quote is not successful');
 
         // obj :: data
-        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after updating a project');
-        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on updating a project');
+        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after updating a quote');
+        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on updating a quote');
 
         // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'Returned data form API doesn\'t have ID');
+        $this->assertObjectHasAttribute('id',$obj->data,'Quote. Returned data form API doesn\'t have ID');
         // obj :: data :: name
-        $this->assertObjectHasAttribute('name',$obj->data,'Returned data form API doesn\'t have name field');
-        $this->assertTrue( ($obj->data->name==$new_name) ,'Name returned by API doesn\'t match setting name');
+        $this->assertObjectHasAttribute('name',$obj->data,'Quote. Returned data form API doesn\'t have name field');
+        $this->assertTrue( ($obj->data->name==$new_name) ,'Quote. Name returned by API doesn\'t match setting name');
 
         return $obj;
     }
@@ -247,17 +247,17 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
         $obj = json_decode($this->do_get_request($url));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
-        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of deleting a project is not successful');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after deleting a quote');
+        $this->assertTrue(is_string($obj->result),'Quote. Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'success','Result of deleting a quote is not successful');
 
         // obj :: deleted_record_id
-        $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a project');
+        $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a quote');
 
 
-        // try if project was SOFT deleted
+        // try if quote was SOFT deleted
         $pr = $this->app->add('Model_Quote')->load($quote_create_res->data[0]->id);
-        $this->assertTrue($pr['is_deleted']==1,'Project SOFT delete not working properly');
+        $this->assertTrue($pr['is_deleted']==1,'Quote SOFT delete is not working properly');
 
         return $obj;
     }

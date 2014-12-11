@@ -116,12 +116,14 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $url = 'v1/project/saveParams&lhash='.$login_res_success->hash->lhash;
-        $data = ['name' => 'TestProject_ApiProjectAllRightsTest_'.$hash];
+        $data = [
+            'name' => 'TestProject_ApiProjectAllRightsTest_'.$hash
+        ];
         $obj = json_decode($this->do_post_request($url,$data));
 
         // obj :: result
         $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
-        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertTrue(is_string($obj->result),'Project. Result was converted not to string by json_encode()');
         $this->assertEquals($obj->result,'success','Result of creating a project is not successful');
 
         // obj :: data
@@ -129,7 +131,7 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on creating a project');
 
         // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'Returned data form API doesn\'t have ID');
+        $this->assertObjectHasAttribute('id',$obj->data,'Project. Returned data form API doesn\'t have ID');
 
         return $obj;
     }
@@ -149,7 +151,7 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
 
         // obj :: result
         $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after getting a project');
-        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertTrue(is_string($obj->result),'Project. Result was converted not to string by json_encode()');
         $this->assertEquals($obj->result,'success','Result of getting a project is not successful');
 
         // obj :: data
@@ -187,7 +189,7 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
 
         // obj :: result
         $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a project');
-        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertTrue(is_string($obj->result),'Project. Result was converted not to string by json_encode()');
         $this->assertEquals($obj->result,'success','Result of updating a project is not successful');
 
         // obj :: data
@@ -195,10 +197,10 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on updating a project');
 
         // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'Returned data form API doesn\'t have ID');
+        $this->assertObjectHasAttribute('id',$obj->data,'Project. Returned data form API doesn\'t have ID');
         // obj :: data :: name
-        $this->assertObjectHasAttribute('name',$obj->data,'Returned data form API doesn\'t have name field');
-        $this->assertTrue( ($obj->data->name==$new_name) ,'Name returned by API doesn\'t match setting name');
+        $this->assertObjectHasAttribute('name',$obj->data,'Project. Returned data form API doesn\'t have name field');
+        $this->assertTrue( ($obj->data->name==$new_name) ,'Project. Name returned by API doesn\'t match setting name');
 
         return $obj;
     }
@@ -220,8 +222,8 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
         $obj = json_decode($this->do_get_request($url));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a project');
-        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after deleting a project');
+        $this->assertTrue(is_string($obj->result),'Project. Result was converted not to string by json_encode()');
         $this->assertEquals($obj->result,'success','Result of deleting a project is not successful');
 
         // obj :: deleted_record_id
@@ -230,7 +232,7 @@ class ApiProjectAllRightsTest extends PHPUnit_Framework_TestCase {
 
         // try if project was SOFT deleted
         $pr = $this->app->add('Model_Project')->load($project_create_res->data[0]->id);
-        $this->assertTrue($pr['is_deleted']==1,'Project SOFT delete not working properly');
+        $this->assertTrue($pr['is_deleted']==1,'Project SOFT delete is not working properly');
 
         return $obj;
     }

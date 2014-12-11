@@ -104,8 +104,6 @@ class ApiProjectSeeRightTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     *
-     *
      * @depends testAddApp
      * @depends testCreateUser
      * @depends testCreatePermissions
@@ -118,7 +116,9 @@ class ApiProjectSeeRightTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $url = 'v1/project/saveParams&lhash='.$login_res_success->hash->lhash;
-        $data = ['name' => 'TestProject_ApiProjectSeeRightTest_'.$hash];
+        $data = [
+            'name' => 'TestProject_ApiProjectSeeRightTest_'.$hash
+        ];
         $obj = json_decode($this->do_post_request($url,$data));
 
         // obj :: result
@@ -140,14 +140,128 @@ class ApiProjectSeeRightTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @depends testAddApp
-     * @depends testCreateUser
-     * @depends testCreatePermissions
      * @depends testApiLogin
      * @depends testCreateProject
      */
-    public function testCleanDB(
-        App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res_obj, $create_project_res_obj
+    public function testGetProject(
+        App_CLI $app, $user_login_res, $project
     ) {
+        $this->app = $app;
+
+        // create project
+        $hash = time();
+        $q = $app->add('Model_Project');
+        $q
+            ->set('name','TestProject_ApiProjectSeeRightTest_'.$hash)
+            ->save()
+        ;
+        $this->assertObjectHasAttribute('id',$q,'Saved Project doesn\'t have ID');
+        $this->assertTrue(!is_null($q->id),'Saved Project doesn\'t have ID');
+
+        $url = 'v1/project/getById&id='.$q->id.'&lhash='.$user_login_res->hash->lhash;
+        $obj = json_decode($this->do_get_request($url));
+
+        // obj :: result
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after getting a Project');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'success','Result of getting a quote is not successful');
+
+        // obj :: data
+        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after getting a Project');
+        $this->assertTrue(is_array($obj->data),'Data is not an array after convertation of API respond on getting a Project');
+
+        // obj :: data[0]
+        $this->assertTrue(isset($obj->data[0]),'Data do not contain Project');
+        $this->assertTrue( (count($obj->data)==1),'There is more then one Project in API respond on getting a Project by ID');
+        $this->assertTrue(is_a($obj->data[0],'stdClass'),'Data[0] is not an object of class stdClass after convertation of API respond on getting a Project by ID');
+
+        // obj :: data :: id
+        $this->assertObjectHasAttribute('id',$obj->data[0],'Returned data form API doesn\'t have ID');
+
+        return $q;
+    }
+
+    /**
+     * @depends testAddApp
+     * @depends testCreateUser
+     * @depends testCreatePermissions
+     * @depends testApiLogin
+     * @depends testGetProject
+     */
+    public function testUpdateProject(
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $project
+    ) {
+        $this->app = $app;
+
+        $hash = time();
+        $new_name = 'TestProject_'.$hash.'_Updated_'.$hash;
+        $url = 'v1/project/saveParams&id='.$project->id.'&lhash='.$user_login_res->hash->lhash;
+        $data = ['name' => $new_name];
+        $obj = json_decode($this->do_post_request($url,$data));
+
+        // obj :: result
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a Project');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
+
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after updating a Project');
+        $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5312','Result of request has unexpected "code" value');
+
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after updating a Project');
+        $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
+
+        return $obj;
+    }
+
+    /**
+     * @depends testAddApp
+     * @depends testCreateUser
+     * @depends testCreatePermissions
+     * @depends testApiLogin
+     * @depends testGetProject
+     * @depends testUpdateProject
+     */
+    public function testDeleteProject(
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $project, $project_update_res
+    ) {
+        $this->app = $app;
+
+        $url = 'v1/project/deleteById&id='.$project->id.'&lhash='.$user_login_res->hash->lhash;
+        $obj = json_decode($this->do_get_request($url));
+
+        // obj :: result
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after deleting a project');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
+
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after deleting a project');
+        $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5313','Result of request has unexpected "code" value');
+
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after deleting a project');
+        $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
+
+        return $obj;
+    }
+
+    /**
+     * @depends testAddApp
+     * @depends testCreateUser
+     * @depends testCreatePermissions
+     * @ depends testApiLogin
+     * @depends testCreateProject
+     * @depends testGetProject
+     */
+    public function testCleanDB(
+        App_CLI $app, Model_User $user, Model_User_Right $rights, /*$login_res_obj,*/
+        $create_project_res_obj, $project
+    ) {
+        $project->forceDelete();
         $rights->delete();
         $user->forceDelete();
 
