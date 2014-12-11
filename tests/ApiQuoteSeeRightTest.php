@@ -215,7 +215,7 @@ class ApiQuoteSeeRightTest extends PHPUnit_Framework_TestCase {
      * @depends testGetQuote
      */
     public function testUpdateQuote(
-        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $quote
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, Model_Quote $quote
     ) {
         $this->app = $app;
 
@@ -251,7 +251,7 @@ class ApiQuoteSeeRightTest extends PHPUnit_Framework_TestCase {
      * @depends testUpdateQuote
      */
     public function testDeleteQuote(
-        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $quote, $quote_update_res
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, Model_Quote $quote, $quote_update_res
     ) {
         $this->app = $app;
 
@@ -288,7 +288,7 @@ class ApiQuoteSeeRightTest extends PHPUnit_Framework_TestCase {
      */
     public function testCleanDB(
         App_CLI $app, Model_User $user, Model_User_Right $rights, /*$login_res,*/
-        $test_project,$create_quote_res, $quote, $update_res, $delete_res
+        $test_project,$create_quote_res, Model_Quote $quote, $update_res, $delete_res
     ) {
 
         $this->app = $app;

@@ -48,7 +48,7 @@ class ApiProjectAddRightTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Add newly created user some permission to see projects only.
+     * Add newly created user some permission to add projects only.
      *
      * @depends testAddApp
      * @depends testCreateUser

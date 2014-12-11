@@ -1,5 +1,5 @@
 <?php
-class ApiQuoteAddRightTest extends PHPUnit_Framework_TestCase {
+class ApiRequirementAddRightTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Post;
     use Trait_Temp_Proxy;
@@ -48,7 +48,7 @@ class ApiQuoteAddRightTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Add newly created user some permission to add quotes only.
+     * Add newly created user some permission to add Requirements only.
      *
      * @depends testAddApp
      * @depends testCreateUser
@@ -61,7 +61,7 @@ class ApiQuoteAddRightTest extends PHPUnit_Framework_TestCase {
         //$m->set = true;
         $m
             ->set('user_id',$user['id'])
-            ->set('right','can_add_quote')
+            ->set('right','can_add_requirement')
             ->save()
         ;
 
@@ -139,24 +139,51 @@ class ApiQuoteAddRightTest extends PHPUnit_Framework_TestCase {
         $this->app = $app;
 
         $hash = time();
-        $url = 'v1/quote/saveParams&lhash='.$login_res_success->hash->lhash;
+        $m = $app->add('Model_Quote');
+        $m['name'] = 'TestQuote_ApiRequirementAllRightsTest_'.$hash;
+        $m['project_id'] = $project->id;
+        $m->save();
+
+        // obj :: data :: id
+        $this->assertObjectHasAttribute('id',$m,'Saved Project doesn\'t have ID');
+        $this->assertTrue(!is_null($m->id),'Saved Project doesn\'t have ID');
+
+        return $m;
+    }
+
+    /**
+     * @depends testAddApp
+     * @depends testCreateUser
+     * @depends testCreatePermissions
+     * @depends testApiLogin
+     * @depends testCreateProject
+     * @depends testCreateQuote
+     */
+    public function testCreateRequirement(
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res_success,
+        Model_Project $project, Model_Quote $quote
+    ) {
+        $this->app = $app;
+
+        $hash = time();
+        $url = 'v1/requirement/saveParams&lhash='.$login_res_success->hash->lhash;
         $data = [
-            'name'       => 'TestQuote_ApiQuoteAllRightsTest_'.$hash,
+            'name'       => 'TestRequirement_ApiRequirementAllRightsTest_'.$hash,
             'project_id' => $project->id,
         ];
         $obj = json_decode($this->do_post_request($url,$data));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a quote');
-        $this->assertTrue(is_string($obj->result),'quote. Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of creating a quote is not successful');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a Requirement');
+        $this->assertTrue(is_string($obj->result),'Requirement. Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'success','Result of creating a Requirement is not successful');
 
         // obj :: data
-        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after creating a quote');
-        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on creating a quote');
+        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after creating a Requirement');
+        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on creating a Requirement');
 
         // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'quote. Returned data form API doesn\'t have ID');
+        $this->assertObjectHasAttribute('id',$obj->data,'Requirement. Returned data form API doesn\'t have ID');
 
         return $obj;
     }
@@ -164,28 +191,28 @@ class ApiQuoteAddRightTest extends PHPUnit_Framework_TestCase {
     /**
      * @depends testAddApp
      * @depends testApiLogin
-     * @depends testCreateQuote
+     * @depends testCreateRequirement
      */
-    public function testGetQuote(
-        App_CLI $app, $user_login_res, $quote_res
+    public function testGetRequirement(
+        App_CLI $app, $user_login_res, $requirement_res
     ) {
         $this->app = $app;
 
-        $url = 'v1/quote/getById&id='.$quote_res->data->id.'&lhash='.$user_login_res->hash->lhash;
+        $url = 'v1/requirement/getById&id='.$requirement_res->data->id.'&lhash='.$user_login_res->hash->lhash;
         $obj = json_decode($this->do_get_request($url));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after getting a quote');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after getting a Requirement');
         $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
         $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
 
         // obj :: code
-        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after getting a quote');
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after getting a Requirement');
         $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
         $this->assertEquals($obj->code,'5310','Result of request has unexpected "code" value');
 
         // obj :: message
-        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after updating a quote');
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after updating a Requirement');
         $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
 
         return $obj;
@@ -196,31 +223,31 @@ class ApiQuoteAddRightTest extends PHPUnit_Framework_TestCase {
      * @depends testCreateUser
      * @depends testCreatePermissions
      * @depends testApiLogin
-     * @depends testCreateQuote
+     * @depends testCreateRequirement
      */
-    public function testUpdateQuote(
-        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $quote
+    public function testUpdateRequirement(
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $requirement
     ) {
         $this->app = $app;
 
         $hash = time();
-        $new_name = 'TestQuote_'.$hash.'_Updated_'.$hash;
-        $url = 'v1/quote/saveParams&id='.$quote->data->id.'&lhash='.$user_login_res->hash->lhash;
+        $new_name = 'TestRequirement_'.$hash.'_Updated_'.$hash;
+        $url = 'v1/requirement/saveParams&id='.$requirement->data->id.'&lhash='.$user_login_res->hash->lhash;
         $data = ['name' => $new_name];
         $obj = json_decode($this->do_post_request($url,$data));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a quote');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a Requirement');
         $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
         $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
 
         // obj :: code
-        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after updating a quote');
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after updating a Requirement');
         $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
         $this->assertEquals($obj->code,'5312','Result of request has unexpected "code" value');
 
         // obj :: message
-        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after updating a quote');
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after updating a Requirement');
         $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
 
         return $obj;
@@ -231,29 +258,29 @@ class ApiQuoteAddRightTest extends PHPUnit_Framework_TestCase {
      * @depends testCreateUser
      * @depends testCreatePermissions
      * @depends testApiLogin
-     * @depends testCreateQuote
-     * @depends testUpdateQuote
+     * @depends testCreateRequirement
+     * @depends testUpdateRequirement
      */
-    public function testDeleteQuote(
-        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $quote, $quote_update_res
+    public function testDeleteRequirement(
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $requirement, $Requirement_update_res
     ) {
         $this->app = $app;
 
-        $url = 'v1/quote/deleteById&id='.$quote->data->id.'&lhash='.$user_login_res->hash->lhash;
+        $url = 'v1/requirement/deleteById&id='.$requirement->data->id.'&lhash='.$user_login_res->hash->lhash;
         $obj = json_decode($this->do_get_request($url));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after deleting a quote');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after deleting a Requirement');
         $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
         $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
 
         // obj :: code
-        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after deleting a quote');
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after deleting a Requirement');
         $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
         $this->assertEquals($obj->code,'5313','Result of request has unexpected "code" value');
 
         // obj :: message
-        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after deleting a quote');
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after deleting a Requirement');
         $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
 
         return $obj;
@@ -264,17 +291,18 @@ class ApiQuoteAddRightTest extends PHPUnit_Framework_TestCase {
      * @depends testAddApp
      * @depends testCreateUser
      * @depends testCreatePermissions
-     * @ depends testApiLogin
      * @depends testCreateProject
      * @depends testCreateQuote
-     * @ depends testGetQuote
+     * @depends testCreateRequirement
+     * @ depends testGetRequirement
      */
     public function testCleanDB(
-        App_CLI $app, Model_User $user, Model_User_Right $rights
-        /*, $login_res_obj*/, $create_project_res_obj, $create_quote_res_obj /*, $quote*/
+        App_CLI $app, Model_User $user, Model_User_Right $rights, Model_Project $create_project,
+        Model_Quote $quote, $create_requirement_res_obj
     ) {
-        $app->add('Model_Quote')->load($create_quote_res_obj->data->id)->forceDelete();
-        $create_project_res_obj->forceDelete();
+        $app->add('Model_Requirement')->load($create_requirement_res_obj->data->id)->forceDelete();
+        $quote->forceDelete();
+        $create_project->forceDelete();
         $rights->delete();
         $user->forceDelete();
 
