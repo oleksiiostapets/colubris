@@ -79,7 +79,7 @@ class Model_Taskcomment extends Model_Auditable {
 		foreach($participated_in as $p){
 			$projects_ids[]=$p['id'];
 		}
-		$jt = $this->join('task.id','task_id','left','_t');
+		$jt = $this->leftJoin('task.id','task_id','left','_t');
 
 		$jt->addField('project_id','project_id');
 
@@ -92,7 +92,7 @@ class Model_Taskcomment extends Model_Auditable {
 		foreach($participated_in as $p){
 			$projects_ids[]=$p['id'];
 		}
-		$jt = $this->join('task.id','task_id','left','_t');
+		$jt = $this->leftJoin('task.id','task_id','left','_t');
 
 		$jt->addField('project_id','project_id');
 

@@ -53,7 +53,7 @@ class page_quotes_archive extends Page{
 			}
 			$quote->addCondition('project_id','in',$ids);
 		}
-		$pr = $quote->join('project','project_id','left','_pr');
+		$pr = $quote->leftJoin('project','project_id','left','_pr');
 		$pr->addField('pr_name','name');
 		if ($this->api->currentUser()->isClient()) {
 			// show only client's quotes

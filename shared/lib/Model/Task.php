@@ -118,10 +118,9 @@ class Model_Task extends Model_Auditable {
             ));
         });*/
 
-            /*$this->addHook('beforeDelete', function($m){//TODO вернуть
-                $a = $m->app->currentUser();
-                $m['deleted_id']=$a->get('id');
-            });*/
+            $this->addHook('beforeDelete', function($m){
+                if( !isset($this->app->is_test_app)) $m['deleted_id']=$m->app->currentUser()->get('id');
+            });
 
     }
 

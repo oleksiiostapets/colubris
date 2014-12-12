@@ -25,10 +25,10 @@ class Model_TaskTime extends Model_Auditable {
         	$q->set('user_id', $q->app->currentUser()->get('id'));
         });
 
-        $task_join = $this->join('task.id','task_id','left','_task');
+        $task_join = $this->leftJoin('task.id','task_id','left','_task');
         $task_join->addField('requirement_id','requirement_id');
 
-        $req_join = $task_join->join('requirement.id','requirement_id','left','_req');
+        $req_join = $task_join->leftJoin('requirement.id','requirement_id','left','_req');
         $req_join->addField('requirement_name','name');
 
         $quote_join = $req_join->leftJoin('quote.id','quote_id','left','_quote');
@@ -45,7 +45,7 @@ class Model_TaskTime extends Model_Auditable {
 
 
 
-		$j_task = $this->join('task.id','task_id','left','_t');
+		$j_task = $this->leftJoin('task.id','task_id','left','_t');
 		$j_task->addField('task_name','name');
 		$j_task->addField('status','status');
 		$j_task->addField('type','type');
@@ -53,11 +53,11 @@ class Model_TaskTime extends Model_Auditable {
 		$j_task->addField('project_id','project_id');
 		$j_task->addField('organisation_id','organisation_id');
 
-		$j_project = $j_task->join('project.id','project_id','left','_p');
+		$j_project = $j_task->leftJoin('project.id','project_id','left','_p');
 		$f1=$j_project->addField('project_name','name');
 		$f1->sortable(true);
 
-		$j_req = $j_task->join('requirement','requirement_id','left','_req');
+		$j_req = $j_task->leftJoin('requirement','requirement_id','left','_req');
 		$j_req->addField('quote_id','quote_id');
 
 		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
