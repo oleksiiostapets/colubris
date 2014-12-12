@@ -117,9 +117,12 @@ class Model_Task extends Model_Auditable {
                 'changer_part'=>$m->app->currentUser()->get('name').' has deleted task "'.$m->get('name').'".',
             ));
         });*/
-        $this->addHook('beforeDelete', function($m){
-            $m['deleted_id']=$m->app->currentUser()->get('id');
-        });
+
+            /*$this->addHook('beforeDelete', function($m){//TODO вернуть
+                $a = $m->app->currentUser();
+                $m['deleted_id']=$a->get('id');
+            });*/
+
     }
 
     // HOOKS :: END -----------------------------------------------------------

@@ -1,5 +1,5 @@
 <?php
-class ApiTaskAllRightsTest extends PHPUnit_Framework_TestCase {
+class ApiTaskDeleteRightTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Post;
     use Trait_Temp_Proxy;
@@ -43,13 +43,12 @@ class ApiTaskAllRightsTest extends PHPUnit_Framework_TestCase {
             ->set('password','123123')
             ->save()
         ;
-        $app->addmethod('currentUser',function($m) {return $m;});
 
         return $m;
     }
 
     /**
-     * Add newly created user all permission for tasks.
+     * Add newly created user some permission to delete Tasks only.
      *
      * @depends testAddApp
      * @depends testCreateUser
@@ -59,9 +58,10 @@ class ApiTaskAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->app = $app;
 
         $m = $app->add('Model_Mock_User_Right');
+        //$m->set = true;
         $m
             ->set('user_id',$user['id'])
-            ->set('right','can_see_tasks,can_see_projects,can_see_quotes,can_add_task,can_edit_task,can_delete_task,can_add_comment_to_task')
+            ->set('right','can_delete_task')
             ->save()
         ;
 
@@ -116,7 +116,7 @@ class ApiTaskAllRightsTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Project');
-        $m['name'] ='TestProject_ApiTaskAllRightsTest_'.$hash;
+        $m['name'] ='TestProject_ApiProjectAllRightsTest_'.$hash;
         $m->save();
 
         // obj :: data :: id
@@ -140,7 +140,7 @@ class ApiTaskAllRightsTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Quote');
-        $m['name'] = 'TestQuote_ApiTaskAllRightsTest_'.$hash;
+        $m['name'] = 'TestTask_ApiTaskAllRightsTest_'.$hash;
         $m['project_id'] = $project->id;
         $m->save();
 
@@ -187,120 +187,22 @@ class ApiTaskAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testCreateQuote
      * @depends testCreateRequirement
      */
-    public function testCreateTask(
-        App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res_success, Model_Project $project,
+    public function testDeleteTask(
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, Model_Project $project,
         Model_Quote $quote, Model_Requirement $requirement
     ) {
         $this->app = $app;
 
+        // create Task
         $hash = time();
-        $url = 'v1/task/saveParams&lhash='.$login_res_success->hash->lhash;
-        $data = [
-            'name'       => 'TestTask_ApiTaskAllRightsTest_'.$hash,
-            'project_id' => $project->id,
-            'requirement_id' => $requirement->id,
-        ];
-        $obj = json_decode($this->do_post_request($url,$data));
+        $q = $app->add('Model_Task');
+        $q
+            ->set('name','TestTask_ApiTaskDeleteRightTest_'.$hash)
+            ->set('requirement_id', $requirement->id)
+            ->save()
+        ;
 
-        // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a Task');
-        $this->assertTrue(is_string($obj->result),'Task. Result was converted not to string by json_encode()');
-
-        $this->assertEquals($obj->result,'success','Result of creating a Task is not successful.');
-
-        // obj :: data
-        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after creating a Task');
-        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on creating a Task');
-
-        // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'Task. Returned data form API doesn\'t have ID');
-
-        return $obj;
-    }
-
-    /**
-     * @depends testAddApp
-     * @depends testApiLogin
-     * @depends testCreateTask
-     */
-    public function testGetTask(
-        App_CLI $app, $user_login_res, $create_object_res
-    ) {
-        $this->app = $app;
-
-        $url = 'v1/task/getById&id='.$create_object_res->data->id.'&lhash='.$user_login_res->hash->lhash;
-        $obj = json_decode($this->do_get_request($url));
-
-        // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after getting a Task');
-        $this->assertTrue(is_string($obj->result),'Task. Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of getting a Task is not successful');
-
-        // obj :: data
-        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after getting a Task');
-        $this->assertTrue(is_array($obj->data),'Data is not an array after convertation of API respond on getting a Task');
-
-        // obj :: data[0]
-        $this->assertTrue(isset($obj->data[0]),'Data do not contain Task');
-        $this->assertTrue( (count($obj->data)==1),'There is more then one Task in API respond on getting a Task by ID');
-        $this->assertTrue(is_a($obj->data[0],'stdClass'),'Data[0] is not an object of class stdClass after convertation of API respond on getting a Task by ID');
-
-        // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data[0],'Task. Returned data form API doesn\'t have ID');
-
-        return $obj;
-    }
-
-    /**
-     * @depends testAddApp
-     * @depends testCreateUser
-     * @depends testCreatePermissions
-     * @depends testApiLogin
-     * @depends testGetTask
-     */
-    public function testUpdateTask(
-        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $task_create_res
-    ) {
-        $this->app = $app;
-
-        $hash = time();
-        $new_name = 'TestTask_'.$hash.'_Updated_'.$hash;
-        $url = 'v1/task/saveParams&id='.$task_create_res->data[0]->id.'&lhash='.$user_login_res->hash->lhash;
-        $data = ['name' => $new_name];
-        $obj = json_decode($this->do_post_request($url,$data));
-
-        // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a Task');
-        $this->assertTrue(is_string($obj->result),'Task. Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of updating a Task is not successful');
-
-        // obj :: data
-        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after updating a Task');
-        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on updating a Task');
-
-        // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'Task. Returned data form API doesn\'t have ID');
-        // obj :: data :: name
-        $this->assertObjectHasAttribute('name',$obj->data,'Task. Returned data form API doesn\'t have name field');
-        $this->assertTrue( ($obj->data->name==$new_name) ,'Task. Name returned by API doesn\'t match setting name');
-
-        return $obj;
-    }
-
-    /**
-     * @depends testAddApp
-     * @depends testCreateUser
-     * @depends testCreatePermissions
-     * @depends testApiLogin
-     * @depends testGetTask
-     * @depends testUpdateTask
-     */
-    public function testDeleteTask(
-        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $task_create_res, $task_update_res
-    ) {
-        $this->app = $app;
-
-        $url = 'v1/task/deleteById&id='.$task_create_res->data[0]->id.'&lhash='.$user_login_res->hash->lhash;
+        $url = 'v1/task/deleteById&id='.$q->id.'&lhash='.$user_login_res->hash->lhash;
         $obj = json_decode($this->do_get_request($url));
 
         // obj :: result
@@ -313,8 +215,11 @@ class ApiTaskAllRightsTest extends PHPUnit_Framework_TestCase {
 
 
         // try if Task was SOFT deleted
-        $pr = $this->app->add('Model_Task')->load($task_create_res->data[0]->id);
+        $pr = $this->app->add('Model_Task')->load($q->id);
         $this->assertTrue($pr['is_deleted']==1,'Task SOFT delete is not working properly');
+
+        //restore deleted
+        $pr->set('is_deleted',0)->save();
 
         return $obj;
     }
@@ -323,31 +228,146 @@ class ApiTaskAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testAddApp
      * @depends testCreateUser
      * @depends testCreatePermissions
-     * @ depends testApiLogin
+     * @depends testApiLogin
+     * @depends testDeleteTask
+     */
+    public function testUpdateTask(
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $task
+    ) {
+        $this->app = $app;
+
+        $hash = time();
+        $new_name = 'TestTask_'.$hash.'_Updated_'.$hash;
+        $url = 'v1/task/saveParams&id='.$task->deleted_record_id.'&lhash='.$user_login_res->hash->lhash;
+        $data = ['name' => $new_name];
+        $obj = json_decode($this->do_post_request($url,$data));
+
+        // obj :: result
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a Task');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
+
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after updating a Task');
+        $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5312','Result of request has unexpected "code" value');
+
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after updating a Task');
+        $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
+
+        return $obj;
+    }
+
+    /**
+     * @depends testAddApp
+     * @depends testCreateUser
+     * @depends testCreatePermissions
+     * @depends testApiLogin
+     */
+    public function testCreateTask(
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res_success
+    ) {
+        $this->app = $app;
+
+        $hash = time();
+        $url = 'v1/task/saveParams&lhash='.$login_res_success->hash->lhash;
+        $data = [
+            'name' => 'TestTask_ApiTaskCreateRightTest_'.$hash
+        ];
+        $obj = json_decode($this->do_post_request($url,$data));
+
+        // obj :: result
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a Task');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
+
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after creating a Task');
+        $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5311','Result of request has unexpected "code" value');
+
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after creating a Task');
+        $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
+
+        return $obj;
+    }
+
+    /**
+     * @depends testAddApp
+     * @depends testApiLogin
+     * @depends testDeleteTask
+     */
+    public function testGetTask(
+        App_CLI $app, $user_login_res, $task_res
+    ) {
+        $this->app = $app;
+        $this->assertObjectHasAttribute('deleted_record_id',$task_res,'Saved Task doesn\'t have ID');
+        $this->assertTrue(!is_null($task_res->deleted_record_id),'Saved Task doesn\'t have ID');
+
+        $url = 'v1/task/getById&id='.$task_res->deleted_record_id.'&lhash='.$user_login_res->hash->lhash;
+        $obj = json_decode($this->do_get_request($url));
+
+        // obj :: result
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after getting a Task');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
+
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after getting a Task');
+        $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5310','Result of request has unexpected "code" value');
+
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after updating a Task');
+        $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
+
+        return $obj;
+    }
+
+
+    /**
+     * @depends testAddApp
+     * @depends testCreateUser
+     * @depends testCreatePermissions
      * @depends testCreateProject
      * @depends testCreateQuote
      * @depends testCreateRequirement
-     * @depends testCreateTask
-     * @depends testGetTask
-     * @depends testUpdateTask
+     * @ depends testCreateTask
+     * @ depends testUpdateTask
      * @depends testDeleteTask
      */
     public function testCleanDB(
-        App_CLI $app, Model_User $user, Model_User_Right $rights, /*$login_res,*/
-        Model_Project $test_project, Model_Quote $test_quote, Model_Requirement $test_requirement,
-        $create_task_res, $get_task_res, $update_task_res, $del_task_res
+        App_CLI $app, Model_User $user, Model_User_Right $rights, Model_Project $project, Model_Quote $quote,
+        Model_Requirement $requirement /*, $task, $create_task_res_obj*/,$delete_task_res_obj
     ) {
-
-        $this->app = $app;
-
-        $task_id = $create_task_res->data->id;
-        $app->add('Model_Task')->load($task_id)->forceDelete();
-
-        $test_requirement->forceDelete();
-        $test_quote->forceDelete();
-        $test_project->forceDelete();
-        $user->forceDelete();
+        $app->add('Model_Task')->load($delete_task_res_obj->deleted_record_id)->forceDelete();
+        $requirement->forceDelete();
+        $quote->forceDelete();
+        $project->forceDelete();
         $rights->delete();
+        $user->forceDelete();
+
+        return true;
     }
 
 }
+
+
+
+/*
+
+
+        try {
+            $user->forceDelete();
+        } catch (Exception $e) {
+            echo $e->getMessage()."\n";
+            echo $e->getFile()."\n";
+            echo $e->getLine()."\n";
+            echo $e->getTraceAsString();
+
+        }
+
+
+ */
