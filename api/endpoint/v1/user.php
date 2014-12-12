@@ -8,20 +8,33 @@ class endpoint_v1_user extends Endpoint_v1_General {
     }
     public function get_getUsers(){
         $this->model->notDeleted();
-        $data = $this->model->prepareForSelect($this->app->current_user)->getRows();
-        //$data = $this->model->getRows();
-        return [
-            'result' => 'success',
-            'data'   => $data,
-        ];
+        try{
+            $data = $this->model->prepareForSelect($this->app->current_user)->getRows();
+            return [
+                'result' => 'success',
+                'data'   => $data,
+            ];
+        }catch (Exception $e){
+            return[
+                'result' => 'error',
+                'error_message'   => $e->getMessage(),
+            ];
+        }
     }
     public function get_getAllUsers(){
         $this->model->notDeleted();
-        $data = $this->model->getRows();
-        return [
-            'result' => 'success',
-            'data'   => $data,
-        ];
+        try{
+            $data = $this->model->getRows();
+            return [
+                'result' => 'success',
+                'data'   => $data,
+            ];
+        }catch (Exception $e){
+            return[
+                'result' => 'error',
+                'error_message'   => $e->getMessage(),
+            ];
+        }
     }
     public function get_getUsersByProject(){
         $this->model->notDeleted();
@@ -31,11 +44,18 @@ class endpoint_v1_user extends Endpoint_v1_General {
             $r->addField('project_id','project_id');
             $this->model->addCondition('project_id',$project_id);
         }
-        $data = $this->model->getRows();
-        return [
-            'result' => 'success',
-            'data'   => $data,
-        ];
+        try{
+            $data = $this->model->getRows();
+            return [
+                'result' => 'success',
+                'data'   => $data,
+            ];
+        }catch (Exception $e){
+            return[
+                'result' => 'error',
+                'error_message'   => $e->getMessage(),
+            ];
+        }
     }
 
     function post_login() {

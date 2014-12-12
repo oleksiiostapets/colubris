@@ -16,11 +16,18 @@ class endpoint_v1_project extends Endpoint_v1_General {
             $name = $this->getParameter('name');
             $mp->addCondition('user','LIKE',$name.'%');
         }
-        $data = $mp->getRows();
-        return [
-            'result' => 'success',
-            'data'   => $data,
-        ];
+        try{
+            $data = $mp->getRows();
+            return [
+                'result' => 'success',
+                'data'   => $data,
+            ];
+        }catch (Exception $e){
+            return[
+                'result' => 'error',
+                'error_message'   => $e->getMessage(),
+            ];
+        }
     }
 
 }
