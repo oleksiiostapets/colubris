@@ -51,7 +51,7 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
         save: function ( project) {
 
 //            console.log(project);
-            if(!API.validateForm(project, ['name','client'], 'project_')) return false;
+//            if(!API.validateForm(project, ['name','client'], 'project_')) return false;
 
             if (typeof project.id === 'undefined' ) {
                 service.projects.push( angular.copy(project));

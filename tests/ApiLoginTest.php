@@ -43,6 +43,8 @@ class ApiLoginTest extends PHPUnit_Framework_TestCase {
             ->set('password','123123')
             ->save()
         ;
+        $this->current_user = $m;
+        $app->addMethod('currentUser',function($user){return $this->current_user;});
         return $m;
     }
 

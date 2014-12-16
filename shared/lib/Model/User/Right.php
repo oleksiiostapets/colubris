@@ -76,12 +76,13 @@ class Model_User_Right extends SQL_Model{
         'can_see_time',
         'can_see_finance',
         'can_see_manager',
+        'can_manage_all_records'
     );
-    private $developer_pattern = 'can_see_tasks,can_add_task,can_edit_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_see_quotes,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_reports,can_see_dashboard,can_move_to_from_archive,can_track_time';
+    private $developer_pattern = 'can_see_tasks,can_add_task,can_edit_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_see_quotes,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_reports,can_see_dashboard,can_move_to_from_archive,can_track_time,can_manage_all_records';
     private $client_pattern = 'can_see_tasks,can_add_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_see_quotes,can_add_projects,can_add_quote,can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_dashboard';
     private $sales_manager_pattern = 'can_see_quotes,can_add_quote,can_add_requirement,can_see_settings,can_edit_settings,can_see_dashboard,can_move_to_from_archive';
-    private $manager_pattern = 'can_see_tasks,can_add_task,can_edit_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_see_quotes,can_add_projects,can_edit_projects,can_delete_projects,can_add_quote,can_edit_quote,can_delete_quote,can_submit_for_quotation,can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_rates,can_manage_rates,can_see_clients,can_manage_clients,can_see_reports,can_see_deleted,can_restore_deleted,can_see_dashboard,can_move_to_from_archive,can_see_time,can_track_time';
-    private $admin_pattern = 'can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_users,can_manage_users,can_see_rates,can_manage_rates,can_see_developers,can_manage_developers,can_see_logs,can_see_dashboard,can_login_as_any_user';
+    private $manager_pattern = 'can_see_tasks,can_add_task,can_edit_task,can_delete_task,can_add_comment_to_task,can_see_projects,can_see_quotes,can_add_projects,can_edit_projects,can_delete_projects,can_add_quote,can_edit_quote,can_delete_quote,can_submit_for_quotation,can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_rates,can_manage_rates,can_see_clients,can_manage_clients,can_see_reports,can_see_deleted,can_restore_deleted,can_see_dashboard,can_move_to_from_archive,can_see_time,can_track_time,can_manage_all_records';
+    private $admin_pattern = 'can_add_requirement,can_edit_requirement,can_delete_requirement,can_add_comment_to_requirement,can_see_settings,can_edit_settings,can_see_users,can_manage_users,can_see_rates,can_manage_rates,can_see_developers,can_manage_developers,can_see_logs,can_see_dashboard,can_login_as_any_user,can_manage_all_records';
 
     function init(){
         parent::init();
@@ -298,6 +299,7 @@ class Model_User_Right extends SQL_Model{
     public function canSeeDashboard($id=null)            {return $this->can('can_see_dashboard',$id);}
     public function canLoginAsAnyUser($id=null)          {return $this->can('can_login_as_any_user',$id);}
     public function canSeeManager($id=null)              {return $this->can('can_see_manager',$id);}
+    public function canManageAllRecords($id=null)        {return $this->can('can_manage_all_records',$id);}
 
     private function fetchRights($rights_string,$right_name){
         $rights_array = explode(',',$rights_string);

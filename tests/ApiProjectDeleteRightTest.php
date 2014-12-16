@@ -1,5 +1,6 @@
 <?php
 class ApiProjectDeleteRightTest extends PHPUnit_Framework_TestCase {
+    public $current_user;
 
     use Trait_Temp_Post;
     use Trait_Temp_Proxy;
@@ -43,7 +44,8 @@ class ApiProjectDeleteRightTest extends PHPUnit_Framework_TestCase {
             ->set('password','123123')
             ->save()
         ;
-
+        $this->current_user = $m;
+        $app->addMethod('currentUser',function($user){return $this->current_user;});
         return $m;
     }
 
@@ -58,7 +60,6 @@ class ApiProjectDeleteRightTest extends PHPUnit_Framework_TestCase {
         $this->app = $app;
 
         $m = $app->add('Model_Mock_User_Right');
-        //$m->set = true;
         $m
             ->set('user_id',$user['id'])
             ->set('right','can_delete_projects')
@@ -251,14 +252,10 @@ class ApiProjectDeleteRightTest extends PHPUnit_Framework_TestCase {
      * @depends testAddApp
      * @depends testCreateUser
      * @depends testCreatePermissions
-     * @ depends testApiLogin
-     * @ depends testCreateProject
-     * @ depends testUpdateProject
      * @depends testDeleteProject
      */
     public function testCleanDB(
-        App_CLI $app, Model_User $user, Model_User_Right $rights
-        /*, $login_res_obj, $project, $create_project_res_obj*/,$delete_project_res_obj
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $delete_project_res_obj
     ) {
         $app->add('Model_Project')->load($delete_project_res_obj->deleted_record_id)->forceDelete();
         $rights->delete();

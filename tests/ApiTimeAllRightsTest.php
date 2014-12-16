@@ -1,4 +1,5 @@
 <?php
+return;
 class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Post;
@@ -43,7 +44,8 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
             ->set('password','123123')
             ->save()
         ;
-        $app->addmethod('currentUser',function($m) {return $m;});
+        $this->current_user = $m;
+        $app->addMethod('currentUser',function($user){return $this->current_user;});
 
         return $m;
     }

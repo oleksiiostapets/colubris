@@ -21,9 +21,9 @@ app_module.controller(
             $scope.quotes = Quote.quotes;
 
             //Client
-            $scope.Client = Client;
-            $scope.clients = Client.clients;
-            Client.getFromServer();
+            //$scope.Client = Client;
+            //$scope.clients = Client.clients;
+            //Client.getFromServer();
 
 
             //clear form
@@ -76,9 +76,9 @@ app_module.controller(
             $scope.$on( 'quotes.update', function( event ) {
                 $scope.quotes = Quote.quotes;
             });
-            $scope.$on( 'clients.update', function( event ) {
-                $scope.clients = Client.clients;
-            });
+            //$scope.$on( 'clients.update', function( event ) {
+            //    $scope.clients = Client.clients;
+            //});
             $rootScope.showSystemMsg = function(msg) {
                 $("#msg").html(msg);
                 $("#msg").show();

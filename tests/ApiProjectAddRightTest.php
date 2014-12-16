@@ -43,7 +43,8 @@ class ApiProjectAddRightTest extends PHPUnit_Framework_TestCase {
             ->set('password','123123')
             ->save()
         ;
-
+        $this->current_user = $m;
+        $app->addMethod('currentUser',function($user){return $this->current_user;});
         return $m;
     }
 
@@ -239,13 +240,10 @@ class ApiProjectAddRightTest extends PHPUnit_Framework_TestCase {
      * @depends testAddApp
      * @depends testCreateUser
      * @depends testCreatePermissions
-     * @ depends testApiLogin
      * @depends testCreateProject
-     * @ depends testGetProject
      */
     public function testCleanDB(
-        App_CLI $app, Model_User $user, Model_User_Right $rights
-        /*, $login_res_obj*/, $create_project_res_obj /*, $project*/
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $create_project_res_obj
     ) {
         $app->add('Model_Project')->load($create_project_res_obj->data->id)->forceDelete();
         $rights->delete();

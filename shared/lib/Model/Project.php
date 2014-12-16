@@ -37,9 +37,35 @@ class Model_Project extends Model_Auditable {
 
 	function addHooks() {
 		$this->addHook('beforeDelete', function($m){
-            if( !isset($this->app->is_test_app)) $m['deleted_id']=$m->api->currentUser()->get('id');
+            if( !isset($this->app->is_test_app)) $m['deleted_id']=$m->app->currentUser()->get('id');
 		});
+        $this->addHook('afterInsert', function($m,$id){
+//            var_dump($m->app->currentUser()->get());
+            $model_participant = $m->add('Model_Participant');
+            $model_participant->set([
+                'user_id'=>$m->app->currentUser()->get('id'),
+                'project_id'=>$id
+            ])->save();
+        });
 	}
+
+    // ------------------------------------------------------------------------------
+    //
+    //                          Expressions
+    //
+    // ------------------------------------------------------------------------------
+
+    function addExpressions(){
+        $this->addExpression('spent_time')->set(function($m,$q){
+            $m_t = $this->add('Model_Task')
+                ->addCondition('project_id',$m->getField('id'))
+                ->fieldQuery('id');
+            $m_tt = $this->add('Model_TaskTime')
+                ->addCondition('task_id','in',$m_t);
+            return $m_tt->sum('spent_time');
+        });
+    }
+    // Expressions --------------------------------------------------------------
 
 	function deleted() {
 		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
@@ -99,24 +125,6 @@ class Model_Project extends Model_Auditable {
         return $par_ids;
     }
 
-    // ------------------------------------------------------------------------------
-    //
-    //                          Expressions
-    //
-    // ------------------------------------------------------------------------------
-
-    function addExpressions(){
-        $this->addExpression('spent_time')->set(function($m,$q){
-            $m_t = $this->add('Model_Task')
-                ->addCondition('project_id',$m->getField('id'))
-                ->fieldQuery('id');
-            $m_tt = $this->add('Model_TaskTime')
-                ->addCondition('task_id','in',$m_t);
-            return $m_tt->sum('spent_time');
-        });
-    }
-    // Expressions --------------------------------------------------------------
-
 
     /**
      *
@@ -125,6 +133,10 @@ class Model_Project extends Model_Auditable {
      */
     function prepareForSelect(Model_User $u){
         $r = $this->add('Model_User_Right');
+
+        if(!$r->canManageAllRecords($u['id'])){
+            $this->participateIn();
+        }
 
         $fields = ['id'];
 
@@ -161,6 +173,10 @@ class Model_Project extends Model_Auditable {
     function prepareForUpdate(Model_User $u){
         $r = $this->add('Model_User_Right');
 
+        if(!$r->canManageAllRecords($u['id'])){
+            $this->participateIn();
+        }
+
         $fields = ['id'];
 
         if($r->canEditProjects($u['id'])){
@@ -181,6 +197,10 @@ class Model_Project extends Model_Auditable {
     }
     function prepareForDelete(Model_User $u){
         $r = $this->add('Model_User_Right');
+
+        if(!$r->canManageAllRecords($u['id'])){
+            $this->participateIn();
+        }
 
         if($r->canDeleteProjects($u['id'])) return $this;
 
