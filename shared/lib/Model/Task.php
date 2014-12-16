@@ -22,7 +22,8 @@ class Model_Task extends Model_Auditable {
         'high'=>'high',
     );
     function init(){
-        parent::init(); //$this->debug();
+        parent::init();
+//        $this->debug();
 
         $this->addField('name')->mandatory(true);
         $this->addField('priority')->setValueList(Model_Task::$task_priority)->defaultValue('normal');
@@ -33,8 +34,8 @@ class Model_Task extends Model_Auditable {
         $this->addField('descr_original')->dataType('text');
 
         $this->addField('estimate')->dataType('money');
-        $this->hasOne('Project','project_id');
-        $this->getField('project_id')->mandatory(true)->sortable(true);
+//        $this->hasOne('Project','project_id');//TODO implemented it expressions. To be removed completely
+//        $this->getField('project_id')->mandatory(true)->sortable(true);
 
         $this->hasOne('Requirement','requirement_id');
 
@@ -48,27 +49,14 @@ class Model_Task extends Model_Auditable {
         $this->hasOne('User','deleted_id');
 
         $this->hasOne('Organisation','organisation_id');
-//        $this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 
         $this->setOrder('updated_dts',true);
 
-        $this->addSpentTime();
+
 
         // expressions
-        $this->addExpression('quote_id')->set(function($m,$q){
-            return $q->dsql()
-                ->expr('if(requirement_id is null,"",
-                            (SELECT id FROM quote WHERE quote.id=(SELECT quote_id FROM requirement WHERE requirement.id=task.requirement_id))
-                )');
-        });
-        $this->addExpression('quote_name')->set(function($m,$q){
-            return $q->dsql()
-                ->expr('if(requirement_id is null,"",
-                            (SELECT name FROM quote WHERE quote.id=(SELECT quote_id FROM requirement WHERE requirement.id=task.requirement_id))
-                )');
-        });
-
         $this->addHooks();
+        $this->addExpressions();
 
         //$this->addField('spent_time')->dataType('int');
         //$this->addField('deviation')->dataType('text');
@@ -135,15 +123,6 @@ class Model_Task extends Model_Auditable {
     //
     // ------------------------------------------------------------------------------
 
-    public function forTaskCRUD() {
-        $this->Base();
-	    $this->addQuoteId();
-        $this->addQuoteName();
-        $this->addGetConditions();
-        $this->notDeleted();
-	    //$this->debug();
-        return $this;
-    }
     function addDashCondition() {
         if (!$_GET['submit']) {
             $this->addCondition('status','<>','accepted');
@@ -231,17 +210,48 @@ class Model_Task extends Model_Auditable {
     //
     // ------------------------------------------------------------------------------
 
+    function addExpressions(){
+        $this->addQuoteId();
+        $this->addQuoteName();
+        $this->addSpentTime();
+        $this->addProjectId();
+        $this->addProjectName();
+    }
+
+
+    function addProjectId() {
+	    $this->addExpression('project_id',function($m){
+		    $req = $m->add('Model_Requirement')->notDeleted()->addCondition('id',$m->getElement('requirement_id'));
+		    $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()
+                ->addCondition('id',$req->fieldQuery('quote_id'));
+            $p = $this->add('Model_Project')->addCondition('id',$quote->fieldQuery('project_id'));
+		    return $p->fieldQuery('id');
+        });
+
+    }
+    function addProjectName() {
+	    $this->addExpression('project_name',function($m){
+		    $req = $m->add('Model_Requirement')->notDeleted()->addCondition('id',$m->getElement('requirement_id'));
+		    $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()
+                ->addCondition('id',$req->fieldQuery('quote_id'));
+            $p = $this->add('Model_Project')->addCondition('id',$quote->fieldQuery('project_id'));
+		    return $p->fieldQuery('name');
+        });
+
+    }
     function addQuoteId() {
 	    $this->addExpression('quote_id',function($m){
 		    $req = $m->add('Model_Requirement')->notDeleted()->addCondition('id',$m->getElement('requirement_id'));
-		    $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()->addCondition('id',$req->fieldQuery('quote_id'));
+		    $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()
+                ->addCondition('id',$req->fieldQuery('quote_id'));
 		    return $quote->fieldQuery('id');
 	    });
     }
     function addQuoteName() {
         $this->addExpression('quote',function($m){
             $req = $m->add('Model_Requirement')->notDeleted()->addCondition('id',$m->getElement('requirement_id'));
-            $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()->addCondition('id',$req->fieldQuery('quote_id'));
+            $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()
+                ->addCondition('id',$req->fieldQuery('quote_id'));
             return $quote->fieldQuery('name');
         });
     }
@@ -258,9 +268,23 @@ class Model_Task extends Model_Auditable {
 
     // EXPRESSIONS :: END -----------------------------------------------------------
 
+    function participated(){
+        $participated_in=$this->add('Model_Participant')->addCondition('user_id',$this->app->currentUser()->get('id'));
+        $projects_ids="";
+        foreach($participated_in as $p){
+            if($projects_ids=="") $projects_ids=$p['project_id'];
+            else $projects_ids=$projects_ids.','.$p['project_id'];
+        }
+        $this->addCondition('project_id','in',$projects_ids);
+        return $this;
+    }
     // API methods
     function prepareForSelect(Model_User $u){
         $r = $this->add('Model_User_Right');
+
+        if(!$r->canManageAllRecords($u['id'])){
+            $this->participated();
+        }
 
         $fields = ['id'];
 

@@ -255,6 +255,7 @@ class ApiTaskSeeRightTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(is_array($obj->data),'Data is not an array after convertation of API respond on getting a Task');
 
         // obj :: data[0]
+//        var_dump($obj);
         $this->assertTrue(isset($obj->data[0]),'Data do not contain Task');
         $this->assertTrue( (count($obj->data)==1),'There is more then one Task in API respond on getting a Task by ID');
         $this->assertTrue(is_a($obj->data[0],'stdClass'),'Data[0] is not an object of class stdClass after convertation of API respond on getting a Task by ID');

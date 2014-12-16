@@ -207,6 +207,31 @@ class Endpoint_v1_General extends Endpoint_REST {
     function post_saveParams(){
         $data_arr = $this->getFancyPost();
 
+        //Check if all required fields are present (if specified)
+        try{
+
+            if(isset($this->required_fields) && !empty($data_arr)){
+                $not_set = [];
+                foreach($this->required_fields as $val){
+                    if(!in_array($val,array_keys($data_arr))){
+                        $not_set[] = $val;
+                    }
+                }
+                if(count($not_set) > 0){
+                    return[
+                        'result' => 'error',
+                        'message'   => 'Required parameters are not specified :'.implode(',',$not_set),
+                    ];
+                }
+            }
+        }catch (Exception $e){
+            return [
+                'result'  => 'error',
+                'code'    => '5399',
+                'message' => 'saveParams '.$e->getMessage(),
+            ];
+        }
+
         if (is_array($data_arr)) {
             $all = array_merge($_REQUEST,$data_arr);
         } else {
@@ -242,13 +267,21 @@ class Endpoint_v1_General extends Endpoint_REST {
                 ];
             }
         }
-        $this->model->set($all);
-        $this->model->save();
 
-        return [
-            'result' => 'success',
-            'data' => $this->model->get(),
-        ];
+        try{
+            $this->model->set($all);
+            $this->model->save();
+            return [
+                'result' => 'success',
+                'data' => $this->model->get(),
+            ];
+        }catch (Exception $e){
+            return [
+                'result'  => 'error',
+                'code'    => '5399',
+                'message' => 'saveParams' . $e->getMessage(),
+            ];
+        }
     }
     protected function getId(){
         $id = $this->checkGetParameter('id',true);

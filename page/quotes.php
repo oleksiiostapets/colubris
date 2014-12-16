@@ -38,7 +38,14 @@ class page_quotes extends Page {
     }
     function getBaseModel(){
         $quote = $this->add('Model_Quote')->notDeleted()->getThisOrganisation();
-        if($this->api->recall('q_project_id')>0){
+
+        //TODO Kostya. This is commented in purpose to apply newly defined logic. Get rid of clients. Use participants
+        //TODO BUT this should be refactored or removed at all when the AngJS is applied to quotes
+        $r = $this->add('Model_User_Right');
+        if(!$r->canManageAllRecords($this->app->currentUser()->get('id'))){
+            $quote->participated();
+        }
+        /*if($this->api->recall('q_project_id')>0){
             $quote->addCondition('project_id',$this->api->recall('q_project_id'));
         }
         if($this->api->recall('q_client_id')>0){
@@ -50,7 +57,7 @@ class page_quotes extends Page {
                 else $ids=$ids.','.$p['id'];
             }
             $quote->addCondition('project_id','in',$ids);
-        }
+        }*/
         $pr = $quote->leftJoin('project','project_id','left','_pr');
         $pr->addField('pr_name','name');
         /*if ($this->api->currentUser()->isClient()) {

@@ -6,10 +6,12 @@ class page_test extends Page {
         $user = $this->app->currentUser();
 
 
-        $m = $this->add('Model_Project');
-        $m->set([
-            'name'=>'qweryu'
-        ])->save();
+        $m = $this->add('Model_Task')->loadAny();
+
+        var_dump($m->get());
+//        $m->set([
+//            'name'=>'qweryu'
+//        ])->save();
 
 //        var_dump($m->get());
 //        $this->add('View')->set($m->get());

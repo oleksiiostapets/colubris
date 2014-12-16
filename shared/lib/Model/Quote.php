@@ -404,6 +404,10 @@ class Model_Quote extends Model_Auditable {
     function prepareForSelect(Model_User $u){
         $r = $this->add('Model_User_Right');
 
+        if(!$r->canManageAllRecords($u['id'])){
+            $this->participated();
+        }
+
         $fields = ['id'];
 
         if($r->canSeeQuotes($u['id'])){
@@ -449,6 +453,10 @@ class Model_Quote extends Model_Auditable {
     function prepareForUpdate(Model_User $u){
         $r = $this->add('Model_User_Right');
 
+        if(!$r->canManageAllRecords($u['id'])){
+            $this->participated();
+        }
+
         $fields = ['id'];
 
         if($r->canEditQuote($u['id'])){
@@ -474,6 +482,10 @@ class Model_Quote extends Model_Auditable {
     }
     function prepareForDelete(Model_User $u){
         $r = $this->add('Model_User_Right');
+
+        if(!$r->canManageAllRecords($u['id'])){
+            $this->participated();
+        }
 
         if($r->canDeleteQuote($u['id'])) return $this;
 

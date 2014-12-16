@@ -32,7 +32,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      *
      * @depends testAddApp
      */
-    public function testCreateUser(App_CLI $app)
+    /*public function testCreateUser(App_CLI $app)
     {
         $this->app = $app;
 
@@ -48,7 +48,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         $app->addMethod('currentUser',function($user){return $this->current_user;});
 
         return $m;
-    }
+    }*/
 
     /**
      * Add newly created user all permission for Times.
@@ -56,7 +56,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testAddApp
      * @depends testCreateUser
      */
-    public function testCreatePermissions(App_CLI $app, Model_User $user)
+    /*public function testCreatePermissions(App_CLI $app, Model_User $user)
     {
         $this->app = $app;
 
@@ -68,7 +68,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         ;
 
         return $m;
-    }
+    }*/
 
     /**
      * Login to API with credentials of newly created user
@@ -77,7 +77,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testCreateUser
      * @depends testCreatePermissions
      */
-    public function testApiLogin(App_CLI $app, Model_User $user, Model_User_Right $rights)
+    /*public function testApiLogin(App_CLI $app, Model_User $user, Model_User_Right $rights)
     {
         $this->app = $app;
 
@@ -103,7 +103,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(is_string($obj->hash->lhash_exp),'lhash_exp was converted not to string by json_encode()');
 
         return $obj;
-    }
+    }*/
 
     /**
      * @depends testAddApp
@@ -111,7 +111,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testCreatePermissions
      * @depends testApiLogin
      */
-    public function testCreateProject(
+    /*public function testCreateProject(
         App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res_success
     ) {
         $this->app = $app;
@@ -126,7 +126,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(!is_null($m->id),'Saved Project doesn\'t have ID');
 
         return $m;
-    }
+    }*/
 
     /**
      * @depends testAddApp
@@ -231,7 +231,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
             'spent_time' => 1
         ];
         $obj = json_decode($this->do_post_request($url,$data));
-var_dump($obj->result,$obj->data);
+//var_dump($obj->result,$obj->data);
         // obj :: result
         /*$this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a Time');
         $this->assertTrue(is_string($obj->result),'Time. Result was converted not to string by json_encode()');

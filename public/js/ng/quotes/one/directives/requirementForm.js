@@ -48,7 +48,7 @@ app_module.directive('requirementForm', function factory($q,$http, $templateCach
                 task.assigned = task.assigned.name ;
             }
             task.requirement_id = reqv.id ;
-            task.project_id = reqv.project_id ;
+            //task.project_id = reqv.project_id ; //No need anymore
             scope.Task.save(task);
         };
     }
