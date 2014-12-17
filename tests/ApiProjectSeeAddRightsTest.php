@@ -117,7 +117,7 @@ class ApiProjectSeeAddRightsTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $url = 'v1/project/saveParams&lhash='.$login_res_success->hash->lhash;
-        $data = ['name' => 'TestProject_ApiProjectAllRightsTest_'.$hash];
+        $data = ['name' => 'TestProject_ApiProjectSeeAddRightsTest_'.$hash];
         $obj = json_decode($this->do_post_request($url,$data));
 
         // obj :: result

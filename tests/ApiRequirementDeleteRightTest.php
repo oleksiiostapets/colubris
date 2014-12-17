@@ -117,7 +117,7 @@ class ApiRequirementDeleteRightTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Project');
-        $m['name'] ='TestProject_ApiProjectAllRightsTest_'.$hash;
+        $m['name'] ='TestProject_ApiRequirementDeleteRightTest_'.$hash;
         $m->save();
 
         // obj :: data :: id
@@ -141,7 +141,7 @@ class ApiRequirementDeleteRightTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Quote');
-        $m['name'] = 'TestQuote_ApiRequirementAllRightsTest_'.$hash;
+        $m['name'] = 'TestQuote_ApiRequirementDeleteRightTest_'.$hash;
         $m['project_id'] = $project->id;
         $m->save();
 
@@ -246,7 +246,7 @@ class ApiRequirementDeleteRightTest extends PHPUnit_Framework_TestCase {
         $hash = time();
         $url = 'v1/requirement/saveParams&lhash='.$login_res_success->hash->lhash;
         $data = [
-            'name' => 'TestRequirement_ApiRequirementCreateRightTest_'.$hash
+            'name' => 'TestRequirement_ApiRequirementDeleteRightTest_'.$hash
         ];
         $obj = json_decode($this->do_post_request($url,$data));
 

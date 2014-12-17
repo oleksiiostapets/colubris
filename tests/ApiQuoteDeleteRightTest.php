@@ -117,7 +117,7 @@ class ApiQuoteDeleteRightTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Project');
-        $m['name'] ='TestProject_ApiProjectAllRightsTest_'.$hash;
+        $m['name'] ='TestProject_ApiQuoteDeleteRightTest_'.$hash;
         $m->save();
 
         // obj :: data :: id
@@ -219,7 +219,7 @@ class ApiQuoteDeleteRightTest extends PHPUnit_Framework_TestCase {
         $hash = time();
         $url = 'v1/quote/saveParams&lhash='.$login_res_success->hash->lhash;
         $data = [
-            'name' => 'TestQuote_ApiQuoteCreateRightTest_'.$hash
+            'name' => 'TestQuote_ApiQuoteDeleteRightTest_'.$hash
         ];
         $obj = json_decode($this->do_post_request($url,$data));
 

@@ -117,7 +117,7 @@ class ApiQuoteAllRightsTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Project');
-        $m['name'] ='TestProject_ApiProjectAllRightsTest_'.$hash;
+        $m['name'] ='TestProject_ApiQuoteAllRightsTest_'.$hash;
         $m->save();
 
         // obj :: data :: id

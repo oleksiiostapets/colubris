@@ -117,7 +117,7 @@ class ApiRequirementUpdateRightTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Project');
-        $m['name'] ='TestProject_ApiProjectAllRightsTest_'.$hash;
+        $m['name'] ='TestProject_ApiRequirementUpdateRightTest_'.$hash;
         $m->save();
 
         // obj :: data :: id
@@ -141,7 +141,7 @@ class ApiRequirementUpdateRightTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Quote');
-        $m['name'] = 'TestQuote_ApiRequirementAllRightsTest_'.$hash;
+        $m['name'] = 'TestQuote_ApiRequirementUpdateRightTest_'.$hash;
         $m['project_id'] = $project->id;
         $m->save();
 

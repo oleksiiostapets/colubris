@@ -117,7 +117,7 @@ class ApiQuoteSeeRightTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Project');
-        $m['name'] ='TestProject_ApiProjectAllRightsTest_'.$hash;
+        $m['name'] ='TestProject_ApiQuoteSeeRightTest_'.$hash;
         $m->save();
 
         // obj :: data :: id
@@ -142,7 +142,7 @@ class ApiQuoteSeeRightTest extends PHPUnit_Framework_TestCase {
         $hash = time();
         $url = 'v1/quote/saveParams&lhash='.$login_res_success->hash->lhash;
         $data = [
-            'name'       => 'TestQuote_ApiQuoteAeeRightTest_'.$hash,
+            'name'       => 'TestQuote_ApiQuoteSeeRightTest_'.$hash,
             'project_id' => $project->id,
         ];
         $obj = json_decode($this->do_post_request($url,$data));
@@ -178,7 +178,7 @@ class ApiQuoteSeeRightTest extends PHPUnit_Framework_TestCase {
         $hash = time();
         $q = $app->add('Model_Quote');
         $q
-            ->set('name','TestQuote_ApiQuoteAllRightsTest_'.$hash)
+            ->set('name','TestQuote_ApiQuoteSeeRightTest_'.$hash)
             ->set('project_id',$project->id)
             ->save()
         ;

@@ -117,7 +117,7 @@ class ApiTaskDeleteRightTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Project');
-        $m['name'] ='TestProject_ApiProjectAllRightsTest_'.$hash;
+        $m['name'] ='TestProject_ApiTaskDeleteRightTest_'.$hash;
         $m->save();
 
         // obj :: data :: id
@@ -141,7 +141,7 @@ class ApiTaskDeleteRightTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Quote');
-        $m['name'] = 'TestTask_ApiTaskAllRightsTest_'.$hash;
+        $m['name'] = 'TestQuote_ApiTaskDeleteRightTest_'.$hash;
         $m['project_id'] = $project->id;
         $m->save();
 
@@ -168,7 +168,7 @@ class ApiTaskDeleteRightTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Requirement');
-        $m['name'] = 'TestRequirement_ApiTaskAllRightsTest_'.$hash;
+        $m['name'] = 'TestRequirement_ApiTaskDeleteRightTest_'.$hash;
         $m['quote_id'] = $quote->id;
         $m->save();
 
@@ -274,7 +274,7 @@ class ApiTaskDeleteRightTest extends PHPUnit_Framework_TestCase {
         $hash = time();
         $url = 'v1/task/saveParams&lhash='.$login_res_success->hash->lhash;
         $data = [
-            'name' => 'TestTask_ApiTaskCreateRightTest_'.$hash
+            'name' => 'TestTask_ApiTaskDeleteRightTest_'.$hash
         ];
         $obj = json_decode($this->do_post_request($url,$data));
 

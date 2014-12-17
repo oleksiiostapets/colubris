@@ -117,7 +117,7 @@ class ApiRequirementSeeRightTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Project');
-        $m['name'] ='TestProject_ApiProjectAllRightsTest_'.$hash;
+        $m['name'] ='TestProject_ApiRequirementSeeRightTest_'.$hash;
         $m->save();
 
         // obj :: data :: id
@@ -141,7 +141,7 @@ class ApiRequirementSeeRightTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Quote');
-        $m['name'] = 'TestQuote_ApiRequirementAllRightsTest_'.$hash;
+        $m['name'] = 'TestQuote_ApiRequirementSeeRightTest_'.$hash;
         $m['project_id'] = $project->id;
         $m->save();
 
@@ -169,7 +169,7 @@ class ApiRequirementSeeRightTest extends PHPUnit_Framework_TestCase {
         $hash = time();
         $url = 'v1/requirement/saveParams&lhash='.$login_res_success->hash->lhash;
         $data = [
-            'name'       => 'TestRequirement_ApiRequirementAeeRightTest_'.$hash,
+            'name'       => 'TestRequirement_ApiRequirementSeeRightTest_'.$hash,
             'quote_id' => $quote->id,
         ];
         $obj = json_decode($this->do_post_request($url,$data));
@@ -206,7 +206,7 @@ class ApiRequirementSeeRightTest extends PHPUnit_Framework_TestCase {
         $hash = time();
         $q = $app->add('Model_Requirement');
         $q
-            ->set('name','TestRequirement_ApiRequirementAllRightsTest_'.$hash)
+            ->set('name','TestRequirement_ApiRequirementSeeRightTest_'.$hash)
             ->set('quote_id',$quote->id)
             ->save()
         ;

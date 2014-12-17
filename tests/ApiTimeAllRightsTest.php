@@ -1,5 +1,5 @@
 <?php
-return;
+//return;
 class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Post;
@@ -32,7 +32,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      *
      * @depends testAddApp
      */
-    /*public function testCreateUser(App_CLI $app)
+    public function testCreateUser(App_CLI $app)
     {
         $this->app = $app;
 
@@ -48,7 +48,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         $app->addMethod('currentUser',function($user){return $this->current_user;});
 
         return $m;
-    }*/
+    }
 
     /**
      * Add newly created user all permission for Times.
@@ -56,7 +56,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testAddApp
      * @depends testCreateUser
      */
-    /*public function testCreatePermissions(App_CLI $app, Model_User $user)
+    public function testCreatePermissions(App_CLI $app, Model_User $user)
     {
         $this->app = $app;
 
@@ -68,7 +68,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         ;
 
         return $m;
-    }*/
+    }
 
     /**
      * Login to API with credentials of newly created user
@@ -77,7 +77,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testCreateUser
      * @depends testCreatePermissions
      */
-    /*public function testApiLogin(App_CLI $app, Model_User $user, Model_User_Right $rights)
+    public function testApiLogin(App_CLI $app, Model_User $user, Model_User_Right $rights)
     {
         $this->app = $app;
 
@@ -103,7 +103,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(is_string($obj->hash->lhash_exp),'lhash_exp was converted not to string by json_encode()');
 
         return $obj;
-    }*/
+    }
 
     /**
      * @depends testAddApp
@@ -111,7 +111,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testCreatePermissions
      * @depends testApiLogin
      */
-    /*public function testCreateProject(
+    public function testCreateProject(
         App_CLI $app, Model_User $user, Model_User_Right $rights, $login_res_success
     ) {
         $this->app = $app;
@@ -126,7 +126,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(!is_null($m->id),'Saved Project doesn\'t have ID');
 
         return $m;
-    }*/
+    }
 
     /**
      * @depends testAddApp
@@ -231,9 +231,9 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
             'spent_time' => 1
         ];
         $obj = json_decode($this->do_post_request($url,$data));
-//var_dump($obj->result,$obj->data);
+
         // obj :: result
-        /*$this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a Time');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a Time');
         $this->assertTrue(is_string($obj->result),'Time. Result was converted not to string by json_encode()');
 
         $this->assertEquals($obj->result,'success','Result of creating a Time is not successful.');
@@ -243,7 +243,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on creating a Time');
 
         // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'Time. Returned data form API doesn\'t have ID');*/
+        $this->assertObjectHasAttribute('id',$obj->data,'Time. Returned data form API doesn\'t have ID');
 
         return $obj;
     }
@@ -253,7 +253,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testApiLogin
      * @depends testCreateTime
      */
-    /*public function testGetTime(
+    public function testGetTime(
         App_CLI $app, $user_login_res, $create_object_res
     ) {
         $this->app = $app;
@@ -279,7 +279,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->assertObjectHasAttribute('id',$obj->data[0],'Time. Returned data form API doesn\'t have ID');
 
         return $obj;
-    }*/
+    }
 
     /**
      * @depends testAddApp
@@ -288,7 +288,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testApiLogin
      * @depends testGetTime
      */
-    /*public function testUpdateTime(
+    public function testUpdateTime(
         App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $time_create_res
     ) {
         $this->app = $app;
@@ -314,7 +314,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue( ($obj->data->spent_time==$new_name) ,'Time. spent_time returned by API doesn\'t match setting spent_time');
 
         return $obj;
-    }*/
+    }
 
     /**
      * @depends testAddApp
@@ -324,7 +324,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testGetTime
      * @depends testUpdateTime
      */
-    /*public function testDeleteTime(
+    public function testDeleteTime(
         App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $time_create_res, $time_update_res
     ) {
         $this->app = $app;
@@ -362,7 +362,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($pr['is_deleted']==1,'Time SOFT delete is not working properly');
 
         return $obj;
-    }*/
+    }
 
     /**
      * @depends testAddApp
@@ -380,22 +380,15 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         Model_Quote $test_quote, Model_Requirement $test_requirement, Model_Task $task,  $create_time_res
     ) {
 
-        /*$this->app = $app;
+        $this->app = $app;
 
         $time_id = $create_time_res->data->id;
-        try{
-            $app->add('Model_TaskTime')->load($time_id)->forceDelete();
-        }catch (Exception $e) {
-            echo $e->getMessage()."\n";
-            echo $e->getFile()."\n";
-            echo $e->getLine()."\n";
-            echo $e->getTraceAsString();
+        $app->add('Model_TaskTime')->load($time_id)->forceDelete();
 
-        }*/
-//        $task->forceDelete();
-//        $test_requirement->forceDelete();
-//        $test_quote->forceDelete();
-//        $test_project->forceDelete();
+        $task->forceDelete();
+        $test_requirement->forceDelete();
+        $test_quote->forceDelete();
+        $test_project->forceDelete();
         $user->forceDelete();
         $rights->delete();
     }
