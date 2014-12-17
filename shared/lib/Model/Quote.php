@@ -91,6 +91,7 @@ class Model_Quote extends Model_Auditable {
 		$this->addHook('beforeInsert', function($m,$q){
 			$q->set('created_dts', $q->expr('now()'));
 			$q->set('expires_dts', $q->expr('DATE_ADD(NOW(), INTERVAL 1 MONTH)'));
+			$q->set('user_id', $m->app->currentUser()->get('id'));
 		});
 
 		$this->addHook('beforeSave', function($m){
@@ -98,7 +99,7 @@ class Model_Quote extends Model_Auditable {
 			if($m['status']=='finished') $m['warranty_end']=date('Y-m-d G:i:s', time()+60*60*24*30);
 		});
         $this->addHook('beforeDelete', function($m){
-            if( !isset($this->app->is_test_app)) $m['deleted_id']=$m->api->currentUser()->get('id');
+            $m['deleted_id']=$m->app->currentUser()->get('id');
         });
 	}
 	// HOOKS --------------------------------------------------------------------------

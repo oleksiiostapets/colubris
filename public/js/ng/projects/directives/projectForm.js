@@ -29,7 +29,7 @@ app_module.directive('projectForm', function factory($q,$http, $templateCache, $
             //$("#project_client option").removeAttr("selected");
         });
 
-        //save data
+        //save project data
         scope.save = function(project,client){
             //if(angular.isDefined(client)){
             //    project.client_id = client.id;

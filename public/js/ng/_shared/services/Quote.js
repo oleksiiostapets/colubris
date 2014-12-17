@@ -27,6 +27,14 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
                 undefined,
                 {field:'project_id',value:project.id},
                 function(obj) {
+                    $.each(obj.data,function(key,value) {
+                        console.log('shhit user s');
+                        console.log(app_module.user_id);
+                        console.log('shhit user e');
+                        if(value.user_id != app_module.user_id) {
+                            obj.data[key]['allow_del_css'] = 'display: none;';
+                        }
+                    });
                     service.quotes = obj.data;
                     $rootScope.$broadcast( 'quotes.update', project );
                 }
@@ -43,6 +51,45 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
                     $rootScope.$broadcast( 'quote.update' );
                 }
             );
+        },
+
+        save: function ( quote, project ) {
+            quote.project_id = project.id;
+            //if(!API.validateForm(task, ['name','client'], 'project_')) return false;
+            API.saveOne(
+                'quote',
+                null,
+                {id : quote.id},
+                angular.toJson(quote),
+                function(obj) {
+                    $rootScope.$broadcast('quotes.need_update', project );
+                    //$rootScope.$broadcast('form.to_regular_place');
+                }
+            );
+            //this.resetbackupQuote();
+            $rootScope.$broadcast('quote.update', {});
+            $rootScope.$broadcast('quote_form.clear');
+        },
+        remove: function(id,project) {
+            try {
+                API.removeOne(
+                    'quote',
+                    'deleteById',
+                    {id:id},
+                    function(obj) {
+                        if (obj.result === 'success') {
+                            $rootScope.$broadcast( 'quotes.update');
+                            $rootScope.$broadcast('quotes.need_update', project );
+                        } else {
+                            console.log(obj);
+                            alert('Error! No success message received.');
+                        }
+                    }
+                );
+            } catch (e) {
+                console.log(e);
+                alert('Error! No data received.');
+            }
         }
     };
     return service;

@@ -44,6 +44,13 @@ app_module.controller(
             $scope.$on( 'projects.need_update', function( event, args ) {
                 Project.getFromServer();
             });
+            $scope.$on( 'quotes.need_update', function( event, project ) {
+                Quote.getFromServerByProject(project);
+            });
+            $scope.$on( 'quote_form.clear', function( event ) {
+                $scope.quotes = {};
+                $('#quote_view textarea, #quote_view input').val('');
+            });
             $scope.$on( 'project.update', function( event, args ) {
                 console.log('---->project.update');
                 $scope.project = args;

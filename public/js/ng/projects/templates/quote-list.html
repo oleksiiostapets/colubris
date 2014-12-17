@@ -1,8 +1,9 @@
 <h3>Quotes:</h3>
-<div class="atk-box-small" ng-repeat="quote in quotes track by $index">
+<div class="atk-box-small" ng-repeat="quote in quotes track by $index" style="position: relative">
+    <div id="close-time-button" class="icon-cancel-circled close-time" ng-click="Quote.remove(quote.id,project)" style="{{quote.allow_del_css}}"></div>
     <div class="atk-cells atk-push small">
         <div class="atk-cell atk-valign-top">
-            <div class="atk-label atk-effect-info">{{$index}} (ID#{{quote.id}})</div>
+            <div class="atk-label atk-effect-info">{{$index+1}} (ID#{{quote.id}})</div>
         </div>
         <div class="atk-cell atk-jackscrew">
             <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><a style="text-decoration:underline;" href="{{quote_url}}/{{quote.id}}">{{quote.name}}</a></div>
@@ -18,4 +19,30 @@
     <div>Archived: {{quote.is_archived}}</div>
     <div>Warranty end: {{quote.warranty_end}}</div>
     <div>Show time to client: {{quote.show_time_to_client}}</div>
+</div>
+
+<h3>Add Quote:</h3>
+<div class="atk-box-small" id="quote_view">
+    <form class="atk-form">
+        <input type="hidden" ng-model="project.id" />
+
+        <div class="atk-push-small">
+            <div class="atk-push-small">
+                <label for="quote_name"><strong>Name:</strong></label>
+            </div>
+            <input type="text" id="quote_name" class="atk-jackscrew" ng-model="quote.name" />
+        </div>
+
+        <div class="atk-push-small">
+            <div class="atk-push-small">
+                <label for="quote_description"><strong>Description:</strong></label>
+            </div>
+            <textarea id="quote_description" type="text" class="atk-jackscrew" ng-model="quote.general_description"></textarea>
+        </div>
+
+        <div class="atk-actions">
+            <button ng-click="Quote(quote,project)" class="atk-swatch-green atk-button-small atk-button" >Add</button>
+        </div>
+
+    </form>
 </div>
