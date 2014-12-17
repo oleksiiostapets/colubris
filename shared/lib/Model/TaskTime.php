@@ -150,9 +150,9 @@ class Model_TaskTime extends Model_Auditable {
         $fields = ['id'];
 
         if($r->canTrackTime($u['id'])){
-            $fields = array('id','task_id','user_id','spent_time','comment','date','remove_billing');
+            $fields = array('id','task_id','user_id','spent_time','comment','date','remove_billing','is_deleted');
         }else{
-            throw $this->exception('This User cannon edit record','API_CannotAdd');
+            throw $this->exception('This User cannon edit record','API_CannotEdit');
         }
 
         foreach ($this->getActualFields() as $f){

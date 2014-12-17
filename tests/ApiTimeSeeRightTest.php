@@ -1,6 +1,6 @@
 <?php
 //return;
-class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
+class ApiTimeSeeRightTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Post;
     use Trait_Temp_Proxy;
@@ -63,7 +63,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         $m = $app->add('Model_Mock_User_Right');
         $m
             ->set('user_id',$user['id'])
-            ->set('right','can_see_time,can_track_time')
+            ->set('right','can_see_time')
             ->save()
         ;
 
@@ -118,7 +118,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Project');
-        $m['name'] ='TestProject_ApiTimeAllRightsTest_'.$hash;
+        $m['name'] ='TestProject_ApiTimeSeeRightTest_'.$hash;
         $m->save();
 
         // obj :: data :: id
@@ -142,7 +142,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Quote');
-        $m['name'] = 'TestQuote_ApiTimeAllRightsTest_'.$hash;
+        $m['name'] = 'TestQuote_ApiTimeSeeRightTest_'.$hash;
         $m['project_id'] = $project->id;
         $m->save();
 
@@ -169,7 +169,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Requirement');
-        $m['name'] = 'TestRequirement_ApiTimeAllRightsTest_'.$hash;
+        $m['name'] = 'TestRequirement_ApiTimeSeeRightTest_'.$hash;
         $m['quote_id'] = $quote->id;
         $m->save();
 
@@ -197,7 +197,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
 
         $hash = time();
         $m = $app->add('Model_Task');
-        $m['name'] = 'TestTask_ApiTimeAllRightsTest_'.$hash;
+        $m['name'] = 'TestTask_ApiTimeSeeRightTest_'.$hash;
         $m['requirement_id'] = $requirement->id;
         $m->save();
 
@@ -234,16 +234,17 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
 
         // obj :: result
         $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after creating a Time');
-        $this->assertTrue(is_string($obj->result),'Time. Result was converted not to string by json_encode()');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
 
-        $this->assertEquals($obj->result,'success','Result of creating a Time is not successful.');
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after creating a Time');
+        $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5311','Result of request has unexpected "code" value');
 
-        // obj :: data
-        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after creating a Time');
-        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on creating a Time');
-
-        // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'Time. Returned data form API doesn\'t have ID');
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after creating a Time');
+        $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
 
         return $obj;
     }
@@ -251,14 +252,26 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
     /**
      * @depends testAddApp
      * @depends testApiLogin
-     * @depends testCreateTime
+     * @depends testCreateTask
+     * @depends testCreateUser
      */
     public function testGetTime(
-        App_CLI $app, $user_login_res, $create_object_res
+        App_CLI $app, $user_login_res, Model_Task $task, Model_User $user
     ) {
         $this->app = $app;
 
-        $url = 'v1/time/getById&id='.$create_object_res->data->id.'&lhash='.$user_login_res->hash->lhash;
+        // create Time
+        $q = $app->add('Model_TaskTime');
+        $q
+            ->set([
+                'task_id' => $task->id,
+                'user_id' => $user->id,
+                'spent_time' => 1
+            ])
+            ->save()
+        ;
+
+        $url = 'v1/time/getById&id='.$q->id.'&lhash='.$user_login_res->hash->lhash;
         $obj = json_decode($this->do_get_request($url));
 
         // obj :: result
@@ -289,29 +302,27 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testGetTime
      */
     public function testUpdateTime(
-        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $time_create_res
+        App_CLI $app, Model_User $user, Model_User_Right $rights, $user_login_res, $time_get_res
     ) {
         $this->app = $app;
 
-        $new_name = 2;
-        $url = 'v1/time/saveParams&id='.$time_create_res->data[0]->id.'&lhash='.$user_login_res->hash->lhash;
+        $url = 'v1/time/saveParams&id='.$time_get_res->data[0]->id.'&lhash='.$user_login_res->hash->lhash;
         $data = ["spent_time" => "2"];
         $obj = json_decode($this->do_post_request($url,$data));
 
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a Time');
-        $this->assertTrue(is_string($obj->result),'Time. Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of updating a Time is not successful');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after updating a Task');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
 
-        // obj :: data
-        $this->assertObjectHasAttribute('data',$obj,'No data is returned form API after updating a Time');
-        $this->assertTrue(is_a($obj->data,'stdClass'),'Data is not an object of class stdClass after convertation of API respond on updating a Time');
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after updating a Task');
+        $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5312','Result of request has unexpected "code" value');
 
-        // obj :: data :: id
-        $this->assertObjectHasAttribute('id',$obj->data,'Time. Returned data form API doesn\'t have ID');
-        // obj :: data :: name
-        $this->assertObjectHasAttribute('spent_time',$obj->data,'Time. Returned data form API doesn\'t have spent_time field');
-        $this->assertTrue( ($obj->data->spent_time==$new_name) ,'Time. spent_time returned by API doesn\'t match setting spent_time');
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after updating a Task');
+        $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
 
         return $obj;
     }
@@ -332,19 +343,19 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
         $url = 'v1/time/deleteById&id='.$time_create_res->data[0]->id.'&lhash='.$user_login_res->hash->lhash;
         $obj = json_decode($this->do_get_request($url));
 
-
         // obj :: result
-        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after deleting a Time');
-        $this->assertTrue(is_string($obj->result),'Time. Result was converted not to string by json_encode()');
-        $this->assertEquals($obj->result,'success','Result of deleting a Time is not successful');
+        $this->assertObjectHasAttribute('result',$obj,'No result is returned form API after deleting a Task');
+        $this->assertTrue(is_string($obj->result),'Result was converted not to string by json_encode()');
+        $this->assertEquals($obj->result,'error','Result of request has unexpected "result" value');
 
-        // obj :: deleted_record_id
-        $this->assertObjectHasAttribute('deleted_record_id',$obj,'No deleted_record_id was returned form API after deleting a Time');
+        // obj :: code
+        $this->assertObjectHasAttribute('code',$obj,'No code is returned form API after deleting a Task');
+        $this->assertTrue(is_string($obj->code),'Code was converted not to string by json_encode()');
+        $this->assertEquals($obj->code,'5313','Result of request has unexpected "code" value');
 
-
-        // try if Time was SOFT deleted
-        $pr = $this->app->add('Model_TaskTime')->load($time_create_res->data[0]->id);
-        $this->assertTrue($pr['is_deleted']==1,'Time SOFT delete is not working properly');
+        // obj :: message
+        $this->assertObjectHasAttribute('message',$obj,'No message is returned form API after deleting a Task');
+        $this->assertTrue(is_string($obj->message),'Message was converted not to string by json_encode()');
 
         return $obj;
     }
@@ -357,7 +368,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
      * @depends testCreateQuote
      * @depends testCreateRequirement
      * @depends testCreateTask
-     * @depends testCreateTime
+     * @depends testGetTime
 
      */
     public function testCleanDB(
@@ -367,7 +378,7 @@ class ApiTimeAllRightsTest extends PHPUnit_Framework_TestCase {
 
         $this->app = $app;
 
-        $time_id = $create_time_res->data->id;
+        $time_id = $create_time_res->data[0]->id;
         $app->add('Model_TaskTime')->load($time_id)->forceDelete();
 
         $task->forceDelete();

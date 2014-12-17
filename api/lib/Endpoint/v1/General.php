@@ -114,6 +114,12 @@ class Endpoint_v1_General extends Endpoint_REST {
                         'code'    => '5310',
                         'message' => 'User has no right to see '.$this->model_class,
                     ];
+                } catch (Exception $e){
+                    return[
+                        'result'  => 'error',
+                        'code'    => '5399',
+                        'message'   => $e->getMessage(),
+                    ];
                 }
             }else{
                 $data = $this->model->getRows();
@@ -255,6 +261,12 @@ class Endpoint_v1_General extends Endpoint_REST {
                     'code'    => '5312',
                     'message' => 'User has ho right to update '.$this->model_class.' with ID='.$id,
                 ];
+            } catch (Exception $e){
+                return [
+                    'result'  => 'error',
+                    'code'    => '5399',
+                    'message' => 'saveParams (update)' . $e->getMessage(),
+                ];
             }
         }else{
             try {
@@ -264,6 +276,12 @@ class Endpoint_v1_General extends Endpoint_REST {
                     'result'  => 'error',
                     'code'    => '5311',
                     'message' => 'User has ho right to add '.$this->model_class,
+                ];
+            } catch (Exception $e){
+                return [
+                    'result'  => 'error',
+                    'code'    => '5399',
+                    'message' => 'saveParams (insert)' . $e->getMessage(),
                 ];
             }
         }
@@ -299,9 +317,16 @@ class Endpoint_v1_General extends Endpoint_REST {
         return $id;
     }
     protected function getFancyPost() {
-        $data = file_get_contents("php://input"); // TODO: not safe data
-        $data_arr = @json_decode($data,true);
-        return $data_arr;
+        try{
+            $data = file_get_contents("php://input"); // TODO: not safe data
+            $data_arr = json_decode($data,true);
+            return $data_arr;
+        }catch (Exception $e){
+            return [
+                'result'=>'error',
+                'message'=>$e->getMessage()
+            ];
+        }
     }
 
 
