@@ -60,10 +60,11 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
             $rootScope.$broadcast( 'comments.update' );
         },
         saveOnServer: function(comm,reqv_id) {
+            comm.requirement_id = reqv_id;
             API.saveOne(
                 'reqcomment',
                 null,
-                {id : comm.id, requirement_id : reqv_id},
+                {id : comm.id},
                 angular.toJson(comm),
                 function(obj) {
                     $rootScope.$broadcast('comments.need_update' );

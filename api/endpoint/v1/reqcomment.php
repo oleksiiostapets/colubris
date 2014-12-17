@@ -2,12 +2,15 @@
 class endpoint_v1_reqcomment extends Endpoint_v1_General {
 
     public $model_class = 'Reqcomment';
+    protected $required_fields = ['requirement_id','text'];
 
     function init() {
         parent::init();
     }
 
-    function post_saveParams(){
+    //Kostya. Commented 17 Dec 2014.
+    //no need to redefining it. Also it doesn't use ->prepare...() methods
+    /*function post_saveParams(){
         $data_arr = $this->getFancyPost();
 
         if (is_array($data_arr)) {
@@ -31,6 +34,6 @@ class endpoint_v1_reqcomment extends Endpoint_v1_General {
             ];
         }
 
-    }
+    }*/
 
 }

@@ -36,7 +36,13 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
         save: function ( reqv ) {
             console.log('----->Save()');
             var args = angular.copy(reqv);
+
             args.quote_id = app_module.quote_id;
+            args.user_id = app_module.user_id;
+
+            if(!angular.isDefined(args.is_included)){
+                args.is_included = true;
+            }
             if (args.is_included === true) {
                 args.is_included = 1;
             } else {
@@ -67,20 +73,15 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                     } else {
 //                        $rootScope.showSystemMsg('Error! No success message received');
                     }
-                    console.log('----->SaveOne()');
-                    console.log('checkbox.update.'+args.id);
-                    console.log(reqv);
                     $rootScope.$broadcast( 'requirements.update' );
                     $rootScope.$broadcast( 'checkbox.update.'+args.id,reqv);
                     //$rootScope.$broadcast( 'requirements.reload');
-                    console.log('----->SaveOne()');
 
                 }
             );
             this.resetBackupReqv();
             //$rootScope.$broadcast( 'requirements.update' );
             //$rootScope.$broadcast( 'checkbox.update.'+args.id,reqv);
-            console.log('----->Save()');
         },
         remove: function(index) {
             API.removeOne(

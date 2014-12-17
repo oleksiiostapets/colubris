@@ -39,7 +39,7 @@ class Endpoint_v1_General extends Endpoint_REST {
             echo json_encode( [
                 'result' => 'error',
                 'code'    => '5399',
-                'error_message'   => $e->getMessage(),
+                'error_message'   => 'function _model() '.$e->getMessage(),
             ]);exit;
         }
         return $m;
@@ -265,7 +265,7 @@ class Endpoint_v1_General extends Endpoint_REST {
                 return [
                     'result'  => 'error',
                     'code'    => '5399',
-                    'message' => 'saveParams (update)' . $e->getMessage(),
+                    'message' => 'saveParams (update) ' . $e->getMessage(),
                 ];
             }
         }else{
@@ -281,7 +281,7 @@ class Endpoint_v1_General extends Endpoint_REST {
                 return [
                     'result'  => 'error',
                     'code'    => '5399',
-                    'message' => 'saveParams (insert)' . $e->getMessage(),
+                    'message' => 'saveParams (insert) ' . $e->getMessage(),
                 ];
             }
         }

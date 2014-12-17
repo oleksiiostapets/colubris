@@ -6,6 +6,7 @@
 class endpoint_v1_requirement extends Endpoint_v1_General {
 
     public $model_class = 'Requirement';
+    protected $required_fields = ['name','quote_id','user_id'];
 
     function init() {
         parent::init();

@@ -13,7 +13,7 @@ class Model_Reqcomment extends Model_Auditable {
 		$this->addField('created_dts')->Caption('Created At')->sortable(true);
 
 		$this->addField('is_deleted')->type('boolean')->defaultValue('0');
-//        $this->addField('deleted_id')->refModel('Model_User');
+
 		$this->hasOne('User','deleted_id');
 
         $this->addExpression('user_avatar_thumb')->set(function($m,$q){
@@ -38,14 +38,14 @@ class Model_Reqcomment extends Model_Auditable {
 	// ------------------------------------------------------------------------------
 
 	function addHooks() {
-//		$this->addHook('beforeDelete', function($m){
-//			$m['deleted_id']=$m->api->currentUser()->get('id');
-//		});
+		$this->addHook('beforeDelete', function($m){
+			$m['deleted_id']=$m->app->currentUser()->get('id');
+		});
 
-//		$this->addHook('beforeInsert',function($m,$q){
-//			$q->set('user_id',$q->api->auth->model['id']);
-//			$q->set('created_dts', $q->expr('now()'));
-//		});
+		$this->addHook('beforeInsert',function($m,$q){
+			$q->set('user_id',$q->app->currentUser()->get('id'));
+			$q->set('created_dts', $q->expr('now()'));
+		});
 
 //		$this->addHook('beforeSave',function($m){
 //			if($m['user_id']>0){
