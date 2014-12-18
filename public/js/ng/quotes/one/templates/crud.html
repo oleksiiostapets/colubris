@@ -10,6 +10,7 @@
                 <th></th>
                 <th>Info</th>
                 <th>Estimate</th>
+                <th>{{requirements.spent_time_cost_text}}</th>
                 <!--<th>Deleted</th>-->
                 <th>Actions</th>
             </tr>
@@ -38,6 +39,7 @@
                     </div>
                 </td>
                 <td>{{rreqv.estimate}}</td>
+                <td>{{rreqv.spent_time_cost}}</td>
                 <!--<td>{{rreqv.is_deleted}}</td>-->
                 <td class="atk-text-nowrap">
                     <button class="atk-button" ng-click="Requirement.edit($index)">Edit</button>

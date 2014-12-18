@@ -9,16 +9,16 @@
             <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><a style="text-decoration:underline;" href="{{quote_url}}/{{quote.id}}">{{quote.name}}</a></div>
         </div>
     </div>
-    <div>Spent time: {{quote.spent_time}}</div>
-    <div>Estim. time: {{quote.estimated-time}}</div>
-    <div>Status: {{quote.status}}</div>
-    <div>User: {{quote.user}}</div>
-    <div>Gen. description: {{quote.general_description}}</div>
-    <div>Deadline: {{quote.deadline}}</div>
-    <div>Created on: {{quote.created_dts}}</div>
-    <div>Archived: {{quote.is_archived}}</div>
-    <div>Warranty end: {{quote.warranty_end}}</div>
-    <div>Show time to client: {{quote.show_time_to_client}}</div>
+    <div style="{{can_see_spent_time}}"><strong>Spent time: </strong>{{quote.spent_time}}</div>
+    <div style="{{can_see_spent_time}}"><strong>Estim. time: </strong>{{quote.estimated-time}}</div>
+    <div><strong>Status: </strong>{{quote.status}}</div>
+    <div><strong>User: </strong>{{quote.user}}</div>
+    <div><strong>Gen. description: </strong>{{quote.general_description}}</div>
+    <div><strong>Deadline: </strong>{{quote.deadline}}</div>
+    <div><strong>Created on: </strong>{{quote.created_dts}}</div>
+    <div><strong>Archived: </strong>{{quote.is_archived}}</div>
+    <div><strong>Warranty end: </strong>{{quote.warranty_end}}</div>
+    <!--<div>Show time to client: {{quote.show_time_to_client}}</div>-->
 </div>
 
 <h3>Add Quote:</h3>

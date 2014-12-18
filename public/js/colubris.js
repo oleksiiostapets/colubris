@@ -110,7 +110,7 @@ $.each({
         form.submit();
 
     },
-    startRequirementApp: function(quote_id,base_url,prefix,postfix,api_base_url,lhash,user_id) {
+    startRequirementApp: function(quote_id,base_url,prefix,postfix,api_base_url,lhash,user_id,current_user_rights) {
         angular.element(document).ready(function() {
             app_module.quote_id = quote_id;
             app_module.base_url = base_url;
@@ -119,6 +119,7 @@ $.each({
             app_module.api_base_url = api_base_url;
             app_module.lhash  = lhash;
             app_module.user_id  = user_id;
+            app_module.current_user_rights  = current_user_rights;
             angular.bootstrap(document, ['quotes.one.app']);
         });
     },

@@ -11,11 +11,26 @@ app_module.directive('projectForm', function factory($q,$http, $templateCache, $
             element.addClass('fixed');
 
             scope.Quote.getFromServerByProject(project);
+
             if(app_module.current_user_rights.indexOf('can_manage_participants') != -1){
                 scope.Participant.getFromServerByProject(project);
                 scope.can_see_participant_html = 'display:block;';
             }else{
                 scope.can_see_participant_html = 'display:none;';
+            }
+
+            if(app_module.current_user_rights.indexOf('can_see_finance') != -1){
+                //user can see money
+                scope.can_see_finance = 'display:block;';
+            }
+            else{
+                scope.can_see_finance = 'display:none;';
+            }
+            if(app_module.current_user_rights.indexOf('can_see_spent_time') != -1){
+                //user can see spent time
+                scope.can_see_spent_time = 'display:block;';
+            }else{
+                scope.can_see_spent_time = 'display:none;';
             }
 
             scope.quote_url = app_module.base_url + app_module.prefix + 'quotes';

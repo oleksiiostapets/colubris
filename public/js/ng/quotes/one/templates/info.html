@@ -3,46 +3,50 @@
         <div class="atk-col-4">
             <div class="atk-box-small">
                 <h3>Quote Info</h3>
-                <div class="">Name: {{info.name}}</div>
-                <div class="">Project: {{info.project}}</div>
-                <div class="">General Description: {{info.general_description}}</div>
-                <div class="">Status: {{info.status}}</div>
-                <div class="">Creator:{{info.user}}</div>
-                <div class="">Created: {{info.created_dts}}</div>
-                <div class="">Expires at: {{info.expires_dts}}</div>
-                <div class="">Organisation: {{info.organisation}}</div>
+                <div class=""><strong>Name: </strong>{{info.name}}</div>
+                <div class=""><strong>Project: </strong>{{info.project}}</div>
+                <div class=""><strong>General Description: </strong>{{info.general_description}}</div>
+                <div class=""><strong>Status: </strong>{{info.status}}</div>
+                <div class=""><strong>Creator: </strong>{{info.user}}</div>
+                <div class=""><strong>Created: </strong>{{info.created_dts}}</div>
+                <div class=""><strong>Expires at: </strong>{{info.expires_dts}}</div>
+                <div class=""><strong>Organisation: </strong>{{info.organisation}}</div>
             </div>
         </div>
         <div class="atk-col-4">
             <div class="atk-box-small">
                 <h3>Client Info</h3>
-                <div class="">Client: {{info.client_name}}</div>
-                <div class="">Email: {{info.client_email}}</div>
-                <div class="">Show time to client: {{info.show_time_to_client}}</div>
+                <div class=""><strong>Client: </strong>{{info.client_name}}</div>
+                <div class=""><strong>Email: </strong>{{info.client_email}}</div>
+                <!--<div class="">Show time to client: {{info.show_time_to_client}}</div>-->
             </div>
             <div class="atk-box-small atk-push">
                 <h3>Different Info</h3>
-                <div class="">Amount: {{info.amount}}</div>
-                <div class="">Currency: {{info.currency}}</div>
-                <div class="">Est.pay: {{info.estimpay}}</div>
-                <div class="">Rate: {{info.rate}}</div>
-                <div class="">Warranty end: {{info.warranty_end}}</div>
-                <div class="">Duration (days) / Deadline: {{info.durdead}}</div>
-                <div class="">Issued: {{info.issued}}</div>
+                <div class="" style="{{Quote.can_see_finance}}"><strong>Amount: </strong>{{info.amount}}</div>
+                <div class="" style="{{Quote.can_see_finance}}"><strong>Currency: </strong>{{info.currency}}</div>
+                <div class="" style="{{Quote.can_see_finance}}"><strong>Est.pay: </strong>{{info.estimpay}}</div>
+                <div class="" style="{{Quote.can_see_rates}}"><strong>Rate: </strong>{{info.rate}}</div>
+                <div class=""><strong>Warranty end: </strong>{{info.warranty_end}}</div>
+                <div class=""><strong>Duration (days) / Deadline: </strong>{{info.durdead}}</div>
+                <div class=""><strong>Issued: </strong>{{info.issued}}</div>
 
 
             </div>
         </div>
         <div class="atk-col-4">
-            <div class="atk-box-small">
+            <div class="atk-box-small"  style="{{Quote.can_see_spent_time}}">
                 <h3>Time Info</h3>
                 <div class="">Estimated: {{calc.net}}h</div>
-                <div class="">foo shit</div>
-                <div class="">bar shit</div>
+                <!--<div class="">foo shit</div>-->
+                <!--<div class="">bar shit</div>-->
                 <div class="">SubTotal: {{calc.subtotal}}h</div>
                 <div class="">PM: {{calc.pm}}h (20%)</div>
                 <div class="">Total: {{calc.total}}h</div>
                 <div class="atk-label {{calc.color}}">Spent: {{calc.spent}}h</div>
+            </div>
+            <div class="atk-box-small"  style="{{Quote.can_see_finance}}">
+                <h3>Finance Info</h3>
+                <div class="">TODO</div>
             </div>
         </div>
     </div>

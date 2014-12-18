@@ -22,6 +22,21 @@ app_module.directive('requirementForm', function factory($q,$http, $templateCach
                 scope.Task.getFromServerByReqvId(reqv.id);
             }
             //console.log(scope.comments);
+
+            if(app_module.current_user_rights.indexOf('can_see_finance') != -1){
+                //user can see money
+                scope.can_see_finance = 'display:block;';
+            }
+            else{
+                scope.can_see_finance = 'display:none;';
+                scope.Quote.can_see_finance = 'display:none;';
+            }
+            if(app_module.current_user_rights.indexOf('can_see_spent_time') != -1){
+                //user can see spent time
+                scope.can_see_spent_time = 'display:block;';
+            }else{
+                scope.can_see_spent_time = 'display:none;';
+            }
         });
         scope.$on( 'form.to_regular_place', function( event ) {
             console.log('form.to_regular_place');
