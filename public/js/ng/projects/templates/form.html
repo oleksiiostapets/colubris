@@ -40,11 +40,19 @@
                 </form>
             </div>
         </div>
+
         <div class="atk-col-4">
             <div class="atk-box">
                 <ng-include src="quote_list"></ng-include>
             </div>
         </div>
+
+        <div class="atk-col-4" style="{{can_see_participant_html}}">
+            <div class="atk-box">
+                <ng-include src="participant_list"></ng-include>
+            </div>
+        </div>
+
     </div>
 </div>
 

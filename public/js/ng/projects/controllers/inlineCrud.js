@@ -2,8 +2,8 @@
 
 app_module.controller(
     'inlineCrud',
-    ['$scope','$document','$http', '$rootScope', 'Project', 'Quote', 'Client',
-        function ($scope,  $document,  $http,  $rootScope,  Project, Quote, Client) {
+    ['$scope','$document','$http', '$rootScope', 'Project', 'Quote', 'Client', 'Participant', 'User', 'Right',
+        function ($scope,  $document,  $http,  $rootScope,  Project, Quote, Client, Participant, User, Right) {
 
             $rootScope.filter_values = {};
             $rootScope.items_on_page = 30;
@@ -19,6 +19,26 @@ app_module.controller(
             //Quote
             $scope.Quote = Quote;
             $scope.quotes = Quote.quotes;
+
+            //Participants
+            $scope.Participant = Participant;
+            $scope.participants = Participant.participants;
+
+            //User
+            $scope.User = User;
+            $scope.users = User.users;
+            User.getFromServer('users.update','getAllUsers');
+            $scope.$on( 'users.update', function( event ) {
+                $scope.users = User.users;
+                $scope.users.unshift({id:"",email:'all'})
+            });
+            $scope.$on( 'participants.need_update', function( event, project ) {
+                Participant.getFromServerByProject(project);
+            });
+
+            //Right
+            $scope.Right = Right;
+            $scope.rights = Right.rights;
 
             //Client
             //$scope.Client = Client;
@@ -82,6 +102,10 @@ app_module.controller(
             });
             $scope.$on( 'quotes.update', function( event ) {
                 $scope.quotes = Quote.quotes;
+            });
+
+            $scope.$on( 'participants.update', function( event ) {
+                $scope.participants = Participant.participants;
             });
             //$scope.$on( 'clients.update', function( event ) {
             //    $scope.clients = Client.clients;

@@ -5,7 +5,7 @@ class MyMenu extends Menu_Basic {
         if($this->app->currentUser()) {
             if ($this->app->model_user_rights->canSeeDashboard()) $this->addMenuItem('dashboard','Dashboard');
             if ($this->app->model_user_rights->canSeeTasks()) $this->addMenuItem('tasks','Tasks');
-            if ($this->app->model_user_rights->canSeeQuotes()) $this->addMenuItem('quotes','Quotes');
+//            if ($this->app->model_user_rights->canSeeQuotes()) $this->addMenuItem('quotes','Quotes');
             if ($this->app->model_user_rights->canSeeProjects()) $this->addMenuItem('projects','Projects');
             if ($this->app->model_user_rights->canManageClients()) $this->addMenuItem('clients','Clients');
             if ($this->app->model_user_rights->canSeeReports()) $this->addMenuItem('reports','Reports');
@@ -14,7 +14,7 @@ class MyMenu extends Menu_Basic {
             if ($this->app->model_user_rights->canSeeUsers()) $this->addMenuItem('users','Users');
             if ($this->app->model_user_rights->canSeeLogs()) $this->addMenuItem('logs','Logs');
             if ($this->app->model_user_rights->canSeeRates()) $this->addMenuItem('rates','Rates');
-            $this->addMenuItem('content','Content');
+//            $this->addMenuItem('content','Content');
             if ($this->app->model_user_rights->canSeeSettings()) $this->addMenuItem('account','Settings');
             if ($this->app->model_user_rights->canSeeManager()) $this->addMenuItem('manager','Manager');
         }

@@ -11,8 +11,17 @@ app_module.directive('projectForm', function factory($q,$http, $templateCache, $
             element.addClass('fixed');
 
             scope.Quote.getFromServerByProject(project);
+            if(app_module.current_user_rights.indexOf('can_manage_participants') != -1){
+                scope.Participant.getFromServerByProject(project);
+                scope.can_see_participant_html = 'display:block;';
+            }else{
+                scope.can_see_participant_html = 'display:none;';
+            }
 
             scope.quote_url = app_module.base_url + app_module.prefix + 'quotes';
+        });
+        scope.$on( 'participants.need_update', function( event ) {
+            $('#participant_view select').val('');
         });
         scope.$on( 'quotes.update', function( event, project ) {
             //select current client

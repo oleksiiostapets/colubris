@@ -28,9 +28,6 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
                 {field:'project_id',value:project.id},
                 function(obj) {
                     $.each(obj.data,function(key,value) {
-                        console.log('shhit user s');
-                        console.log(app_module.user_id);
-                        console.log('shhit user e');
                         if(value.user_id != app_module.user_id) {
                             obj.data[key]['allow_del_css'] = 'display: none;';
                         }

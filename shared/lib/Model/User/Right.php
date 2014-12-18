@@ -34,6 +34,7 @@ class Model_User_Right extends SQL_Model{
         'can_add_projects',
         'can_edit_projects',
         'can_delete_projects',
+        'can_manage_participants',
         //Quote
         'can_see_quotes',
         'can_add_quote',
@@ -258,6 +259,7 @@ class Model_User_Right extends SQL_Model{
     public function canAddProjects($id=null)             {return $this->can('can_add_projects',$id);}
     public function canEditProjects($id=null)            {return $this->can('can_edit_projects',$id);}
     public function canDeleteProjects($id=null)          {return $this->can('can_delete_projects',$id);}
+    public function canManageParticipants($id=null)      {return $this->can('can_manage_participants',$id);}
     //Quote
     public function canSeeQuotes($id=null)               {return $this->can('can_see_quotes',$id);}
     public function canAddQuote($id=null)                {return $this->can('can_add_quote',$id);}
