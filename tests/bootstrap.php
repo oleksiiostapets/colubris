@@ -25,6 +25,14 @@
 //  More examplesof UI testing with selenium
 //  https://github.com/DavertMik/php-webdriver-demo/blob/master/tests/GitHubTest.php
 //
+//  HeadLess Firefox
+//  http://www.installationpage.com/selenium/how-to-run-selenium-headless-firefox-in-ubuntu/
+//  Start server :::   sudo Xvfb :10 -ac
+//
+//  http://www.chrisle.me/2013/08/running-headless-selenium-with-chrome/
+//  http://alex.nederlof.com/blog/2012/11/19/installing-selenium-with-jenkins-on-ubuntu/
+//  http://selftechy.com/2011/08/17/running-selenium-tests-with-chromedriver-on-linux
+//
 // ---------------------------------------------------------------------------------------------------
 
 
