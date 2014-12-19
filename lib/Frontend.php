@@ -147,7 +147,7 @@ class Frontend extends ApiFrontend {
             if ($this->model_user_rights->canSeeLogs())         $this->addAllowedPages(array('logs'));
             if ($this->model_user_rights->canSeeRates())        $this->addAllowedPages(array('rates'));
             if ($this->model_user_rights->canSeeSettings())     $this->addAllowedPages(array('account'));
-            if ($this->model_user_rights->canSeeManager())     $this->addAllowedPages(array('manager'));
+            if ($this->model_user_rights->canSeeManager())      $this->addAllowedPages(array('manager'));
             $this->addAllowedPages(array('content','content_edit'));
         }
     }

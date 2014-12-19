@@ -155,6 +155,12 @@ class UIPageAccessReportsRightTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see "users" page');
         $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
 
+        // logs
+        $this->webDriver->get($this->config->test_url.'?page=logs');
+        $error_message = $this->webDriver->findElement(WebDriverBy::cssSelector("h2.cannot-see-page"));
+        $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see "logs" page');
+        $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
+
         // rates
         $this->webDriver->get($this->config->test_url.'?page=rates');
         $error_message = $this->webDriver->findElement(WebDriverBy::cssSelector("h2.cannot-see-page"));
