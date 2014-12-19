@@ -130,7 +130,7 @@ class Model_User_Right extends SQL_Model{
         $this->set('right', $new_str);
         $this->set('user_id', $user_id);
         $this->save();
-        return $this->get();
+//        return $this->get();
 //        $this->set(arr//(
 //            'right'   => $new_s//,
 //            'user_id' => $rights['user_i//]

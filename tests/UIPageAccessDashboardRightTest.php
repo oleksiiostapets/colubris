@@ -5,7 +5,7 @@
  * Date: 21/11/14
  * Time: 23:46
  */
-class UIPageAccessNoRightsTest extends PHPUnit_Framework_TestCase {
+class UIPageAccessDashboardRightTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Proxy;
     use UserInputTrait;
@@ -17,6 +17,7 @@ class UIPageAccessNoRightsTest extends PHPUnit_Framework_TestCase {
     protected $webDriver;
     protected $config;
     protected $current_user;
+    protected $current_user_rights;
 
     public function setUp() {
         $this->config = new Config();
@@ -54,15 +55,20 @@ class UIPageAccessNoRightsTest extends PHPUnit_Framework_TestCase {
             ->set('password','123123')
             ->save();
         $this->app->addMethod('currentUser',function($user){return $this->current_user;});
+
+        $this->current_user_rights = $this->app->add('Model_User_Right')
+            ->setRights($this->current_user->id,['can_see_dashboard'])
+        ;
     }
 
     public function tearDown() {
-        //if( $this->hasFailed() ) {
+        if( $this->hasFailed() ) {
             $date = "screenshot_" . date('Y-m-d-H-i-s') . ".png" ;
             $this->webDriver->takeScreenshot( $date );
-        //}
+        }
         $this->webDriver->close();
         $this->current_user->forceDelete();
+        $this->current_user_rights->delete();
     }
 
 
@@ -99,9 +105,7 @@ class UIPageAccessNoRightsTest extends PHPUnit_Framework_TestCase {
         // PAGES
 
         // dashboard
-        $error_message = $this->webDriver->findElement(WebDriverBy::cssSelector("h2.cannot-see-page"));
-        $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see dashboard');
-        $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
+        $this->assertContains('Dashboard', $this->webDriver->getTitle());
 
         // tasks
         $this->webDriver->get($this->config->test_url.'?page=tasks');
@@ -153,5 +157,9 @@ class UIPageAccessNoRightsTest extends PHPUnit_Framework_TestCase {
 
         $this->waitForUserInput('All pages tested! ');
     }
+
+
+
+
 
 }
