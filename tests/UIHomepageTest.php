@@ -84,13 +84,16 @@ class UIHomepageTest extends PHPUnit_Framework_TestCase {
         $password_field = $login_form->findElement(WebDriverBy::cssSelector('input[data-shortname="password"]'));
         $password_field->click();
         $this->webDriver->getKeyboard()->sendKeys('123123');
+        $this->waitForUserInput();
 
 
         $submit_button = $login_form->findElement(WebDriverBy::cssSelector('button.atk-button'));
         $submit_button->click();
+        $this->waitForUserInput();
 
-        $form_title = $this->webDriver->findElement(WebDriverBy::xpath(".//h2[text()='﻿You cannot see this page']"));
-        $this->assertTrue($form_title->getText()=='Client Log-in','﻿You cannot see this page');
+        $error_message = $this->webDriver->findElement(WebDriverBy::cssSelector("h2.cannot-see-page"));
+        $this->assertTrue($error_message->getText()=='You cannot see this page','No error message shown');
+        $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
 
         $this->waitForUserInput();
     }

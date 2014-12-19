@@ -174,8 +174,9 @@ class Frontend extends ApiFrontend {
             // TODO show denied page
             //throw $e;
             $v = $this->layout->add('View')->addClass('denied');
-            $v->add('View')->setElement('h2')->set('You cannot see this page');
+            $v->add('View')->setElement('h2')->addClass('cannot-see-page')->set('You cannot see this page');
             $v->add('View_Error')->set('Try to change role if you have multiple roles for this account');
+            $this->template->set('page_title','You cannot see this page');
         }
     }
     protected function addRouter() {
