@@ -5,7 +5,7 @@
  * Date: 21/11/14
  * Time: 23:46
  */
-class UIPageAccessProjectsRightTest extends PHPUnit_Framework_TestCase {
+class UIPageAccessDeletedRightTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Proxy;
     use UserInputTrait;
@@ -57,7 +57,7 @@ class UIPageAccessProjectsRightTest extends PHPUnit_Framework_TestCase {
         $this->app->addMethod('currentUser',function($user){return $this->current_user;});
 
         $this->current_user_rights = $this->app->add('Model_User_Right')
-            ->setRights($this->current_user->id,['can_see_projects'])
+            ->setRights($this->current_user->id,['can_see_deleted'])
         ;
     }
 
@@ -123,7 +123,9 @@ class UIPageAccessProjectsRightTest extends PHPUnit_Framework_TestCase {
 
         // projects
         $this->webDriver->get($this->config->test_url.'?page=projects');
-        $this->assertContains('Projects', $this->webDriver->getTitle());
+        $error_message = $this->webDriver->findElement(WebDriverBy::cssSelector("h2.cannot-see-page"));
+        $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see "projects" page');
+        $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
 
         // clients
         $this->webDriver->get($this->config->test_url.'?page=clients');
@@ -145,9 +147,7 @@ class UIPageAccessProjectsRightTest extends PHPUnit_Framework_TestCase {
 
         // deleted
         $this->webDriver->get($this->config->test_url.'?page=deleted');
-        $error_message = $this->webDriver->findElement(WebDriverBy::cssSelector("h2.cannot-see-page"));
-        $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see "deleted" page');
-        $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
+        $this->assertContains('Deleted', $this->webDriver->getTitle());
 
         // users
         $this->webDriver->get($this->config->test_url.'?page=users');

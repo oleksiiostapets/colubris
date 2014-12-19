@@ -5,7 +5,7 @@
  * Date: 21/11/14
  * Time: 23:46
  */
-class UIPageAccessProjectsRightTest extends PHPUnit_Framework_TestCase {
+class UIPageAccessUsersRightTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Proxy;
     use UserInputTrait;
@@ -57,7 +57,7 @@ class UIPageAccessProjectsRightTest extends PHPUnit_Framework_TestCase {
         $this->app->addMethod('currentUser',function($user){return $this->current_user;});
 
         $this->current_user_rights = $this->app->add('Model_User_Right')
-            ->setRights($this->current_user->id,['can_see_projects'])
+            ->setRights($this->current_user->id,['can_see_users'])
         ;
     }
 
@@ -123,7 +123,9 @@ class UIPageAccessProjectsRightTest extends PHPUnit_Framework_TestCase {
 
         // projects
         $this->webDriver->get($this->config->test_url.'?page=projects');
-        $this->assertContains('Projects', $this->webDriver->getTitle());
+        $error_message = $this->webDriver->findElement(WebDriverBy::cssSelector("h2.cannot-see-page"));
+        $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see "projects" page');
+        $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
 
         // clients
         $this->webDriver->get($this->config->test_url.'?page=clients');
@@ -140,7 +142,7 @@ class UIPageAccessProjectsRightTest extends PHPUnit_Framework_TestCase {
         // developers
         $this->webDriver->get($this->config->test_url.'?page=developers');
         $error_message = $this->webDriver->findElement(WebDriverBy::cssSelector("h2.cannot-see-page"));
-        $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see "reports" page');
+        $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see "developers" page');
         $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
 
         // deleted
@@ -151,9 +153,7 @@ class UIPageAccessProjectsRightTest extends PHPUnit_Framework_TestCase {
 
         // users
         $this->webDriver->get($this->config->test_url.'?page=users');
-        $error_message = $this->webDriver->findElement(WebDriverBy::cssSelector("h2.cannot-see-page"));
-        $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see "users" page');
-        $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
+        $this->assertContains('Users', $this->webDriver->getTitle());
 
         // rates
         $this->webDriver->get($this->config->test_url.'?page=rates');

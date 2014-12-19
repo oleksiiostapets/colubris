@@ -133,10 +133,22 @@ class UIPageAccessNoRightsTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see "reports" page');
         $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
 
+        // developers
+        $this->webDriver->get($this->config->test_url.'?page=developers');
+        $error_message = $this->webDriver->findElement(WebDriverBy::cssSelector("h2.cannot-see-page"));
+        $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see "developers" page');
+        $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
+
         // deleted
         $this->webDriver->get($this->config->test_url.'?page=deleted');
         $error_message = $this->webDriver->findElement(WebDriverBy::cssSelector("h2.cannot-see-page"));
         $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see "deleted" page');
+        $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
+
+        // users
+        $this->webDriver->get($this->config->test_url.'?page=users');
+        $error_message = $this->webDriver->findElement(WebDriverBy::cssSelector("h2.cannot-see-page"));
+        $this->assertTrue($error_message->getText()=='You cannot see this page','User with no rights can see "users" page');
         $this->assertContains('You cannot see this page', $this->webDriver->getTitle());
 
         // rates
