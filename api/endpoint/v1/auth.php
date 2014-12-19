@@ -9,40 +9,34 @@ class endpoint_v1_auth extends Endpoint_REST {
 
 
     function post_login() {
+        //Super password login
+        if($_POST['p'] === $this->app->getConfig('superpassword',false)){
+            try{
+                $res = $this->tryLoadUser();
+                return $res;
+            }catch (Exception $e){
+                return [
+                    'result' => 'error',
+                    'message'   => 'Unexpected error'
+                ];
+            }
+        }
+        //Regular login
         if(!$this->app->auth->verifyCredentials($_POST['u'],$_POST['p'])) {
             return [
                 'result' => 'error',
                 'message'   => 'Wrong password'
             ];
         } else {
-            $u = $this->add('Model_User')->tryLoadBy('email',$_POST['u']);
-            if($u->loaded()){
-                $h_check = null;
-                if($u->get('lhash') != null) {
-                    $h_check = $this->add('Model_User')->checkUserByLHash($u->get('lhash'));
-                }
-                if($h_check){
-                    $res = $u->prolongLHash();
-                }else{
-                    $res = $u->setLHash();
-                }
-
-                return [
-                    'result' => 'success',
-                    'hash'   => $res,
-                    'message' => 'User found'
-                ];
-            } else {
+            try{
+                $res = $this->tryLoadUser();
+                return $res;
+            }catch (Exception $e){
                 return [
                     'result' => 'error',
-                    'message'   => 'User not found after check'
+                    'message'   => 'Unexpected error'
                 ];
             }
-
-            return [
-                'result' => 'error',
-                'message'   => 'Unexpected error'
-            ];
         }
     }
 
@@ -58,6 +52,31 @@ class endpoint_v1_auth extends Endpoint_REST {
         ];
     }
 
+    private function tryLoadUser(){
+        $u = $this->add('Model_User')->tryLoadBy('email',$_POST['u']);
+        if($u->loaded()){
+            $h_check = null;
+            if($u->get('lhash') != null) {
+                $h_check = $this->add('Model_User')->checkUserByLHash($u->get('lhash'));
+            }
+            if($h_check){
+                $res = $u->prolongLHash();
+            }else{
+                $res = $u->setLHash();
+            }
+
+            return [
+                'result' => 'success',
+                'hash'   => $res,
+                'message' => 'User found'
+            ];
+        } else {
+            return [
+                'result' => 'error',
+                'message'   => 'User not found after check'
+            ];
+        }
+    }
     function get_check(){
         $u = $this->add('Model_User');
         $res = $u->checkUserByLHash($_GET['lhash']);
