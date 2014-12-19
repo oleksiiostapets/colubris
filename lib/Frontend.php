@@ -140,11 +140,11 @@ class Frontend extends ApiFrontend {
             if ($this->model_user_rights->canSeeQuotes())       $this->addAllowedPages(array('quotes'));
             if ($this->model_user_rights->canSeeProjects())     $this->addAllowedPages(array('projects'));
             if ($this->model_user_rights->canSeeClients())      $this->addAllowedPages(array('clients'));
-            if ($this->model_user_rights->canSeeReports())   $this->addAllowedPages(array('reports'));
+            if ($this->model_user_rights->canSeeReports())      $this->addAllowedPages(array('reports'));
             if ($this->model_user_rights->canSeeDevelopers())   $this->addAllowedPages(array('developers'));
-            if ($this->model_user_rights->canSeeDeleted())   $this->addAllowedPages(array('deleted'));
+            if ($this->model_user_rights->canSeeDeleted())      $this->addAllowedPages(array('deleted'));
             if ($this->model_user_rights->canSeeUsers())        $this->addAllowedPages(array('users'));
-            if ($this->model_user_rights->canSeeLogs())   $this->addAllowedPages(array('logs'));
+            if ($this->model_user_rights->canSeeLogs())         $this->addAllowedPages(array('logs'));
             if ($this->model_user_rights->canSeeRates())        $this->addAllowedPages(array('rates'));
             if ($this->model_user_rights->canSeeSettings())     $this->addAllowedPages(array('account'));
             if ($this->model_user_rights->canSeeManager())     $this->addAllowedPages(array('manager'));
