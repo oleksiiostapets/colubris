@@ -63,8 +63,8 @@ class UIPageAccessDashboardRightTest extends PHPUnit_Framework_TestCase {
 
     public function tearDown() {
         if( $this->hasFailed() ) {
-            $date = "screenshot_" . date('Y-m-d-H-i-s') . ".png" ;
-            $this->webDriver->takeScreenshot( $date );
+            $path = $this->config->screenshot_location . "/screenshot_" . date('Y-m-d-H-i-s') . ".png" ;
+            $this->webDriver->takeScreenshot( $path );
         }
         $this->webDriver->close();
         $this->current_user->forceDelete();
