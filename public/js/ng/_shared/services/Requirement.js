@@ -122,12 +122,42 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
             $rootScope.$broadcast('task.clear');
             $rootScope.$broadcast('comm.clear');
         },
-        getFromServer: function() {
+        getFromServer: function(quote) {
             API.getAll(
                 'requirement',
                 'getForQuote',
                 {quote_id: app_module.quote_id},
                 function(obj) {
+                    $.each(obj.data,function(i,e){
+                        var spent_time = '';
+                        var cost = '';
+                        var del = '';
+                        if(app_module.current_user_rights.indexOf('can_see_spent_time') != -1){
+                            spent_time = e.spent_time;
+                        }
+                        if(app_module.current_user_rights.indexOf('can_see_finance') != -1){
+                            cost = Math.ceil(e.estimate * quote.quotes[0].calc_rate) + quote.quotes[0].currency;
+                        }
+                        if(spent_time != '' && cost != ''){
+                            del = ' / ';
+                        }
+                        obj.data[i].spent_time_cost = spent_time + del + cost;
+
+                    });
+                    var spent_time_text = '';
+                    var cost_text = '';
+                    var del = '';
+                    if(app_module.current_user_rights.indexOf('can_see_spent_time') != -1){
+                        spent_time_text = 'Spent time';
+                    }
+                    if(app_module.current_user_rights.indexOf('can_see_finance') != -1){
+                        cost_text = 'Cost';
+                    }
+                    if(spent_time_text != '' && cost_text != ''){
+                        del = ' / ';
+                    }
+                    obj.data.spent_time_cost_text = spent_time_text +del + cost_text;
+
                     service.requirements = obj.data;
                     $rootScope.$broadcast( 'requirements.update' );
                 }

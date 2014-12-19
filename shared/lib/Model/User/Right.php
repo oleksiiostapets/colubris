@@ -76,6 +76,7 @@ class Model_User_Right extends SQL_Model{
         'can_login_as_any_user',
         'can_see_time',
         'can_see_finance',
+        'can_see_spent_time',
         'can_see_manager',
         'can_manage_all_records'
     );
@@ -268,6 +269,7 @@ class Model_User_Right extends SQL_Model{
     public function canSubmitForQuotation($id=null)      {return $this->can('can_submit_for_quotation',$id);}
     public function canMoveToFromArchive($id=null)       {return $this->can('can_move_to_from_archive',$id);}
     public function canSeeFinance($id=null)              {return $this->can('can_see_finance',$id);}
+    public function canSeeSpentTime($id=null)            {return $this->can('can_see_spent_time',$id);}
     //Requirement
     public function canAddRequirement($id=null)          {return $this->can('can_add_requirement',$id);}
     public function canEditRequirement($id=null)         {return $this->can('can_edit_requirement',$id);}

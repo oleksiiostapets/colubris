@@ -8,7 +8,6 @@
                     <div class="atk-push-small">
                         <div class="atk-cell atk-valign-top">
                             <div class="atk-label atk-effect-info">ID#{{project.id}}</div>
-                            <div>Spent time: {{project.spent_time}}</div>
                         </div>
                     </div>
                     <div class="atk-push-small">
@@ -30,6 +29,9 @@
                             </div>
                             <textarea class="atk-jackscrew" rows="7" resize="none" ng-model="project.descr" />
                         </div>
+                    </div>
+                    <div class="atk-push-small" style="{{can_see_spent_time}}">
+                        <label class="atk-label atk-effect-danger"><strong>Spent time: </strong><span>{{project.spent_time}}</span></label>
                     </div>
 
                     <div class="atk-actions">

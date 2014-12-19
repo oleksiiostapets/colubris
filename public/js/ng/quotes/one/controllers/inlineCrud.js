@@ -10,7 +10,26 @@ app_module.controller(
         function ($scope,  $document,  $http,  Requirement,  Comment,  Task,  Quote,  User) {
 
             // quote info
+            $scope.Quote = Quote;
             Quote.getOneFromServer(app_module.quote_id);
+            if(app_module.current_user_rights.indexOf('can_see_finance') != -1){
+                //user can see money
+                Quote.can_see_finance = 'display:block;';
+            }else{
+                Quote.can_see_finance = 'display:none;';
+            }
+            if(app_module.current_user_rights.indexOf('can_see_spent_time') != -1){
+                //user can see spent time
+                Quote.can_see_spent_time = 'display:block;';
+            }else{
+                Quote.can_see_spent_time = 'display:none;';
+            }
+            if(app_module.current_user_rights.indexOf('can_see_rates') != -1){
+                //user can see spent time
+                Quote.can_see_rates = 'display:block;';
+            }else{
+                Quote.can_see_rates = 'display:none;';
+            }
 
             $scope.calc = {};
 
@@ -61,7 +80,7 @@ app_module.controller(
             $scope.assigneds = User.users;
             User.getFromServer('assigneds.update','getAllUsers');
 
-            Requirement.getFromServer();
+            Requirement.getFromServer(Quote);
 
             $scope.$on( 'assigneds.update', function( event ) {
                 $scope.assigneds = User.users;
