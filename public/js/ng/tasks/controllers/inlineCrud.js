@@ -112,7 +112,9 @@ app_module.controller(
 
             $scope.$on( 'projects.update', function( event ) {
                 $scope.projects = Project.projects;
-                $scope.projects.unshift({id:"",name:'all'});  //default element for filter by field
+                if(angular.isDefined($scope.projects)){
+                    $scope.projects.unshift({id:"",name:'all'});  //default element for filter by field
+                }
             });
 
             $scope.$on( 'quotes.update', function( event ) {
