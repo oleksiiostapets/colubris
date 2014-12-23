@@ -315,7 +315,8 @@ class Page_Requirements extends Page {
 
     function addClientInfoGrid($v,$fields_required,$client_id) {
 
-        $client = $this->add('Model_Client')->notDeleted()->tryLoad($client_id);
+        try {
+        $client = $this->add('Model_Client')->tryLoad($client_id);
 
         if ($client->loaded()) {
             $count = 0;
@@ -332,6 +333,9 @@ class Page_Requirements extends Page {
             $gr->addColumn('text','value','Info');
 //        $gr->addFormatter('value','wrap');
             $gr->setSource($source);
+        }
+        } catch (BaseException $e) {
+        
         }
 
     }
