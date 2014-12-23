@@ -159,6 +159,11 @@ class Model_User extends Model_BaseTable {
 
         $fields = ['id'];
 
+        // to make user be able to edit itself
+        if ($this['id'] == $u['id']) {
+            $fields = array('id','name','password','mail_task_changes','avatar_id','avatar','avatar_thumb');
+        }
+
         if($r->canSeeUsers($u['id'])){
             $fields = array('id','email','name','password','is_admin','is_manager','is_financial','is_developer','is_sales','hash','mail_task_changes','is_deleted','deleted_id','avatar_id','deleted','is_system','client_id','client','chash','organisation_id','organisation','lhash','lhash_exp','is_client','avatar','avatar_thumb');
         }

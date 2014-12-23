@@ -71,8 +71,7 @@ class Page_Requirements extends Page {
         $left->add('H4')->set('Client:');
         $fields_required = array('name','email','phone');
         $project=$this->add('Model_Project')->notDeleted()->load($quote->get('project_id'));
-        $client = $this->add('Model_Client')->notDeleted()->load($project->get('client_id'));
-        $this->addClientInfoGrid($left,$fields_required,$client);
+        $this->addClientInfoGrid($left,$fields_required,$project->get('client_id'));
 
         // | *** RIGHT *** |
         $right = $this->add('View')
@@ -310,21 +309,26 @@ class Page_Requirements extends Page {
 
     }
 
-    function addClientInfoGrid($v,$fields_required,$client_data) {
-        $count = 0;
-        $source = array();
-        foreach ($client_data->get() as $key=>$value) {
-            if (in_array($key,$fields_required)) {
-                $source[$count]['name'] = ucwords($key);
-                $source[$count]['value'] = $value;
-                $count++;
+    function addClientInfoGrid($v,$fields_required,$client_id) {
+
+        $client = $this->add('Model_Client')->notDeleted()->tryLoad($client_id);
+
+        if ($client->loaded()) {
+            $count = 0;
+            $source = array();
+            foreach ($client->get() as $key=>$value) {
+                if (in_array($key,$fields_required)) {
+                    $source[$count]['name'] = ucwords($key);
+                    $source[$count]['value'] = $value;
+                    $count++;
+                }
             }
-        }
-        $gr = $v->add('Grid_Quote');
-        $gr->addColumn('text','name','');
-        $gr->addColumn('text','value','Info');
+            $gr = $v->add('Grid_Quote');
+            $gr->addColumn('text','name','');
+            $gr->addColumn('text','value','Info');
 //        $gr->addFormatter('value','wrap');
-        $gr->setSource($source);
+            $gr->setSource($source);
+        }
 
     }
 
