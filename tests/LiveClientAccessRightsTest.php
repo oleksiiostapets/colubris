@@ -27,8 +27,8 @@ class LiveClientAccessRightsTest extends PHPUnit_Framework_TestCase {
 
     public function tearDown() {
         if( $this->hasFailed() ) {
-            $date = "screenshot_" . date('Y-m-d-H-i-s') . ".png" ;
-            $this->webDriver->takeScreenshot( $date );
+            $path = $this->config->screenshot_location . "/screenshot_" . date('Y-m-d-H-i-s') . ".png" ;
+            $this->webDriver->takeScreenshot( $path );
         }
         $this->webDriver->close();
     }
@@ -203,15 +203,23 @@ class LiveClientAccessRightsTest extends PHPUnit_Framework_TestCase {
         //if user can delete task he can see delete button
     }
 
-    /**
-     * @expectedException NoSuchElementException
-     */
     private function userCanNotSeeEditButton(){
-        $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_actions_1 .task_action_edit_1"))->getText();
+        try {
+            $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_actions_1 .task_action_edit_1"))->getText();
+            $this->fail('User CAN see Edit button but should not');
+        }catch (NoSuchElementException $expected) {
+            return;
+        }
     }
     private function userCanSeeEditButton(){
-        $first_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_actions_1 .task_action_edit_1"));
-        $this->assertTrue($first_task->getText()=='Edit','Invalid Edit button name');
+        try {
+            $first_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_actions_1 .task_action_edit_1"));
+            $this->assertTrue($first_task->getText()=='Edit','Invalid Edit button name');
+        }catch (NoSuchElementException $expected) {
+            $this->fail('User CAN NOT see Edit button but should');
+        }catch(Exception $e){
+            $this->fail('Unexpected exception has been raised.');
+        }
     }
     public function testPages() {
         $this->logIn();
