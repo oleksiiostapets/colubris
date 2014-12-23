@@ -230,7 +230,7 @@ class Model_Task extends Model_Auditable {
 
     }
     function addProjectName() {
-	    $this->addExpression('project_name',function($m){
+	    $this->addExpression('project',function($m){
 		    $req = $m->add('Model_Requirement')->notDeleted()->addCondition('id',$m->getElement('requirement_id'));
 		    $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()
                 ->addCondition('id',$req->fieldQuery('quote_id'));
@@ -248,7 +248,7 @@ class Model_Task extends Model_Auditable {
 	    });
     }
     function addQuoteName() {
-        $this->addExpression('quote',function($m){
+        $this->addExpression('quote_name',function($m){
             $req = $m->add('Model_Requirement')->notDeleted()->addCondition('id',$m->getElement('requirement_id'));
             $quote = $m->add('Model_Quote')->notDeleted()->getThisOrganisation()
                 ->addCondition('id',$req->fieldQuery('quote_id'));

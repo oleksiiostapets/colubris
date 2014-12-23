@@ -3,39 +3,39 @@
         <button class="atk-button atk-effect-success" ng-click="Task.showForm()">Add Task</button>
     </div>-->
     <div class="atk-table atk-table-bordered">
-        <table>
+        <table class="task_crud">
             <thead>
             <tr class="atk-swatch-blue">
-                <th>#</th>
-                <th>Name</th>
-                <th>Project</th>
-                <th>Quote</th>
-                <th>Requirement</th>
-                <th>Priority</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Spent Time</th>
-                <th>Requester</th>
-                <th>Assigned</th>
-                <th>Actions</th>
+                <th class="task_number_header">#</th>
+                <th class="task_name_header">Name</th>
+                <th class="task_project_header">Project</th>
+                <th class="task_quote_header">Quote</th>
+                <th class="task_requirement_header">Requirement</th>
+                <th class="task_priority_header">Priority</th>
+                <th class="task_type_header">Type</th>
+                <th class="task_status_header">Status</th>
+                <th class="task_spent_time_header">Spent Time</th>
+                <th class="task_requester_header">Requester</th>
+                <th class="task_assigned_header">Assigned</th>
+                <th class="task_actions_header">Actions</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="task in tasks track by $index">
-                <td>{{$index+1}}</td>
-                <td>{{task.name}}</td>
-                <td>{{task.project}}</td>
-                <td>{{task.quote_name}}</td>
-                <td>{{task.requirement}}</td>
-                <td>{{task.priority}}</td>
-                <td>{{task.type}}</td>
-                <td>{{task.status}}</td>
-                <td>{{task.spent_time}}</td>
-                <td>{{task.requester}}</td>
-                <td>{{task.assigned}}</td>
-                <td class="atk-text-nowrap">
-                    <button class="atk-button" ng-click="Task.edit($index)">Edit</button>
-                    <button class="atk-button atk-effect-danger" ng-confirm-click="Are you sure?" confirmed-click="Task.remove($index)">Delete</button>
+            <tr ng-repeat="task in tasks track by $index" class="task_row_{{$index+1}}">
+                <td class="task_number_{{$index+1}}">{{$index+1}}</td>
+                <td class="task_name_{{$index+1}}">{{task.name}}</td>
+                <td class="task_project_{{$index+1}}">{{task.project}}</td>
+                <td class="task_quote_{{$index+1}}">{{task.quote_name}}</td>
+                <td class="task_requirement_{{$index+1}}">{{task.requirement}}</td>
+                <td class="task_priority_{{$index+1}}">{{task.priority}}</td>
+                <td class="task_type_{{$index+1}}">{{task.type}}</td>
+                <td class="task_status_{{$index+1}}">{{task.status}}</td>
+                <td class="task_spent_time_{{$index+1}}">{{task.spent_time}}</td>
+                <td class="task_requester_{{$index+1}}">{{task.requester}}</td>
+                <td class="task_assigned_{{$index+1}}">{{task.assigned}}</td>
+                <td class="atk-text-nowrap task_actions_{{$index+1}}">
+                    <button class="atk-button task_action_edit_{{$index+1}}" ng-click="Task.edit($index)">Edit</button>
+                    <button class="atk-button atk-effect-danger  task_action_delete_{{$index+1}}" ng-confirm-click="Are you sure?" confirmed-click="Task.remove($index)">Delete</button>
                 </td>
             </tr>
             </tbody>

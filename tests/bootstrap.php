@@ -41,3 +41,4 @@
 include_once 'unit_tests_config.php';
 include_once 'vendor/autoload.php';
 include_once 'tests/lib/UserInputTrait.php';
+include_once 'tests/lib/GetUserTrait.php';
