@@ -73,6 +73,7 @@ class UISettingPageTest extends PHPUnit_Framework_TestCase {
     }
 
 
+
     public function testAccountForm() {
 
         $this->sendConsoleMessage('Wait for page loading...');
@@ -107,11 +108,20 @@ class UISettingPageTest extends PHPUnit_Framework_TestCase {
         $cur_user_name = $this->webDriver->findElement(WebDriverBy::cssSelector("div.current-user-name"));
         $this->assertTrue($cur_user_name->getText()==$this->current_user_name,'Displayed current user name is not correct');
 
-        // account
+
+//        // account
         $this->goToAccountPage();
-        $this->checkNameInputField();
-        $this->updateNameField();
-        $this->checkNameInputField();
+//        $this->checkNameInputField();
+//        $this->updateNameField();
+//        $this->checkNameInputField();
+//        $this->updateNameField(false);
+//        $this->checkNameInputField();
+//
+//        // mail settings
+//        $this->checkMailSettings();
+
+        // avatar settings
+        $this->checkAvatarSettings();
 
         $this->waitForUserInput('All pages tested! ');
     }
@@ -120,20 +130,63 @@ class UISettingPageTest extends PHPUnit_Framework_TestCase {
         $this->webDriver->get($this->config->test_url.'?page=account');
         $this->waitForUserInput('Wait until Angular loads all templates.');
     }
+
     protected function checkNameInputField() {
         $form_user_name = $this->webDriver->findElement(WebDriverBy::cssSelector("input.account-name-field"));
-        $this->waitForUserInput('Check data ^.');
         $this->assertTrue($this->current_user_name==$form_user_name->getAttribute('value'),'Form user name is not correct');
+        $this->waitForUserInput('Submitted form checked');
     }
-    protected function updateNameField() {
-        $this->current_user_name = $new_name = $this->current_user_name . '_Updated';
+
+    protected function updateNameField($enter=true) {
+        $this->current_user_name = $new_name = $this->current_user_name . '_Up';
         $form_user_name = $this->webDriver->findElement(WebDriverBy::cssSelector("input.account-name-field"));
         $this->sendConsoleMessage('Double click on name field to select all.');
         $this->webDriver->getMouse()->doubleClick($form_user_name->getCoordinates());
         $this->webDriver->getKeyboard()->sendKeys($new_name);
 
-        // save form by pressing <enter>
-        $this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
-        $this->sendConsoleMessage('Wait for form submit...');
+        if ($enter) {
+            // save form by pressing <enter>
+            $this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
+            $this->waitForUserInput('Submitted by pressing <enter>. Wait for form submit...');
+        } else {
+            // save form by clicking submit button
+            $submit_button = $this->webDriver->findElement(WebDriverBy::cssSelector("button.account-save-button"));
+            $submit_button->click();
+            $this->waitForUserInput('Submitted by clicking save button. Wait for form submit...');
+        }
+    }
+
+    public function checkMailSettings() {
+        $send_when_task_changed_checkbox = $this->webDriver->findElement(WebDriverBy::cssSelector("input.send-when-task-changed"));
+        $send_when_task_changed_checkbox->click();
+        $is_checked = $send_when_task_changed_checkbox->getAttribute('checked');
+        $submit = $this->webDriver->findElement(WebDriverBy::cssSelector("button.account-main-settings-submit"));
+        $submit->click();
+        $this->waitForUserInput('Mail settings updated');
+
+        // reload page and check if data really updated
+        $this->goToAccountPage();
+        $send_when_task_changed_checkbox_updated = $this->webDriver->findElement(WebDriverBy::cssSelector("input.send-when-task-changed"));
+        $is_checked_after = $send_when_task_changed_checkbox_updated->getAttribute('checked');
+
+        $this->assertTrue($is_checked==$is_checked_after,'Send when task changed was not updated after form submit');
+
+    }
+
+    public function checkAvatarSettings() {
+        $send_when_task_changed_checkbox = $this->webDriver->findElement(WebDriverBy::cssSelector("input.send-when-task-changed"));
+        $send_when_task_changed_checkbox->click();
+        $is_checked = $send_when_task_changed_checkbox->getAttribute('checked');
+        $submit = $this->webDriver->findElement(WebDriverBy::cssSelector("button.account-main-settings-submit"));
+        $submit->click();
+        $this->waitForUserInput('Mail settings updated');
+
+        // reload page and check if data really updated
+        $this->webDriver->get($this->config->test_url.'?page=account');
+        $send_when_task_changed_checkbox_updated = $this->webDriver->findElement(WebDriverBy::cssSelector("input.send-when-task-changed"));
+        $is_checked_after = $send_when_task_changed_checkbox_updated->getAttribute('checked');
+
+        $this->assertTrue($is_checked==$is_checked_after,'Send when task changed was not updated after form submit');
+
     }
 }
