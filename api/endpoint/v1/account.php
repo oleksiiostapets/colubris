@@ -84,8 +84,7 @@ class endpoint_v1_account extends Endpoint_v1_General {
 
                 return [
                     'result' => 'success',
-                    'data' => $up_model->get(),
-                    'data' => 'adnfbdv',
+                    'data'   => $this->model->get(),
                 ];
             } catch (Exception $e) {
                 $this->app->logger->logCaughtException($e);

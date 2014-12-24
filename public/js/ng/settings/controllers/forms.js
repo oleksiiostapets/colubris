@@ -34,7 +34,7 @@ app_module.controller(
                         alert('Error! No data received.');
                     }
                     if (obj.result === 'success') {
-                        $("#avatar").html('<img src="http://' + document.domain + obj.data.thumb_url + '" alt="Avatar" />');
+                        $("#avatar").html('<img src="' + app_module.base_url + 'upload/' + obj.data.avatar_thumb + '" alt="Avatar" />');
                     } else {
                         alert('Error! No success message received.');
                     }
