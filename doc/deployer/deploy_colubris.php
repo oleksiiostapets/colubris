@@ -99,6 +99,7 @@ $s1->task('cmd',"cd $base_path/releases/$server_deploy_folder");
 $s1->task('cmd',"ln -s ../../shared/logs logs");
 $s1->task('cmd',"ln -s ../../shared/upload upload");
 $s1->task('cmd',"ln -s ../../../shared/upload public/upload");
+$s1->task('cmd',"ln -s ../../../shared/upload api/upload");
 $s1->task('cmd',"ln -s ../../shared/config.php config.php");
 $s1->task('cmd',"cd api");
 $s1->task('cmd',"ln -s ../../../shared/config.php config.php");

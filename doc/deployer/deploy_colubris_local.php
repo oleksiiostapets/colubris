@@ -90,6 +90,7 @@ $s1->task('cmd',"ln -s ../../shared/logs-front logs");
 $s1->task('cmd',"ln -s ../../../shared/logs-api api/logs");
 $s1->task('cmd',"ln -s ../../shared/upload upload");
 $s1->task('cmd',"ln -s ../../../shared/upload public/upload");
+$s1->task('cmd',"ln -s ../../../shared/upload api/upload");
 $s1->task('cmd',"ln -s ../../shared/config-frontend.php config.php");
 $s1->task('cmd',"cd api");
 $s1->task('cmd',"ln -s ../../../shared/config-api.php config.php");

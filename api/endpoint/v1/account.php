@@ -47,6 +47,7 @@ class endpoint_v1_account extends Endpoint_v1_General {
     }
 
     function post_addToFilestore(){
+
         $id = $this->checkPostParameter('id');
         $this->model->tryLoad($id);
         if(!$this->model->loaded()){
@@ -75,19 +76,29 @@ class endpoint_v1_account extends Endpoint_v1_General {
             $type = $up_model->getFiletypeID($mime_type_string);
             $up_model->set('filestore_type_id',$type);
             $up_model->import($img_url,'copy');
-            $up_model->save();
+            try {
+                $up_model->save();
+                unlink($img_url);
+                $this->model->set('avatar_id',$up_model->get('id'));
+                $this->model->save();
 
-            unlink($img_url);
-
-            $this->model->set('avatar_id',$up_model->get('id'));
-            $this->model->save();
-
+                return [
+                    'result' => 'success',
+                    'data' => $up_model->get(),
+                    'data' => 'adnfbdv',
+                ];
+            } catch (Exception $e) {
+                $this->app->logger->logCaughtException($e);
+                /*echo $e->getMessage()."\n";
+                echo $e->getFile()."\n";
+                echo $e->getLine()."\n";
+                echo $e->getTraceAsString();*/
+            }
             return [
-                'result' => 'success',
-//                'data' => $up_model->get(),
-                'data' => 'adnfbdv',
+                'result' => 'error',
+                'error_message' => 'File was not imported into filestore',
             ];
-        }else{
+        } else {
             return [
                 'result' => 'error',
                 'error_message' => 'File not found',

@@ -119,6 +119,7 @@ class UISettingPageTest extends PHPUnit_Framework_TestCase {
 //
 //        // mail settings
 //        $this->checkMailSettings();
+//        $this->checkMailSettings();
 
         // avatar settings
         $this->checkAvatarSettings();
@@ -174,19 +175,14 @@ class UISettingPageTest extends PHPUnit_Framework_TestCase {
     }
 
     public function checkAvatarSettings() {
-        $send_when_task_changed_checkbox = $this->webDriver->findElement(WebDriverBy::cssSelector("input.send-when-task-changed"));
-        $send_when_task_changed_checkbox->click();
-        $is_checked = $send_when_task_changed_checkbox->getAttribute('checked');
-        $submit = $this->webDriver->findElement(WebDriverBy::cssSelector("button.account-main-settings-submit"));
+        $avatar_field = $this->webDriver->findElement(WebDriverBy::cssSelector("input.avatar-upload"));
+        $avatar_field->sendKeys(__DIR__ . '/images/12345.jpg');
+
+        $this->waitForUserInput('=============');
+
+        $submit = $this->webDriver->findElement(WebDriverBy::cssSelector("button.avatar-upload-submit"));
         $submit->click();
-        $this->waitForUserInput('Mail settings updated');
-
-        // reload page and check if data really updated
-        $this->webDriver->get($this->config->test_url.'?page=account');
-        $send_when_task_changed_checkbox_updated = $this->webDriver->findElement(WebDriverBy::cssSelector("input.send-when-task-changed"));
-        $is_checked_after = $send_when_task_changed_checkbox_updated->getAttribute('checked');
-
-        $this->assertTrue($is_checked==$is_checked_after,'Send when task changed was not updated after form submit');
+        $this->waitForUserInput('Submitted by clicking save button. Wait for form submit...');
 
     }
 }
