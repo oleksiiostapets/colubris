@@ -199,10 +199,30 @@ class LiveClientAccessRightsTest extends PHPUnit_Framework_TestCase {
         }else{
             $this->userCanNotSeeEditButton();
         }
-
-        //if user can delete task he can see delete button
+        if($r->canDeleteTask($u['id'])){
+            $this->userCanSeeDeleteButton();
+        }else{
+            $this->userCanNotSeeDeleteButton();
+        }
     }
-
+    private function userCanNotSeeDeleteButton(){
+        try {
+            $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_actions_1 .task_action_delete_1"))->getText();
+            $this->fail('User CAN see Delete button but should not');
+        }catch (NoSuchElementException $expected) {
+            return;
+        }
+    }
+    private function userCanSeeDeleteButton(){
+        try {
+            $first_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_actions_1 .task_action_delete_1"));
+            $this->assertTrue($first_task->getText()=='Delete','Invalid Delete button name');
+        }catch (NoSuchElementException $expected) {
+            $this->fail('User CAN NOT see Delete button but should');
+        }catch(Exception $e){
+            $this->fail('Unexpected exception has been raised.');
+        }
+    }
     private function userCanNotSeeEditButton(){
         try {
             $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_actions_1 .task_action_edit_1"))->getText();
