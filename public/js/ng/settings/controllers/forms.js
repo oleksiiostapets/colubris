@@ -48,7 +48,7 @@ app_module.controller(
             $scope.settings = args;
             $scope.account = $scope.settings[0];
             //console.log($scope.account.avatar_thumb);
-            if($scope.account.avatar_thumb != '' && $scope.account.avatar_thumb != null) $("#avatar").html('<img src="http://' + document.domain + window.location.pathname + 'upload/' + $scope.account.avatar_thumb + '" alt="Avatar" />');
+            if($scope.account.avatar_thumb != '' && $scope.account.avatar_thumb != null) $("#avatar").html('<img src="' + app_module.base_url + 'upload/' + $scope.account.avatar_thumb + '" alt="Avatar" />');
             //console.log($scope.account);
         });
         $scope.$on( 'settings.message', function( event, args ) {
