@@ -5,7 +5,7 @@
  * Date: 21/11/14
  * Time: 23:46
  */
-class LiveClientAccessRightsTest extends PHPUnit_Framework_TestCase {
+class LiveClientTaskPageTest extends PHPUnit_Framework_TestCase {
 
     use Trait_Temp_Proxy;
     use UserInputTrait;
@@ -219,8 +219,6 @@ class LiveClientAccessRightsTest extends PHPUnit_Framework_TestCase {
             $this->assertTrue($first_task->getText()=='Delete','Invalid Delete button name');
         }catch (NoSuchElementException $expected) {
             $this->fail('User CAN NOT see Delete button but should');
-        }catch(Exception $e){
-            $this->fail('Unexpected exception has been raised.');
         }
     }
     private function userCanNotSeeEditButton(){
@@ -237,8 +235,213 @@ class LiveClientAccessRightsTest extends PHPUnit_Framework_TestCase {
             $this->assertTrue($first_task->getText()=='Edit','Invalid Edit button name');
         }catch (NoSuchElementException $expected) {
             $this->fail('User CAN NOT see Edit button but should');
-        }catch(Exception $e){
-            $this->fail('Unexpected exception has been raised.');
+        }
+    }
+    private function goToEdit(){
+        //go to
+        $this->waitForUserInput('Go to task form');
+        $edit_button = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_actions_1 .task_action_edit_1"));
+        $edit_button->click();
+    }
+    private function checkTaskTitles(){
+        $this->waitForUserInput('Compare task data');
+
+        $first_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_name_1"))->getText();
+        $current_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_edit_form #task_name"))->getAttribute('value');
+        $this->assertEquals($first_task,$current_task,'Task name is invalid');
+        $first_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_priority_1"))->getText();
+        $current_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_edit_form #task_priority"))->getAttribute('value');
+        $this->assertEquals($first_task,$current_task,'Task priority is invalid');
+        $first_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_type_1"))->getText();
+        $current_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_edit_form #task_type"))->getAttribute('value');
+        $this->assertEquals($first_task,$current_task,'Task type is invalid');
+        $first_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_status_1"))->getText();
+        $current_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_edit_form #task_status"))->getAttribute('value');
+        $this->assertEquals($first_task,$current_task,'Task status is invalid');
+        $first_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_requester_1"))->getText();
+        $current_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_edit_form #task_requester option[selected='selected']"))->getText();
+        $this->assertEquals($first_task,$current_task,'Task requester is invalid');
+        $first_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_crud .task_row_1 .task_assigned_1"))->getText();
+        $current_task = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_edit_form #task_assigned option[selected='selected']"))->getText();
+        $this->assertEquals($first_task,$current_task,'Task assigned is invalid');
+    }
+    private function userCanSeeTime(){
+        try {
+            $first_time = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_time_list .task_time_1 .spent_time_row_1 .spent_time_title_1"))->getText();
+            $this->assertEquals('Spent time:', $first_time,'Invalid Spent time title');
+        }catch (NoSuchElementException $expected) {
+            $this->fail('User CANNOT see Time but should');
+        }
+    }
+    private function userCanNotSeeTime(){
+        try {
+            $this->webDriver->findElement(WebDriverBy::cssSelector(".task_time_list .task_time_1 .spent_time_row_1 .spent_time_title_1"))->getText();
+            $this->fail('User CAN see Time but should not');
+        }catch (NoSuchElementException $expected) {
+            return;
+        }
+    }
+    private function userCanSeeTimeForm(){
+        try {
+            $time_form = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_time_form .spent_time_title"))->getText();
+            $this->assertEquals('Spent Time:', $time_form,'Invalid Spent time title');
+            $time_form = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_time_form .date_title"))->getText();
+            $this->assertEquals('Date:', $time_form,'Invalid date title');
+            $time_form = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_time_form .comment_title"))->getText();
+            $this->assertEquals('Comment:', $time_form,'Invalid Comment title');
+        }catch (NoSuchElementException $expected) {
+            $this->fail('User CANNOT see Time Form but should');
+        }
+    }
+    private function userCanNotSeeTimeForm(){
+        try {
+            $this->webDriver->findElement(WebDriverBy::cssSelector(".task_time_form"))->getText();
+            $this->fail('User CAN see Time Form but should not');
+        }catch (NoSuchElementException $expected) {
+            return;
+        }
+    }
+    private function userCanAddTime(){
+        $this->sendConsoleMessage('Filling the form...');
+
+        $time_form_spent_time_field  = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_time_form #spent_time"));
+        $time_form_spent_time_field->click();
+        $this->webDriver->getKeyboard()->sendKeys(5);
+
+        sleep(1);
+        $time_form_time_comment_field  = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_time_form #time_comment"));
+        $time_form_time_comment_field->click();
+        $this->webDriver->getKeyboard()->sendKeys('test time');
+        sleep(1);
+        $time_form_add_time_button  = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_time_form .add_time_button"));
+        $time_form_add_time_button->click();
+        $this->sendConsoleMessage('Wait for form submitting...');
+
+        $this->waitForUserInput('Check if time list has been reloaded');
+
+        $time_list  = $this->webDriver->findElements(WebDriverBy::cssSelector(".task_time_box"));
+        $last_element = $time_list[count($time_list)-1];
+
+        $last_time_box_element  = $last_element->findElement(WebDriverBy::cssSelector(".time_comment_field"));
+        $this->assertEquals('test time', $last_time_box_element->getText(),'Invalid Comment value');
+        $last_time_box_element  = $last_element->findElement(WebDriverBy::cssSelector(".time_spent_time_field"));
+        $this->assertEquals(5, $last_time_box_element->getText(),'Invalid Spent time value');
+        $last_time_box_element  = $last_element->findElement(WebDriverBy::cssSelector(".time_date_field"));
+        $this->assertEquals(date('Y-m-d'), $last_time_box_element->getText(),'Invalid date value');
+        $last_time_box_element  = $last_element->findElement(WebDriverBy::cssSelector(".time_user_field"));
+        $this->assertEquals($this->u['name'], $last_time_box_element->getText(),'Invalid User Name value');
+    }
+    private function canDeleteOwnTime(){
+        $this->waitForUserInput('Check if user can Delete time');
+        try{
+            $time_list  = $this->webDriver->findElements(WebDriverBy::cssSelector(".task_time_box"));
+            $last_element = $time_list[count($time_list)-1];
+            $element_id = $last_element->findElement(WebDriverBy::cssSelector(".time_comment_id"))->getText();
+
+            $delete_button  = $last_element->findElement(WebDriverBy::cssSelector("#close-time-button"));
+            $this->assertTrue($delete_button->isDisplayed(),'Delete button is absent');
+            $delete_button->click();
+            $this->waitForUserInput('Time must be deleted now');
+
+            //check last element is absent
+            $time_list  = $this->webDriver->findElements(WebDriverBy::cssSelector(".task_time_box"));
+            $last_element = $time_list[count($time_list)-1];
+            $current_element_id = $last_element->findElement(WebDriverBy::cssSelector(".time_comment_id"))->getText();
+
+            $this->assertNotEquals($element_id,$current_element_id,'Element has not been deleted');
+        }catch (Exception $e){
+            $this->fail('User cannot delete his own time: '.$e->getMessage());
+        }
+    }
+    private function canEditOwnTime(){
+        $this->waitForUserInput('Check if user can Edit time');
+        try{
+            $time_list  = $this->webDriver->findElements(WebDriverBy::cssSelector(".task_time_box"));
+            $last_element = $time_list[count($time_list)-1];
+
+            //edit comment
+            $last_time_box_element  = $last_element->findElement(WebDriverBy::cssSelector(".time_comment_field"));
+            $last_time_box_element->click();
+            sleep(1);
+            $last_time_box_element_form  = $last_element->findElement(WebDriverBy::cssSelector("form textarea"));
+            $last_time_box_element_form->click();
+            sleep(1);
+            $last_time_box_element_form->clear();
+            $last_time_box_element_form->sendKeys('test time updated');
+            $time_list  = $this->webDriver->findElements(WebDriverBy::cssSelector(".task_time_box"));
+            $last_element = $time_list[count($time_list)-1];
+            $last_time_box_element_form  = $last_element->findElement(WebDriverBy::cssSelector("form button[type='submit']"));
+            $last_time_box_element_form->click();
+
+            //edit spent time
+            $last_time_box_element  = $last_element->findElement(WebDriverBy::cssSelector(".time_spent_time_field"));
+            $last_time_box_element->click();
+            sleep(1);
+            $last_time_box_element_form  = $last_element->findElement(WebDriverBy::cssSelector("form input"));
+            $last_time_box_element_form->click();
+            sleep(1);
+            $last_time_box_element_form->clear();
+            $last_time_box_element_form->sendKeys(3);
+            $this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
+
+            //edit date
+            $last_time_box_element  = $last_element->findElement(WebDriverBy::cssSelector(".time_date_field"));
+            $last_time_box_element->click();
+            sleep(1);
+            $last_time_box_element_form  = $last_element->findElement(WebDriverBy::cssSelector("form input"));
+            $last_time_box_element_form->click();
+            sleep(1);
+            $last_time_box_element_form->clear();
+            $last_time_box_element_form->sendKeys('2014-10-14');
+            $this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
+        }catch (Exception $e){
+            $this->fail('User cannot edit time: '.$e->getMessage());
+        }
+
+        $this->waitForUserInput('Wait');
+    }
+    private function canNotEditOthersTime(){
+        $this->waitForUserInput('Check user cannot edit others time');
+    }
+    private function canNotDeleteOthersTime(){
+        $this->waitForUserInput('Check user cannot delete others time');
+        //find last element
+        $time_list  = $this->webDriver->findElements(WebDriverBy::cssSelector(".task_time_box"));
+        $others_time = null;
+        foreach($time_list as $element){
+            if($element->findElement(WebDriverBy::cssSelector(".time_user_field"))->getText() == $this->u['name']){
+                continue;
+            }
+            $others_time = $element;
+        }
+        if(!$others_time){
+            $this->fail('No others time present. Not a bug. Just need to choose other task.');
+        }
+        try{
+            $others_time->findElement(WebDriverBy::cssSelector("#close-time-button"));
+            $this->fail('Delete button is here.');
+        }catch (NoSuchElementException $e){}
+    }
+    private function checkTaskTime(){
+        $this->waitForUserInput('Check user rights to see/track time');
+
+        $this->u = $this->getUser();
+        $r = $this->u->add('Model_User_Right');
+
+        if($r->canSeeTime($this->u['id'])){
+            $this->userCanSeeTime();
+        }else{
+            $this->userCanNotSeeTime();
+        }
+        if($r->canTrackTime($this->u['id'])){
+//            $this->userCanSeeTimeForm();
+//            $this->userCanAddTime();
+//            $this->canEditOwnTime();
+//            $this->canNotEditOthersTime();
+//            $this->canDeleteOwnTime();
+            $this->canNotDeleteOthersTime();
+        }else{
+            $this->userCanNotSeeTimeForm();
         }
     }
     public function testPages() {
@@ -246,7 +449,7 @@ class LiveClientAccessRightsTest extends PHPUnit_Framework_TestCase {
         $this->webDriver->get($this->config->test_url.'?page=tasks');
         $this->assertContains('Tasks', $this->webDriver->getTitle());
 
-        sleep(1);
+        /*sleep(1);
         $this->sendConsoleMessage('checkTitles...');
         $this->checkTitles();
         sleep(1);
@@ -269,13 +472,17 @@ class LiveClientAccessRightsTest extends PHPUnit_Framework_TestCase {
         $this->checkTableHeaders();
         sleep(1);
         $this->sendConsoleMessage('checkFirstTask...');
-        $this->checkFirstTask();
+        $this->checkFirstTask();*/
+
+        //Edit task tests
+        $this->goToEdit();
+
+//        $this->checkTaskTitles();
+        $this->checkTaskTime();
+
+//        $close_button = $this->webDriver->findElement(WebDriverBy::cssSelector(".task_edit_form #close-button"));
+//        $this->assertTrue($close_button->getText()=='Project:','User cannot see project filter');//TODO click to close
 
         $this->waitForUserInput('Finished');
-
-
-
-
-
     }
 }

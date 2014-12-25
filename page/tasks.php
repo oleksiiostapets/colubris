@@ -45,7 +45,8 @@ class page_tasks extends Page {
             $this->app->getConfig('url_postfix'),
             $this->app->url($this->app->getConfig('js_api_base_url')),
             $this->app->currentUser()->get('lhash'),
-            $this->app->currentUser()->get('id')
+            $this->app->currentUser()->get('id'),
+            $this->add('Model_User_Right')->getRights($this->app->currentUser()->get('id'))
         );
     }
     function defaultTemplate() {

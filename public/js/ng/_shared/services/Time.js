@@ -58,6 +58,8 @@ app_module.service( 'Time', [ '$rootScope','$http', 'API', function( $rootScope,
             }
         },
         saveOnServer: function(time,task) {
+            time.task_id = task.id;
+            time.user_id = app_module.user_id;
             API.saveOne(
                 'time',
                 null,
