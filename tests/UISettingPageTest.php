@@ -109,19 +109,20 @@ class UISettingPageTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($cur_user_name->getText()==$this->current_user_name,'Displayed current user name is not correct');
 
 
-//        // account
+        // account
         $this->goToAccountPage();
-//        $this->checkNameInputField();
-//        $this->updateNameField();
-//        $this->checkNameInputField();
-//        $this->updateNameField(false);
-//        $this->checkNameInputField();
-//
-//        // mail settings
-//        $this->checkMailSettings();
-//        $this->checkMailSettings();
+        $this->checkNameInputField();
+        $this->updateNameField();
+        $this->checkNameInputField();
+        $this->updateNameField(false);
+        $this->checkNameInputField();
+
+        // mail settings
+        $this->checkMailSettings();
+        $this->checkMailSettings();
 
         // avatar settings
+        $this->checkAvatarSettings();
         $this->checkAvatarSettings();
 
         $this->waitForUserInput('All pages tested! ');
@@ -178,11 +179,19 @@ class UISettingPageTest extends PHPUnit_Framework_TestCase {
         $avatar_field = $this->webDriver->findElement(WebDriverBy::cssSelector("input.avatar-upload"));
         $avatar_field->sendKeys(__DIR__ . '/images/12345.jpg');
 
-        $this->waitForUserInput('=============');
-
         $submit = $this->webDriver->findElement(WebDriverBy::cssSelector("button.avatar-upload-submit"));
         $submit->click();
         $this->waitForUserInput('Submitted by clicking save button. Wait for form submit...');
 
+        $avatar = $this->webDriver->findElement(WebDriverBy::cssSelector("div#avatar>img"));
+        $src = $avatar->getAttribute('src');
+
+        // reload page and check if avatar really updated
+        $this->goToAccountPage();
+
+        $avatar2 = $this->webDriver->findElement(WebDriverBy::cssSelector("div#avatar>img"));
+        $src2 = $avatar2->getAttribute('src');
+
+        $this->assertTrue($src==$src2,'Avatar was not updated after form submit');
     }
 }
