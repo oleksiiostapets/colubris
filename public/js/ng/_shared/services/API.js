@@ -223,7 +223,7 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
                 prefix='';
             }
             if(!angular.isDefined(time)) {
-                time = 3000;
+                time = 10000;
             }
 
             if(angular.isArray(field)){

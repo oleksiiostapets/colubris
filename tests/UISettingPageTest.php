@@ -125,6 +125,9 @@ class UISettingPageTest extends PHPUnit_Framework_TestCase {
         $this->checkAvatarSettings();
         $this->checkAvatarSettings();
 
+        // password
+        $this->checkPasswordSettings();
+
         $this->waitForUserInput('All pages tested! ');
     }
 
@@ -194,4 +197,299 @@ class UISettingPageTest extends PHPUnit_Framework_TestCase {
 
         $this->assertTrue($src==$src2,'Avatar was not updated after form submit');
     }
+
+    public function checkPasswordSettings() {
+
+        $form = $this->webDriver->findElement(WebDriverBy::cssSelector("form.account-password-form"));
+
+
+        // old
+        $old_wrap = $this->webDriver->findElement(WebDriverBy::cssSelector("div.old-pass-wrapper"));
+        $old = $old_wrap->findElement(WebDriverBy::cssSelector("input#old_password"));
+
+        // new
+        $new_wrap = $this->webDriver->findElement(WebDriverBy::cssSelector("div.new-pass-wrapper"));
+        $new = $new_wrap->findElement(WebDriverBy::cssSelector("input#new_password"));
+
+        // verify
+        $verify_wrap = $this->webDriver->findElement(WebDriverBy::cssSelector("div.verify-pass-wrapper"));
+        $verify = $verify_wrap->findElement(WebDriverBy::cssSelector("input#verify_password"));
+
+        // -----------------------------------------------------------
+        //
+        //           NO PASSWORD PROVIDED
+        //
+        // -----------------------------------------------------------
+
+        $old->click();
+        $this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
+
+        $this->waitForUserInput('Password form submitted bypressing <enter>. Wait for form submit...');
+
+        $old_errors = $old_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+        $new_errors = $new_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+        $verify_errors = $verify_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+
+        // old
+        $old_errors_messages = array();
+        foreach ($old_errors as $em) {
+            $old_errors_messages[] = $em->getText();
+        }
+
+        // new
+        $new_errors_messages = array();
+        foreach ($new_errors as $em) {
+            $new_errors_messages[] = $em->getText();
+        }
+
+        // verify
+        $verify_errors_messages = array();
+        foreach ($verify_errors as $em) {
+            $verify_errors_messages[] = $em->getText();
+        }
+
+        // old
+        $this->assertTrue(count($old_errors_messages)==2,'There must be exactly two messages if no old password provided.');
+        $this->assertTrue(in_array('required',$old_errors_messages),'There is no "required" error message if old password is not provided.');
+        $this->assertTrue(in_array('incorrect',$old_errors_messages),'There is no "incorrect" error message if old password is not provided.');
+
+        // new
+        $this->assertTrue(count($new_errors_messages)==1,'There must be exactly one messages if no new password provided.');
+        $this->assertTrue(in_array('required',$new_errors_messages),'There is no "required" error message if new password is not provided.');
+        $this->assertTrue(!in_array('incorrect',$new_errors_messages),'No "incorrect" error message required if new password is not provided.');
+
+        // verify
+        $this->assertTrue(count($verify_errors_messages)==1,'There must be exactly one messages if no verify password provided.');
+        $this->assertTrue(in_array('required',$verify_errors_messages),'There is no "required" error message if verify password is not provided.');
+        $this->assertTrue(!in_array('incorrect',$verify_errors_messages),'No "incorrect" error message required if verify password is not provided.');
+
+
+        // -----------------------------------------------------------
+        //
+        //           INCORRECT PASSWORD PROVIDED
+        //
+        // -----------------------------------------------------------
+
+        $this->waitForUserInput('Wait until form is ready...');
+
+        $old->click();
+        $old->sendKeys('this is wrong password');
+
+        $this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
+
+        $this->waitForUserInput('Password form submitted bypressing <enter>. Wait for form submit...');
+
+        $old_errors = $old_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+        $new_errors = $new_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+        $verify_errors = $verify_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+
+        // old
+        $old_errors_messages = array();
+        foreach ($old_errors as $em) {
+            $old_errors_messages[] = $em->getText();
+        }
+
+        // new
+        $new_errors_messages = array();
+        foreach ($new_errors as $em) {
+            $new_errors_messages[] = $em->getText();
+        }
+
+        // verify
+        $verify_errors_messages = array();
+        foreach ($verify_errors as $em) {
+            $verify_errors_messages[] = $em->getText();
+        }
+
+        // old
+        $this->assertTrue(count($old_errors_messages)==1,'There must be exactly one messages if old password is provided.');
+        $this->assertTrue(!in_array('required',$old_errors_messages),'No "required" error message is required if old password is provided.');
+        $this->assertTrue(in_array('incorrect',$old_errors_messages),'There is no "incorrect" error message if old password is not provided.');
+
+        // new
+        $this->assertTrue(count($new_errors_messages)==1,'There must be exactly one messages if no new password provided.');
+        $this->assertTrue(in_array('required',$new_errors_messages),'There is no "required" error message if new password is provided.');
+        $this->assertTrue(!in_array('incorrect',$new_errors_messages),'No "incorrect" error message required if new password is not provided.');
+
+        // verify
+        $this->assertTrue(count($verify_errors_messages)==1,'There must be exactly one messages if no verify password provided.');
+        $this->assertTrue(in_array('required',$verify_errors_messages),'There is no "required" error message if verify password is not provided.');
+        $this->assertTrue(!in_array('incorrect',$verify_errors_messages),'No "incorrect" error message required if verify password is not provided.');
+
+
+        // -----------------------------------------------------------
+        //
+        //       CORRECT PASS PROVIDED AND ONLY NEW PASS PROVIDED
+        //
+        // -----------------------------------------------------------
+
+        $this->waitForUserInput('Wait until form is ready...');
+
+        $this->webDriver->getMouse()->doubleClick($old->getCoordinates());
+        $old->sendKeys('123123');
+        $new->click();
+        $new->sendKeys('123123123123');
+
+        $this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
+
+        $this->waitForUserInput('Password form submitted bypressing <enter>. Wait for form submit...');
+
+        $old_errors = $old_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+        $new_errors = $new_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+        $verify_errors = $verify_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+
+        // old
+        $old_errors_messages = array();
+        foreach ($old_errors as $em) {
+            $old_errors_messages[] = $em->getText();
+        }
+
+        // new
+        $new_errors_messages = array();
+        foreach ($new_errors as $em) {
+            $new_errors_messages[] = $em->getText();
+        }
+
+        // verify
+        $verify_errors_messages = array();
+        foreach ($verify_errors as $em) {
+            $verify_errors_messages[] = $em->getText();
+        }
+
+        // old
+        $this->assertTrue(count($old_errors_messages)==0,'There must be exactly zero messages if correct old password is provided.');
+        $this->assertTrue(!in_array('required',$old_errors_messages),'There is no "required" error message if old password is not provided.');
+        $this->assertTrue(!in_array('incorrect',$old_errors_messages),'There is no "incorrect" error message if old password is not provided.');
+
+        // new
+        $this->assertTrue(count($new_errors_messages)==0,'There must be exactly zero messages if no new password provided.');
+        $this->assertTrue(!in_array('required',$new_errors_messages),'No "required" error message required if new password is provided.');
+        $this->assertTrue(!in_array('incorrect',$new_errors_messages),'No "incorrect" error message required if new password is provided.');
+
+        // verify
+        $this->assertTrue(count($verify_errors_messages)==2,'There must be exactly two messages if password provided and no verify password provided.');
+        $this->assertTrue(in_array('required',$verify_errors_messages),'There is no "required" error message if verify password is not provided.');
+        $this->assertTrue(in_array('passwords don\'t match',$verify_errors_messages),'There is no  "passwords don\'t match" error message if verify password is not provided.');
+
+
+
+        // -----------------------------------------------------------
+        //
+        // CORRECT PASS PROVIDED, NEW PASS DOESN'T MATCH VERIFICATION
+        //
+        // -----------------------------------------------------------
+
+        $this->waitForUserInput('Wait until form is ready...');
+
+        $this->webDriver->getMouse()->doubleClick($old->getCoordinates());
+        $old->sendKeys('123123');
+        $this->webDriver->getMouse()->doubleClick($new->getCoordinates());
+        $new->sendKeys('123123123123');
+        $verify->click();
+        $verify->sendKeys('doesn\'t match');
+
+        $this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
+
+        $this->waitForUserInput('Password form submitted bypressing <enter>. Wait for form submit...');
+
+        $old_errors = $old_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+        $new_errors = $new_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+        $verify_errors = $verify_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+
+        // old
+        $old_errors_messages = array();
+        foreach ($old_errors as $em) {
+            $old_errors_messages[] = $em->getText();
+        }
+
+        // new
+        $new_errors_messages = array();
+        foreach ($new_errors as $em) {
+            $new_errors_messages[] = $em->getText();
+        }
+
+        // verify
+        $verify_errors_messages = array();
+        foreach ($verify_errors as $em) {
+            $verify_errors_messages[] = $em->getText();
+        }
+
+        // old
+        $this->assertTrue(count($old_errors_messages)==0,'There must be exactly zero messages if correct old password is provided.');
+        $this->assertTrue(!in_array('required',$old_errors_messages),'There is no "required" error message if old password is not provided.');
+        $this->assertTrue(!in_array('incorrect',$old_errors_messages),'There is no "incorrect" error message if old password is not provided.');
+
+        // new
+        $this->assertTrue(count($new_errors_messages)==0,'There must be exactly zero messages if no new password provided.');
+        $this->assertTrue(!in_array('required',$new_errors_messages),'No "required" error message required if new password is provided.');
+        $this->assertTrue(!in_array('incorrect',$new_errors_messages),'No "incorrect" error message required if new password is provided.');
+
+        // verify
+        $this->assertTrue(count($verify_errors_messages)==1,'There must be exactly one messages if password provided and no verify password provided.');
+        $this->assertTrue(!in_array('required',$verify_errors_messages),'No "required" error message required if verify password is provided.');
+        $this->assertTrue(in_array('passwords don\'t match',$verify_errors_messages),'There is no  "passwords don\'t match" error message if verify password is not provided.');
+
+
+        // -----------------------------------------------------------
+        //
+        //     CORRECT PASS PROVIDED, NEW PASS MATCH VERIFICATION
+        //
+        // -----------------------------------------------------------
+
+        $this->waitForUserInput('Wait until form is ready...');
+
+        $this->webDriver->getMouse()->doubleClick($old->getCoordinates());
+        $old->sendKeys('123123');
+        $this->webDriver->getMouse()->doubleClick($new->getCoordinates());
+        $new->sendKeys('123123123123');
+        $this->webDriver->getMouse()->doubleClick($verify->getCoordinates());
+        $verify->sendKeys('123123123123');
+
+        $this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
+
+        $this->waitForUserInput('Password form submitted bypressing <enter>. Wait for form submit...');
+
+        $old_errors = $old_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+        $new_errors = $new_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+        $verify_errors = $verify_wrap->findElements(WebDriverBy::cssSelector("span.validation_error"));
+
+        // old
+        $old_errors_messages = array();
+        foreach ($old_errors as $em) {
+            $old_errors_messages[] = $em->getText();
+        }
+
+        // new
+        $new_errors_messages = array();
+        foreach ($new_errors as $em) {
+            $new_errors_messages[] = $em->getText();
+        }
+
+        // verify
+        $verify_errors_messages = array();
+        foreach ($verify_errors as $em) {
+            $verify_errors_messages[] = $em->getText();
+        }
+
+        // old
+        $this->assertTrue(count($old_errors_messages)==0,'There must be exactly zero messages if correct old password is provided.');
+        $this->assertTrue(!in_array('required',$old_errors_messages),'There is no "required" error message if old password is not provided.');
+        $this->assertTrue(!in_array('incorrect',$old_errors_messages),'There is no "incorrect" error message if old password is not provided.');
+
+        // new
+        $this->assertTrue(count($new_errors_messages)==0,'There must be exactly zero messages if new password provided.');
+        $this->assertTrue(!in_array('required',$new_errors_messages),'No "required" error message required if new password is provided.');
+        $this->assertTrue(!in_array('incorrect',$new_errors_messages),'No "incorrect" error message required if new password is provided.');
+
+        // verify
+        $this->assertTrue(count($verify_errors_messages)==0,'There must be exactly zero messages if password match verify.');
+        $this->assertTrue(!in_array('required',$verify_errors_messages),'No "required" error message required if verify password is provided.');
+        $this->assertTrue(!in_array('passwords don\'t match',$verify_errors_messages),'No "passwords don\'t match" error message required if verify password match.');
+
+
+    }
 }
+
+
+
+//$this->sendConsoleMessage(count($old_errors_messages));

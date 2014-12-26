@@ -1,4 +1,4 @@
 .system-msg {display:none;background-color:#E0F8F7;color:#610B0B;font-style:italic;font-size:14px;-moz-border-radius: 15px;border-radius: 15px;padding:10px;}
-.validation_error {color:red;position: relative;top:-7px;}
+.validation_error {color:red;}
 .requirement-avatar {width: 20px;position: relative;top: 4px;}
 .paginator .first, .paginator .last {font-size:16px;}

@@ -44,7 +44,7 @@ app_module.service( 'Setting', [ '$rootScope','$http','API', function( $rootScop
                         $.each(obj.errors,function(key,value) {
                             $.each(value,function(key2,value2) {
                                 i = i + 1;
-                                $( "#" + key2).parent().after( '<span id="val_error_' + i + '" class="validation_error">' + value2 + '<br /></span>' );
+                                $( "#" + key2)/*.parent()*/.after( '<span id="val_error_' + i + '" class="validation_error">' + value2 + '<br /></span>' );
                                 $rootScope.removeTag("#val_error_" + i, 3000);
                             });
                         });
