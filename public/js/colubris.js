@@ -134,7 +134,7 @@ $.each({
             angular.bootstrap(document, ['clients.app']);
         });
     },
-    startTasksApp: function(base_url,prefix,postfix,api_base_url,lhash,user_id) {
+    startTasksApp: function(base_url,prefix,postfix,api_base_url,lhash,user_id,current_user_rights) {
         angular.element(document).ready(function() {
             app_module.base_url = base_url;
             app_module.prefix   = prefix;
@@ -142,6 +142,7 @@ $.each({
             app_module.api_base_url = api_base_url;
             app_module.lhash  = lhash;
             app_module.user_id  = user_id;
+            app_module.current_user_rights  = current_user_rights;
             angular.bootstrap(document, ['tasks.app']);
         });
     },

@@ -11,7 +11,9 @@ app_module.directive('taskForm', function factory($q,$http, $templateCache, $com
             element.addClass('fixed');
 
             if(task){
-                scope.Time.getFromServerByTask(task);
+                if(app_module.current_user_rights.indexOf('can_see_time') != -1){
+                    scope.Time.getFromServerByTask(task);
+                }
             }
 
             scope.task_url = app_module.base_url + app_module.prefix + 'tasks';

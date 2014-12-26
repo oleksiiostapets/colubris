@@ -1,4 +1,4 @@
-<div class="atk-box atk-push floating-form"  task-form>
+<div class="atk-box atk-push floating-form task_edit_form"  task-form>
     <div id="close-button" class="icon-cancel-circled close" ng-click="clearForm()"></div>
     <div class="atk-row full-height-box atk-padding-small">
         <div class="atk-col-4 ">
@@ -79,7 +79,7 @@
         <div class="atk-col-4 time" task-time>
             <div class="atk-box">
                 <div id="time-view" class="">
-                    <ng-include src="time_list"></ng-include>
+                    <ng-include src="time_list" class="task_time_list"></ng-include>
                 </div>
             </div>
         </div>

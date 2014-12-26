@@ -129,7 +129,11 @@ app_module.controller(
                 $('#time_view input[type=checkbox]').attr('checked',false);
             });
             $scope.$on( 'times.need_update', function( event, task ) {
-                Time.getFromServerByTask(task);
+                if(app_module.current_user_rights.indexOf('can_see_time') != -1){
+                    Time.getFromServerByTask(task);
+                }else{
+                    $scope.$broadcast( 'times.update', task );
+                }
             });
 
             $scope.$on( 'requirements.update', function( event ) {
