@@ -1,6 +1,6 @@
-<div class="atk-box atk-push ">
+<div class="atk-box atk-push project_crud_wrapper">
     <div class="atk-push-small">
-        <button class="atk-button atk-effect-success" ng-click="Project.showForm()">Add Project</button>
+        <button class="atk-button atk-effect-success add_project_button" ng-click="Project.showForm()">Add Project</button>
     </div>
     <div class="atk-table atk-table-bordered">
         <table class="project_crud">
@@ -14,14 +14,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="project in projects track by $index">
-                <td>{{$index+1}}</td>
-                <td>{{project.name}}</td>
+            <tr ng-repeat="project in projects track by $index" class="project_crud_row_{{$index+1}}">
+                <td class="project_crud_index">{{$index+1}}</td>
+                <td class="project_crud_name">{{project.name}}</td>
                 <!--<td>{{project.client}}</td>-->
-                <td>{{project.descr}}</td>
-                <td class="atk-text-nowrap">
-                    <button class="atk-button" ng-click="Project.edit($index)">Edit</button>
-                    <button class="atk-button atk-effect-danger" ng-confirm-click="Are you sure?" confirmed-click="Project.remove($index)">Delete</button>
+                <td class="project_crud_descr">{{project.descr}}</td>
+                <td class="atk-text-nowrap project_crud_actions">
+                    <button class="atk-button edit_button" ng-click="Project.edit($index)">Edit</button>
+                    <button class="atk-button atk-effect-danger delete_button" ng-confirm-click="Are you sure?" confirmed-click="Project.remove($index)">Delete</button>
                 </td>
             </tr>
             </tbody>

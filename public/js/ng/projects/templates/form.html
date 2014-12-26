@@ -1,9 +1,9 @@
-<div class="atk-box atk-push floating-form"  project-form>
+<div class="atk-box atk-push floating-form project_frame"  project-form>
     <div id="close-button" class="icon-cancel-circled close" ng-click="clearForm()"></div>
     <div class="atk-row full-height-box atk-padding-small">
         <div class="atk-col-4 ">
             <div class="atk-box">
-                <form class="atk-form">
+                <form class="atk-form project_form">
                     <input type="hidden" ng-model="project.id" />
                     <div class="atk-push-small">
                         <div class="atk-cell atk-valign-top">
@@ -13,7 +13,7 @@
                     <div class="atk-push-small">
                         <div class="atk-push-small">
                             <div class="atk-push-small">
-                                <label><strong>Name:</strong></label>
+                                <label for="project_name"><strong>Name:</strong></label>
                             </div>
                             <input type="text" id="project_name" class="atk-jackscrew" ng-model="project.name" />
                         </div>
@@ -25,19 +25,19 @@
                         </div>-->
                         <div class="atk-push-small">
                             <div class="atk-push-small">
-                                <label><strong>Description:</strong></label>
+                                <label for="project_descr"><strong>Description:</strong></label>
                             </div>
-                            <textarea class="atk-jackscrew" rows="7" resize="none" ng-model="project.descr" />
+                            <textarea id="project_descr" class="atk-jackscrew" rows="7" resize="none" ng-model="project.descr" ></textarea>
                         </div>
                     </div>
                     <div class="atk-push-small" style="{{can_see_spent_time}}">
                         <label class="atk-label atk-effect-danger"><strong>Spent time: </strong><span>{{project.spent_time}}</span></label>
                     </div>
 
-                    <div class="atk-actions">
-                        <button ng-click="save(project,client)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
+                    <div class="atk-actions project_buttons">
+                        <button ng-click="save(project,client)" class="atk-swatch-green atk-button-small atk-button save_button" >Save</button>
                         <button ng-click="Project.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
-                        <button ng-confirm-click="Are you sure?" confirmed-click="Project.delete(project.id)" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
+                        <button ng-confirm-click="Are you sure?" confirmed-click="Project.delete(project.id)" class="atk-swatch-red atk-button-small atk-button delete_button" >Delete</button>
                     </div>
                 </form>
             </div>
