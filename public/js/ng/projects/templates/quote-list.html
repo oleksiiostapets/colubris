@@ -1,19 +1,19 @@
 <h3>Quotes:</h3>
-<div class="atk-box-small" ng-repeat="quote in quotes track by $index" style="position: relative">
+<div class="atk-box-small quote_box" ng-repeat="quote in quotes track by $index" style="position: relative">
     <div id="close-time-button" class="icon-cancel-circled close-time" ng-click="Quote.remove(quote.id,project)" style="{{quote.allow_del_css}}"></div>
     <div class="atk-cells atk-push small">
         <div class="atk-cell atk-valign-top">
             <div class="atk-label atk-effect-info">{{$index+1}} (ID#{{quote.id}})</div>
         </div>
         <div class="atk-cell atk-jackscrew">
-            <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><a style="text-decoration:underline;" href="{{quote_url}}/{{quote.id}}">{{quote.name}}</a></div>
+            <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><a style="text-decoration:underline;" href="{{quote_url}}/{{quote.id}}" class="quote_name">{{quote.name}}</a></div>
         </div>
     </div>
     <div style="{{can_see_spent_time}}"><strong>Spent time: </strong>{{quote.spent_time}}</div>
     <div style="{{can_see_spent_time}}"><strong>Estim. time: </strong>{{quote.estimated-time}}</div>
     <div><strong>Status: </strong>{{quote.status}}</div>
-    <div><strong>User: </strong>{{quote.user}}</div>
-    <div><strong>Gen. description: </strong>{{quote.general_description}}</div>
+    <div><strong>User: </strong><span class="quote_user_name">{{quote.user}}</span></div>
+    <div><strong>Gen. description: </strong><span class="quote_descr">{{quote.general_description}}</span></div>
     <div><strong>Deadline: </strong>{{quote.deadline}}</div>
     <div><strong>Created on: </strong>{{quote.created_dts}}</div>
     <div><strong>Archived: </strong>{{quote.is_archived}}</div>
@@ -23,7 +23,7 @@
 
 <h3>Add Quote:</h3>
 <div class="atk-box-small" id="quote_view">
-    <form class="atk-form">
+    <form class="atk-form add_quote_form">
         <input type="hidden" ng-model="project.id" />
 
         <div class="atk-push-small">
@@ -41,7 +41,7 @@
         </div>
 
         <div class="atk-actions">
-            <button ng-click="Quote.save(quote,project)" class="atk-swatch-green atk-button-small atk-button" >Add</button>
+            <button ng-click="Quote.save(quote,project)" class="atk-swatch-green atk-button-small atk-button add_quote_button" >Add</button>
         </div>
 
     </form>
