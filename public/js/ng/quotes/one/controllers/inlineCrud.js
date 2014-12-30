@@ -38,6 +38,32 @@ app_module.controller(
             $scope.Requirement = Requirement;
             $scope.requirements = Requirement.requirements;
 
+            if(app_module.current_user_rights.indexOf('can_add_requirement') != -1){
+                //Quote.can_add_requirement = 'display:block;';
+            }else{
+                Requirement.can_add_requirement = 'display:none;';
+            }
+
+            if(app_module.current_user_rights.indexOf('can_edit_requirement') != -1){
+                //Quote.can_add_requirement = 'display:block;';
+            }else{
+                Requirement.can_edit_requirement = 'display:none;';
+            }
+
+            if(app_module.current_user_rights.indexOf('can_delete_requirement') != -1){
+                //Quote.can_add_requirement = 'display:block;';
+            }else{
+                Requirement.can_delete_requirement = 'display:none;';
+            }
+
+            if(
+                app_module.current_user_rights.indexOf('can_edit_requirement') == -1
+                &&
+                app_module.current_user_rights.indexOf('can_delete_requirement') == -1
+            ){
+                Requirement.show_actions = 'display:none;';
+            }
+
             // comm
             $scope.Comment = Comment;
             $scope.comments = Comment.comments;
@@ -47,6 +73,12 @@ app_module.controller(
             $scope.Task = Task;
             $scope.tasks = Task.tasks;
             $scope.actionButtonSet = {};
+
+            if(app_module.current_user_rights.indexOf('can_add_task') != -1){
+                //Task.can_add_task = 'display:block;';
+            }else{
+                Task.can_add_task = 'display:none;';
+            }
 
             $scope.priorities = [
                 {name:'low'},

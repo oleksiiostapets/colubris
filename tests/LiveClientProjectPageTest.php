@@ -72,7 +72,7 @@ class LiveClientProjectPageTest extends PHPUnit_Framework_TestCase {
 
         if($r->canDeleteQuote($this->u['id'])){
             $this->canSeeOwnQuoteDeleteButton();
-//            $this->canNotSeeOthersQuoteDeleteButton();//TODO uncomment
+            $this->canNotSeeOthersQuoteDeleteButton();
             $this->canDeleteOwnQuote();
         }else{
             $this->canNotSeeOthersQuoteDeleteButton();

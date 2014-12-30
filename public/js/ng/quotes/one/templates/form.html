@@ -27,9 +27,9 @@
                         <input type="text" class="atk-jackscrew" ng-model="reqv.estimate" />
                     </div>
                     <div class="atk-actions">
-                        <button ng-click="Requirement.save(reqv)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
+                        <button style="{{Requirement.can_edit_requirement}}" ng-click="Requirement.save(reqv)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
                         <button ng-click="Requirement.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
-                        <button ng-click="Requirement.delete()" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
+                        <button style="{{Requirement.can_delete_requirement}}" ng-click="Requirement.delete()" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
                     </div>
                 </form>
             </div>

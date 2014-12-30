@@ -69,9 +69,9 @@
                     </div>
 
                     <div class="atk-actions">
-                        <button ng-click="save(task,priority,type,status,requester,assigned)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
+                        <button ng-click="save(task,priority,type,status,requester,assigned)" style="{{Task.can_edit_task}}" class="atk-swatch-green atk-button-small atk-button" >Save</button>
                         <button ng-click="Task.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
-                        <button ng-confirm-click="Are you sure?" confirmed-click="Task.delete(task.id)" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
+                        <button ng-confirm-click="Are you sure?" style="{{Task.can_delete_task}}" confirmed-click="Task.delete(task.id)" class="atk-swatch-red atk-button-small atk-button" >Delete</button>
                     </div>
                 </form>
             </div>

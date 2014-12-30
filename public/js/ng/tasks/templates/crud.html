@@ -17,7 +17,7 @@
                 <th class="task_spent_time_header">Spent Time</th>
                 <th class="task_requester_header">Requester</th>
                 <th class="task_assigned_header">Assigned</th>
-                <th class="task_actions_header">Actions</th>
+                <th class="task_actions_header" style="{{Task.show_actions}}">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -33,9 +33,9 @@
                 <td class="task_spent_time_{{$index+1}}">{{task.spent_time}}</td>
                 <td class="task_requester_{{$index+1}}">{{task.requester}}</td>
                 <td class="task_assigned_{{$index+1}}">{{task.assigned}}</td>
-                <td class="atk-text-nowrap task_actions_{{$index+1}}">
-                    <button class="atk-button task_action_edit_{{$index+1}}" ng-click="Task.edit($index)">Edit</button>
-                    <button class="atk-button atk-effect-danger  task_action_delete_{{$index+1}}" ng-confirm-click="Are you sure?" confirmed-click="Task.remove($index)">Delete</button>
+                <td class="atk-text-nowrap task_actions_{{$index+1}}" style="{{Task.show_actions}}">
+                    <button class="atk-button task_action_edit_{{$index+1}}" style="{{Task.can_edit_task}}" ng-click="Task.edit($index)">Edit</button>
+                    <button class="atk-button atk-effect-danger task_action_delete_{{$index+1}}" style="{{Task.can_delete_task}}" ng-confirm-click="Are you sure?" confirmed-click="Task.remove($index)">Delete</button>
                 </td>
             </tr>
             </tbody>

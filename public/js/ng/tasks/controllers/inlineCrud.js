@@ -26,6 +26,12 @@ app_module.controller(
             $scope.Time = Time;
             $scope.times = Time.times;
 
+            if(app_module.current_user_rights.indexOf('can_track_time') != -1){
+                //Project.can_add_quote = 'display:block;';
+            }else{
+                Time.can_track_time = 'display:none;';
+            }
+
             $scope.Requirement = Requirement;
             $scope.requirements = Requirement.requirements;
 
@@ -38,6 +44,24 @@ app_module.controller(
             $scope.task = {};
             $scope.Task = Task;
             $scope.tasks = Task.task;
+
+            if(app_module.current_user_rights.indexOf('can_edit_task') != -1){
+                //Project.can_edit_task = 'display:block;';
+            }else{
+                Task.can_edit_task = 'display:none;';
+            }
+            if(app_module.current_user_rights.indexOf('can_delete_task') != -1){
+                //Project.can_delete_task = 'display:block;';
+            }else{
+                Task.can_delete_task = 'display:none;';
+            }
+            if(
+                app_module.current_user_rights.indexOf('can_edit_task') == -1
+                &&
+                app_module.current_user_rights.indexOf('can_delete_task') == -1
+            ){
+                Task.show_actions = 'display:none;';
+            }
 
             $scope.priorities = [
                 {name:'low'},

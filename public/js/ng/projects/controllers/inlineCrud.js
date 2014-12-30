@@ -15,10 +15,37 @@ app_module.controller(
             $scope.Project = Project;
             $scope.projects = Project.projects;
             Project.getFromServer();
+            if(app_module.current_user_rights.indexOf('can_add_projects') != -1){
+                //Project.can_add_projects = 'display:block;';
+            }else{
+                Project.can_add_projects = 'display:none;';
+            }
+            if(app_module.current_user_rights.indexOf('can_edit_projects') != -1){
+                //Project.can_edit_projects = 'display:block;';
+            }else{
+                Project.can_edit_projects = 'display:none;';
+            }
+            if(app_module.current_user_rights.indexOf('can_delete_projects') != -1){
+                //Project.can_delete_projects = 'display:block;';
+            }else{
+                Project.can_delete_projects = 'display:none;';
+            }
+            if(
+                app_module.current_user_rights.indexOf('can_edit_projects') == -1
+                &&
+                app_module.current_user_rights.indexOf('can_delete_projects') == -1
+            ){
+                Project.show_actions = 'display:none;';
+            }
 
             //Quote
             $scope.Quote = Quote;
             $scope.quotes = Quote.quotes;
+            if(app_module.current_user_rights.indexOf('can_add_quote') != -1){
+                //Project.can_add_quote = 'display:block;';
+            }else{
+                Project.can_add_quote = 'display:none;';
+            }
 
             //Participants
             $scope.Participant = Participant;

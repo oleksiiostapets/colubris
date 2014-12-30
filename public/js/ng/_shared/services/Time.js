@@ -16,11 +16,11 @@ app_module.service( 'Time', [ '$rootScope','$http', 'API', function( $rootScope,
                 {field:'task_id',value:task.id},
                 function(obj) {
                     $.each(obj.data,function(key,value) {
+                        if(app_module.current_user_rights.indexOf('can_track_time') == -1){
+                            obj.data[key]['allow_del_css'] = 'display: none;';
+                        }
                         if(value.user_id != app_module.user_id) {
                             obj.data[key]['allow_del_css'] = 'display: none;';
-                            //obj.data[key]['spent_time_template'] = 'spent_time_field';//TODO
-                        }else{
-                            //obj.data[key]['spent_time_template'] = 'spent_time_field_editable';
                         }
                     });
                     service.times = obj.data;

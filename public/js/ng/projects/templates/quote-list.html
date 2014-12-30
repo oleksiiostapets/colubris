@@ -21,28 +21,30 @@
     <!--<div>Show time to client: {{quote.show_time_to_client}}</div>-->
 </div>
 
-<h3>Add Quote:</h3>
-<div class="atk-box-small" id="quote_view">
-    <form class="atk-form add_quote_form">
-        <input type="hidden" ng-model="project.id" />
+<div style="{{Project.can_add_quote}}">
+    <h3>Add Quote:</h3>
+    <div class="atk-box-small" id="quote_view">
+        <form class="atk-form add_quote_form">
+            <input type="hidden" ng-model="project.id" />
 
-        <div class="atk-push-small">
             <div class="atk-push-small">
-                <label for="quote_name"><strong>Name:</strong></label>
+                <div class="atk-push-small">
+                    <label for="quote_name"><strong>Name:</strong></label>
+                </div>
+                <input type="text" id="quote_name" class="atk-jackscrew" ng-model="quote.name" />
             </div>
-            <input type="text" id="quote_name" class="atk-jackscrew" ng-model="quote.name" />
-        </div>
 
-        <div class="atk-push-small">
             <div class="atk-push-small">
-                <label for="quote_description"><strong>Description:</strong></label>
+                <div class="atk-push-small">
+                    <label for="quote_description"><strong>Description:</strong></label>
+                </div>
+                <textarea id="quote_description" type="text" class="atk-jackscrew" ng-model="quote.general_description"></textarea>
             </div>
-            <textarea id="quote_description" type="text" class="atk-jackscrew" ng-model="quote.general_description"></textarea>
-        </div>
 
-        <div class="atk-actions">
-            <button ng-click="Quote.save(quote,project)" class="atk-swatch-green atk-button-small atk-button add_quote_button" >Add</button>
-        </div>
+            <div class="atk-actions">
+                <button ng-click="Quote.save(quote,project)" class="atk-swatch-green atk-button-small atk-button add_quote_button" >Add</button>
+            </div>
 
-    </form>
+        </form>
+    </div>
 </div>

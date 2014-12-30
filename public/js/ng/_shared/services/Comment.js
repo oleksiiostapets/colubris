@@ -78,13 +78,14 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
                 {field:'requirement_id',value:reqv_id},
                 function(obj) {
                     // Delete button
-                    $.each(obj.data, function(index, value) {
-                        if(value.user_id != app_module.user_id) {
-                            obj.data[index]['allow_del_css'] = 'display: none;';
-                        }
-                    });
-                    service.comments = obj.data;
-                    console.log(service.comments);
+                    if(obj.result === 'success'){
+                        $.each(obj.data, function(index, value) {
+                            if(value.user_id != app_module.user_id) {
+                                obj.data[index]['allow_del_css'] = 'display: none;';
+                            }
+                        });
+                        service.comments = obj.data;
+                    }
                     $rootScope.$broadcast( 'comments.update' );
                 }
             );
