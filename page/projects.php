@@ -33,6 +33,7 @@ class page_projects extends Page {
         $this->app->jquery->addStaticInclude('ng/_shared/services/Participant');
         $this->app->jquery->addStaticInclude('ng/_shared/services/User');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Right');
+        $this->app->jquery->addStaticInclude('ng/_shared/directives/colArchived');
 
         $rights = $this->add('Model_User_Right')->getRights($this->app->currentUser()->get('id'));
 

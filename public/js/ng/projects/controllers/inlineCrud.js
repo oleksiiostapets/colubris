@@ -2,8 +2,8 @@
 
 app_module.controller(
     'inlineCrud',
-    ['$scope','$document','$http', '$rootScope', 'Project', 'Quote', 'Client', 'Participant', 'User', 'Right',
-        function ($scope,  $document,  $http,  $rootScope,  Project, Quote, Client, Participant, User, Right) {
+    ['$scope','$document','$http', '$rootScope', 'Project', 'Quote', 'Client', 'Participant', 'User', 'Right', '$filter',
+        function ($scope,  $document,  $http,  $rootScope,  Project, Quote, Client, Participant, User, Right, $filter) {
 
             $rootScope.filter_values = {};
             $rootScope.items_on_page = 30;
@@ -41,11 +41,29 @@ app_module.controller(
             //Quote
             $scope.Quote = Quote;
             $scope.quotes = Quote.quotes;
+
             if(app_module.current_user_rights.indexOf('can_add_quote') != -1){
                 //Project.can_add_quote = 'display:block;';
             }else{
                 Project.can_add_quote = 'display:none;';
             }
+
+            // Quote status
+            $scope.statuses = [
+                {value: 'quotation_requested', text: 'Quotation requested'},
+                {value: 'estimate_needed', text: 'Estimate needed'},
+                {value: 'not_estimated', text: 'Not estimated'},
+                {value: 'estimation_approved', text: 'Estimation approved'},
+                {value: 'finished', text: 'Finished'}
+            ];
+            $scope.showStatus = function(quote) {
+                var selected = $filter('filter')($scope.statuses, {value: quote.status});
+                return (quote.status && selected.length) ? selected[0].text : 'Not set';
+            };
+
+
+
+
 
             //Participants
             $scope.Participant = Participant;

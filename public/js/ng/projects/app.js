@@ -1,6 +1,6 @@
 'use strict';
 
-var app_module = angular.module('projects.app',[]);
+var app_module = angular.module('projects.app',['xeditable']);
 
 
 //  inline editing

@@ -34,6 +34,13 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
                         if(value.user_id != app_module.user_id) {
                             obj.data[key]['allow_del_css'] = 'display: none;';
                         }
+                        if (value.is_archived == 1) {
+                            var b = true;
+                        }
+                        if (value.is_archived == 0) {
+                            var b = false;
+                        }
+                        obj.data[key].is_archived_boolean = b;
                     });
                     service.quotes = obj.data;
                     $rootScope.$broadcast( 'quotes.update', project );
@@ -54,6 +61,16 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
         },
 
         save: function ( quote, project ) {
+
+            if (typeof quote.is_archived_boolean !== 'undefined') {
+                if (quote.is_archived_boolean === true) {
+                    quote.is_archived = 1;
+                }
+                if (quote.is_archived_boolean === false) {
+                    quote.is_archived = 0;
+                }
+            }
+
             quote.project_id = project.id;
             //if(!API.validateForm(task, ['name','client'], 'project_')) return false;
             API.saveOne(

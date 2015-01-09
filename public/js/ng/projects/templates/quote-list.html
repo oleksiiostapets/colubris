@@ -1,27 +1,30 @@
-<h3>Quotes:</h3>
 <div class="atk-box-small quote_box" ng-repeat="quote in quotes track by $index" style="position: relative">
     <div id="delete-quote-button-{{$index+1}}" class="icon-cancel-circled close-time" ng-click="Quote.remove(quote.id,project)" style="{{quote.allow_del_css}}"></div>
     <div class="atk-cells atk-push small">
         <div class="atk-cell atk-valign-top">
-            <div class="atk-label atk-effect-info">{{$index+1}} (ID#{{quote.id}})</div>
+            <div class="atk-label atk-effect-info"><a style="text-decoration:underline;" href="{{quote_url}}/{{quote.id}}" class="quote_name">{{$index+1}}&nbsp;(ID#{{quote.id}})</a></div>
         </div>
         <div class="atk-cell atk-jackscrew">
-            <div class="atk-label atk-effect-warning" style="white-space: pre-wrap">
-                <a style="text-decoration:underline;" href="{{quote_url}}/{{quote.id}}" class="quote_name">{{quote.name}}</a>
-            </div>
+            <div editable-text="quote.name" onaftersave="Quote.save(quote,project)" class="atk-label atk-effect-warning" style="white-space: pre-wrap">{{quote.name}}</div>
         </div>
     </div>
-    <div style="{{can_see_spent_time}}"><strong>Spent time: </strong>{{quote.spent_time}}</div>
-    <div style="{{can_see_spent_time}}"><strong>Estim. time: </strong>{{quote.estimated-time}}</div>
-    <div><strong>Status: </strong>{{quote.status}}</div>
-    <div><strong>User: </strong><span class="quote_user_name">{{quote.user}}</span></div>
-    <div><strong>Gen. description: </strong><span class="quote_descr">{{quote.general_description}}</span></div>
-    <div><strong>Deadline: </strong>{{quote.deadline}}</div>
+    <div editable-checkbox="quote.is_archived_boolean" e-title="Archived" onaftersave="Quote.save(quote,project)">
+        <span data="{{quote.is_archived}}" col-archived col-archived-watch="quote.is_archived"></span>
+    </div>
+    <div><strong>Created by: </strong><span class="quote_user_name">{{quote.user || 'no info' }}</span></div>
+    <div><strong>Status: </strong>
+        <span onaftersave="Quote.save(quote,project)" editable-select="quote.status" e-ng-options="s.value as s.text for s in statuses">{{ showStatus(quote) }}</span>
+    </div>
+    <div style="{{can_see_spent_time}}"><strong>Spent time: </strong>{{quote.spent_time || '0'}}</div>
+    <div style="{{can_see_spent_time}}"><strong>Estim. time: </strong>{{quote.estimated-time || '0'}}</div>
+    <div editable-textarea="quote.general_description" onaftersave="Quote.save(quote,project)" class="atk-box-small quote_descr" >{{ quote.general_description || 'no description' }}</div>
+
     <div><strong>Created on: </strong>{{quote.created_dts}}</div>
-    <div><strong>Archived: </strong>{{quote.is_archived}}</div>
+    <div><strong>Deadline: </strong>{{quote.deadline}}</div>
     <div><strong>Warranty end: </strong>{{quote.warranty_end}}</div>
     <!--<div>Show time to client: {{quote.show_time_to_client}}</div>-->
 </div>
+<h3>Quotes:</h3>
 
 <div style="{{Project.can_add_quote}}" id="add-quote-wrapper">
     <h3>Add Quote:</h3>
