@@ -20,8 +20,8 @@
                 <!--<td>{{project.client}}</td>-->
                 <td class="project_crud_descr">{{project.descr}}</td>
                 <td class="atk-text-nowrap project_crud_actions" style="{{Project.show_actions}}">
-                    <button class="atk-button edit_button" ng-click="Project.edit($index)" style="{{Project.can_edit_projects}}">Edit</button>
-                    <button class="atk-button atk-effect-danger delete_button" style="{{Project.can_delete_projects}}" ng-confirm-click="Are you sure?" confirmed-click="Project.remove($index)">Delete</button>
+                    <a href="javascript:void(0)" class="icon-pencil atk-effect-info" ng-click="Project.edit($index)" style="{{Project.can_edit_projects}}"> Project info</a>
+                    <a href="javascript:void(0)" class="icon-trash atk-effect-danger" style="{{Project.can_delete_projects}}" ng-confirm-click="Are you sure?" confirmed-click="Project.remove($index)"> Delete</a>
                 </td>
             </tr>
             </tbody>
