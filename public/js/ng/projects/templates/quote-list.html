@@ -1,12 +1,14 @@
 <h3>Quotes:</h3>
 <div class="atk-box-small quote_box" ng-repeat="quote in quotes track by $index" style="position: relative">
-    <div id="close-time-button" class="icon-cancel-circled close-time" ng-click="Quote.remove(quote.id,project)" style="{{quote.allow_del_css}}"></div>
+    <div id="delete-quote-button-{{$index+1}}" class="icon-cancel-circled close-time" ng-click="Quote.remove(quote.id,project)" style="{{quote.allow_del_css}}"></div>
     <div class="atk-cells atk-push small">
         <div class="atk-cell atk-valign-top">
             <div class="atk-label atk-effect-info">{{$index+1}} (ID#{{quote.id}})</div>
         </div>
         <div class="atk-cell atk-jackscrew">
-            <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><a style="text-decoration:underline;" href="{{quote_url}}/{{quote.id}}" class="quote_name">{{quote.name}}</a></div>
+            <div class="atk-label atk-effect-warning" style="white-space: pre-wrap">
+                <a style="text-decoration:underline;" href="{{quote_url}}/{{quote.id}}" class="quote_name">{{quote.name}}</a>
+            </div>
         </div>
     </div>
     <div style="{{can_see_spent_time}}"><strong>Spent time: </strong>{{quote.spent_time}}</div>
@@ -21,7 +23,7 @@
     <!--<div>Show time to client: {{quote.show_time_to_client}}</div>-->
 </div>
 
-<div style="{{Project.can_add_quote}}">
+<div style="{{Project.can_add_quote}}" id="add-quote-wrapper">
     <h3>Add Quote:</h3>
     <div class="atk-box-small" id="quote_view">
         <form class="atk-form add_quote_form">

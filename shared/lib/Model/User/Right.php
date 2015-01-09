@@ -126,10 +126,20 @@ class Model_User_Right extends SQL_Model{
         }
 
         $new_str = implode(',',$new_arr);
+
+//        echo(":::::::: ------------------------\n");
+//        echo(":::::::: user_id ---> $user_id\n");
+//        echo(":::::::: rights id ---> $this->id\n");
+//        echo(":::::::: rights before save ---> ".implode(',',$this->getRights())."\n");
+//        echo(":::::::: rights to be set ---> ".$new_str."\n");
+
         $this->_set = true;
         $this->set('right', $new_str);
         $this->set('user_id', $user_id);
         $this->save();
+
+//        echo(":::::::: rights after save ---> ".implode(',',$this->getRights())."\n");
+
 //        return $this->get();
 //        $this->set(arr//(
 //            'right'   => $new_s//,

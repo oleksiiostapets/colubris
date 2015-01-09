@@ -34,6 +34,10 @@ class page_projects extends Page {
         $this->app->jquery->addStaticInclude('ng/_shared/services/User');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Right');
 
+        $rights = $this->add('Model_User_Right')->getRights($this->app->currentUser()->get('id'));
+
+        //$this->add('View')->set('Rights:'.implode(',',$rights));
+
         $this->js(true)->colubris()->startProjectsApp(
             $this->app->url('/'),
             $this->app->getConfig('url_prefix'),
@@ -41,7 +45,7 @@ class page_projects extends Page {
             $this->app->url($this->app->getConfig('js_api_base_url')),
             $this->app->currentUser()->get('lhash'),
             $this->app->currentUser()->get('id'),
-            $this->add('Model_User_Right')->getRights($this->app->currentUser()->get('id'))
+            $rights
         );
     }
     function defaultTemplate() {

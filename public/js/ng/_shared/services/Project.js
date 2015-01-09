@@ -29,6 +29,7 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
             }
         },
         delete: function(id) {
+            this.restoreCanEdit();
             API.removeOne(
                 'project',
                 null,
@@ -52,6 +53,8 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
 
 //            console.log(project);
 //            if(!API.validateForm(project, ['name','client'], 'project_')) return false;
+
+            this.restoreCanEdit();
 
             if (typeof project.id === 'undefined' ) {
                 service.projects.push( angular.copy(project));
@@ -79,6 +82,7 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
             console.log('------> cancel');
             this.restoreProject();
             this.resetbackupProject();
+            this.restoreCanEdit();
             $rootScope.$broadcast('project.update', {});
             $rootScope.$broadcast( 'projects.update' );
             $rootScope.$broadcast('form.to_regular_place');
@@ -115,6 +119,7 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
 
         showForm: function(index) {
             console.log('------> Show');
+            this.backupCanEdit(index);
             $rootScope.$broadcast('form.to_fixed_position',service.projects[index]);
         },
 
@@ -137,6 +142,21 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
                       angular.isDefined(service.projects[current_index].backup)
                 ) {
                 service.projects[current_index] = service.projects[current_index].backup;
+            }
+        },
+
+        backupCanEdit: function(index) {
+            if (index) {
+                this.can_edit_projects_backup = null;
+            } else {
+                this.can_edit_projects_backup = this.can_edit_projects;
+                this.can_edit_projects = this.can_add_projects;
+            }
+        },
+
+        restoreCanEdit: function() {
+            if (this.can_edit_projects_backup) {
+                this.can_edit_projects = this.can_edit_projects_backup;
             }
         }
     }
