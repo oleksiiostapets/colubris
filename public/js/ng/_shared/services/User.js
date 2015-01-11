@@ -33,6 +33,24 @@ app_module.service( 'User', [ '$rootScope','$http','API', function( $rootScope, 
                 }
             );
         },
+        getFromServerByProjectId: function(project_id, broadcast_message) {
+            if(!project_id)return;
+            API.getAll(
+                'user',
+                'getUsersByProject',
+                {project_id:project_id},
+                function(obj) {
+                    service.users = obj.data;
+                    if(Array.isArray(broadcast_message)){
+                        $.each(broadcast_message,function(key,value) {
+                            $rootScope.$broadcast( value );
+                        });
+                    }else{
+                        $rootScope.$broadcast( broadcast_message );
+                    }
+                }
+            );
+        },
         save: function ( user ) {
             if(!API.validateForm(user, ['name','email'], 'user_')) return false;
                 if (typeof user.id === 'undefined' ) {

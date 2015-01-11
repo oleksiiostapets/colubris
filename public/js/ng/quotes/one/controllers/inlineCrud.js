@@ -107,22 +107,16 @@ app_module.controller(
             $scope.status = $scope.statuses;
 
             $scope.User = User;
-            $scope.requesters = User.users;
-            User.getFromServer('requesters.update','getAllUsers');
-            $scope.assigneds = User.users;
-            User.getFromServer('assigneds.update','getAllUsers');
 
             Requirement.getFromServer(Quote);
 
             $scope.$on( 'assigneds.update', function( event ) {
                 $scope.assigneds = User.users;
-                $scope.assigneds.unshift({id:"",email:'all'})
             });
-
             $scope.$on( 'requesters.update', function( event ) {
                 $scope.requesters = User.users;
-                $scope.requesters.unshift({id:"",email:'all'})
             });
+
             $scope.$on( 'comments.need_update', function( event, args ) {
                 Comment.getFromServer($scope.Requirement.requirements[$scope.Requirement.current_index].id);
             });
@@ -145,6 +139,8 @@ app_module.controller(
             });
             $scope.$on( 'reqv.update', function( event, args ) {
                 $scope.reqv = args;
+
+                User.getFromServerByProjectId(args.project_id,['requesters.update','assigneds.update']);
             });
             $scope.$on( 'requirements.reload', function( event ) {
                 $scope.requirements = Requirement.requirements;

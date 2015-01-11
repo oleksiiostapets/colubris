@@ -1,4 +1,11 @@
 <?php
+/*
+ *
+ *Attention!!!! The method addProjectId() should be uncommented when v4.3 is fully released and v4.2 is not in use anymore.
+ * After restoring please comment $this->getField('project_id')
+ * Do not delete it. (Kostya)
+ *
+ */
 class Model_Task extends Model_Auditable {
     public $table='task';
     public $task_statuses = array(
@@ -34,8 +41,11 @@ class Model_Task extends Model_Auditable {
         $this->addField('descr_original')->dataType('text');
 
         $this->addField('estimate')->dataType('money');
-//        $this->hasOne('Project','project_id');//TODO implemented it expressions. To be removed completely
-//        $this->getField('project_id')->mandatory(true)->sortable(true);
+
+        /*
+         * project_id to be removed. See annotation above.
+         * */
+        $this->addField('project_id')->mandatory(true)->sortable(true);
 
         $this->hasOne('Requirement','requirement_id');
 
@@ -214,7 +224,10 @@ class Model_Task extends Model_Auditable {
         $this->addQuoteId();
         $this->addQuoteName();
         $this->addSpentTime();
-        $this->addProjectId();
+        /*
+         * To be uncommented. See annotation on top of the page
+         */
+//        $this->addProjectId();
         $this->addProjectName();
     }
 
