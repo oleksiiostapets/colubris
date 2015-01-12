@@ -110,7 +110,7 @@ class Model_User extends Model_BaseTable {
 		return $this;
 	}
 	function getUsersOfOrganisation(){
-		//$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
+		$this->addCondition('organisation_id',$this->app->currentUser()->get('organisation_id'));
 		return $this;
 	}
 	function getSystemUsers(){
