@@ -64,13 +64,13 @@ app_module.controller(
             $scope.participants = Participant.participants;
 
             //User
-            $scope.User = User;
+            /*$scope.User = User;
             $scope.users = User.users;
             User.getFromServer('users.update','getAllUsers');
             $scope.$on( 'users.update', function( event ) {
                 $scope.users = User.users;
                 $scope.users.unshift({id:"",email:'all'})
-            });
+            });*/
             $scope.$on( 'participants.need_update', function( event, project ) {
                 Participant.getFromServerByProject(project);
             });
@@ -145,6 +145,13 @@ app_module.controller(
 
             $scope.$on( 'participants.update', function( event ) {
                 $scope.participants = Participant.participants;
+
+                $scope.User = User;
+                User.getFromServer('users.update','getAllUsers');
+
+            });
+            $scope.$on( 'users.update', function( event ) {
+                $scope.users = User.users;
             });
             //$scope.$on( 'clients.update', function( event ) {
             //    $scope.clients = Client.clients;

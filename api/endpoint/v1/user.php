@@ -7,7 +7,7 @@ class endpoint_v1_user extends Endpoint_v1_General {
         parent::init();
     }
     public function get_getUsers(){
-        $this->model->notDeleted();
+        $this->model->notDeleted()->getUsersOfOrganisation();
         try{
             $data = $this->model->prepareForSelect($this->app->current_user)->getRows();
             return [
@@ -22,7 +22,7 @@ class endpoint_v1_user extends Endpoint_v1_General {
         }
     }
     public function get_getAllUsers(){
-        $this->model->notDeleted();
+        $this->model->notDeleted()->getUsersOfOrganisation();
         try{
             $data = $this->model->getRows();
             return [
@@ -37,7 +37,7 @@ class endpoint_v1_user extends Endpoint_v1_General {
         }
     }
     public function get_getUsersByProject(){
-        $this->model->notDeleted();
+        $this->model->notDeleted()->getUsersOfOrganisation();
         $project_id = $this->getParameter('project_id');
         if($project_id){
             $r=$this->model->leftJoin('participant.user_id','id','left','_r');
