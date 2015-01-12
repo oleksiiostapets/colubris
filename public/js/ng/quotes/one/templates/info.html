@@ -3,7 +3,7 @@
         <div class="atk-col-4">
             <div class="atk-box-small">
                 <h3>Quote Info</h3>
-                <div class=""><strong>Name: </strong><span editable-text="info.name" onaftersave="Quote.save(quote,project)" >{{info.name || '---' }}</span></div>
+                <div class=""><strong>Name: </strong><span class="inline-edit" editable-text="info.name" onaftersave="Quote.save(quote,project)" >{{info.name || '---' }}</span></div>
                 <div class=""><strong>Project: </strong>{{info.project || '---' }}</div>
                 <div class=""><strong>General Description: </strong></div>
                 <div class="atk-swatch-gray atk-box-small">{{info.general_description || '---' }}</div>
