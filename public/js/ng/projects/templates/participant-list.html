@@ -1,6 +1,6 @@
 <h3>Participants:</h3>
 <div class="atk-box-small" ng-repeat="participant in participants track by $index" style="position: relative">
-    <div id="close-time-button" class="icon-cancel-circled close-time" ng-click="Participant.remove(participant.id,project)"></div>
+    <div id="close-time-button" class="icon-trash close-time" ng-confirm-click="Are you sure?" confirmed-click="Participant.remove(participant.id,project)"></div>
     <div class="atk-cells atk-push small">
         <div class="atk-cell atk-valign-top">
             <div class="atk-label atk-effect-info">{{$index+1}} (ID#{{participant.id}})</div>
