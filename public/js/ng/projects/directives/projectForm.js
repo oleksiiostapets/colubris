@@ -13,7 +13,9 @@ app_module.directive('projectForm', function factory($q,$http, $templateCache, $
             scope.Quote.getFromServerByProject(project);
 
             if(app_module.current_user_rights.indexOf('can_manage_participants') != -1){
-                scope.Participant.getFromServerByProject(project);
+                if(project){
+                    scope.Participant.getFromServerByProject(project);
+                }
                 scope.can_see_participant_html = 'display:block;';
             }else{
                 scope.can_see_participant_html = 'display:none;';

@@ -7302,6 +7302,13 @@ table .requirement {
   height: 100%;
   overflow: auto;
 }
+.floating-form .remove-participant {
+  position: absolute;
+  right: 10px;
+  display: block;
+  cursor: pointer;
+  z-index: 10;
+}
 .floating-form.fixed {
   display: block;
   position: fixed;
