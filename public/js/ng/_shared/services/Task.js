@@ -29,6 +29,8 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
             $rootScope.filter_values[field] = value.id;
             $rootScope.current_page = 1;
             this.getFromServerByFields();
+            //Update URL without reloading the page
+            $rootScope.$broadcast('task.update_url',null,'&' + field + '=' + value.id);
         },
         getFromServerByFields: function() {
             var params = {"count":$rootScope.tasks_on_page,"offset":(($rootScope.current_page-1)*$rootScope.tasks_on_page)};
@@ -118,6 +120,7 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
             this.backupTask(index);
             $rootScope.$broadcast('task.update', service.tasks[index]);
             $rootScope.$broadcast('form.to_fixed_position',service.tasks[index]);
+            $rootScope.$broadcast('task.update_url',service.tasks[index],'&p=sfdgnb');
         },
 
         remove: function(index) {

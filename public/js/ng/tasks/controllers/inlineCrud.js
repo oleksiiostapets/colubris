@@ -106,6 +106,15 @@ app_module.controller(
             $scope.$on( 'task.update', function( event, args ) {
                 $scope.task = args;
             });
+            //TODO
+            $scope.$on( 'task.update_url', function( event, args, urlPath ) {
+                console.log('------>task.update_url');
+                var histAPI=!!(window.history && history.pushState);
+                if(histAPI){
+                    console.log('------>task.update_url' + urlPath);
+                    window.history.pushState("filtered.html","Filter reloaded page", urlPath);
+                }
+            });
             $scope.$on( 'tasks.need_update', function( event, args ) {
                 Task.getFromServer();
             });
