@@ -55,10 +55,10 @@ class API extends App_REST {
         $router->route();
     }
     protected function addAuth() {
-		$mu = $this->add('Model_User')->notDeleted();
+        $this->current_user = $this->add('Model_User')->notDeleted();
         $this->add('Auth')
             ->usePasswordEncryption('md5')
-            ->setModel($mu, 'email', 'password')
+            ->setModel($this->current_user, 'email', 'password')
         ;
 
 //        if(!$this->auth->model['id']){
