@@ -6,8 +6,8 @@
 
 app_module.controller(
     'inlineCrud',
-    ['$scope','$document','$http','Requirement','Comment','Task','Quote','User',
-        function ($scope,  $document,  $http,  Requirement,  Comment,  Task,  Quote,  User) {
+    ['$scope','$document','$http','Requirement','Comment','Task','Quote','User','Project',
+        function ($scope,  $document,  $http,  Requirement,  Comment,  Task,  Quote,  User, Project) {
 
             // quote info
             $scope.Quote = Quote;
@@ -30,6 +30,11 @@ app_module.controller(
             }else{
                 Quote.can_see_rates = 'display:none;';
             }
+
+            // project
+            $scope.project = Project;
+            Project.getFromServer('id',Quote.project_id);
+
 
             $scope.calc = {};
 

@@ -49,13 +49,7 @@ app_module.controller(
             }
 
             // Quote status
-            $scope.statuses = [
-                {value: 'quotation_requested', text: 'Quotation requested'},
-                {value: 'estimate_needed', text: 'Estimate needed'},
-                {value: 'not_estimated', text: 'Not estimated'},
-                {value: 'estimation_approved', text: 'Estimation approved'},
-                {value: 'finished', text: 'Finished'}
-            ];
+            $scope.statuses = Quote.getStatuses('value','text');
             $scope.showStatus = function(quote) {
                 var selected = $filter('filter')($scope.statuses, {value: quote.status});
                 return (quote.status && selected.length) ? selected[0].text : 'Not set';

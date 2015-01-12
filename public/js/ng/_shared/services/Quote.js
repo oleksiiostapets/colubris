@@ -8,6 +8,43 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
     var current_index = null;
     var service = {
         quotes: [],
+        statuses: [
+            {key: 'quotation_requested', value: 'Quotation requested'},
+            {key: 'estimate_needed', value: 'Estimate needed'},
+            {key: 'not_estimated', value: 'Not estimated'},
+            {key: 'estimation_approved', value: 'Estimation approved'},
+            {key: 'finished', value: 'Finished'}
+        ],
+
+        getStatusValueByKey: function(key) {
+            var return_value = false;
+            angular.forEach(this.statuses,function(status,index){
+                if (status.key === key) {
+                    return_value = status.value;
+                }
+            });
+            return return_value;
+        },
+        getStatusKeyByValue: function(value) {
+            var return_key = false;
+            angular.forEach(this.statuses,function(status,index){
+                if (status.value === value) {
+                    return_key = status.key;
+                }
+            });
+            return return_key;
+
+        },
+        getStatuses: function(key_name, value_name) {
+            var arr_to_return = [];
+            angular.forEach(this.statuses,function(status,index){
+                var obj = {};
+                obj[key_name] = status.key;
+                obj[value_name] = status.value;
+                arr_to_return.push(obj);
+            });
+            return arr_to_return;
+        },
 
         clear: function(){
             service.quotes = [];

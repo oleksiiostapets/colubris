@@ -3,32 +3,35 @@
         <div class="atk-col-4">
             <div class="atk-box-small">
                 <h3>Quote Info</h3>
-                <div class=""><strong>Name: </strong>{{info.name}}</div>
-                <div class=""><strong>Project: </strong>{{info.project}}</div>
-                <div class=""><strong>General Description: </strong>{{info.general_description}}</div>
-                <div class=""><strong>Status: </strong>{{info.status}}</div>
-                <div class=""><strong>Creator: </strong>{{info.user}}</div>
-                <div class=""><strong>Created: </strong>{{info.created_dts}}</div>
-                <div class=""><strong>Expires at: </strong>{{info.expires_dts}}</div>
-                <div class=""><strong>Organisation: </strong>{{info.organisation}}</div>
+                <div class=""><strong>Name: </strong><span editable-text="info.name" onaftersave="Quote.save(quote,project)" >{{info.name || '---' }}</span></div>
+                <div class=""><strong>Project: </strong>{{info.project || '---' }}</div>
+                <div class=""><strong>General Description: </strong></div>
+                <div class="atk-swatch-gray atk-box-small">{{info.general_description || '---' }}</div>
+                <div class=""><strong class="icon-chat-empty"> Status: </strong>{{ Quote.getStatusValueByKey(info.status) || '---'  }}</div>
+                <div class=""><strong class="icon-pencil"> Creator: </strong>{{info.user || '---' }}</div>
+                <div class=""><strong class="icon-plus-circled-1"> Created: </strong>{{info.created_dts || '---' }}</div>
+                <div class=""><strong class="icon-minus-circled"> Expires at: </strong>{{info.expires_dts || '---' }}</div>
+                <div class=""><strong class="icon-ok-circled"> Deadline: </strong><span class="inline-edit" editable-date="info.deadline" onaftersave="Quote.save(quote,project)">{{info.deadline || '---' }}</span></div>
+                <div class=""><strong class="icon-attention-circled"> Warranty end: </strong><span class="inline-edit" editable-date="info.warranty_end" onaftersave="Quote.save(quote,project)">{{info.warranty_end || '---' }}</span></div>
+                <div class=""><strong class="icon-vcard"> Organisation: </strong>{{info.organisation || '---' }}</div>
             </div>
         </div>
         <div class="atk-col-4">
             <div class="atk-box-small">
                 <h3>Client Info</h3>
-                <div class=""><strong>Client: </strong>{{info.client_name}}</div>
-                <div class=""><strong>Email: </strong>{{info.client_email}}</div>
+                <div class=""><strong>Client: </strong>{{info.client_name || '---' }}</div>
+                <div class=""><strong>Email: </strong>{{info.client_email || '---' }}</div>
                 <!--<div class="">Show time to client: {{info.show_time_to_client}}</div>-->
             </div>
             <div class="atk-box-small atk-push">
                 <h3>Different Info</h3>
-                <div class="" style="{{Quote.can_see_finance}}"><strong>Amount: </strong>{{info.amount}}</div>
-                <div class="" style="{{Quote.can_see_finance}}"><strong>Currency: </strong>{{info.currency}}</div>
-                <div class="" style="{{Quote.can_see_finance}}"><strong>Est.pay: </strong>{{info.estimpay}}</div>
-                <div class="" style="{{Quote.can_see_rates}}"><strong>Rate: </strong>{{info.rate}}</div>
-                <div class=""><strong>Warranty end: </strong>{{info.warranty_end}}</div>
-                <div class=""><strong>Duration (days) / Deadline: </strong>{{info.durdead}}</div>
-                <div class=""><strong>Issued: </strong>{{info.issued}}</div>
+                <div class="" style="{{Quote.can_see_finance}}"><strong>Amount: </strong>{{info.amount || '---' }}</div>
+                <div class="" style="{{Quote.can_see_finance}}"><strong>Currency: </strong>{{info.currency || '---' }}</div>
+                <div class="" style="{{Quote.can_see_finance}}"><strong>Est.pay: </strong>{{info.estimpay || '---' }}</div>
+                <div class="" style="{{Quote.can_see_rates}}"><strong>Rate: </strong>{{info.rate || '---' }}</div>
+                <div class=""><strong>Warranty end: </strong>{{info.warranty_end || '---' }}</div>
+                <div class=""><strong>Duration (days) / Deadline: </strong>{{info.durdead || '---' }}</div>
+                <div class=""><strong>Issued: </strong>{{info.issued || '---' }}</div>
 
 
             </div>
