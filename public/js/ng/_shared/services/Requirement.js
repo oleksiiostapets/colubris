@@ -66,15 +66,15 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                 angular.toJson(args),
                 function(obj) {
                     if (obj.result === 'success') {
-//                        $rootScope.showSystemMsg('Saved successfully');
+                        //$rootScope.showSystemMsg('Saved successfully');
                         if (typeof args.id === 'undefined' ) {
-                            //service.requirements.push( angular.copy(obj.data)  );
+                            service.requirements.push( angular.copy(obj.data)  );
                         }
                     } else {
-//                        $rootScope.showSystemMsg('Error! No success message received');
+                        //$rootScope.showSystemMsg('Error! No success message received');
                     }
                     $rootScope.$broadcast( 'requirements.update' );
-                    $rootScope.$broadcast( 'checkbox.update.'+args.id,reqv);
+                    //$rootScope.$broadcast( 'checkbox.update.'+args.id,reqv);
                     //$rootScope.$broadcast( 'requirements.reload');
 
                 }
