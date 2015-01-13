@@ -80,8 +80,8 @@ app_module.service( 'Comment', [ '$rootScope','$http','API', function( $rootScop
                     // Delete button
                     if(obj.result === 'success'){
                         $.each(obj.data, function(index, value) {
-                            if(value.user_id != app_module.user_id) {
-                                obj.data[index]['allow_del_css'] = 'display: none;';
+                            if(value.user_id == app_module.user_id) {
+                                obj.data[index]['allow_del_css'] = 'display: block;';
                             }
                         });
                         service.comments = obj.data;
