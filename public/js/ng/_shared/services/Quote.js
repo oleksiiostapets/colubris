@@ -98,7 +98,6 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
         },
 
         save: function ( quote, project ) {
-
             if (typeof quote === 'undefined') {
                 alert('Cannot save');
                 return;

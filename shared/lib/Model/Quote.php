@@ -1,5 +1,5 @@
 <?php
-class Model_Quote extends Model_Auditable {
+class Model_Quote extends Model_Table {
 	public $table="quote";
 	function init(){
 		parent::init(); //$this->debug();
@@ -30,11 +30,6 @@ class Model_Quote extends Model_Auditable {
 
 		$this->addField('duration')->type('int');
 		$this->addField('deadline')->type('date')->caption('Duration/Deadline');
-
-		$this->addExpression('durdead')->caption('Duration (days) / Deadline')->set(function($m,$q){
-			return $q->dsql()
-				->expr('if(deadline is null,duration,deadline)');
-		});
 
 		$this->addField('html')->type('text')->allowHtml(true);
 
@@ -111,6 +106,12 @@ class Model_Quote extends Model_Auditable {
 	//
 	// ------------------------------------------------------------------------------
 	function addExpressions(){
+
+        $this->addExpression('durdead')->caption('Duration (days) / Deadline')->set(function($m,$q){
+            return $q->dsql()
+                ->expr('if(deadline is null,duration,deadline)');
+        });
+
 		$this->addExpression('client_id')->set(function($m,$q){
 			return $q->dsql()
 				->table('project')
@@ -118,6 +119,7 @@ class Model_Quote extends Model_Auditable {
 				->where('project.id',$q->getField('project_id'))
 				;
 		});
+
 		$this->addExpression('client_name')->set(function($m,$q){
 			return $q->dsql()
                 ->table('client')
@@ -127,6 +129,7 @@ class Model_Quote extends Model_Auditable {
                 ->where('project.id',$q->getField('project_id'))
 				;
 		});
+
 		$this->addExpression('client_email')->set(function($m,$q){
 			return $q->dsql()
                 ->table('client')

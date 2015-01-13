@@ -13,6 +13,21 @@ app_module.directive('inlineCrud', function factory($q,$http, $templateCache,$co
         scope.task_list = app_module.base_url + 'js/ng/quotes/one/templates/task-list.html';
         scope.info = app_module.base_url + 'js/ng/quotes/one/templates/info.html';
 
+
+        /*var addReorderButton = function(scope,$compile,element) {
+            var html = '<span class="inline-edit" editable-date="quote[0].deadline_obj" onaftersave="Quote.save(quote[0],projects[0])">{{quote[0].deadline || "---" }}</span>';
+            var template = angular.element(html);
+            var linkFn = $compile(template);
+            scope.can_edit_deadline = linkFn(scope);
+            element.append(scope.can_edit_deadline);
+        };*/
+
+        /*var html = '<span class="inline-edit" editable-date="quote[0].deadline_obj" onaftersave="Quote.save(quote[0],projects[0])">{{quote[0].deadline || "---" }}</span>';
+        var template = angular.element(html);
+        var linkFn = $compile(template);
+        scope.can_edit_deadline = linkFn(scope);
+        element.append(scope.can_edit_deadline);*/
+
         //------------------------------------------------
         //
         //                 PANNEL

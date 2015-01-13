@@ -31,9 +31,7 @@ app_module.controller(
                 Quote.can_see_rates = 'display:none;';
             }
 
-            // project
-            $scope.project = Project;
-            Project.getFromServer('id',Quote.project_id);
+
 
 
             $scope.calc = {};
@@ -146,6 +144,15 @@ app_module.controller(
             });
             $scope.$on( 'quote.update', function( event) {
                 $scope.quote = Quote.quotes;
+                $scope.quote[0].deadline_obj = new Date($scope.quote[0].deadline);
+                $scope.quote[0].warranty_end_obj = new Date($scope.quote[0].warranty_end);
+
+                $scope.Project = Project;
+                Project.getFromServer('id',$scope.quote[0].project_id);
+
+            });
+            $scope.$on('projects.update', function(event){
+                $scope.projects = Project.projects;
             });
             $scope.$on( 'reqv_tasks.update', function( event, args ) {
                 $scope.tasks = args;
