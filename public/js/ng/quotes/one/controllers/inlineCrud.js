@@ -85,13 +85,15 @@ app_module.controller(
                 Task.can_add_task = 'display:none;';
             }
 
+            // TODO move to Task service
             $scope.priorities = [
                 {name:'low'},
                 {name:'normal'},
                 {name:'high'}
             ];
-            $scope.priority = $scope.priorities;
+            $scope.priority = $scope.priorities; // TODO why two variables with exactly same values
 
+            // TODO move to Task service
             $scope.types = [
                 {name:'Project',        value:'project'},
                 {name:'Change request', value:'change_request'},
@@ -99,8 +101,9 @@ app_module.controller(
                 {name:'Support',        value:'support'},
                 {name:'Drop',           value:'drop'}
             ];
-            $scope.type = $scope.types;
+            $scope.type = $scope.types; // TODO why two variables with exactly same values
 
+            // TODO move to Task service
             $scope.statuses = [
                 {name:'unstarted'},
                 {name:'started'},
@@ -109,11 +112,16 @@ app_module.controller(
                 {name:'rejected'},
                 {name:'accepted'}
             ];
-            $scope.status = $scope.statuses;
+            $scope.status = $scope.statuses; // TODO why two variables with exactly same values
 
+            // User
             $scope.User = User;
 
+            // Requirements
             Requirement.getFromServer(Quote);
+
+
+
 
             $scope.$on( 'assigneds.update', function( event ) {
                 $scope.assigneds = User.users;
