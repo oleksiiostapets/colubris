@@ -134,6 +134,9 @@ app_module.controller(
             $scope.$on( 'comments.need_update', function( event, args ) {
                 Comment.getFromServer($scope.Requirement.requirements[$scope.Requirement.current_index].id);
             });
+            $scope.$on( 'tasks.need_update', function( event, args ) {
+                Task.getFromServer($scope.Requirement.requirements[$scope.Requirement.current_index].id);
+            });
             $scope.$on( 'task.clear', function( event ) {
                 $scope.tasks = {};
                 $('#task_view textarea, #task_view input').val('');

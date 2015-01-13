@@ -1,5 +1,6 @@
 <h4>Comments:</h4>
 <div class="atk-box-small" ng-repeat="comm in comments track by $index" style="position: relative">
+    <!-- TODO id must be unique -->
     <div id="delete-comment-button" class="icon-trash delete-comment" ng-confirm-click="Are you sure?" confirmed-click="Comment.delete(comm.id)" style="{{comm.allow_del_css}}"></div>
     <div class="atk-push-small">
         <span class="atk-label atk-effect-info">{{$index+1}} (#{{comm.id}})</span>
@@ -12,7 +13,7 @@
             </strong> says:
         </span>
     </div>
-    <div editable-textarea="comm.text" onaftersave="Comment.save(comm)">{{comm.text}}</div>
+    <div class="inline-edit" editable-textarea="comm.text" onaftersave="Comment.save(comm)">{{comm.text}}</div>
     <div><a ng-href="{{comm.file_thumb}}">{{ comm.file_thumb ? "file" : "" }}</a></div>
 </div>
 

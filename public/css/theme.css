@@ -7279,7 +7279,8 @@ table .requirement {
 }
 .floating-form .close,
 .floating-form .close-time,
-.floating-form .delete-comment {
+.floating-form .delete-comment,
+.floating-form .delete-task {
   display: none;
 }
 .floating-form .comments {
@@ -7345,11 +7346,13 @@ table .requirement {
 }
 .floating-form.fixed .close:hover,
 .floating-form.fixed .close-time:hover,
-.floating-form.fixed .delete-comment:hover {
+.floating-form.fixed .delete-comment:hover,
+.floating-form.fixed .delete-task:hover {
   color: red;
 }
 .floating-form.fixed .close-time,
-.floating-form.fixed .delete-comment {
+.floating-form.fixed .delete-comment,
+.floating-form.fixed .delete-task {
   position: absolute;
   right: 10px;
   display: block;

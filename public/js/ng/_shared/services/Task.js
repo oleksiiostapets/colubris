@@ -148,8 +148,9 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
                 function(obj) {
                     if (obj.result === 'success') {
                         $rootScope.$broadcast('task.update', {});
-                        $rootScope.$broadcast('form.to_regular_place');
+                        //$rootScope.$broadcast('form.to_regular_place');
                         $rootScope.$broadcast( 'tasks.update' );
+                        $rootScope.$broadcast( 'tasks.need_update' );
                     } else {
                     }
                 }

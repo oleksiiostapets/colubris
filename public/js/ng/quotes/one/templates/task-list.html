@@ -1,21 +1,21 @@
 <h4>Tasks:</h4>
 <div class="atk-box-small" ng-repeat="task in tasks track by $index">
+    <div id="delete-task-button-{{task.id}}" class="icon-trash delete-task" ng-confirm-click="Are you sure?" confirmed-click="Task.delete(task.id)" style="{{comm.allow_del_css}}"></div>
     <div class="atk-push small atk-cells">
         <div class="atk-cell atk-valign-top">
             <div class="atk-label atk-effect-info">{{$index+1}} (#{{task.id}})</div>
         </div>
         <div class="atk-cell atk-jackscrew">
-            <div class="atk-label atk-effect-warning" style="white-space: pre-wrap"><strong>{{task.name}}</strong></div>
-
+            <div class="atk-label atk-effect-warning inline-edit" style="white-space: pre-wrap"><strong editable-text="task.name" onaftersave="Task.save(task)">{{task.name}}</strong></div>
         </div>
     </div>
-    <div><strong class="icon-user"> Asigned: </strong> {{task.assigned}}</div>
+    <div><strong class="icon-user"> Asigned: </strong> {{task.assigned || '---'}}</div>
+    <div><strong class="icon-chat-empty"> Status: </strong> {{task.status || '---'}}</div>
+    <div><strong class="icon-list"> Type: </strong> {{task.type || '---'}}</div>
+    <div><strong class="icon-clock"> Estimate: </strong> {{task.estimate || '---'}}</div>
+    <div class="inline-edit"><span class="atk-box atk-swatch-gray" editable-textarea="task.descr_original" onaftersave="Task.save(task)">{{task.descr_original || 'no description'}}</span></div>
     <div><strong class="icon-plus-circled-1"> Created: </strong> {{task.created_dts}}</div>
     <div><strong class="icon-cw"> Last updated: </strong> {{task.updated_dts}}</div>
-    <div><span class="atk-box atk-swatch-gray">{{task.descr_original || 'no description'}}</span></div>
-    <div><strong class="icon-clock"> Estimate: </strong> {{task.estimate}}</div>
-    <div><strong class="icon-chat-empty"> Status: </strong> {{task.status}}</div>
-    <div><strong class="icon-list"> Type: </strong> {{task.type}}</div>
 </div>
 
 <div style="{{Task.can_add_task}}">
