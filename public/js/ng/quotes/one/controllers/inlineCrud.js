@@ -134,6 +134,13 @@ app_module.controller(
             $scope.$on( 'comments.need_update', function( event, args ) {
                 Comment.getFromServer($scope.Requirement.requirements[$scope.Requirement.current_index].id);
             });
+            $scope.$on( 'reqv_tasks.update', function( event, args ) {
+                console.log('--------------------------------');
+                $scope.showTaskStatus = function(task) {
+                    var selected = $filter('filter')($scope.statuses, {value: task.status});
+                    return (task.status && selected.length) ? selected[0].text : 'Not set';
+                };
+            });
             $scope.$on( 'tasks.need_update', function( event, args ) {
                 Task.getFromServer($scope.Requirement.requirements[$scope.Requirement.current_index].id);
             });

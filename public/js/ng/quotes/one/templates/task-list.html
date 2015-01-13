@@ -10,6 +10,14 @@
         </div>
     </div>
     <div><strong class="icon-user"> Asigned: </strong> {{task.assigned || '---'}}</div>
+
+
+    <div class=""><strong class="icon-chat-empty"> Status: </strong>
+        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.status" e-ng-options="s.value as s.text for s in statuses">{{ showTaskStatus(task) || '---' }}</span>
+    </div>
+
+
+
     <div><strong class="icon-chat-empty"> Status: </strong> {{task.status || '---'}}</div>
     <div><strong class="icon-list"> Type: </strong> {{task.type || '---'}}</div>
     <div><strong class="icon-clock"> Estimate: </strong> {{task.estimate || '---'}}</div>
