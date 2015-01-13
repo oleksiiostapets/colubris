@@ -7,7 +7,6 @@
             <thead>
             <tr class="atk-swatch-gray">
                 <th>#</th>
-                <th></th>
                 <th>Info</th>
                 <th>Estimate</th>
                 <th>{{requirements.spent_time_cost_text}}</th>
@@ -18,24 +17,20 @@
             <tr ng-repeat="rreqv in requirements track by $index"  is-included class=" {{rreqv.css.is_active}}">
                 <td>{{$index+1}}</td>
                 <td>
-                    <div class="toggle_is_included {{rreqv.css.is_active}} {{rreqv.css.can_toggle}}" ng-click="toggleIsIncluded(rreqv)">
-                        {{rreqv.css.is_included}}
-                    </div>
-                </td>
-                <td>
                    <div class="atk-action">
-                       <span class="atk-label atk-effect-info">Req.#{{rreqv.id}}</span>
-                       <span class="atk-label atk-effect-warning"><strong>{{rreqv.name || 'no name provided'}}</strong></span>
+                        <span class="toggle_is_included {{rreqv.css.is_active}} {{rreqv.css.can_toggle}}" ng-click="toggleIsIncluded(rreqv)">
+                            {{rreqv.css.is_included}}
+                        </span>
+                        <span class="atk-label atk-effect-info">Req.#{{rreqv.id}}</span>
+                        <span class="atk-label atk-effect-warning"><strong>{{rreqv.name || 'no name provided'}}</strong></span>
+                        <span class="atk-size-micro"> - by {{rreqv.user}}</span>
                    </div>
-                    <div class="atk-action atk-size-milli">
-                        <span>Added by {{rreqv.user}}</span>
-                    </div>
                     <div class="atk-action atk-box atk-swatch-gray">
                         <span>{{rreqv.descr || 'no description provided'}}</span>
                     </div>
                 </td>
-                <td>{{rreqv.estimate}}</td>
-                <td>{{rreqv.spent_time_cost}}</td>
+                <td>{{ rreqv.estimate || '-'}}</td>
+                <td>{{ rreqv.spent_time_cost || '-'}}</td>
                 <td class="" style="{{Requirement.show_actions}}">
                     <a href="javascript:void(0)" class="atk-text-nowrap icon-pencil atk-effect-info" ng-click="Requirement.edit($index)" style="{{Requirement.can_edit_requirement}}"> Info</a>
                     <a href="javascript:void(0)" class="atk-text-nowrap icon-trash atk-effect-danger" style="{{Requirement.can_delete_requirement}}" ng-confirm-click="Are you sure?" confirmed-click="Requirement.remove($index)"> Delete</a>
