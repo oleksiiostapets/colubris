@@ -22,11 +22,13 @@
                             {{rreqv.css.is_included}}
                         </span>
                         <span class="atk-label atk-effect-info">Req.#{{rreqv.id}}</span>
-                        <span class="atk-label atk-effect-warning"><strong>{{rreqv.name || 'no name provided'}}</strong></span>
+                        <span class="atk-label atk-effect-warning">
+                            <strong class="inline-edit" editable-text="rreqv.name" onaftersave="Requirement.save(rreqv)">{{rreqv.name || 'no name provided'}}</strong>
+                        </span>
                         <span class="atk-size-micro"> - by {{rreqv.user}}</span>
                    </div>
-                    <div class="atk-action atk-box atk-swatch-gray">
-                        <span>{{rreqv.descr || 'no description provided'}}</span>
+                    <div class="atk-action atk-box atk-swatch-gray inline-edit">
+                        <span class="" editable-textarea="rreqv.descr" onaftersave="Requirement.save(rreqv)" >{{rreqv.descr || 'no description provided'}}</span>
                     </div>
                 </td>
                 <td>{{ rreqv.estimate || '-'}}</td>
