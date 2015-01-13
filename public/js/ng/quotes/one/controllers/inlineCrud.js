@@ -6,8 +6,8 @@
 
 app_module.controller(
     'inlineCrud',
-    ['$scope','$document','$http','Requirement','Comment','Task','Quote','User','Project',
-        function ($scope,  $document,  $http,  Requirement,  Comment,  Task,  Quote,  User, Project) {
+    ['$scope','$document','$http','Requirement','Comment','Task','Quote','User','Project','$filter',
+        function ($scope,  $document,  $http,  Requirement,  Comment,  Task,  Quote,  User, Project, $filter) {
 
             // quote info
             $scope.Quote = Quote;
@@ -31,6 +31,9 @@ app_module.controller(
                 Quote.can_see_rates = 'display:none;';
             }
 
+
+            // Quote status
+            $scope.quote_statuses = Quote.getStatuses('value','text');
 
 
 
@@ -143,6 +146,12 @@ app_module.controller(
                 Task.getFromServerByReqvId($scope.Requirement.requirements[$scope.Requirement.current_index].id);
             });
             $scope.$on( 'quote.update', function( event) {
+
+                $scope.showStatus = function(quote) {
+                    var selected = $filter('filter')($scope.quote_statuses, {value: quote.status});
+                    return (quote.status && selected.length) ? selected[0].text : 'Not set';
+                };
+
                 $scope.quote = Quote.quotes;
                 $scope.quote[0].deadline_obj = new Date($scope.quote[0].deadline);
                 $scope.quote[0].warranty_end_obj = new Date($scope.quote[0].warranty_end);

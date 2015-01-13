@@ -7,7 +7,9 @@
                 <div class=""><strong>Project: </strong>{{quote[0].project || '---' }}</div>
                 <div class=""><strong>General Description: </strong></div>
                 <div class="atk-swatch-gray atk-box-small inline-edit" editable-textarea="quote[0].general_description" onaftersave="Quote.save(quote[0],projects[0])">{{quote[0].general_description || '---' }}</div>
-                <div class=""><strong class="icon-chat-empty"> Status: </strong><span class="inline-edit" editable-text="quote[0].status" onaftersave="Quote.save(quote[0],projects[0])">{{ Quote.getStatusValueByKey(quote[0].status) || '---'  }}</span></div>
+                <div class=""><strong class="icon-chat-empty"> Status: </strong>
+                    <span class="inline-edit" onaftersave="Quote.save(quote[0],projects[0])" editable-select="quote[0].status" e-ng-options="s.value as s.text for s in quote_statuses">{{ showStatus(quote[0]) }}</span>
+                </div>
                 <div class=""><strong class="icon-pencil"> Creator: </strong>{{quote[0].user || '---' }}</div>
                 <div class=""><strong class="icon-plus-circled-1"> Created: </strong>{{quote[0].created_dts || '---' }}</div>
                 <div class=""><strong class="icon-minus-circled"> Expires at: </strong>{{quote[0].expires_dts || '---' }}</div>
