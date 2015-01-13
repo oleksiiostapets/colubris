@@ -7254,6 +7254,9 @@ ul.atk-lister.discussion li .timestamp {
 .atk-table.atk-table-zebra tbody tr:nth-child(odd) td:not([class*='atk-swatch']) {
   background: #fcfbf9;
 }
+.relative {
+  position: relative;
+}
 table .name span,
 table .project span {
   background-color: #777777;
@@ -7355,7 +7358,7 @@ table .requirement {
 .floating-form.fixed .delete-task {
   position: absolute;
   right: 10px;
-  display: block;
+  display: none;
   font-size: 18px;
   cursor: pointer;
   z-index: 10;

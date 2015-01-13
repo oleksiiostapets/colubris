@@ -1,6 +1,6 @@
 <h4>Tasks:</h4>
-<div class="atk-box-small" ng-repeat="task in tasks track by $index">
-    <div id="delete-task-button-{{task.id}}" class="icon-trash delete-task" ng-confirm-click="Are you sure?" confirmed-click="Task.delete(task.id)" style="{{comm.allow_del_css}}"></div>
+<div class="atk-box-small relative" ng-repeat="task in tasks track by $index">
+    <div id="delete-task-button-{{task.id}}" class="icon-trash delete-task" ng-confirm-click="Are you sure?" confirmed-click="Task.delete(task.id)" style="{{task.can_delete_task}}"></div>
     <div class="atk-push small atk-cells">
         <div class="atk-cell atk-valign-top">
             <div class="atk-label atk-effect-info">{{$index+1}} (#{{task.id}})</div>

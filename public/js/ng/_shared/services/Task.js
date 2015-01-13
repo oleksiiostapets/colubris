@@ -58,6 +58,12 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
                 'getByField',
                 params,
                 function(obj) {
+                    $.each(obj.data,function(key,value) {
+                        if(app_module.current_user_rights.indexOf('can_delete_task') != -1){
+                            obj.data[key]['can_delete_task'] = 'display: block;';
+                        }
+                    });
+
                     service.tasks = obj.data;
                     service.total_rows = obj.total_rows;
                     $rootScope.$broadcast( 'reqv_tasks.update',service.tasks );
