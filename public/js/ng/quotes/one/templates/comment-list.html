@@ -13,7 +13,7 @@
         </span>
     </div>
     <div editable-textarea="comm.text" onaftersave="Comment.save(comm)">{{comm.text}}</div>
-    <div><a ng-href="{{comm.file_thumb}}">file</a></div>
+    <div><a ng-href="{{comm.file_thumb}}">{{ comm.file_thumb ? "file" : "" }}</a></div>
 </div>
 
 <div class="atk-box-small" id="comment_view">
