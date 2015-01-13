@@ -86,33 +86,14 @@ app_module.controller(
                 Task.can_add_task = 'display:none;';
             }
 
-            // TODO move to Task service
-            $scope.priorities = [
-                {name:'low'},
-                {name:'normal'},
-                {name:'high'}
-            ];
+
+            $scope.priorities = Task.getSorted('priorities','value','name');
             $scope.priority = $scope.priorities; // TODO why two variables with exactly same values
 
-            // TODO move to Task service
-            $scope.types = [
-                {name:'Project',        value:'project'},
-                {name:'Change request', value:'change_request'},
-                {name:'Bug',            value:'bug'},
-                {name:'Support',        value:'support'},
-                {name:'Drop',           value:'drop'}
-            ];
+            $scope.types = Task.getSorted('types','value','name');
             $scope.type = $scope.types; // TODO why two variables with exactly same values
 
-            // TODO move to Task service
-            $scope.statuses = [
-                {name:'unstarted'},
-                {name:'started'},
-                {name:'finished'},
-                {name:'tested'},
-                {name:'rejected'},
-                {name:'accepted'}
-            ];
+            $scope.statuses = Task.getSorted('statuses','value','name');
             $scope.status = $scope.statuses; // TODO why two variables with exactly same values
 
             // User
@@ -135,8 +116,13 @@ app_module.controller(
                 Comment.getFromServer($scope.Requirement.requirements[$scope.Requirement.current_index].id);
             });
             $scope.$on( 'reqv_tasks.update', function( event, args ) {
-                console.log('--------------------------------');
                 $scope.showTaskStatus = function(task) {
+
+                    console.log('--------------------------------');
+                    console.log($scope.statuses);
+                    console.log(task.status);
+
+
                     var selected = $filter('filter')($scope.statuses, {value: task.status});
                     return (task.status && selected.length) ? selected[0].text : 'Not set';
                 };

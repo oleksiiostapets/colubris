@@ -38,36 +38,44 @@
                 </div>
                 <input type="text" id="task_name" class="atk-jackscrew" ng-model="task.name" />
             </div>
+            
             <div class="atk-push-small">
                 <div class="atk-push-small">
                     <label for="task_description"><strong>Description:</strong></label>
                 </div>
                 <textarea id="task_description" type="text" class="atk-jackscrew" ng-model="task.descr_original"></textarea>
             </div>
+
             <div class="atk-push-small">
-                <div class="atk-push-small">
-                    <label for="task_estimate"><strong>Estimate:</strong></label>
+                <div class="atk-row">
+                    <!--estimate-->
+                    <div class="atk-push-small atk-col-6">
+                        <label for="task_estimate"><strong>Estimate:</strong></label>
+                        <input type="text" id="task_estimate" ng-model="task.estimate" />
+                    </div>
+                    <!--priority-->
+                    <div class="atk-push-small atk-col-6">
+                        <label for="task_priority"><strong>Priority:</strong></label>
+                        <select id="task_priority" ng-model="task.priority" ng-options="priority.name for priority in priorities track by priority.name"></select>
+                    </div>
                 </div>
-                <input type="text" id="task_estimate" class="atk-jackscrew" ng-model="task.estimate" />
-            </div>
-            <div class="atk-push-small">
-                <div class="atk-push-small">
-                    <label for="task_priority"><strong>Priority:</strong></label>
-                </div>
-                <select id="task_priority" ng-model="task.priority" ng-options="priority.name for priority in priorities track by priority.name"></select>
-            </div>
-            <div class="atk-push-small">
-                <div class="atk-push-small">
-                    <label for="task_type"><strong>Type:</strong></label>
-                </div>
-                <select id="task_type" ng-model="task.type"  ng-options="type.name for type in types track by type.value"></select>
             </div>
 
             <div class="atk-push-small">
-                <div class="atk-push-small">
-                    <label for="task_status"><strong>Status:</strong></label>
+
+                <div class="atk-row">
+                    <!--Type-->
+                    <div class="atk-push-small atk-col-6">
+                        <label for="task_type"><strong>Type:</strong></label>
+                        <select id="task_type" ng-model="task.type"  ng-options="type.name for type in types track by type.value"></select>
+                    </div>
+                    <!--Status-->
+                    <div class="atk-push-small atk-col-6">
+                        <label for="task_status"><strong>Status:</strong></label>
+                        <select id="task_status" ng-model="task.status"  ng-options="status.name for status in statuses track by status.name"></select>
+                    </div>
                 </div>
-                <select id="task_status" ng-model="task.status"  ng-options="status.name for status in statuses track by status.name"></select>
+
             </div>
 
             <div class="atk-push-small">

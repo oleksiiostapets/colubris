@@ -8,8 +8,119 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
     var current_index = null;
     var service = {
         tasks: [],
+        statuses: [
+            {key: 'unstarted', value: 'Unstarted'},
+            {key: 'started',   value: 'Started'},
+            {key: 'finished',  value: 'Finished'},
+            {key: 'tested',    value: 'Tested'},
+            {key: 'rejected',  value: 'Rejected'},
+            {key: 'accepted',  value: 'Accepted'}
+        ],
+        types: [
+            {key: 'project',        value: 'Project'},
+            {key: 'change_request', value: 'Change request'},
+            {key: 'bug',            value: 'Bug'},
+            {key: 'support',        value: 'Support'},
+            {key: 'drop',           value: 'Drop'}
+        ],
+        priorities: [
+            {key: 'low',    value: 'Low'},
+            {key: 'normal', value: 'Normal'},
+            {key: 'high',   value: 'High'}
+        ],
         task_statuses: [],
         total_rows: 0,
+
+
+        getSorted: function(property, key_name, value_name) {
+            var iterator;
+            switch (property) {
+                case 'statuses':
+                    iterator = this.statuses;
+                    break;
+                case 'types':
+                    iterator = this.types;
+                    break;
+                case 'priorities':
+                    iterator = this.priorities;
+                    break;
+                default:
+                    return false;
+            }
+            var arr_to_return = [];
+            angular.forEach(iterator,function(item,index){
+                var obj = {};
+                obj[key_name] = item.key;
+                obj[value_name] = item.value;
+                arr_to_return.push(obj);
+            });
+            return arr_to_return;
+        },
+
+
+        // statuses
+        getStatusValueByKey: function(key) {
+            var return_value = false;
+            angular.forEach(this.statuses,function(status,index){
+                if (status.key === key) {
+                    return_value = status.value;
+                }
+            });
+            return return_value;
+        },
+        getStatusKeyByValue: function(value) {
+            var return_key = false;
+            angular.forEach(this.statuses,function(status,index){
+                if (status.value === value) {
+                    return_key = status.key;
+                }
+            });
+            return return_key;
+        },
+
+        // types
+        getTypeValueByKey: function(key) {
+            var return_value = false;
+            angular.forEach(this.types,function(status,index){
+                if (status.key === key) {
+                    return_value = status.value;
+                }
+            });
+            return return_value;
+        },
+        getTypeKeyByValue: function(value) {
+            var return_key = false;
+            angular.forEach(this.types,function(status,index){
+                if (status.value === value) {
+                    return_key = status.key;
+                }
+            });
+            return return_key;
+        },
+
+        // priorities
+        getPriorityValueByKey: function(key) {
+            var return_value = false;
+            angular.forEach(this.priorities,function(status,index){
+                if (status.key === key) {
+                    return_value = status.value;
+                }
+            });
+            return return_value;
+        },
+        getPriorityKeyByValue: function(value) {
+            var return_key = false;
+            angular.forEach(this.priorities,function(status,index){
+                if (status.value === value) {
+                    return_key = status.key;
+                }
+            });
+            return return_key;
+        },
+
+
+
+
 
         getStatusesFromServer: function() {
 
