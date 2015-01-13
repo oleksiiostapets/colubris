@@ -87,13 +87,14 @@ app_module.controller(
             }
 
 
-            $scope.priorities = Task.getSorted('priorities','value','name');
+            $scope.priorities = Task.getSorted('priorities','value','text');
             $scope.priority = $scope.priorities; // TODO why two variables with exactly same values
 
-            $scope.types = Task.getSorted('types','value','name');
+            $scope.types = Task.getSorted('types','value','text');
             $scope.type = $scope.types; // TODO why two variables with exactly same values
 
-            $scope.statuses = Task.getSorted('statuses','value','name');
+            //$scope.statuses = Task.getSorted('statuses','value','name');
+            $scope.statuses = Task.getSorted('statuses','value','text');
             $scope.status = $scope.statuses; // TODO why two variables with exactly same values
 
             // User
@@ -117,12 +118,6 @@ app_module.controller(
             });
             $scope.$on( 'reqv_tasks.update', function( event, args ) {
                 $scope.showTaskStatus = function(task) {
-
-                    console.log('--------------------------------');
-                    console.log($scope.statuses);
-                    console.log(task.status);
-
-
                     var selected = $filter('filter')($scope.statuses, {value: task.status});
                     return (task.status && selected.length) ? selected[0].text : 'Not set';
                 };
