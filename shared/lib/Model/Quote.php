@@ -57,9 +57,6 @@ class Model_Quote extends Model_Table {
 		$this->addField('is_deleted')->type('boolean')->defaultValue('0');
 		$this->hasOne('User','deleted_id');
 
-//        $this->addField('organisation_id')->refModel('Model_Organisation');
-		$this->hasOne('Organisation','organisation_id');
-
 		$this->addField('created_dts');
 		$this->addField('updated_dts')->caption('Updated')->sortable(true);
 
@@ -262,6 +259,22 @@ class Model_Quote extends Model_Table {
                 ->addCondition('task_id','in',$m_t);
             return $m_tt->sum('spent_time');
 		});
+        $this->addExpression('organisation_id')->set(function($m,$q){
+            return $q->dsql()
+                ->table('project')
+                ->field('organisation_id')
+                ->where('project.id',$q->getField('project_id'))
+                ;
+        });
+        $this->addExpression('organisation')->set(function($m,$q){
+            return $q->dsql()
+                ->table('organisation')
+                ->table('project')
+                ->field('organisation.name')
+                ->where('organisation.id=project.organisation_id')
+                ->where('project.id',$q->getField('project_id'))
+                ;
+        });
 	}
 	// Expressions --------------------------------------------------------------
 
