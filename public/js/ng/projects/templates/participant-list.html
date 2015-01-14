@@ -1,5 +1,5 @@
 <h3>Participants:</h3>
-<div class="atk-box-small" ng-repeat="participant in participants track by $index" style="position: relative">
+<div class="atk-box-small relative" ng-repeat="participant in participants track by $index">
     <div id="close-time-button" class="icon-trash atk-effect-danger remove-participant " ng-confirm-click="Are you sure?" confirmed-click="Participant.remove(participant.id,project)"></div>
     <div class="atk-cells atk-push small">
         <div class="atk-cell atk-valign-top">
@@ -11,21 +11,23 @@
     </div>
 </div>
 
-<h3>Add Participant:</h3>
-<div class="atk-box-small" id="participant_view">
-    <form class="atk-form">
-        <input type="hidden" ng-model="project.id" />
+<div style="{{show_add_participants_form}}">
+    <h3>Add Participant:</h3>
+    <div class="atk-box-small" id="participant_view">
+        <form class="atk-form">
+            <input type="hidden" ng-model="project.id" />
 
-        <div class="atk-push-small">
             <div class="atk-push-small">
-                <label for="participant_user"><strong>User:</strong></label>
+                <div class="atk-push-small">
+                    <label for="participant_user"><strong>User:</strong></label>
+                </div>
+                <select id="participant_user" ng-model="participant.user"  ng-options="user.name  for user in users track by user.id" ng-init="user = participant.user_id"  ></select>
             </div>
-            <select id="participant_user" ng-model="participant.user"  ng-options="user.name  for user in users track by user.id" ng-init="user = participant.user_id"  ></select>
-        </div>
 
-        <div class="atk-actions">
-            <button ng-click="Participant.save(participant.user,project)" class="atk-swatch-green atk-button-small atk-button" >Add</button>
-        </div>
+            <div class="atk-actions">
+                <button ng-click="Participant.save(participant.user,project)" class="atk-swatch-green atk-button-small atk-button" >Add</button>
+            </div>
 
-    </form>
+        </form>
+    </div>
 </div>

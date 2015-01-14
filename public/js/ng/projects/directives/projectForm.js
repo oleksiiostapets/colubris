@@ -10,7 +10,14 @@ app_module.directive('projectForm', function factory($q,$http, $templateCache, $
         scope.$on( 'form.to_fixed_position', function( event, project) {
             element.addClass('fixed');
 
-            scope.Quote.getFromServerByProject(project);
+            if(project){
+                scope.Quote.getFromServerByProject(project);
+                scope.show_add_quote_form = 'display:block;';
+                scope.show_add_participants_form = 'display:block;';
+            }else{
+                scope.show_add_quote_form = 'display:none;';
+                scope.show_add_participants_form = 'display:none;';
+            }
 
             if(app_module.current_user_rights.indexOf('can_manage_participants') != -1){
                 if(project){

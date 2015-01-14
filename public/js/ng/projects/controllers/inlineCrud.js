@@ -115,6 +115,7 @@ app_module.controller(
                 $scope.project = args;
                 if(!$scope.project.hasOwnProperty('id') && $scope.quotes.length){
                     Quote.clear();
+                    Participant.clear();
                 }
                 console.log('---->project.update');
             });
@@ -150,6 +151,11 @@ app_module.controller(
                 User.getFromServer('users.update','getAllUsers');
 
             });
+
+            $scope.$on( 'participants.clear', function( event ) {
+                $scope.participants = Participant.participants;
+            });
+
             $scope.$on( 'users.update', function( event ) {
                 $scope.users = User.users;
             });

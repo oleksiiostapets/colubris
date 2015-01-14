@@ -57,6 +57,11 @@ app_module.service( 'Participant', [ '$rootScope','$http', 'API', function( $roo
                     $rootScope.$broadcast('participants.need_update', project );
                 }
             );
+        },
+
+        clear: function(){
+            service.participants = [];
+            $rootScope.$broadcast( 'participants.clear' );
         }
         /*backupTime: function(index) {
             this.current_index = index;
