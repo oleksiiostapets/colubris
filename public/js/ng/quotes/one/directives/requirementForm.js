@@ -20,6 +20,11 @@ app_module.directive('requirementForm', function factory($q,$http, $templateCach
             if(reqv){
                 scope.Comment.getFromServer(reqv.id);
                 scope.Task.getFromServerByReqvId(reqv.id);
+                scope.show_add_comment_from = 'display:block;';
+                scope.show_add_task_from = 'display:block;';
+            }else{
+                scope.show_add_comment_from = 'display:none;';
+                scope.show_add_task_from = 'display:none;';
             }
             //console.log(scope.comments);
 

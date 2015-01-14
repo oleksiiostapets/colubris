@@ -16,7 +16,7 @@
     <div><a ng-href="{{comm.file_thumb}}">{{ comm.file_thumb ? "file" : "" }}</a></div>
 </div>
 
-<div class="atk-box-small" id="comment_view">
+<div class="atk-box-small" id="comment_view" style="{{show_add_comment_from}}">
     <form class="atk-form">
         <input type="hidden" ng-model="comm.id" />
         <input type="hidden" ng-model="comm.user_id" />
