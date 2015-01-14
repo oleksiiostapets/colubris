@@ -91,7 +91,6 @@ class Model_Quote extends Model_Table {
 
 		$this->addHook('beforeSave', function($m){
 			$m['updated_dts']=date('Y-m-d G:i:s', time());
-			if($m['status']=='finished') $m['warranty_end']=date('Y-m-d G:i:s', time()+60*60*24*30);
 		});
         $this->addHook('beforeDelete', function($m){
             $m['deleted_id']=$m->app->currentUser()->get('id');
