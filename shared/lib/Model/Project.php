@@ -9,21 +9,18 @@ class Model_Project extends Model_Auditable {
 		$this->addField('name')->mandatory('required');
 		$this->addField('descr')->dataType('text');
 
-//        $this->addField('client_id')->refModel('Model_Client');
 		$this->hasOne('Client','client_id');
 
 		$this->addField('demo_url');
 		$this->addField('prod_url');
 		$this->addField('repository');
 
-//        $this->addField('organisation_id')->refModel('Model_Organisation');
 		$this->hasOne('Organisation','organisation_id');
 
 		$this->addField('is_deleted')->type('boolean')->defaultValue('0');
 
 		$this->setOrder('name');
 
-//        $this->addField('deleted_id')->refModel('Model_User');
 		$this->hasOne('User','deleted_id');
 
         $this->addExpressions();
@@ -43,8 +40,10 @@ class Model_Project extends Model_Auditable {
 		$this->addHook('beforeDelete', function($m){
             if( !isset($this->app->is_test_app)) $m['deleted_id']=$m->app->currentUser()->get('id');
 		});
+		$this->addHook('beforeSave', function($m){
+            $m['organisation_id']=$m->app->currentUser()->get('organisation_id');
+		});
         $this->addHook('afterInsert', function($m,$id){
-//            var_dump($m->app->currentUser()->get());
             $model_participant = $m->add('Model_Participant');
             $model_participant->set([
                 'user_id'=>$m->app->currentUser()->get('id'),

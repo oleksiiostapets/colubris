@@ -2,6 +2,7 @@
 class endpoint_v1_project extends Endpoint_v1_General {
 
     public $model_class = 'Project';
+    protected $required_fields = ['name'];
 
     function init() {
         parent::init();

@@ -17,12 +17,6 @@
                             </div>
                             <input type="text" id="project_name" class="atk-jackscrew" ng-model="project.name" />
                         </div>
-                        <!--<div class="atk-push-small">
-                            <div class="atk-push-small">
-                                <label><strong>Client:</strong></label>
-                            </div>
-                            <select id="project_client" ng-model="client"  ng-options="client.name  for client in clients track by client.id" ng-init="client = project.client"  ></select>
-                        </div>-->
                         <div class="atk-push-small">
                             <div class="atk-push-small">
                                 <label for="project_descr"><strong>Description:</strong></label>
@@ -35,7 +29,7 @@
                     </div>
 
                     <div class="atk-actions project_buttons">
-                        <button style="{{Project.can_edit_projects}}" ng-click="save(project,client)" class="atk-swatch-green atk-button-small atk-button save_button" >Save</button>
+                        <button style="{{Project.can_edit_projects}}" ng-click="Project.save(project)" class="atk-swatch-green atk-button-small atk-button save_button" >Save</button>
                         <button ng-click="Project.cancel()" class="atk-swatch-yellow atk-button-small atk-button" >Cancel</button>
                         <button style="{{Project.can_delete_projects}}" ng-confirm-click="Are you sure?" confirmed-click="Project.delete(project.id)" class="atk-swatch-red atk-button-small atk-button delete_button" >Delete</button>
                     </div>
