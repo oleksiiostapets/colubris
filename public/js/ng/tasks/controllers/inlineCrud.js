@@ -36,10 +36,6 @@ app_module.controller(
             $scope.requirements = Requirement.requirements;
 
             $scope.User = User;
-            $scope.requesters = User.users;
-            User.getFromServer('requesters.update','getAllUsers');
-            $scope.assigneds = User.users;
-            User.getFromServer('assigneds.update','getAllUsers');
 
             $scope.task = {};
             $scope.Task = Task;
@@ -104,7 +100,10 @@ app_module.controller(
             });
 
             $scope.$on( 'task.update', function( event, args ) {
+                console.log('---->task.update');
                 $scope.task = args;
+
+                User.getFromServerByProjectId(args.project_id,['requesters.update','assigneds.update']);
             });
             $scope.$on( 'tasks.need_update', function( event, args ) {
                 Task.getFromServer();
@@ -171,12 +170,10 @@ app_module.controller(
 
             $scope.$on( 'assigneds.update', function( event ) {
                 $scope.assigneds = User.users;
-                $scope.assigneds.unshift({id:"",email:'all'})
             });
 
             $scope.$on( 'requesters.update', function( event ) {
                 $scope.requesters = User.users;
-                $scope.requesters.unshift({id:"",email:'all'})
             });
 
             $scope.combined = function(user){
