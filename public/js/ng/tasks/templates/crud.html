@@ -14,7 +14,7 @@
                 <th class="task_priority_header">Priority</th>
                 <th class="task_type_header">Type</th>
                 <th class="task_status_header">Status</th>
-                <th class="task_spent_time_header">Spent Time</th>
+                <th class="task_spent_time_header" style="{{Task.can_see_spent_time}}">Spent Time</th>
                 <th class="task_requester_header">Requester</th>
                 <th class="task_assigned_header">Assigned</th>
                 <th class="task_actions_header" style="{{Task.show_actions}}">Actions</th>
@@ -30,7 +30,7 @@
                 <td class="task_priority_{{$index+1}}">{{task.priority}}</td>
                 <td class="task_type_{{$index+1}}">{{task.type}}</td>
                 <td class="task_status_{{$index+1}}">{{task.status}}</td>
-                <td class="task_spent_time_{{$index+1}}">{{task.spent_time}}</td>
+                <td class="task_spent_time_{{$index+1}}" style="{{Task.can_see_spent_time}}">{{task.spent_time}}</td>
                 <td class="task_requester_{{$index+1}}">{{task.requester}}</td>
                 <td class="task_assigned_{{$index+1}}">{{task.assigned}}</td>
                 <td class="atk-text-nowrap task_actions_{{$index+1}}" style="{{Task.show_actions}}">

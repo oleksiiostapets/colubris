@@ -58,6 +58,11 @@ app_module.controller(
             ){
                 Task.show_actions = 'display:none;';
             }
+            if(app_module.current_user_rights.indexOf('can_see_spent_time') != -1){
+                //Project.can_edit_task = 'display:block;';
+            }else{
+                Task.can_see_spent_time = 'display:none;';
+            }
 
             $scope.priorities = [
                 {name:'low'},
