@@ -2,27 +2,46 @@
 <div class="atk-box-small relative" ng-repeat="task in tasks track by $index">
     <div id="delete-task-button-{{task.id}}" class="icon-trash delete-task" ng-confirm-click="Are you sure?" confirmed-click="Task.delete(task.id)" style="{{task.can_delete_task}}"></div>
     <div class="atk-push small atk-cells">
+
+        <!--row number and ID-->
         <div class="atk-cell atk-valign-top">
             <div class="atk-label atk-effect-info">{{$index+1}} (#{{task.id}})</div>
         </div>
+
+        <!--Name-->
         <div class="atk-cell atk-jackscrew">
             <div class="atk-label atk-effect-warning inline-edit" style="white-space: pre-wrap"><strong editable-text="task.name" onaftersave="Task.save(task)">{{task.name}}</strong></div>
         </div>
     </div>
-    <div><strong class="icon-user"> Asigned: </strong> {{task.assigned || '---'}}</div>
 
+    <!--Assigned-->
+    <!--TODO: dropdown-->
+    <div><strong class="icon-user"> Assigned: </strong> {{task.assigned || '---'}}</div>
 
+    <!--Status-->
     <div class=""><strong class="icon-chat-empty"> Status: </strong>
         <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.status" e-ng-options="s.value as s.text for s in statuses">{{ showTaskStatus(task) || '---' }}</span>
     </div>
 
-
-
+    <!--Status (backup because firs one is buggy) TODO remove this one when first is fixed-->
     <div><strong class="icon-chat-empty"> Status: </strong> {{task.status || '---'}}</div>
-    <div><strong class="icon-list"> Type: </strong> {{task.type || '---'}}</div>
+
+    <!--Type-->
+    <div>
+        <strong class="icon-list"> Type: </strong>
+        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.type" e-ng-options="s.value as s.text for s in types">{{ showTypeStatus(task) || '---' }}</span>
+    </div>
+
+    <!--Estimate-->
     <div><strong class="icon-clock"> Estimate: </strong> {{task.estimate || '---'}}</div>
+
+    <!--Description-->
     <div class="inline-edit"><span class="atk-box atk-swatch-gray" editable-textarea="task.descr_original" onaftersave="Task.save(task)">{{task.descr_original || 'no description'}}</span></div>
+
+    <!--Created-->
     <div><strong class="icon-plus-circled-1"> Created: </strong> {{task.created_dts}}</div>
+
+    <!--Last update-->
     <div><strong class="icon-cw"> Last updated: </strong> {{task.updated_dts}}</div>
 </div>
 

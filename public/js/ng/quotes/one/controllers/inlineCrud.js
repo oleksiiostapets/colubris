@@ -87,13 +87,15 @@ app_module.controller(
             }
 
 
+            // properties
             $scope.priorities = Task.getSorted('priorities','value','text');
             $scope.priority = $scope.priorities; // TODO why two variables with exactly same values
 
+            // types
             $scope.types = Task.getSorted('types','value','text');
             $scope.type = $scope.types; // TODO why two variables with exactly same values
 
-            //$scope.statuses = Task.getSorted('statuses','value','name');
+            // statuses
             $scope.statuses = Task.getSorted('statuses','value','text');
             $scope.status = $scope.statuses; // TODO why two variables with exactly same values
 
@@ -120,6 +122,10 @@ app_module.controller(
                 $scope.showTaskStatus = function(task) {
                     var selected = $filter('filter')($scope.statuses, {value: task.status});
                     return (task.status && selected.length) ? selected[0].text : 'Not set';
+                };
+                $scope.showTypeStatus = function(type) {
+                    var selected = $filter('filter')($scope.types, {value: type.type});
+                    return (type.status && selected.length) ? selected[0].text : 'Not set';
                 };
             });
             $scope.$on( 'tasks.need_update', function( event, args ) {
