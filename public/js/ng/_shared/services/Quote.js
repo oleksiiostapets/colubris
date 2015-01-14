@@ -116,11 +116,12 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
             quote.project_id = project.id;
 
             //Formatting dates for update
-            if(quote.id){
+            if(quote.deadline_obj){
                 var deadline_month = quote.deadline_obj.getMonth()+1;
                 if(deadline_month < 10) deadline_month = '0' + deadline_month;
                 quote.deadline = quote.deadline_obj.getFullYear()+'-'+deadline_month+'-'+quote.deadline_obj.getDate();
-
+            }
+            if(quote.warranty_end_obj){
                 var warranty_month = quote.warranty_end_obj.getMonth()+1;
                 if(warranty_month < 10) warranty_month = '0' + warranty_month;
                 quote.warranty_end = quote.warranty_end_obj.getFullYear()+'-'+warranty_month+'-'+quote.warranty_end_obj.getDate();
