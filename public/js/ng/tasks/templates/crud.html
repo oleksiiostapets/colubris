@@ -2,7 +2,7 @@
     <!--<div class="atk-push-small">
         <button class="atk-button atk-effect-success" ng-click="Task.showForm()">Add Task</button>
     </div>-->
-    <div class="atk-table atk-table-bordered">
+    <div class="atk-table">
         <table class="task_crud">
             <thead>
             <tr class="atk-swatch-gray">
@@ -33,9 +33,12 @@
                 <td class="task_spent_time_{{$index+1}}" style="{{Task.can_see_spent_time}}">{{task.spent_time}}</td>
                 <td class="task_requester_{{$index+1}}">{{task.requester}}</td>
                 <td class="task_assigned_{{$index+1}}">{{task.assigned}}</td>
-                <td class="atk-text-nowrap task_actions_{{$index+1}}" style="{{Task.show_actions}}">
-                    <button class="atk-button task_action_edit_{{$index+1}}" style="{{Task.can_edit_task}}" ng-click="Task.edit($index)">Edit</button>
-                    <button class="atk-button atk-effect-danger task_action_delete_{{$index+1}}" style="{{Task.can_delete_task}}" ng-confirm-click="Are you sure?" confirmed-click="Task.remove($index)">Delete</button>
+                <td class=" task_actions_{{$index+1}}" style="{{Task.show_actions}}">
+                    <!--<button class="atk-button task_action_edit_{{$index+1}}" style="{{Task.can_edit_task}}" ng-click="Task.edit($index)">Edit</button>-->
+                    <!--<button class="atk-button atk-effect-danger task_action_delete_{{$index+1}}" style="{{Task.can_delete_task}}" ng-confirm-click="Are you sure?" confirmed-click="Task.remove($index)">Delete</button>-->
+
+                    <a href="javascript:void(0)" class="atk-text-nowrap icon-pencil atk-effect-info" ng-click="Task.edit($index)" style="{{Task.can_edit_task}}"> Info</a>
+                    <a href="javascript:void(0)" class="atk-text-nowrap icon-trash atk-effect-danger" style="{{Task.can_delete_task}}" ng-confirm-click="Are you sure?" confirmed-click="Task.remove($index)"> Delete</a>
                 </td>
             </tr>
             </tbody>
