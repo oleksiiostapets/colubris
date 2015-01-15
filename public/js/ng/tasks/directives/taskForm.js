@@ -56,7 +56,7 @@ app_module.directive('taskForm', function factory($q,$http, $templateCache, $com
                 task.assigned_id = assigned.id;
                 task.assigned = assigned.name ;
             }
-            scope.Task.save(task);
+            scope.Task.save(task,true);
         };
     }
 })

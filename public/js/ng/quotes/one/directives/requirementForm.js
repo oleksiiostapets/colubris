@@ -69,7 +69,7 @@ app_module.directive('requirementForm', function factory($q,$http, $templateCach
             }
             task.requirement_id = reqv.id ;
             task.project_id = reqv.project_id ;
-            scope.Task.save(task);
+            scope.Task.save(task,false);
         };
     }
 })

@@ -200,7 +200,7 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API',
             );
         },
 
-        save: function ( task ) {
+        save: function ( task, to_save ) {
             //console.log('service.Task.save()');
 
             //if(!API.validateForm(task, ['name','client'], 'project_')) return false;
@@ -218,7 +218,7 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API',
             this.resetbackupTask();
             $rootScope.$broadcast('task.update', {});
             $rootScope.$broadcast('task.clear');
-            $rootScope.$broadcast('form.to_regular_place');
+            if(to_save) $rootScope.$broadcast('form.to_regular_place');
         },
 
         saveOnServer: function(task) {

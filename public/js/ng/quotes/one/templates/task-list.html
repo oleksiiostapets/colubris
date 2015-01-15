@@ -10,42 +10,42 @@
 
         <!--Name-->
         <div class="atk-cell atk-jackscrew">
-            <div class="atk-label atk-effect-warning inline-edit" style="white-space: pre-wrap"><strong editable-text="task.name" onaftersave="Task.save(task)">{{task.name || '---'}}</strong></div>
+            <div class="atk-label atk-effect-warning inline-edit" style="white-space: pre-wrap"><strong editable-text="task.name" onaftersave="Task.save(task,false)">{{task.name || '---'}}</strong></div>
         </div>
     </div>
 
     <!--Requester-->
     <div>
         <strong class="icon-user"> Requester: </strong>
-        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.requester_id" e-ng-options="s.value as s.text for s in participants">{{ showTaskRequester(task) || '---' }}</span>
+        <span class="inline-edit" onaftersave="Task.save(task,false)" editable-select="task.requester_id" e-ng-options="s.value as s.text for s in participants">{{ showTaskRequester(task) || '---' }}</span>
     </div>
 
     <!--Assigned-->
     <div>
         <strong class="icon-user"> Assigned: </strong>
-        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.assigned_id" e-ng-options="s.value as s.text for s in participants">{{ showTaskAssigned(task) || '---' }}</span>
+        <span class="inline-edit" onaftersave="Task.save(task,false)" editable-select="task.assigned_id" e-ng-options="s.value as s.text for s in participants">{{ showTaskAssigned(task) || '---' }}</span>
     </div>
 
     <!--Status-->
     <div class="">
         <strong class="icon-chat-empty"> Status: </strong>
-        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.status" e-ng-options="s.value as s.text for s in statuses">{{ showTaskStatus(task) || '---' }}</span>
+        <span class="inline-edit" onaftersave="Task.save(task,false)" editable-select="task.status" e-ng-options="s.value as s.text for s in statuses">{{ showTaskStatus(task) || '---' }}</span>
     </div>
 
     <!--Type-->
     <div>
         <strong class="icon-list"> Type: </strong>
-        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.type" e-ng-options="s.value as s.text for s in types">{{ showTaskType(task) || '---' }}</span>
+        <span class="inline-edit" onaftersave="Task.save(task,false)" editable-select="task.type" e-ng-options="s.value as s.text for s in types">{{ showTaskType(task) || '---' }}</span>
     </div>
 
     <!--Estimate-->
     <div>
         <strong class="icon-clock"> Estimate: </strong>
-        <span class="inline-edit" editable-text="task.estimate" onaftersave="Task.save(task)">{{task.estimate || '---'}}</span>
+        <span class="inline-edit" editable-text="task.estimate" onaftersave="Task.save(task,false)">{{task.estimate || '---'}}</span>
     </div>
 
     <!--Description-->
-    <div class="inline-edit"><span class="atk-box atk-swatch-gray" editable-textarea="task.descr_original" onaftersave="Task.save(task)">{{task.descr_original || 'no description'}}</span></div>
+    <div class="inline-edit"><span class="atk-box atk-swatch-gray" editable-textarea="task.descr_original" onaftersave="Task.save(task,false)">{{task.descr_original || 'no description'}}</span></div>
 
     <!--Created-->
     <div><strong class="icon-plus-circled-1"> Created: </strong> {{task.created_dts}}</div>
