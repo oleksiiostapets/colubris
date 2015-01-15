@@ -201,6 +201,7 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API',
         },
 
         save: function ( task ) {
+            //console.log('service.Task.save()');
 
             //if(!API.validateForm(task, ['name','client'], 'project_')) return false;
 

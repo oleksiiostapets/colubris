@@ -109,21 +109,16 @@ app_module.controller(
 
 
             $scope.$on( 'projects.participants.update', function( event ) {
+                console.log('quote.one.inlineCrud.on.projects.participants.update');
                 $scope.participants = $scope.Project.getSortedParticipants(0,'value','text');
-                $scope.showTaskParticipantes = function(task) {
-                    var selected = $filter('filter')($scope.participants, {value: task.assigned});
+                $scope.showProjectParticipants = function(task) {
+                    //console.log('quote.one.inlineCrud.showTaskParticipantes()');
+                    var selected = $filter('filter')($scope.participants, {value: task.assigned_id});
                     return (task.assigned && selected.length) ? selected[0].text : 'Not set';
                 };
 
             });
-            $scope.$on( 'assigneds.update', function( event ) {
-                $scope.assigneds = User.users;
-                $scope.showTaskAssigneds = function(task) {
-                    var selected = $filter('filter')($scope.assigneds, {value: task.assigned});
-                    return (task.assigned && selected.length) ? selected[0].text : 'Not set';
-                };
 
-            });
             $scope.$on( 'requesters.update', function( event ) {
                 $scope.requesters = User.users;
             });
@@ -133,7 +128,7 @@ app_module.controller(
             });
             $scope.$on( 'reqv_tasks.update', function( event, args ) {
                 $scope.showTaskStatus = function(task) {
-                    var selected = $filter('filter')($scope.statuses, {value: task.status});
+                    var selected = $filter('filter')($scope.statuses, {value: task.status},true);
                     return (task.status && selected.length) ? selected[0].text : 'Not set';
                 };
                 $scope.showTaskType = function(task) {

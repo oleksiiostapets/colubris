@@ -39,10 +39,11 @@ app_module.service( 'Project', [ '$rootScope','$http','API', 'Participant', func
 
 
         getSortedParticipants: function(projet_index, key_name, value_name) {
+            //console.log('service.Project.getSortedParticipants()');
             var arr_to_return = [];
             angular.forEach(this.projects[projet_index].participants,function(item,index){
                 var obj = {};
-                obj[key_name] = item.id;
+                obj[key_name] = item.user_id;
                 obj[value_name] = item.user;
                 arr_to_return.push(obj);
             });
@@ -50,6 +51,7 @@ app_module.service( 'Project', [ '$rootScope','$http','API', 'Participant', func
         },
 
         remove: function(index) {
+            //console.log('service.Project.remove()');
             try {
                 API.removeOne(
                     'project',

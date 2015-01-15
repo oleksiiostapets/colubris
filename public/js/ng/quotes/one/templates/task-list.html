@@ -15,10 +15,9 @@
     </div>
 
     <!--Assigned-->
-    <!--TODO: dropdown-->
     <div>
-        <strong class="icon-user"> Assigned: </strong> {{task.assigned || '---'}}
-        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.assigned_id" e-ng-options="s.value as s.text for s in participants">{{ showTaskAssigneds(task) || '---' }}</span>
+        <strong class="icon-user"> Assigned: </strong>
+        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.assigned_id" e-ng-options="s.value as s.text for s in participants">{{ showProjectParticipants(task) || '---' }}</span>
     </div>
 
     <!--Status-->
@@ -26,9 +25,6 @@
         <strong class="icon-chat-empty"> Status: </strong>
         <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.status" e-ng-options="s.value as s.text for s in statuses">{{ showTaskStatus(task) || '---' }}</span>
     </div>
-
-    <!--Status (backup because firs one is buggy) TODO remove this one when first is fixed-->
-    <div><strong class="icon-chat-empty"> Status: </strong> {{task.status || '---'}}</div>
 
     <!--Type-->
     <div>
