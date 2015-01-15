@@ -165,7 +165,7 @@ app_module.service( 'API', [ '$rootScope','$http', function( $rootScope, $http )
                 url = url + key + '=' + value + '&';
                 count++;
             });
-            // Token from cookie
+            // TODO Token from cookie
             url = url + 'lhash=' + app_module.lhash;
             return url;
         },

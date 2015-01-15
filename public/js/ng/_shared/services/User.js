@@ -21,20 +21,16 @@ app_module.service( 'User', [ '$rootScope','$http','API', function( $rootScope, 
                 }
             );
         },
-        getFromServerByProject: function(project) {
+        getFromServerByProject: function(project, broadcast_message) {
             if(!project)return;
-            API.getAll(
-                'user',
-                'getUsersByProject',
-                {project_id:project.id},
-                function(obj) {
-                    service.users = obj.data;
-                    $rootScope.$broadcast( 'assigneds.update' );
-                }
-            );
+            service.getFromServerByProjectId(project.id,broadcast_message);
         },
         getFromServerByProjectId: function(project_id, broadcast_message) {
+            console.log('------> *** getFromServerByProjectId ***');
             if(!project_id)return;
+            if (typeof broadcast_message == 'undefined') broadcast_message = 'assigneds.update';
+
+            // TODO change to call getFromServer method
             API.getAll(
                 'user',
                 'getUsersByProject',

@@ -4,10 +4,50 @@
 
 'use strict';
 
-app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScope, $http, API ) {
+app_module.service( 'Project', [ '$rootScope','$http','API', 'Participant', function( $rootScope, $http, API, Participant ) {
     var current_index = null;
+
+
+    // PRIVATE method for object Project
+    var getProjectParticipants = function() {
+        angular.forEach(service.projects, function(pr,i){
+            Participant.getFromServerByProject(pr);
+        });
+    }
+
+    $rootScope.$on( 'projects.update', function( event ) {
+        getProjectParticipants(); // call private method
+    });
+
+//    $rootScope.$on( 'quote.update', function( event ) {
+//        console.log('---> update project participants Project.getProjectParticipants() (quote.update)');
+//        getProjectParticipants(); // call private method
+//    });
+
+    $rootScope.$on( 'participants.update', function( event, participants, project_id ) {
+        angular.forEach(service.projects,function(pr,count){
+            if (pr.id == project_id) {
+                service.projects[count].participants = participants;
+                $rootScope.$broadcast( 'projects.participants.update' );
+            }
+        });
+    });
+
+    // Everything inside this block are PUBLIC properties and methods!!!
     var service = {
         projects: [],
+
+
+        getSortedParticipants: function(projet_index, key_name, value_name) {
+            var arr_to_return = [];
+            angular.forEach(this.projects[projet_index].participants,function(item,index){
+                var obj = {};
+                obj[key_name] = item.id;
+                obj[value_name] = item.user;
+                arr_to_return.push(obj);
+            });
+            return arr_to_return;
+        },
 
         remove: function(index) {
             try {
@@ -99,6 +139,10 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
                 field_val,
                 function(obj) {
                     service.projects = obj.data;
+                    /**
+                     * Actions to be performed on this broadcast message:
+                     * - update EACH project participants
+                     */
                     $rootScope.$broadcast( 'projects.update' );
                 }
             );
@@ -137,9 +181,9 @@ app_module.service( 'Project', [ '$rootScope','$http','API', function( $rootScop
 
         restoreProject: function() {
             if (
-                  current_index &&
-                  angular.isDefined(service.projects[current_index]) &&
-                      angular.isDefined(service.projects[current_index].backup)
+                current_index &&
+                    angular.isDefined(service.projects[current_index]) &&
+                    angular.isDefined(service.projects[current_index].backup)
                 ) {
                 service.projects[current_index] = service.projects[current_index].backup;
             }

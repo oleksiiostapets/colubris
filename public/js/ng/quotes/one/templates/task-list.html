@@ -16,7 +16,10 @@
 
     <!--Assigned-->
     <!--TODO: dropdown-->
-    <div><strong class="icon-user"> Assigned: </strong> {{task.assigned || '---'}}</div>
+    <div>
+        <strong class="icon-user"> Assigned: </strong> {{task.assigned || '---'}}
+        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.assigned_id" e-ng-options="s.value as s.text for s in participants">{{ showTaskAssigneds(task) || '---' }}</span>
+    </div>
 
     <!--Status-->
     <div class="">
@@ -30,13 +33,13 @@
     <!--Type-->
     <div>
         <strong class="icon-list"> Type: </strong>
-        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.type" e-ng-options="s.value as s.text for s in types">{{ showTypeStatus(task) || '---' }}</span>
+        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.type" e-ng-options="s.value as s.text for s in types">{{ showTaskType(task) || '---' }}</span>
     </div>
 
     <!--Estimate-->
     <div>
         <strong class="icon-clock"> Estimate: </strong>
-        <span editable-text="task.estimate" onaftersave="Task.save(task)">{{task.estimate || '---'}}</span>
+        <span class="inline-edit" editable-text="task.estimate" onaftersave="Task.save(task)">{{task.estimate || '---'}}</span>
     </div>
 
     <!--Description-->

@@ -27,6 +27,7 @@ class page_quotes_one extends Page {
         $this->app->jquery->addStaticInclude('ng/_shared/services/Project');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Quote');
         $this->app->jquery->addStaticInclude('ng/_shared/services/User');
+        $this->app->jquery->addStaticInclude('ng/_shared/services/Participant');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Comment');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Task');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Requirement');

@@ -4,7 +4,8 @@
 
 'use strict';
 
-app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope, $http, API ) {
+app_module.service( 'Task', [ '$rootScope','$http', 'API',
+    function( $rootScope, $http, API ) {
     var current_index = null;
     var service = {
         tasks: [],
@@ -194,6 +195,7 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API', function( $rootScope,
                     service.tasks = obj.data;
                     service.total_rows = obj.total_rows;
                     $rootScope.$broadcast( 'tasks.update' );
+                    $rootScope.$broadcast( 'participants.update' );
                 }
             );
         },

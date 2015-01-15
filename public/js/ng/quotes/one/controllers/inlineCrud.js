@@ -108,8 +108,21 @@ app_module.controller(
 
 
 
+            $scope.$on( 'projects.participants.update', function( event ) {
+                $scope.participants = $scope.Project.getSortedParticipants(0,'value','text');
+                $scope.showTaskParticipantes = function(task) {
+                    var selected = $filter('filter')($scope.participants, {value: task.assigned});
+                    return (task.assigned && selected.length) ? selected[0].text : 'Not set';
+                };
+
+            });
             $scope.$on( 'assigneds.update', function( event ) {
                 $scope.assigneds = User.users;
+                $scope.showTaskAssigneds = function(task) {
+                    var selected = $filter('filter')($scope.assigneds, {value: task.assigned});
+                    return (task.assigned && selected.length) ? selected[0].text : 'Not set';
+                };
+
             });
             $scope.$on( 'requesters.update', function( event ) {
                 $scope.requesters = User.users;
@@ -123,9 +136,9 @@ app_module.controller(
                     var selected = $filter('filter')($scope.statuses, {value: task.status});
                     return (task.status && selected.length) ? selected[0].text : 'Not set';
                 };
-                $scope.showTypeStatus = function(type) {
-                    var selected = $filter('filter')($scope.types, {value: type.type});
-                    return (type.status && selected.length) ? selected[0].text : 'Not set';
+                $scope.showTaskType = function(task) {
+                    var selected = $filter('filter')($scope.types, {value: task.type});
+                    return (task.status && selected.length) ? selected[0].text : 'Not set';
                 };
             });
             $scope.$on( 'tasks.need_update', function( event, args ) {
@@ -165,7 +178,6 @@ app_module.controller(
             });
             $scope.$on( 'reqv.update', function( event, args ) {
                 $scope.reqv = args;
-
                 User.getFromServerByProjectId(args.project_id,['requesters.update','assigneds.update']);
             });
             $scope.$on( 'requirements.reload', function( event ) {

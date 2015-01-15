@@ -7,20 +7,46 @@
 app_module.service( 'Participant', [ '$rootScope','$http', 'API', function( $rootScope, $http, API ) {
     var current_index = null;
     var service = {
-        Participants: [],
 
-        getFromServerByProject: function(project) {
+        participants: [],
+
+        getFromServerByProject: function(project, broadcast_message) {
+            if(!project)return;
+            service.getFromServerByProjectId(project.id,broadcast_message);
+        },
+        getFromServerByProjectId: function(project_id, broadcast_message) {
+            if(!project_id)return;
+            if (typeof broadcast_message == 'undefined') broadcast_message = 'participants.update';
+
             API.getAll(
                 'participant',
                 undefined,
-                {field:'project_id',value:project.id},
+                {field:'project_id',value:project_id},
                 function(obj) {
                     service.participants = obj.data;
-                    //console.log(obj.data);
-                    $rootScope.$broadcast( 'participants.update', project );
+                    if (Array.isArray(broadcast_message)) {
+                        $.each(broadcast_message,function(key,value) {
+                            $rootScope.$broadcast( value, obj.data, project_id );
+                        });
+                    } else {
+                        $rootScope.$broadcast( broadcast_message, obj.data, project_id );
+                    }
                 }
             );
         },
+
+//        getFromServerByProject: function(project) {
+//            API.getAll(
+//                'participant',
+//                undefined,
+//                {field:'project_id',value:project.id},
+//                function(obj) {
+//                    service.participants = obj.data;
+//                    //console.log(obj.data);
+//                    $rootScope.$broadcast( 'participants.update', project );
+//                }
+//            );
+//        },
         /*clear: function(){
             service.times = [];
             $rootScope.$broadcast( 'times.update' );
