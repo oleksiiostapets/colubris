@@ -43,6 +43,7 @@ mklink ../../vendor/atk4/atk4/templates/ templates
 ## Error codes
 5300	User cannot be authorized (user cannot be authorized with set lhash)
 5301	User exist but lhash is out of date, get a new one.
+5302    There is no necessary parameter provided
 5399	Unexpected Error
 	
 5310	User has no rights to see
