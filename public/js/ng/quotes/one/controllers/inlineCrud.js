@@ -111,10 +111,13 @@ app_module.controller(
             $scope.$on( 'projects.participants.update', function( event ) {
                 console.log('quote.one.inlineCrud.on.projects.participants.update');
                 $scope.participants = $scope.Project.getSortedParticipants(0,'value','text');
-                $scope.showProjectParticipants = function(task) {
-                    //console.log('quote.one.inlineCrud.showTaskParticipantes()');
+                $scope.showTaskAssigned = function(task) {
                     var selected = $filter('filter')($scope.participants, {value: task.assigned_id});
                     return (task.assigned && selected.length) ? selected[0].text : 'Not set';
+                };
+                $scope.showTaskRequester = function(task) {
+                    var selected = $filter('filter')($scope.participants, {value: task.requester_id});
+                    return (task.requester && selected.length) ? selected[0].text : 'Not set';
                 };
 
             });

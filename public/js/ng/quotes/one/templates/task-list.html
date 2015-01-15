@@ -14,10 +14,16 @@
         </div>
     </div>
 
+    <!--Requester-->
+    <div>
+        <strong class="icon-user"> Requester: </strong>
+        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.requester_id" e-ng-options="s.value as s.text for s in participants">{{ showTaskRequester(task) || '---' }}</span>
+    </div>
+
     <!--Assigned-->
     <div>
         <strong class="icon-user"> Assigned: </strong>
-        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.assigned_id" e-ng-options="s.value as s.text for s in participants">{{ showProjectParticipants(task) || '---' }}</span>
+        <span class="inline-edit" onaftersave="Task.save(task)" editable-select="task.assigned_id" e-ng-options="s.value as s.text for s in participants">{{ showTaskAssigned(task) || '---' }}</span>
     </div>
 
     <!--Status-->
