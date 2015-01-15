@@ -285,7 +285,10 @@ class Endpoint_v1_General extends Endpoint_REST {
                 ];
             }
         }
-
+        /*return [
+            'result' => 'shit',
+            'data' => $all,
+        ];*/
         try{
             $this->model->set($all);
             $this->model->save();

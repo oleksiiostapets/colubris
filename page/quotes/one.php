@@ -9,6 +9,13 @@ class page_quotes_one extends Page {
     function init() {
         parent::init();
         $this->id = $this->checkGetParameter('id');
+
+        $url = 'v1/quote/getByField&field=id&value='.$this->id.'&lhash='.$this->app->currentUser()->get('lhash');
+        $res = $this->app->do_get_request($url);
+        $res_obj = json_decode($res);
+        if($res_obj->result != 'success' || count($res_obj->data) == 0) {
+            throw $this->exception('You cannot see this page','Exception_Denied');
+        }
         $this->addNgJs();
     }
     protected function addNgJs() {
