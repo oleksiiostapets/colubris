@@ -88,13 +88,14 @@ class Endpoint_v1_General extends Endpoint_REST {
         try{
             $field = $this->getParameter('field');
             $value = $this->getParameter('value');
-            if(!$field || !isset($value)){
+            //TODO check if necessary parameters are provided
+            /*if(!$field || !isset($value)){
                 return [
                     'result' => 'error',
                     'code'    => '5302',
                     'message' => 'There is no necessary parameter provided',
                 ];
-            }
+            }*/
             if($field != ''){
                 if($this->method){
                     if($this->method == 'rlike') $value = $value . '%';
