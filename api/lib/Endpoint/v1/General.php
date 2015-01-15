@@ -12,6 +12,7 @@ class Endpoint_v1_General extends Endpoint_REST {
     protected $count;
     protected $offset;
     protected $method;
+    protected $show_deleted = false;
 
     public $user_id_field = false;
 
@@ -107,7 +108,7 @@ class Endpoint_v1_General extends Endpoint_REST {
                 }
             }
 
-            if ($this->model->hasElement('is_deleted')){
+            if (!$this->show_deleted && $this->model->hasElement('is_deleted')){
                 $this->model->addCondition('is_deleted',false);
             }
             $this->model->dsql()->calcFoundRows();
@@ -167,6 +168,12 @@ class Endpoint_v1_General extends Endpoint_REST {
                     $this->model->addCondition($field,$value);
                 }
             }
+
+            //Show not delete only
+            if (!$this->show_deleted && $this->model->hasElement('is_deleted')){
+                $this->model->addCondition('is_deleted',false);
+            }
+
             $this->model->dsql()->calcFoundRows();
             $this->model->setLimit($this->count,$this->offset);
             $data = $this->model->prepareForSelect($this->app->current_user)->getRows();
