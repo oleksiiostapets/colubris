@@ -22,6 +22,7 @@ app_module.service( 'Time', [ '$rootScope','$http', 'API', function( $rootScope,
                         if(value.user_id != app_module.user_id) {
                             obj.data[key]['allow_del_css'] = 'display: none;';
                         }
+                        obj.data[key]['date_obj'] = new Date(obj.data[key]['date']);
                     });
                     service.times = obj.data;
                     //console.log(obj.data);
@@ -60,7 +61,16 @@ app_module.service( 'Time', [ '$rootScope','$http', 'API', function( $rootScope,
         saveOnServer: function(time,task) {
             time.task_id = task.id;
             time.user_id = app_module.user_id;
-            API.saveOne(
+            //Formatting dates for update
+            console.log('fuck');
+            console.log(time.date_obj);
+            if(time.date_obj){
+                var date_month = time.date_obj.getMonth()+1;
+                if(date_month < 10) date_month = '0' + date_month;
+                time.date = time.date_obj.getFullYear()+'-'+date_month+'-'+time.date_obj.getDate();
+            }
+            console.log(time.date);
+             API.saveOne(
                 'time',
                 null,
                 {id : time.id, task_id : task.id},

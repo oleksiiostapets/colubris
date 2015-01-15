@@ -1,25 +1,34 @@
 <h3>Time:</h3>
 <div class="atk-box-small task_time_box task_time_{{$index+1}}" ng-repeat="time in times track by $index" style="position: relative">
-    <div id="close-time-button" class="icon-cancel-circled close-time" ng-click="Time.remove(time.id,task)" style="{{time.allow_del_css}}"></div>
+
+    <div id="delete-task-button-{{time.id}}" class="icon-trash delete-task" ng-confirm-click="Are you sure?" confirmed-click="Time.remove(time.id,task)" style="{{time.allow_del_css}}"></div>
+
+    <!--ID and row index-->
     <div class="atk-cells atk-push small">
         <div class="atk-cell atk-valign-top">
             <div class="atk-label atk-effect-info time_comment_id">{{$index+1}} (ID#{{time.id}})</div>
         </div>
-        <div class="atk-cell atk-jackscrew">
-            <div class="atk-label atk-effect-warning time_comment_field" editable-textarea="time.comment" onaftersave="Time.save(time, task)">{{time.comment}}</div>
-        </div>
     </div>
+
+    <!--Comment-->
+    <div class="atk-swatch-gray atk-box-small inline-edit time_comment_field" editable-textarea="time.comment" onaftersave="Time.save(time, task)">{{time.comment}}</div>
+
+    <!--spent time-->
     <div class="spent_time_row_{{$index+1}}">
         <span class="spent_time_title_{{$index+1}}">Spent time: </span>
-        <span class="time_spent_time_field" editable-text="time.spent_time" onaftersave="Time.save(time, task)">{{time.spent_time}}</span>
+        <span class="time_spent_time_field inline-edit" editable-text="time.spent_time" onaftersave="Time.save(time, task)">{{time.spent_time}}</span>
     </div>
+
+    <!--User name-->
     <div>
         <span>User: </span>
         <span class="time_user_field">{{time.user}}</span>
     </div>
+
+    <!--Date-->
     <div>
         <span>Date: </span>
-        <span class="time_date_field" editable-bsdate="time.date" e-datepicker-popup="yyyy-mm-dd" onaftersave="Time.save(time, task)">{{time.date}}</span>
+        <span class="time_date_field inline-edit" editable-date="time.date_obj" onaftersave="Time.save(time, task)">{{time.date}}</span>
     </div>
 </div>
 
