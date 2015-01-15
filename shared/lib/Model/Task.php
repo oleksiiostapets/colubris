@@ -60,7 +60,7 @@ class Model_Task extends Model_Auditable {
 
         $this->hasOne('Organisation','organisation_id');
 
-        $this->setOrder('updated_dts',true);
+        $this->setOrder('created_dts',true);
 
 
 
