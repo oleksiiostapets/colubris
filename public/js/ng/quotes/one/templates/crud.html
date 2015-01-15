@@ -31,8 +31,8 @@
                         <span class="" editable-textarea="rreqv.descr" onaftersave="Requirement.save(rreqv)" >{{rreqv.descr || 'no description provided'}}</span>
                     </div>
                 </td>
-                <td>{{ rreqv.estimate || '-'}}</td>
-                <td>{{ rreqv.spent_time_cost || '-'}}</td>
+                <td>{{ rreqv.estimate == "null" ? "-" : rreqv.estimate }}</td>
+                <td>{{ rreqv.spent_time_cost == "null" ? "-" : rreqv.spent_time_cost }}</td>
                 <td class="" style="{{Requirement.show_actions}}">
                     <a href="javascript:void(0)" class="atk-text-nowrap icon-pencil atk-effect-info" ng-click="Requirement.edit($index)" style="{{Requirement.can_edit_requirement}}"> Info</a>
                     <a href="javascript:void(0)" class="atk-text-nowrap icon-trash atk-effect-danger" style="{{Requirement.can_delete_requirement}}" ng-confirm-click="Are you sure?" confirmed-click="Requirement.remove($index)"> Delete</a>
