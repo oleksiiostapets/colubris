@@ -218,6 +218,7 @@ app_module.service( 'Task', [ '$rootScope','$http', 'API',
             this.resetbackupTask();
             $rootScope.$broadcast('task.update', {});
             $rootScope.$broadcast('task.clear');
+            $rootScope.$broadcast('form.to_regular_place');
         },
 
         saveOnServer: function(task) {
