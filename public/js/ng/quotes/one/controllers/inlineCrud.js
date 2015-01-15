@@ -125,6 +125,9 @@ app_module.controller(
             $scope.$on( 'requesters.update', function( event ) {
                 $scope.requesters = User.users;
             });
+            $scope.$on( 'assigneds.update', function( event ) {
+                $scope.assigneds = User.users;
+            });
 
             $scope.$on( 'comments.need_update', function( event, args ) {
                 Comment.getFromServer($scope.Requirement.requirements[$scope.Requirement.current_index].id);
