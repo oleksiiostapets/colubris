@@ -13,11 +13,7 @@ app_module.service( 'Project', [ '$rootScope','$http','API', 'Participant', func
         angular.forEach(service.projects, function(pr,i){
             Participant.getFromServerByProject(pr);
         });
-    }
-
-    $rootScope.$on( 'projects.update', function( event ) {
-        getProjectParticipants(); // call private method
-    });
+    };
 
 //    $rootScope.$on( 'quote.update', function( event ) {
 //        console.log('---> update project participants Project.getProjectParticipants() (quote.update)');
@@ -36,6 +32,13 @@ app_module.service( 'Project', [ '$rootScope','$http','API', 'Participant', func
     // Everything inside this block are PUBLIC properties and methods!!!
     var service = {
         projects: [],
+
+        withParticipants: function(){
+            $rootScope.$on( 'projects.update', function( event ) {
+                getProjectParticipants(); // call private method
+            });
+            return this;
+        },
 
 
         getSortedParticipants: function(projet_index, key_name, value_name) {

@@ -162,6 +162,7 @@ app_module.controller(
                 $scope.quote[0].warranty_end_obj = new Date($scope.quote[0].warranty_end);
 
                 $scope.Project = Project;
+                $scope.Project.withParticipants();
                 Project.getFromServer('id',$scope.quote[0].project_id);
 
             });

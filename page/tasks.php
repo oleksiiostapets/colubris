@@ -37,6 +37,7 @@ class page_tasks extends Page {
         $this->app->jquery->addStaticInclude('ng/_shared/services/User');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Task');
         $this->app->jquery->addStaticInclude('ng/_shared/services/Time');
+        $this->app->jquery->addStaticInclude('ng/_shared/services/Participant');
         $this->app->jquery->addStaticInclude('ng/_shared/directives/filter');
 
         $this->js(true)->colubris()->startTasksApp(
