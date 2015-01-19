@@ -42,6 +42,7 @@ class Model_TaskTime extends Model_Auditable {
 		$this->getField('spent_time')->caption('Spent');
 
 		$this->addCondition('spent_time','>','0');
+		$this->addCondition('is_deleted',false);
 
 
 
