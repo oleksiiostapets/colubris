@@ -96,6 +96,7 @@ class endpoint_v1_user extends Endpoint_v1_General {
                     'message' => 'User with this email already exists',
                 ];
             }
+            $this->model->set('organisation_id',$this->app->currentUser()->get('organisation_id'));
         }
         $this->model->set($all);
         $this->model->save();

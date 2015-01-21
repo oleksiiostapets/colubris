@@ -7423,3 +7423,6 @@ table .requirement {
 .inline-edit {
   border-bottom: dashed 1px rgba(248, 8, 0, 0.2) !important;
 }
+.display-none {
+  display: none!important;
+}

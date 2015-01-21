@@ -169,13 +169,14 @@ $.each({
             angular.bootstrap(document, ['projects.app']);
         });
     },
-    startUsersApp: function(base_url,prefix,postfix,api_base_url,lhash) {
+    startUsersApp: function(base_url,prefix,postfix,api_base_url,lhash,current_user_rights) {
         angular.element(document).ready(function() {
             app_module.base_url = base_url;
             app_module.prefix   = prefix;
             app_module.postfix  = postfix;
             app_module.api_base_url = api_base_url;
             app_module.lhash  = lhash;
+            app_module.current_user_rights  = current_user_rights;
             angular.bootstrap(document, ['users.app']);
         });
     }

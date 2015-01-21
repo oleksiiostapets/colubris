@@ -111,6 +111,12 @@ app_module.service( 'User', [ '$rootScope','$http','API', function( $rootScope, 
                 }
             );
         },
+
+        showForm: function(index) {
+            console.log('------> Show');
+            $rootScope.$broadcast('form.to_fixed_position',service.users[index]);
+        },
+
         edit: function(index) {
             console.log('------> edit');
             this.backupUser(index);

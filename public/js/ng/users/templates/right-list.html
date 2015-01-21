@@ -14,7 +14,7 @@
                 ng-model="right[1]"
                 />
     </div>
-    <div class="atk-actions">
-        <button ng-click="Right.save(rights)" class="atk-swatch-green atk-button-small atk-button" >Save</button>
+    <div class="atk-actions" style="{{can_see_save_button}}">
+        <button ng-click="Right.save(rights)" class="atk-swatch-green atk-button-small atk-button display-none" >Save</button>
     </div>
 </form>

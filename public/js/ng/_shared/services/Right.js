@@ -159,6 +159,10 @@ app_module.service( 'Right', [ '$rootScope','$http','API', function( $rootScope,
             $rootScope.$broadcast( 'rights.update' );
             $rootScope.$broadcast('form.to_regular_place');
         },
+        clear: function(){
+            service.rights = [];
+            $rootScope.$broadcast( 'rights.update' );
+        },
         resetBackupRight: function() {
             if (current_index) {
                 service.rights[current_index].backup = {};

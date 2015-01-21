@@ -16,6 +16,9 @@ app_module.controller(
             $scope.User = User;
             $scope.users = User.users;
             User.getFromServer('users.update');
+            if(app_module.current_user_rights.indexOf('can_manage_users') != -1){
+                User.can_add_users = 'display:block!important;';
+            }
 
             // rights
             $scope.rights = null;
@@ -26,6 +29,12 @@ app_module.controller(
                 $scope.rights = Right.rights;
 //                console.log(Right.rights);
             });
+
+            //clear form
+            $scope.clearForm = function(){
+                User.cancel();
+                Right.clear();
+            };
 
             $scope.$on( 'user.update', function( event, args ) {
                 $scope.user = args;
