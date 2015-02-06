@@ -15,7 +15,9 @@ app_module.directive('userForm', function factory($q,$http, $templateCache,$comp
             if(user){
                 scope.User.getFromServer(user.id);
                 scope.Right.getAllRights(user,'rights.update');
-                scope.can_see_save_button = 'display:block;';
+                if(app_module.current_user_rights.indexOf('can_manage_users') != -1){
+                    scope.can_see_save_button = 'display:block!important;';
+                }
             }
         });
         scope.$on( 'form.to_regular_place', function( event ) {
