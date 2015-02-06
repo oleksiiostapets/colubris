@@ -8,7 +8,7 @@
             <tr class="atk-swatch-gray">
                 <th>#</th>
                 <th>Info</th>
-                <th>Estimate</th>
+                <th style="{{requirements.can_see_spent_time}}">Estimate</th>
                 <th>{{requirements.spent_time_cost_text}}</th>
                 <th style="{{Requirement.show_actions}}">Actions</th>
             </tr>
@@ -31,7 +31,7 @@
                         <span class="" editable-textarea="rreqv.descr" onaftersave="Requirement.save(rreqv)" >{{rreqv.descr || 'no description provided'}}</span>
                     </div>
                 </td>
-                <td>{{ rreqv.estimate == "null" ? "-" : rreqv.estimate }}</td>
+                <td style="{{requirements.can_see_spent_time}}">{{ rreqv.estimate == "null" ? "-" : rreqv.estimate }}</td>
                 <td>{{ rreqv.spent_time_cost == "null" ? "-" : rreqv.spent_time_cost }}</td>
                 <td class="" style="{{Requirement.show_actions}}">
                     <a href="javascript:void(0)" class="atk-text-nowrap icon-pencil atk-effect-info" ng-click="Requirement.edit($index)" style="{{Requirement.can_edit_requirement}}"> Info</a>

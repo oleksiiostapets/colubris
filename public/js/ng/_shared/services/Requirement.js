@@ -148,8 +148,11 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                     var spent_time_text = '';
                     var cost_text = '';
                     var del = '';
+                    var can_see_spent_time = '';
                     if(app_module.current_user_rights.indexOf('can_see_spent_time') != -1){
                         spent_time_text = 'Spent time';
+                    }else{
+                        can_see_spent_time = 'display:none;';
                     }
                     if(app_module.current_user_rights.indexOf('can_see_finance') != -1){
                         cost_text = 'Cost';
@@ -158,6 +161,7 @@ app_module.service( 'Requirement', [ '$rootScope','$http','API', function( $root
                         del = ' / ';
                     }
                     obj.data.spent_time_cost_text = spent_time_text +del + cost_text;
+                    obj.data.can_see_spent_time = can_see_spent_time;
 
                     service.requirements = obj.data;
                     $rootScope.$broadcast( 'requirements.update' );
