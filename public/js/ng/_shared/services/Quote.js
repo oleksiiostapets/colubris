@@ -13,7 +13,8 @@ app_module.service( 'Quote', [ '$rootScope','$http','API', function( $rootScope,
             {key: 'estimate_needed', value: 'Estimate needed'},
             {key: 'not_estimated', value: 'Not estimated'},
             {key: 'estimation_approved', value: 'Estimation approved'},
-            {key: 'finished', value: 'Finished'}
+            {key: 'finished', value: 'Finished'},
+            {key: 'accepted', value: 'Accepted'}
         ],
 
         getStatusValueByKey: function(key) {

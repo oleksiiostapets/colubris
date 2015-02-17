@@ -1,6 +1,15 @@
 <?php
 class Model_Quote extends Model_Table {
 	public $table="quote";
+    public static $quote_statuses = [
+        'quotation_requested'=>'Quotation Requested',
+        'estimate_needed'=>'Estimate Needed',
+        'not_estimated'=>'Not Estimated',
+        'estimated'=>'Estimated',
+        'estimation_approved'=>'Estimation Approved',
+        'finished'=>'Finished',
+        'accepted'=>'Accepted',
+    ];
 	function init(){
 		parent::init(); //$this->debug();
 /*TODO: check by API. Temporary commented till fix
@@ -33,16 +42,8 @@ class Model_Quote extends Model_Table {
 
 		$this->addField('html')->type('text')->allowHtml(true);
 
-		$this->addField('status')->setValueList(
-			array(
-				'quotation_requested'=>'Quotation Requested',
-				'estimate_needed'=>'Estimate Needed',
-				'not_estimated'=>'Not Estimated',
-				'estimated'=>'Estimated',
-				'estimation_approved'=>'Estimation Approved',
-				'finished'=>'Finished',
-			)
-		)->mandatory('Cannot be empty')->sortable(true);
+		$this->addField('status')->setValueList(self::$quote_statuses)
+            ->mandatory('Cannot be empty')->sortable(true);
 		//$this->addField('attachment_id')->setModel('Model_Filestore_File');
 
 		$this->addField('rate')->defaultValue('0.00');
