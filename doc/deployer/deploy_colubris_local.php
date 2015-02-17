@@ -97,6 +97,11 @@ $s1->task('cmd',"ln -s ../../../shared/config-api.php config.php");
 $s1->task('cmd',"cd ..");
 $s1->task('cmd',"cd $base_path/releases/$server_deploy_folder/public/");
 $s1->task('cmd',"ln -s ../vendor/atk4/atk4/public/atk4/");
+//migrator
+$s1->task('cmd',"cd $base_path/releases/$server_deploy_folder");
+$s1->task('cmd',"cp -n $base_path/releases/$server_deploy_folder/phinx-distrib.yml $base_path/shared/phinx.yml");
+$s1->task('cmd',"ln -s vendor/bin/phinx phinx");
+$s1->task('cmd',"ln -s ../../shared/phinx.yml .");
 
 // create CURRENT symlink
 $s1->task('cmd',"cd $base_path");

@@ -17,3 +17,5 @@ nbproject
 /.idea
 logs
 unit_tests_config.php
+phinx
+phinx.yml
